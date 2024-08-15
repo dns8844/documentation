@@ -36,7 +36,7 @@ jobs:
           gem install bundler
           bundle install
           pip3 install --user -r requirements.txt
-          make
+          make serve_html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
