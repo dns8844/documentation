@@ -1,4 +1,4 @@
-[[compute-moduleeeprom-bootloader]]
+[[compute-module-eeprom-bootloader]]
 == 计算模块 EEPROM 引导加载程序
 
 从计算模块 4 开始，计算模块使用 EEPROM 引导加载程序。该引导加载程序位于板载存储的一小部分中，而不是引导分区中。因此，更新它需要不同的程序。在生产中使用带有 EEPROM 引导加载程序的计算模块之前，请务必遵循以下最佳实践：
@@ -26,6 +26,7 @@ $ ./rpiboot -d recovery
 
 `usbboot` 还包括一些 https://github.com/raspberrypi/usbboot/blob/master/Readme.md#compute-module-4-extensions[扩展]，可让您与计算模块上的 EEPROM 引导加载程序进行交互。
 
+[[update-the-compute-module-bootloader]]
 === 更新计算模块引导加载程序
 
 在使用 EEPROM 引导加载程序的计算模块上，ROM 从未从 SD/eMMC 运行过 `recovery.bin`。这些计算模块默认禁用 `rpi-eeprom-update` 服务，因为 eMMC 不可拆卸，无效的  `recovery.bin` 文件可能会阻止系统启动。

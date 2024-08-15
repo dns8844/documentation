@@ -1,7 +1,7 @@
 [[usb-mass-storage-boot]]
 == USB大容量存储启动
 
-NOTE: 适用于 xref:raspberry-pi.adoc#computute-module-series[自 Compute Module 3 起的 Compute Module 系列]、xref:raspberry-pi.adoc#zero-series[自 Zero 2 W 起的 Zero 系列] 和 xref:raspberry-pi.adoc#flagship-series[自 Raspberry Pi 2B（1.2 版）起的所有旗舰系列设备]。
+NOTE: 适用于 xref:raspberry-pi.adoc#compute-module-series[自 Compute Module 3 起的 Compute Module 系列]、xref:raspberry-pi.adoc#zero-series[自 Zero 2 W 起的 Zero 系列] 和 xref:raspberry-pi.adoc#flagship-series[自 Raspberry Pi 2B（1.2 版）起的所有旗舰系列设备]。
 
 USB 大容量存储启动让您可以从闪存盘或 USB 磁盘等 USB 大容量存储设备启动 Raspberry Pi。在连接 USB 设备（尤其是硬盘和固态硬盘）时，请注意它们的电源要求。连接一个以上的磁盘通常需要额外的外部电源，这些电源可以来自供电的磁盘盒或供电的 USB 集线器。
 

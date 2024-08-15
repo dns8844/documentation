@@ -918,7 +918,7 @@ ALSA 不会阻止其编解码器和其他组件在使用中被卸载。如果删
 | xref:raspberry-pi.adoc#usb-mass-storage-boot[USB boot] 使用BCM2711 USB主机控制器
 
 | 5
-| xref:raspberry-pi.adoc#boot_ramdisk[RAM disk - boot.img]
+| xref:config_txt.adoc#boot_ramdisk[RAM disk - boot.img]
 
 | 6
 | xref:raspberry-pi.adoc#nvme-ssd-boot[NVMe boot]

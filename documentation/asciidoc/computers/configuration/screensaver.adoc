@@ -19,7 +19,6 @@ image::images/pi-configuration.png[从桌面打开 Raspberry Pi 配置菜单]
 
 image::images/blanking.png[在 Raspberry Pi 配置菜单中切换自动息屏]
 
-[[cli]]
 ==== CLI
 
 您可以使用 `raspi-config` CLI 工具启用和禁用自动息屏。运行以下命令打开该工具：

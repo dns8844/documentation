@@ -111,7 +111,7 @@ TIP: 或者，您也可以 https://github.com/raspberrypi/usbboot[从源代码�
 
 您可以使用 xref:../computers/getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 将操作系统映像烧录到计算模块。
 
-或者，使用 `dd` 将原始操作系统映像 xref:../computers/getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 写入计算模块。运行以下命令，将 `/dev/sdX` 替换为计算模块的大容量存储设备表示路径，将 `raw_os_image.img` 替换为原始操作系统映像的路径：
+或者，使用 `dd` 将原始操作系统映像 (如 xref:../computers/os.adoc#introduction[Raspberry Pi OS]) 写入计算模块。运行以下命令，将 `/dev/sdX` 替换为计算模块的大容量存储设备表示路径，将 `raw_os_image.img` 替换为原始操作系统映像的路径：
 
 [source,console]
 ----

@@ -1,140 +1,140 @@
 {
     "tabs": [
         {
-            "title": "Computers",
+            "title": "计算机",
             "path": "computers",
             "default_tab": "yes",
             "subitems": [
                 {
-                    "title": "Getting started",
-                    "description": "How to get started with your Raspberry Pi",
+                    "title": "开始",
+                    "description": "c如何开始使用 Raspberry Pi",
                     "image": "full-sized/Getting-Started.png",
                     "subpath": "getting-started.adoc"
                 },
                 {
                     "title": "Raspberry Pi OS",
-                    "description": "The official Raspberry Pi operating system",
+                    "description": "官方 Raspberry Pi 操作系统",
                     "image": "full-sized/Raspberry-Pi-OS.png",
                     "subpath": "os.adoc"
                 },
                 {
-                    "title": "Configuration",
-                    "description": "Configuring your Raspberry Pi's settings",
+                    "title": "配置",
+                    "description": "配置 Raspberry Pi 的设置",
                     "image": "full-sized/Configuration.png",
                     "subpath": "configuration.adoc"
                 },
                 {
                     "title": "`config.txt`",
-                    "description": "Low-level settings control",
+                    "description": "低级设置控制",
                     "image": "full-sized/The-config-txt-file.png",
                     "subpath": "config_txt.adoc"
                 },
                 {
-                    "title": "Legacy `config.txt` options",
-                    "description": "Options which may be useful for OSes other than Raspberry Pi OS",
+                    "title": "传统的 `config.txt` 选项",
+                    "description": "对 Raspberry Pi OS 之外的其他操作系统可能有用的选项",
                     "image": "full-sized/Legacy-config-txt.png",
                     "subpath": "legacy_config_txt.adoc"
                 },
                 {
-                    "title": "The Linux kernel",
-                    "description": "How to configure and build a custom kernel for your Raspberry Pi",
+                    "title": "Linux 内核",
+                    "description": "如何为 Raspberry Pi 配置和构建自定义内核",
                     "image": "full-sized/Linux-Kernel.png",
                     "subpath": "linux_kernel.adoc"
                 },
                 {
-                    "title": "Remote access",
-                    "description": "Accessing your Raspberry Pi remotely",
+                    "title": "远程访问",
+                    "description": "远程访问 Raspberry Pi",
                     "image": "full-sized/Remote-Access.png",
                     "subpath": "remote-access.adoc"
                 },
                 {
-                    "title": "Camera software",
-                    "description": "Software and libraries for Raspberry Pi camera hardware",
+                    "title": "相机",
+                    "description": "用于 Raspberry Pi 摄像头的软件和程序库",
                     "image": "full-sized/Camera.png",
                     "subpath": "camera_software.adoc"
                 },
                 {
-                    "title": "Raspberry Pi hardware",
-                    "description": "Technical information about Raspberry Pi hardware",
+                    "title": "Raspberry Pi 硬件",
+                    "description": "有关 Raspberry Pi 硬件的技术信息",
                     "image": "full-sized/Raspberry-Pi-Hardware.png",
                     "subpath": "raspberry-pi.adoc"
                 },
                 {
-                    "title": "Compute Module hardware",
-                    "description": "Technical information about Raspberry Pi Compute Module hardware",
+                    "title": "计算模块硬件",
+                    "description": "有关 Raspberry Pi 计算模块硬件的技术信息",
                     "image": "full-sized/Compute-Module-Hardware.png",
                     "subpath": "compute-module.adoc"
                 },
                 {
-                    "title": "Processors",
-                    "description": "Technical information about the CPUs used by Raspberry Pi",
+                    "title": "处理器",
+                    "description": "有关 Raspberry Pi 所用 CPU 的技术信息",
                     "image": "full-sized/Processors.png",
                     "subpath": "processors.adoc"
                 }
             ]
         },
         {
-            "title": "Accessories",
+            "title": "配件",
             "path": "accessories",
             "default_tab": "no",
             "subitems": [
                 {
-                    "title": "Camera",
-                    "description": "Raspberry Pi camera boards",
+                    "title": "摄像头",
+                    "description": "Raspberry Pi 摄像头板",
                     "image": "full-sized/Camera.png",
                     "subpath": "camera.adoc"
                 },
                 {
-                    "title": "Display",
-                    "description": "The Raspberry Pi Touch Display",
+                    "title": "显示屏",
+                    "description": "树莓派触摸显示屏",
                     "image": "full-sized/Display.png",
                     "subpath": "display.adoc"
                 },
                 {
-                    "title": "Keyboard and mouse",
-                    "description": "Official Raspberry Pi keyboard and mouse",
+                    "title": "键盘和鼠标",
+                    "description": "官方 Raspberry Pi 键盘和鼠标",
                     "image": "full-sized/Keyboard-and-Mouse.png",
                     "subpath": "keyboard-and-mouse.adoc"
                 },
                 {
                     "title": "Build HAT",
-                    "description": "How to use the Build HAT",
+                    "description": "如何使用 Build HAT",
                     "image": "full-sized/Build-HAT.png",
                     "subpath": "build-hat.adoc"
                 },
                 {
                     "title": "Sense HAT",
-                    "description": "Monitor and visualise sensor data",
+                    "description": "监控和可视化传感器数据",
                     "image": "full-sized/Sense-HAT.png",
                     "subpath": "sense-hat.adoc"
                 },
                 {
                     "title": "TV HAT",
-                    "description": "Watch TV on your Raspberry Pi",
+                    "description": "用 Raspberry Pi 观看电视",
                     "image": "full-sized/TV-HAT.png",
                     "subpath": "tv-hat.adoc"
                 },
                 {
                     "title": "M.2 HAT+",
-                    "description": "Connect storage to your Raspberry Pi via PCIe",
+                    "description": "通过 PCIe 将存储设备连接到 Raspberry Pi",
                     "image": "full-sized/m2-hat-plus.png",
                     "subpath": "m2-hat-plus.adoc"
                 },
                 {
                     "title": "AI Kit",
-                    "description": "An NPU for your Raspberry Pi",
+                    "description": "Raspberry Pi 的 NPU",
                     "image": "full-sized/ai-kit.png",
                     "subpath": "ai-kit.adoc"
                 },
                 {
                     "title": "Raspberry Pi Audio",
-                    "description": "High-definition audio with Raspberry Pi",
+                    "description": "用 Raspberry Pi 实现高清音频",
                     "image": "full-sized/Audio-HATs.png",
                     "subpath": "audio.adoc"
                 },
                 {
-                    "title": "Designing a HAT",
-                    "description": "Information on the HAT specification",
+                    "title": "设计一个 HAT",
+                    "description": "有关 HAT 规范的信息",
                     "image": "full-sized/Designing-a-HAT.png",
                     "url": "https://datasheets.raspberrypi.com/hat/hat-plus-specification.pdf"
                 }

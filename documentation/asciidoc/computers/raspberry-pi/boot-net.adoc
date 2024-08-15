@@ -146,7 +146,7 @@ DHCP UUID 设置为常量值。
 在Raspberry Pi 3 Model B+中修复；该值设置为32位序列号。
 
 [[arp-check-can-fail-to-respond-in-the-middle-of-tftp-transaction]]
-=== =ARP 检查在 TFTP 事务中间可能无法响应
+==== ARP 检查在 TFTP 事务中间可能无法响应
 
 Raspberry Pi仅在初始化阶段响应ARP请求；一旦它开始传输数据，它将无法继续响应。
 

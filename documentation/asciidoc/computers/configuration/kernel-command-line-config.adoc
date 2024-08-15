@@ -1,4 +1,4 @@
-[[the-kernel-command-line]]
+[[kernel-command-line-cmdline-txt]]
 == 内核命令行 (`cmdline.txt`)
 
 Linux 内核在启动过程中接受一系列命令行参数。在 Raspberry Pi 上，该命令行定义在启动分区中一个名为 `cmdline.txt` 的文件中。您可以使用任何文本编辑器编辑该文本文件。
@@ -38,7 +38,7 @@ $ cat /proc/cmdline
 
 `quiet`:: 将内核日志的默认级别设置为 `KERN_WARNING`，这样在启动过程中，除了非常严重的日志信息外，所有日志信息都会被抑制。
 
-[[setting-the-kms-display-mode]]
+[[set-the-kms-display-mode]]
 ===== 设置KMS显示模式
 
 设置 KMS 显示模式

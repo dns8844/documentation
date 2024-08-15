@@ -26,7 +26,7 @@ while True:
 
 LED 方法包括 `on()`、 `off()`、 `toggle()` 和 `blink()` 。
 
-=== Read button state
+=== 读取按键状态
 
 要读取连接到 GPIO2 的按钮的状态：
 

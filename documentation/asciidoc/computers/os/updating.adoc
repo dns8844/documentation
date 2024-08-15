@@ -29,6 +29,7 @@ TIP: 与 Debian 不同，Raspberry Pi OS 正在持续开发中。因此，软件
 
 当 Raspberry Pi 发布新的 Raspberry Pi OS 主版本时，上述命令不会将你的操作系统升级到新的主版本。要升级到新的主版本，请遵循我们的 xref:os.adoc#upgrade-your-operating-system-to-a-new-major-version[操作系统升级说明]。
 
+[[search-for-software]]
 ==== 搜索软件
 
 要搜索存档软件包，请向 `apt-cache search` 传递搜索关键字：
@@ -67,7 +68,7 @@ raspi-copies-and-fills-dbgsym - debug symbols for raspi-copies-and-fills
 $ apt-cache show <package-name>
 ----
 
-例如，下面是对 "raspi-config "软件包的查询：
+例如，下面是对 "raspi-config" 软件包的查询：
 
 [source,console]
 ----
@@ -134,6 +135,7 @@ $ df -h
 $ sudo apt clean
 ----
 
+[[upgrade-your-operating-system-to-a-new-major-version]]
 === 将操作系统升级到新的主要版本
 
 WARNING: 在尝试主要版本升级之前，请先进行备份。

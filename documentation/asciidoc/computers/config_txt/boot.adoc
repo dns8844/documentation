@@ -114,6 +114,7 @@ NOTE: 由于CM4和CM4IO不包括外部USB 3控制器，Raspberry Pi OS镜像在C
 
 NOTE:  除非存在 `+${os_prefix}${overlay_prefix}README+` ，否则overlays将与主操作系统共享（即忽略 `os_prefix` ）。
 
+[[configuration-properties]]
 === 配置属性
 
 Raspberry Pi 5 需要一个 `config.txt` 文件，以表明分区是可启动的。

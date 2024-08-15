@@ -8,6 +8,7 @@ Raspberry Pi 电脑分为几个不同的系列：
 
 此外，Raspberry Pi 还生产 *Pico* 系列小巧、多功能的 https://en.wikipedia.org/wiki/Microcontroller[微控制器]板。Pico 型号不运行 Linux，也不允许使用可移动存储器，而是允许通过将二进制文件闪存到板载Flash上进行编程。
 
+[[flagship-series]]
 === 旗舰系列
 
 *型号 B* 表示有以太网端口。

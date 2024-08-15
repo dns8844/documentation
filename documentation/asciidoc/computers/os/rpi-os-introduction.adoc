@@ -1,3 +1,4 @@
+[[introduction]]
 == 简介
 
 Raspberry Pi OS 是基于 Debian 的免费操作系统，针对 Raspberry Pi 硬件进行了优化。Raspberry Pi OS 支持超过 35,000 个 Debian 软件包。我们推荐大多数 Raspberry Pi 使用 Raspberry Pi OS。

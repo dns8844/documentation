@@ -1,9 +1,10 @@
-[[configuring-networking]]
+[[networking]]
 == 配置网络
 
 Raspberry Pi OS提供了用于设置无线连接的图形用户交互界面（GUI），Raspberry Pi OS Lite和headless机器的用户可以通过 https://networkmanager.dev/docs/api/latest/nmcli.html[`nmcli`] 从命令行设置无线网络。
 
 NOTE: 从 Raspberry Pi OS _Bookworm_ 开始，网络管理器是默认的网络配置工具。早期版本的 Raspberry Pi OS 使用 `dhcpd` 和其他工具进行网络配置。
+
 === 连接到无线网络
 
 [[using-the-desktop]]

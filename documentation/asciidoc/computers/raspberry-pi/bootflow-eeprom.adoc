@@ -1,3 +1,4 @@
+[[eeprom-boot-flow]]
 == EEPROM 启动流程
 
 自 Raspberry Pi 4 起，Raspberry Pi 旗舰设备开始使用 EEPROM 引导加载程序。

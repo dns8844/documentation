@@ -1,4 +1,4 @@
-[[the-boot-folder]]
+[[boot-folder-contents]]
 == `boot` 文件夹内容
 
 Raspberry Pi OS将引导文件存储在SD卡的第一个分区上，使用FAT文件系统。

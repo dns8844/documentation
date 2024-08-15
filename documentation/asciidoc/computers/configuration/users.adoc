@@ -1,6 +1,5 @@
 == Users
 
-[[change-user-password]]
 === 更改用户密码
 
 您可以通过 `raspi-config` 应用程序或命令行更改当前用户账户的密码：
@@ -12,7 +11,7 @@ $ sudo raspi-config
 
 选择option 2，然后按照说明更改密码。
 
-或者使用  `passwd` 应用程序：
+或者使用 `passwd` 应用程序：
 
 [source,console]
 ----

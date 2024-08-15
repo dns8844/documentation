@@ -6,6 +6,7 @@
 
 要控制 HDMI 设置，请使用 `cmdline.txt` 中的 xref:configuration.adoc#set-resolution-and-rotation[屏幕配置实用程序] 或 xref:configuration.adoc#set-the-kms-display-mode[KMS 视频设置]。
 
+[[hdmi-pipeline-for-raspberry-pi-4]]
 ==== Raspberry Pi 4 的 HDMI
 
 为了支持双显示器和高达 4Kp60 的模式，Raspberry Pi 4 在每个时钟周期生成 2 个输出像素。

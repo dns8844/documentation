@@ -1,3 +1,4 @@
+[[configure-the-kernel]]
 == 配置内核
 
 The Linux kernel is highly configurable. Advanced users may wish to modify the default configuration to customise it to their needs, such as enabling a new or experimental network protocol, or enabling support for new hardware.
