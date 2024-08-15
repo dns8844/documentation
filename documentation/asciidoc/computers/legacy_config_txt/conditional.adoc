@@ -1,11 +1,12 @@
-== Legacy conditional filters
-(See also xref:config_txt.adoc#conditional-filters[config.txt conditional filters].)
+[[legacy-conditional-filters]]
+== 遗留条件过滤器
+（另请参见 xref:config_txt.adoc#conditional-filters[config.txt条件过滤器]。）
 
-=== The `[HDMI:*]` filter
+=== The `[HDMI:*]` 过滤器
 
-NOTE: This filter is for Raspberry Pi 4 only.
+NOTE: 此过滤器仅适用于Raspberry Pi 4。
 
-Raspberry Pi 4 has two HDMI ports, and for many `config.txt` commands related to HDMI, it is necessary to specify which HDMI port is being referred to. The HDMI conditional filters subsequent HDMI configurations to the specific port.
+树莓派4有两个HDMI端口，对于许多与HDMI相关的 `config.txt` 命令，需要指定引用的是哪个HDMI端口。HDMI条件过滤后续HDMI配置到特定端口。
 
 [source]
 ----
@@ -17,7 +18,8 @@ Raspberry Pi 4 has two HDMI ports, and for many `config.txt` commands related to
    hdmi_mode=67
 ----
 
-An alternative `variable:index` syntax is available on all port-specific HDMI commands. You could use the following, which is the same as the previous example:
+
+所有特定于端口的HDMI命令都可以使用替代的 `变量：索引` 语法。您可以使用以下内容，与前面的示例相同：
 
 [source]
 ----
@@ -26,5 +28,6 @@ An alternative `variable:index` syntax is available on all port-specific HDMI co
  hdmi_group:1=2
  hdmi_mode:1=67
 ----
+
 
 

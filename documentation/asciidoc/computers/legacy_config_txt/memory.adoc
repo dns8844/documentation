@@ -1,54 +1,60 @@
-== Legacy memory options
-(see also xref:config_txt.adoc#memory-options[config.txt Memory Options])
+[[legacy-memory-options]]
+== 旧内存选项
+（另请参见 xref:config_txt.adoc#memory-options[config.txt内存选项]）
 
-NOTE: Raspberry Pi 5 does not allocate GPU memory on behalf of the OS, so the following settings have no effect.
+NOTE: Raspberry Pi 5 不会代表操作系统分配 GPU 内存，因此以下设置不会产生任何影响。
 
-=== `gpu_mem`
+[[gpu_mem]]
+=== `gpu_mem` 
 
-Specifies how much memory, in megabytes, to reserve for the exclusive use of the GPU: the remaining memory is allocated to the Arm CPU for use by the OS. For Raspberry Pis with less than 1GB of memory, the default is `64`; for Raspberry Pis with 1GB or more of memory the default is `76`.
+指定为GPU独占使用预留多少内存（以兆字节为单位）：剩余内存分配给Arm CPU供操作系统使用。对于内存小于1GB的Raspberry Pi，默认值为 `64` ；对于内存为1GB或更多的Raspberry Pi，默认值为 `76` 。
 
-IMPORTANT: Unlike GPUs found on x86 machines, where increasing memory can improve 3D performance, the architecture of the VideoCore means *there is no performance advantage from specifying values larger than is necessary*, and doing this can in fact harm performance.
+IMPORTANT: 与x86机器上的GPU不同，增加内存可以提高3D性能，VideoCore的架构意味着*分配超过必要内存不会提高3D性能*，这样做实际上会损害性能。
 
-To ensure the best performance of Linux, you should set `gpu_mem` to the lowest possible value. If a particular graphics feature is not working correctly, try increasing the value of `gpu_mem`, being mindful of the recommended maximums shown below.
+为确保Linux的最佳性能，您应该将 `gpu_mem` 设置为尽可能低的值。如果特定图形功能无法正常工作，请尝试增加 `gpu_mem` 的值，同时注意下面显示的推荐最大值。
 
-On Raspberry Pi 4 the 3D component of the GPU has its own memory management unit (MMU), and does not use memory from the `gpu_mem` allocation. Instead memory is allocated dynamically within Linux. This allows a smaller value to be specified for `gpu_mem` on the Raspberry Pi 4, compared to previous models.
+在Raspberry Pi 4上，GPU的3D组件有自己的内存管理单元（MMU），并且不使用来自 `gpu_mem` 分配的内存。相反，内存是在Linux内动态分配的。与以前的型号相比，这允许在Raspberry Pi 4上为 `gpu_mem` 指定更小的值。
 
-On legacy kernels, the memory allocated to the GPU is used for display, 3D, codec and camera purposes as well as some basic firmware housekeeping. The maximums specified below assume you are using all these features. If you are not, then smaller values of gpu_mem should be used.
+在传统内核上，分配给GPU的内存用于显示、3D、编解码器和相机目的，以及一些基本的固件管理。下面指定的最大值假定您正在使用所有这些功能。如果不是，则应使用较小的gpu_mem值。
 
-The recommended maximum values are as follows:
+建议的最大值如下：
 
 |===
 | total RAM | `gpu_mem` recommended maximum
 
 | 256MB
-| `128`
+|  `128` 
 
 | 512MB
-| `384`
+|  `384` 
 
 | 1GB or greater
-| `512`, `76` on the Raspberry Pi 4
+| `512` , `76` on the Raspberry Pi 4
 |===
 
-IMPORTANT: The camera stack (libcamera) on Raspberry Pi OS uses Linux CMA memory to allocate buffers instead of GPU memory, so there is no benefit in increasing the GPU memory size.
+IMPORTANT: 树莓派操作系统上的相机堆栈（libcamera）使用LinuxCMA内存来分配缓冲区，而不是GPU内存，因此增加GPU内存大小没有好处。
 
-It is possible to set `gpu_mem` to larger values, however this should be avoided since it can cause problems, such as preventing Linux from booting. The minimum value is `16`, however this disables certain GPU features.
+可以将 `gpu_mem` 设置为较大的值，但是应该避免这样做，因为它会导致问题，例如阻止Linux启动。最小值是 `16` ，但是这会禁用某些GPU功能。
 
-You can also use `gpu_mem_256`, `gpu_mem_512`, and `gpu_mem_1024` to allow swapping the same SD card between Raspberry Pis with different amounts of RAM without having to edit `config.txt` each time:
+您还可以使用 `gpu_mem_256`、 `gpu_mem_512` 和 `gpu_mem_1024` ，以便在内存容量不同的 Raspberry Pi 之间交换同一张 SD 卡，而无需每次都编辑 `config.txt` ：
 
-=== `gpu_mem_256`
+[[gpu_mem_256]]
+=== `gpu_mem_256` 
 
-The `gpu_mem_256` command sets the GPU memory in megabytes for Raspberry Pis with 256MB of memory. It is ignored if memory size is not 256MB. This overrides `gpu_mem`.
+`gpu_mem_256` 命令为具有256MB内存的Raspberry Pi设置GPU内存（以兆字节为单位）。如果内存大小不是256MB，则忽略该命令。该命令会覆盖 `gpu_mem` 。
 
-=== `gpu_mem_512`
+[[gpu_mem_512]]
+=== `gpu_mem_512` 
 
-The `gpu_mem_512` command sets the GPU memory in megabytes for Raspberry Pis with 512MB of memory. It is ignored if memory size is not 512MB. This overrides `gpu_mem`.
+`gpu_mem_512` 命令为具有512MB内存的Raspberry Pi设置GPU内存（以兆字节为单位）。如果内存大小不是512MB，则忽略该命令。该命令会覆盖 `gpu_mem` 。
 
-=== `gpu_mem_1024`
+[[gpu_mem_1024]]
+=== `gpu_mem_1024` 
 
-The `gpu_mem_1024` command sets the GPU memory in megabytes for Raspberry Pis with 1GB or more of memory. It is ignored if memory size is smaller than 1GB. This overrides `gpu_mem`.
+`gpu_mem_1024` 命令为具有1GB或更多内存的Raspberry Pi设置GPU内存（以兆字节为单位）。如果内存小于1GB，则忽略该命令。该命令会覆盖 `gpu_mem` 。
 
-=== `disable_l2cache`
+[[disable_l2cache]]
+=== `disable_l2cache` 
 
-Setting this to `1` disables the CPU's access to the GPU's L2 cache and requires a corresponding L2 disabled kernel. Default value on BCM2835 is `0`. On BCM2836, BCM2837, BCM2711, and BCM2712, the ARMs have their own L2 cache and therefore the default is `1`. The standard Raspberry Pi `kernel.img` and `kernel7.img` builds reflect this difference in cache setting.
+将其设置为 `1` 将禁止 CPU 访问 GPU 的二级缓存，并需要相应的二级禁用内核。BCM2835 上的默认值为 `0` 。在 BCM2836、BCM2837、BCM2711 和 BCM2712 上，ARM 拥有自己的二级缓存，因此默认值为 `1` 。标准的 Raspberry Pi `kernel.img` 和 `kernel7.img` 版本反映了缓存设置的这种差异。
 

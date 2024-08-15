@@ -1,42 +1,43 @@
-== GPIO control
+[[gpio-control]]
+== GPIO控制
 
-=== `gpio`
+[[gpio]]
+=== `gpio` 
 
-The `gpio` directive allows GPIO pins to be set to specific modes and values at boot time in a way that would previously have needed a custom `dt-blob.bin` file. Each line applies the same settings (or at least makes the same changes) to a set of pins, addressing either a single pin (`3`), a range of pins (`3-4`), or a comma-separated list of either (`3-4,6,8`).
+通过 `gpio` 指令，可以在启动时将 GPIO 引脚设置为特定模式和值，而以前需要自定义 `dt-blob.bin` 文件。每一行都对一组引脚应用相同的设置（或至少进行相同的更改），可以是单个引脚（`3`）、引脚范围（`3-4`）或以逗号分隔的列表（`3-4,6,8`）。
+引脚集后面跟一个 `=` 和一个或多个以逗号分隔的属性：
 
-The pin set is followed by an `=` and one or more comma-separated attributes from this list:
-
-* `ip` - Input
-* `op` - Output
+* `ip` - 输入
+* `op` - 输出
 * `a0-a5` - Alt0-Alt5
-* `dh` - Driving high (for outputs)
-* `dl` - Driving low (for outputs)
-* `pu` - Pull up
-* `pd` - Pull down
-* `pn/np` - No pull
+* `dh` - 驱动高电平（用于输出）
+* `dl` - 驱动低电平（用于输出）
+* `pu` - 上拉
+* `pd` - 下拉
+* `pn/np` - 没有上拉或下拉
 
-`gpio` settings apply in order, so those appearing later override those appearing earlier.
+`gpio` 设置按顺序应用，因此后面出现的设置会覆盖之前出现的设置。
 
-Examples:
+例子：
 
 [source,ini]
 ----
-# Select Alt2 for GPIO pins 0 to 27 (for DPI24)
+# 为GPIO引脚0到27选择Alt2（对于DPI24）
 gpio=0-27=a2
 
-# Set GPIO12 to be an output set to 1
+# 将GPIO12设置为输出设置为1
 gpio=12=op,dh
 
-# Change the pull on (input) pins 18 and 20
+# 改变拉动（输入）引脚18和20
 gpio=18,20=pu
 
-# Make pins 17 to 21 inputs
+# 设置引脚17到21为输入
 gpio=17-21=ip
 ----
 
-The `gpio` directive respects the "[...]" conditional filters in `config.txt`, so it is possible to use different settings based on the model, serial number, and EDID.
+`gpio` 指令受控于 `config.txt` 中的 `[...]` 条件筛选器，因此可以根据型号、序列号和 EDID 使用不同的设置。
 
-GPIO changes made through this mechanism do not have any direct effect on the kernel. They don't cause GPIO pins to be exported to the `sysfs` interface, and they can be overridden by `pinctrl` entries in the Device Tree as well as utilities like `pinctrl`.
+通过这种机制进行的 GPIO 更改不会对内核产生任何直接影响。它们不会导致 GPIO 引脚被导出到 `sysfs` 接口，而且可以被设备树中的 `pinctrl` 条目以及 `pinctrl` 等实用程序覆盖。
 
-Note also that there is a delay of a few seconds between power being applied and the changes taking effect - longer if booting over the network or from a USB mass storage device.
+还需注意的是，从接通电源到更改生效之间会有几秒钟的延迟，如果通过网络或 USB 大容量存储设备启动，延迟时间会更长。
 

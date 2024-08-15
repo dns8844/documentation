@@ -1,143 +1,148 @@
 [[setting-up-your-raspberry-pi]]
-== Getting started with your Raspberry Pi
+== 开始使用您的Raspberry Pi
 
 video::CQtliTJ41ZE[youtube]
 
-To get started with your Raspberry Pi, you'll need the following:
+要开始使用Raspberry Pi，您需要以下配件：
 
-* a xref:raspberry-pi.adoc#power-supply[power supply]
-* boot media (e.g. a xref:getting-started.adoc#recommended-sd-cards[microSD card with ample storage and speed])
+* xref:raspberry-pi.adoc#power-supply[电源]
+* 引导设备（例如 xref:getting-started.adoc#recommended-sd-cards[具有充足存储空间和速度的microSD卡]）
 
-You can set up your Raspberry Pi as an interactive computer with a desktop, or as a _headless_ computer accessible only over the network. To set your Raspberry Pi up headless, you don't need any additional peripherals: you can preconfigure a hostname, user account, network connection, and SSH when you xref:getting-started.adoc#installing-the-operating-system[install an operating system]. If you want to use your Raspberry Pi directly, you'll need the following additional accessories:
+您可以将Raspberry Pi设置为带有桌面的计算机，或者设置为只能通过网络访问的headless计算机。要设置headless Raspberry Pi，您不需要任何额外的外围设备：您可以在 xref:getting-started.adoc#installing-the-operating-system[安装操作系统] 时预先配置主机名、用户帐户、网络连接和SSH。如果您想直接使用Raspberry Pi，则需要以下设备：
 
-* a display
-* a cable to connect your Raspberry Pi to your display
-* a keyboard
-* a mouse
+* 一个显示器
+* 连接Raspberry Pi和显示器的HDMI线
+* 键盘
+* 鼠标
 
-=== Power supply
+=== 电源
 
-The following table shows the USB-PD power mode required to power various Raspberry Pi models.
-You can use any high-quality power supply that provides the correct power mode.
+下表显示了为各种Raspberry Pi型号供电所需的USB-PD电源模式。
+您可以使用任何提供正确电源模式的高质量电源。
 
 [%header,cols="1,1,1"]
 |===
-|Model
-|Recommended power supply (voltage/current)
-|Raspberry Pi power supply
+|型号
+|推荐电源（电压/电流）
+|树莓派电源
 
 |Raspberry Pi 5
-|5V/5A, 5V/3A limits peripherals to 600mA
-|https://www.raspberrypi.com/products/27w-power-supply/[27W USB-C power supply]
+|5V/5A、5V/3A将外围设备限制为600mA
+|https://www.raspberrypi.com/products/27w-power-supply/[27W USB-C电源]
 
 |Raspberry Pi 4 Model B
 |5V/3A
-|https://www.raspberrypi.com/products/type-c-power-supply/[15W USB-C power supply]
+|https://www.raspberrypi.com/products/type-c-power-supply/[15W USB-C电源]
 
-|Raspberry Pi 3 (all models)
+|Raspberry Pi 3（所有型号）
 |5V/2.5A
-|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB power supply]
+|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB电源]
 
-|Raspberry Pi 2 (all models)
+|Raspberry Pi 2（所有型号）
 |5V/2.5A
-|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB power supply]
+|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB电源]
 
-|Raspberry Pi 1 (all models)
+|Raspberry Pi 1（所有型号）
 |5V/2.5A
-|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB power supply]
+|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB电源]
 
-|Raspberry Pi Zero (all models)
+|Raspberry Pi Zero（所有型号）
 |5V/2.5A
-|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB power supply]
+|https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB电源]
 |===
 
 image::images/peripherals/cable-power.png[alt="Plugging a power supply into a Raspberry Pi."]
 
-Plug your power supply into the port marked "POWER IN", "PWR IN", or "PWR". Some Raspberry Pi models, such as the Zero series, have output USB ports with the same form factor as the power port. Be sure to use the correct port on your Raspberry Pi!
+将电源插入标有"POWER IN", "PWR IN"，或 "PWR"的接口。某些Raspberry Pi型号（例如Zero系列）的输出USB接口与电源接口的外形尺寸相同。请务必在Raspberry Pi上使用正确的电源接口！
 
 [[sd-cards]]
-=== Boot Media
+=== 启动介质
 
-Raspberry Pi models lack onboard storage, so you have to supply it. You can boot your Raspberry Pi from an operating system image installed on any supported media: microSD cards are used commonly, but USB storage, network storage, and storage connected via a PCIe HAT are also available. However, only recent Raspberry Pi models support all of these media types.
+Raspberry Pi 型号没有板载存储设备，因此必须由您自己提供。您可以从安装在任何支持介质上的操作系统镜像启动 Raspberry Pi：通常使用 microSD 卡，但也可以使用 USB 存储器、网络存储器和通过 PCIe HAT 连接的存储器。不过，只有最近的 Raspberry Pi 型号才支持所有这些介质类型。
 
-All Raspberry Pi consumer models since the Raspberry Pi 1 Model A+ feature a microSD slot. Your Raspberry Pi automatically boots from the microSD slot when the slot contains a card.
+自 Raspberry Pi 1 Model A+ 以来的所有 Raspberry Pi 消费者型号都有一个 microSD 插槽。当 microSD 插槽中有卡时，Raspberry Pi 会自动从该插槽启动。
 
 image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspberry Pi."]
 
-==== Recommended SD cards
+[[recommended-sd-cards]]
+==== 推荐的SD卡
 
 [[recommended-capacity]]
 
-We recommend using an SD card with at least 32GB of storage for Raspberry Pi OS installations. For Raspberry Pi OS Lite, we recommend at least 16GB. You can use any SD card with a capacity of less than 2TB. Capacities above 2TB are currently not supported due to limitations in the https://en.wikipedia.org/wiki/Master_boot_record[MBR]. As with any other boot media, you'll see improved performance on SD cards with faster read and write speeds.
+对于Raspberry Pi OS安装，我们建议使用至少具有32GB存储空间的SD卡。对于Raspberry Pi OS Lite，我们建议至少使用16GB。您可以使用任何容量小于2TB的SD卡。由于 https://en.wikipedia.org/wiki/Master_boot_record[MBR] 的限制，目前不支持2TB以上的容量。与任何其他引导介质一样，你会发现 SD 卡的性能有所提高，读写速度更快。。
 
-Because of a hardware limitation, the following devices will only boot from a boot partition of 256GB or less:
+由于硬件限制，以下设备只能从256GB或更小的引导分区引导：
 
 * Raspberry Pi Zero
 * Raspberry Pi 1
-* early Raspberry Pi 2 models with the BCM2836 SoC
+* 使用BCM2836 SoC的早期Raspberry Pi 2
 
-Other operating systems have different requirements. Check the documentation for your operating system for capacity requirements.
+其他操作系统有不同的要求。有关容量要求，请查阅操作系统的文档。
 
-=== Keyboard
+[[keyboard]]
+=== 键盘
 
-You can use any of the USB ports on your Raspberry Pi to connect a https://www.raspberrypi.com/products/raspberry-pi-keyboard-and-hub/[wired keyboard] or USB Bluetooth receiver.
+您可以使用Raspberry Pi上的任何USB接口连接 https://www.raspberrypi.com/products/raspberry-pi-keyboard-and-hub/[有线键盘] 或USB蓝牙接收器。
 
 image:images/peripherals/cable-key.png[alt="Plugging a keyboard into a Raspberry Pi."]
 
-=== Mouse
+[[mouse]]
+=== 鼠标
 
-You can use any of the USB ports on your Raspberry Pi to connect a https://www.raspberrypi.com/products/raspberry-pi-mouse/[wired mouse] or USB Bluetooth receiver.
+您可以使用Raspberry Pi上的任何USB接口连接 https://www.raspberrypi.com/products/raspberry-pi-mouse/[有线鼠标] 或USB蓝牙接收器。
 
 image:images/peripherals/cable-mouse.png[alt="Plugging a mouse into a Raspberry Pi."]
 
-=== Display
+[[display]]
+=== 显示
 
-Raspberry Pi models have the following display connectivity:
+Raspberry Pi型号具有以下显示连接性：
 
 [%header,cols="1,1"]
 |===
-|Model
-|Display outputs
+|型号
+|显示输出接口
 
 |Raspberry Pi 5
 |2× micro HDMI
 
-|Raspberry Pi 4 (all models)
-|2× micro HDMI, audio and composite out via 3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] jack
+|树莓派4（所有型号）
 
-|Raspberry Pi 3 (all models)
-|HDMI, audio and composite out via 3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] jack
+|树莓派3（所有型号）
+|HDMI、音频和复合输出通过3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔
 
-|Raspberry Pi 2 (all models)
-|HDMI, audio and composite out via 3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] jack
+|树莓派2（所有型号）
+|HDMI、音频和复合输出通过3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔
 
-|Raspberry Pi 1 Model B+
-|HDMI, audio and composite out via 3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] jack
+|树莓派1型号B+
+|HDMI、音频和复合输出通过3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔
 
-|Raspberry Pi 1 Model A+
-|HDMI, audio and composite out via 3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] jack
+|树莓派1型号A+
+|HDMI、音频和复合输出通过3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔
 
-|Raspberry Pi Zero (all models)
+|Raspberry Pi Zero（所有型号）
 |mini HDMI
 |===
 
-NOTE: No Raspberry Pi models support video over USB-C (DisplayPort alt mode).
+NOTE: 没有Raspberry Pi型号支持USB-C视频（DisplayPort alt模式）。
 
-If your Raspberry Pi has more than one HDMI port, plug your primary monitor into the port marked `HDMI0`.
+如果您的Raspberry Pi有多个HDMI接口，请将主显示器插入标有 `HDMI0` 的接口。
 
-Most displays don't have micro or mini HDMI ports. However, you can use a https://www.raspberrypi.com/products/micro-hdmi-to-standard-hdmi-a-cable/[micro-HDMI-to-HDMI cable] or https://www.raspberrypi.com/products/standard-hdmi-a-male-to-mini-hdmi-c-male-cable/[mini-HDMI-to-HDMI cable] to connect those ports on your Raspberry Pi to any HDMI display. For displays that don't support HDMI, consider an adapter that translates display output from HDMI to a port supported by your display.
+大多数显示器没有 micro 或 mini HDMI 接口。但是，您可以使用 https://www.raspberrypi.com/products/micro-hdmi-to-standard-hdmi-a-cable/[micro-HDMI到HDMI电缆] 或 https://www.raspberrypi.com/products/standard-hdmi-a-male-to-mini-hdmi-c-male-cable/[mini-HDMI到HDMI电缆] 将树莓派上的这些接口连接到任何HDMI显示器。对于不支持HDMI的显示器，请考虑使用适配器，将显示输出从HDMI转换到显示器支持的接口。
 
 image::images/peripherals/cable-hdmi.png[alt="Plugging a micro HDMI cable into a Raspberry Pi."]
 
-=== Audio
 
-All Raspberry Pi models with HDMI, micro HDMI, or mini HDMI support audio output over HDMI.
-All Raspberry Pi models support audio over USB. All Raspberry Pi models equipped with Bluetooth support Bluetooth audio.
-All variants of the Raspberry Pi 1, 2, 3, and 4 include a 3.5mm auxiliary http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] jack, which may require amplification for sufficient output volume.
+=== 音频
 
-=== Networking
+所有带有HDMI、micro HDMI或mini HDMI的Raspberry Pi型号都支持通过HDMI进行音频输出。
+所有Raspberry Pi型号都支持USB音频。所有配备蓝牙的Raspberry Pi型号都支持蓝牙音频。
+树莓派1、2、3和4的所有变体都包括一个3.5毫米辅助 http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔，这可能需要放大才能获得足够大的输出音量。
 
-The following Raspberry Pi models come with Wi-Fi and Bluetooth connectivity:
+[[networking]]
+=== 网络
+
+以下Raspberry Pi型号配备Wi-Fi和蓝牙连接：
 
 * Raspberry Pi 5
 * Raspberry Pi 4
@@ -146,6 +151,6 @@ The following Raspberry Pi models come with Wi-Fi and Bluetooth connectivity:
 * Raspberry Pi Zero W
 * Rsapberry Pi Zero 2 W
 
-The "Model B" suffix indicates variants with an Ethernet port; "Model A" indicates no Ethernet port. If your Raspberry Pi doesn't have an Ethernet port, you can still connect to a wired internet connection using a USB-to-Ethernet adapter.
+"Model B" 后缀表示带有以太网接口的变体；"Model A"表示没有以太网接口。如果您的Raspberry Pi没有以太网接口，您仍然可以使用USB转以太网适配器连接到有线互联网连接。
 
 image::images/peripherals/cable-net.png[alt="Plugging an Ethernet cable into a Raspberry Pi."]

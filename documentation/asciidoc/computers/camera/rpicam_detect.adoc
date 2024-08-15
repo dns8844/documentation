@@ -1,14 +1,14 @@
-=== `rpicam-detect`
+[[rpicam-detect]]
+=== `rpicam-detect` 
 
-NOTE: Raspberry Pi OS does not include `rpicam-detect`. However, you can build `rpicam-detect` if you have xref:camera_software.adoc#post-processing-with-tensorflow-lite[installed TensorFlow Lite]. For more information, see the xref:camera_software.adoc#build-libcamera-and-rpicam-apps[`rpicam-apps` build instructions]. Don't forget to pass `-Denable_tflite=enabled` when you run `meson`.
+NOTE: Raspberry Pi OS 不包含 `rpicam-detect`。不过，如果您安装了 xref:camera_software.adoc#post-processing-with-tensorflow-lite[已安装 TensorFlow Lite]，则可以构建 `rpicam-detect`。有关详细信息，请参阅 xref:camera_software.adoc#build-libcamera-and-rpicam-apps[`rpicam-apps` 构建说明]。运行 `meson` 时不要忘记传递 `Denable_tflite=enabled`。
 
-`rpicam-detect` displays a preview window and monitors the contents using a Google MobileNet v1 SSD (Single Shot Detector) neural network trained to identify about 80 classes of objects using the Coco dataset. `rpicam-detect` recognises people, cars, cats and many other objects.
+`rpicam-detect` 显示一个预览窗口，并使用Google MobileNet v1 SSD（单发探测器）神经网络监控内容，该网络经过训练，可以使用可可数据集识别大约80类物体。 `rpicam-detect` 识别人、汽车、猫和许多其他物体。
 
-Whenever `rpicam-detect` detects a target object, it captures a full-resolution JPEG. Then it returns to monitoring preview mode.
+每当 `rpicam-detect` 检测到目标对象时，它都会捕获全分辨率JPEG。然后它返回到监控预览模式。
 
-See the xref:camera_software.adoc#object_detect_tf-stage[TensorFlow Lite object detector] section for general information on model usage. For example, you might spy secretly on your cats while you are away with:
+有关模型使用的一般信息，请参阅 xref:camera_software.adoc#object_detect_tf-stage[TensorFlow Lite对象检测器] 部分。例如，您可能会在外出时偷偷监视您的猫：
 
-[source,console]
 ----
 $ rpicam-detect -t 0 -o cat%04d.jpg --lores-width 400 --lores-height 300 --post-process-file object_detect_tf.json --object cat
 ----

@@ -1,9 +1,11 @@
-== Legacy GPIO control
-(See also xref:config_txt.adoc#gpio-control[config.txt GPIO control].)
+[[legacy-gpio-control]]
+== 传统GPIO控制
+（另请参见 xref:config_txt.adoc#gpio-control[config.txt GPIO控制]。）
 
-=== `enable_jtag_gpio`
+[[enable_jtag_gpio]]
+=== `enable_jtag_gpio` 
 
-Setting `enable_jtag_gpio=1` selects Alt4 mode for GPIO pins 22-27, and sets up some internal SoC connections, enabling the JTAG interface for the Arm CPU. It works on all models of Raspberry Pi.
+设置 `enable_jtag_gpio=1` 会为GPIO引脚22-27选择Alt4模式，并设置一些内部SoC连接，为Arm CPU启用JTAG接口。它适用于所有型号的树莓派。
 
 |===
 | Pin # | Function

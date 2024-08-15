@@ -1,28 +1,28 @@
 [[rsync]]
-== Synchronise folders between computers with `rsync`
+== 使用 `rsync` 在计算机之间同步文件夹
 
-You can use `rsync` to synchronise folders between computers. For example, you could use `rsync` to transfer new pictures taken by your Raspberry Pi to your personal computer automatically.
+您可以使用 `rsync` 在计算机之间同步文件夹。例如，您可以使用 `rsync` 将Raspberry Pi拍摄的新照片自动传输到您的个人计算机。
 
-Before you can configure `rsync`, determine values for the following:
+在配置 `rsync` 之前，请确定以下值：
 
-* `<pi_ip_address>`: your Raspberry Pi's local IP address: see xref:remote-access.adoc#ip-address[Find your Raspberry Pi's IP address] for more information
-* `<pi_username>`: the username you use to log into your Raspberry Pi
-* `<pi_folder_name>`: the name of the folder you want to copy files from on your Raspberry Pi
-* `<pc_folder_name>`: the name of the folder you would like to synchronise on your personal computer
+* `<pi_ip_address>` ：您的Raspberry Pi的本地IP地址：请参阅 xref:remote-access.adoc#ip-address[查找您的Raspberry Pi的IP地址] 了解更多信息
+* <pi_username>：用于登录树莓派的用户名
+* `<pi_folder_name>` ：您要从Raspberry Pi上复制文件的文件夹名称
+* `<pc_folder_name>` ：您要在个人计算机上同步的文件夹的名称
 
-To configure `rsync` to synchronise files, complete the following steps on your personal computer, replacing placeholders in the commands with the values you determined above:
+要将 `rsync` 配置为同步文件，请在您的个人计算机上完成以下步骤，将命令中的占位符替换为您在上面确定的值：
 
-. Create the folder you would like to synchronise to:
+. 创建您要同步到的文件夹：
 +
 [source,console]
 ----
 $ mkdir <pc_folder_name>
 ----
-. Synchronise files to the folder with `rsync`:
+. 使用 `rsync` 将文件同步到文件夹：
 +
 [source,console]
 ----
 $ rsync -avz -e ssh <pi_username>@<pi_ip_address>:<pi_folder_name>/ <pc_folder_name>/
 ----
 
-This command copies all files from the selected folder on your Raspberry Pi to the selected folder on your personal computer. If you run the command multiple times, `rsync` keeps track of the files you have already downloaded and skips them. If you delete or modify an already synchronised file on the Raspberry Pi, `rsync` updates the files on your personal computer accordingly.
+此命令将Raspberry Pi上选定文件夹中的所有文件复制到个人计算机上的选定文件夹中。如果您多次运行该命令， `rsync` 会跟踪您已经下载的文件并跳过它们。如果您删除或修改Raspberry Pi上已经同步的文件， `rsync` 会相应地更新您个人计算机上的文件。

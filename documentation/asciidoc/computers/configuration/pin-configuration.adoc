@@ -1,126 +1,136 @@
-== Change the default pin configuration
+[[change-the-default-pin-configuration]]
+== 更改默认引脚配置
 
-NOTE: Custom default pin configurations via user-provided Device Tree blobs has been deprecated.
+NOTE: 已弃用通过用户提供的设备树blob自定义默认引脚配置。
 
-=== Device pins during boot sequence
+[[device-pins-during-boot-sequence]]
+=== 引导过程中的设备引脚
 
-During the bootup sequence, the GPIO pins go through various actions.
+在启动序列期间，GPIO引脚会执行各种操作。
 
-* Power-on - pins default to inputs with default pulls, which are described in the https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[datasheet]
-* Setting by the bootrom
-* Setting by `bootcode.bin`
-* Setting by `dt-blob.bin` (this page)
-* Setting by the xref:config_txt.adoc#gpio-control[GPIO command] in `config.txt`
-* Additional firmware pins (e.g. UARTS)
-* Kernel/Device Tree
+* 上电-引脚默认为具有默认拉动的输入，如 https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[datasheet] 中所述
+* 通过引导程序设置
+* 通过 `bootcode.bin` 设置
+* 通Plymouth过 `dt-blob.bin` 设置
+* 通过 `config.txt` 中的 xref:config_txt.adoc#gpio-control[GPIO 命令] 进行设置
+* 附加固件引脚（如 UARTS）
+* 内核/设备树
 
-On a soft reset, the same procedure applies, except for default pulls, which are only applied on a power-on reset.
+在软重置时，除默认拉动外，其他程序相同，默认拉动仅在开机重置时应用。
 
-It may take a few seconds to run through the process. During this time, the GPIO pins may not be in the state expected by attached peripherals (as defined in `dt-blob.bin` or `config.txt`). Since different GPIO pins have different default pulls, you should do *one of the following* for your peripheral:
+整个过程可能需要几秒钟。在此期间，GPIO 引脚可能不会处于所连接外设（如 `dt-blob.bin` 或 `config.txt` 中定义）预期的状态。由于不同的 GPIO 引脚有不同的默认拉动方式，因此应为外设执行以下*项之一：
 
-* Choose a GPIO pin that defaults to pulls as required by the peripheral on reset
-* Delay the peripheral's startup until the actions are completed
-* Add an appropriate pull-up/pull-down resistor
+* 选择一个 GPIO 引脚，该引脚在复位时按外设的要求默认拉动
+* 延迟外设的启动时间，直至操作完成
+* 添加适当的上拉/下拉电阻器
 
-=== Provide a custom Device Tree blob
+[[provide-a-custom-device-tree-blob]]
+=== 提供自定义设备树blob
 
-In order to compile a Device Tree source (`.dts`) file into a Device Tree blob (`.dtb`) file, the Device Tree compiler must be installed by running `sudo apt install device-tree-compiler`. The `dtc` command can then be used as follows:
+为了将设备树源（ `.dts` ）文件编译为设备树blob（ `.dtb` ）文件，必须通过运行 `sudo apt installdevice-tree-compiler` 来安装设备树编译器。然后可以如下使用 `dtc` 命令：
 
 [source,console]
 ----
 $ sudo dtc -I dts -O dtb -o /boot/firmware/dt-blob.bin dt-blob.dts
 ----
 
-Similarly, a `.dtb` file can be converted back to a `.dts` file, if required.
+
+类似地，如果需要，可以将 `.dtb` 文件转换回 `.dts` 文件。
 
 [source,console]
 ----
 $ dtc -I dtb -O dts -o dt-blob.dts /boot/firmware/dt-blob.bin
 ----
 
-=== Sections of the `dt-blob`
+[[sections-of-the-dt-blob]]
+=== `dt-blob` 的部分
 
-The `dt-blob.bin` is used to configure the binary blob (VideoCore) at boot time. It is not currently used by the Linux kernel. The dt-blob can configure all versions of the Raspberry Pi, including the Compute Module, to use the alternative settings. The following sections are valid in the dt-blob:
+dt-blob.bin用于在引导时配置二进制blob（VideoCore）。Linux内核当前未使用它。dt-blob可以配置所有版本的Raspberry Pi（包括Compute Module）以使用替代设置。以下部分在dt-blob中有效：
 
-==== `videocore`
+[[videocore]]
+==== `videocore` 
 
-This section contains all of the VideoCore blob information. All subsequent sections must be enclosed within this section.
+本节包含所有VideoCore blob信息。所有后续部分都必须包含在本节中。
 
-==== `pins_*`
+==== `pins_*` 
 
-There are a number of separate `pins_*` sections, based on particular Raspberry Pi models, namely:
+基于特定的Raspberry Pi型号，有许多单独的 `pins_*` 部分，即：
 
-* `pins_rev1`: Rev1 pin setup. There are some differences because of the moved I2C pins.
-* `pins_rev2`: Rev2 pin setup. This includes the additional codec pins on P5.
-* `pins_bplus1`: Raspberry Pi 1 Model B+ rev 1.1, including the full 40pin connector.
-* `pins_bplus2`: Raspberry Pi 1 Model B+ rev 1.2, swapping the low-power and lan-run pins.
-* `pins_aplus`: Raspberry Pi 1 Model A+, lacking Ethernet.
-* `pins_2b1`: Raspberry Pi 2 Model B rev 1.0; controls the SMPS via I2C0.
-* `pins_2b2`: Raspberry Pi 2 Model B rev 1.1; controls the SMPS via software I2C on 42 and 43.
-* `pins_3b1`: Raspberry Pi 3 Model B rev 1.0
-* `pins_3b2`: Raspberry Pi 3 Model B rev 1.2
-* `pins_3bplus`: Raspberry Pi 3 Model B+
-* `pins_3aplus`: Raspberry Pi 3 Model A+
-* `pins_pi0`: Raspberry Pi Zero
-* `pins_pi0w`: Raspberry Pi Zero W
-* `pins_pi02w`: Raspberry Pi Zero 2 W
-* `pins_cm`: Raspberry Pi Compute Module 1. The default for this is the default for the chip, so it is a useful source of information about default pull-ups/pull-downs on the chip.
-* `pins_cm3`: Raspberry Pi Compute Module 3
-* `pins_cm3plus`: Raspberry Pi Compute Module 3+
-* `pins_cm4s`: Raspberry Pi Compute Module 4S
-* `pins_cm4`: Raspberry Pi Compute Module 4
+* `pins_rev1` ： Rev1 引脚设置。由于移动了 I2C 引脚，因此存在一些差异。
+* `pins_rev2` ： Rev2 引脚设置。其中包括 P5 上的额外编解码器引脚。
+* `pins_bplus1` ： Raspberry Pi 1 Model B+ rev 1.1，包括完整的 40 引脚连接器。
+* `pins_bplus2` ： Raspberry Pi 1 Model B+ rev 1.2，交换了低功耗和 lan-run 引脚。
+* `pins_aplus` ： Raspberry Pi 1 Model A+，缺少以太网。
+* `pins_2b1` ： Raspberry Pi 2 Model B rev 1.0；通过 I2C0 控制 SMPS。
+* `pins_2b2` ： Raspberry Pi 2 Model B rev 1.1；通过 42 和 43 上的软件 I2C 控制 SMPS。
+* `pins_3b1` ： Raspberry Pi 3 Model B rev 1.0
+* `pins_3b2` ： Raspberry Pi 3 Model B rev 1.2
+* `pins_3bplus` ： Raspberry Pi 3 Model B+
+* `pins_3aplus` ： Raspberry Pi 3 Model A+
+* `pins_pi0` ： Raspberry Pi Zero
+* `pins_pi0w` ： Raspberry Pi Zero W
+* `pins_pi02w` ： Raspberry Pi Zero 2 W
+* `pins_cm` ： Raspberry Pi Compute Module 1。它的默认值是芯片的默认值，因此是有关芯片默认上拉/下拉的有用信息来源。
+* `pins_cm3` ： Raspberry Pi Compute Module 3
+* `pins_cm3plus` ： Raspberry Pi Compute Module 3+
+* `pins_cm4s` ： Raspberry Pi Compute Module 4S
+* `pins_cm4` ： Raspberry Pi Compute Module 4
 
-Each `pins_*` section can contain `pin_config` and `pin_defines` sections.
+每个 `pins_*` 部分都可以包含 `pin_config` 和 `pin_defines` 部分。
 
-==== `pin_config`
+[[pin_config]]
+==== `pin_config` 
 
-The `pin_config` section is used to configure the individual pins. Each item in this section must be a named pin section, such as `pin@p32`, meaning GPIO32. There is a special section `pin@default`, which contains the default settings for anything not specifically named in the pin_config section.
+`pin_config` 部分用于配置各个引脚。此部分中的每个项目都必须是命名引脚部分，例如 `pin@p32` ，即GPIO32。还有一个特殊部分 `pin@default` ，其中包含pin_config部分中未具体命名的任何内容的默认设置。
 
-==== `pin@pinname`
+[[pinpinname]]
+==== `pin@pinname` 
 
-This section can contain any combination of the following items:
+本节可以包含以下项目的任意组合：
 
- * `polarity`
-  ** `active_high`
-  ** `active_low`
- * `termination`
-  ** `pull_up`
-  ** `pull_down`
-  ** `no_pulling`
- * `startup_state`
-  ** `active`
-  ** `inactive`
- * `function`
-  ** `input`
-  ** `output`
-  ** `sdcard`
-  ** `i2c0`
-  ** `i2c1`
-  ** `spi`
-  ** `spi1`
-  ** `spi2`
-  ** `smi`
-  ** `dpi`
-  ** `pcm`
-  ** `pwm`
-  ** `uart0`
-  ** `uart1`
-  ** `gp_clk`
-  ** `emmc`
-  ** `arm_jtag`
- * `drive_strength_mA`
+ *  `polarity` 
+  **  `active_high` 
+  **  `active_low` 
+ *  `termination` 
+  **  `pull_up` 
+  **  `pull_down` 
+  **  `no_pulling` 
+ *  `startup_state` 
+  **  `active` 
+  **  `inactive` 
+ *  `function` 
+  **  `input` 
+  **  `output` 
+  **  `sdcard` 
+  **  `i2c0` 
+  **  `i2c1` 
+  **  `spi` 
+  **  `spi1` 
+  **  `spi2` 
+  **  `smi` 
+  **  `dpi` 
+  **  `pcm` 
+  **  `pwm` 
+  **  `uart0` 
+  **  `uart1` 
+  **  `gp_clk` 
+  **  `emmc` 
+  **  `arm_jtag` 
+ *  `drive_strength_mA` 
 +
-The drive strength is used to set a strength for the pins. Please note that you can only specify a single drive strength for the bank. <8> and <16> are valid values.
+驱动强度用于设置引脚的强度。请注意，您只能为引脚组指定一个驱动强度。<8>和<16>是有效值。
 
-==== `pin_defines`
+[[pin_defines]]
+==== `pin_defines` 
 
-This section is used to set specific VideoCore functionality to particular pins. This enables the user to move the camera power enable pin to somewhere different, or move the HDMI hotplug position: these are things that Linux does not control. Please refer to the example DTS file below.
+此部分用于将特定VideoCore功能设置为特定引脚。这使用户能够将相机电源使能引脚移动到不同的位置，或移动HDMI热插拔位置：这些是Linux无法控制的。请参阅下面的示例DTS文件。
 
-=== Clock configuration
+[[clock-configuration]]
+=== 时钟配置
 
-It is possible to change the configuration of the clocks through this interface, although it can be difficult to predict the results! The configuration of the clocking system is very complex. There are five separate PLLs, and each one has its own fixed (or variable, in the case of PLLC) VCO frequency. Each VCO then has a number of different channels which can be set up with a different division of the VCO frequency. Each of the clock destinations can be configured to come from one of the clock channels, although there is a restricted mapping of source to destination, so not all channels can be routed to all clock destinations.
+通过这个接口可以改变时钟的配置，不过很难预测结果！时钟系统的配置非常复杂。有五个独立的 PLL，每个 PLL 都有自己的固定（或可变，在 PLLC 的情况下）VCO 频率。然后，每个 VCO 都有若干不同的通道，可以对 VCO 频率进行不同的分频设置。每个时钟目的地都可以配置为来自其中一个时钟通道，不过源到目的地的映射是有限制的，因此并非所有通道都能路由到所有时钟目的地。
 
-Here are a couple of example configurations that you can use to alter specific clocks. We will add to this resource when requests for clock configurations are made.
+这里有几个配置示例，您可以用来更改特定时钟。如有时钟配置请求，我们将添加到此资源中。
 
 [source,kotlin]
 ----
@@ -137,9 +147,12 @@ clock_setup {
 };
 ----
 
-The above will set the PLLA to a source VCO running at 1.96608GHz (the limits for this VCO are 600MHz - 2.4GHz), change the APER channel to /4, and configure GPCLK0 to be sourced from PLLA through APER. This is used to give an audio codec the 12288000Hz it needs to produce the 48000 range of frequencies.
 
-=== Sample Device Tree source file
+上述操作将 PLLA 设置为运行于 1.96608GHz 的源 VCO（该 VCO 的限制频率为 600MHz - 2.4GHz），将 APER 通道更改为 /4，并将 GPCLK0 配置为通过 APER 从 PLLA 获取。这将为音频编解码器提供产生 48000 频率范围所需的 12288000Hz 频率。
 
-The firmware repository contains a https://github.com/raspberrypi/firmware/blob/master/extra/dt-blob.dts[master Raspberry Pi blob] from which others are usually derived.
+[[sample-device-tree-source-file]]
+=== 示例设备树源文件
+
+固件库包含一个 https://github.com/raspberrypi/firmware/blob/master/extra/dt-blob.dts[master Raspberry Pi blob]，其他固件通常都是从它衍生出来的。
+
 

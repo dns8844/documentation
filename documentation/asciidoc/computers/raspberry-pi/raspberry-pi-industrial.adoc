@@ -1,129 +1,136 @@
-== Industrial use of the Raspberry Pi
+[[industrial-use-of-the-raspberry-pi]]
+== Raspberry Pi的工业用途
 
-Raspberry Pi is often used as part of another product. This documentation describes some extra facilities available to use other capabilities of your Raspberry Pi.
+Raspberry Pi经常被用作其他产品的一部分。此文档描述了一些可用于使用Raspberry Pi其他功能的额外功能。
 
-=== One-time programmable settings
+[[one-time-programmable-settings]]
+=== 一次性可编程设置
 
 [.whitepaper, title="Using the one-time programmable memory on Raspberry Pi single-board computers", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003611-WP/Using-the-One-time-programmable-memory-on-Raspberry-Pi-single-board-computers.pdf]
 ****
-All Raspberry Pi single-board computers (SBCs) have an inbuilt area of one-time programmable (OTP) memory, which is actually part of the main system on a chip (SoC). As its name implies, OTP memory can be written to (i.e. a binary 0 can be changed to a 1) only once. Once a bit has been changed to 1, it can never be returned to 0. One way of looking at the OTP is to consider each bit as a fuse. Programming it involves deliberately blowing the fuse — an irreversible process, as you cannot get inside the chip to replace it!
+所有 Raspberry Pi 单板电脑（SBC）都有一个内置的一次性可编程（OTP）内存区域，它实际上是芯片上主系统（SoC）的一部分。顾名思义，OTP 内存只能被写入一次（即二进制 0 变为 1）。一旦某个位变为 1，就永远不能再变回 0。一种看待 OTP 的方法是将每个位视为保险丝。编程时需要故意烧断保险丝，这是一个不可逆的过程，因为你无法进入芯片内部更换保险丝！
 
-This whitepaper assumes that the Raspberry Pi is running the Raspberry Pi operating system (OS), and is fully up-to-date with the latest firmware and kernels.
+本白皮书假定Raspberry Pi正在运行Raspberry Pi操作系统（OS），并且完全更新了最新的固件和内核。
 ****
 
-There are a number of OTP values that can be used. To see a list of all the xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP values], run the following command:
+有许多 OTP 值可以使用。要查看所有 xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP 值] 的列表，请运行以下命令：
 
 [source,console]
 ----
 $ vcgencmd otp_dump
 ----
 
-Some interesting lines from this dump are:
+这个转储中的一些重要的行是：
 
-* 28 - Serial number
-* 29 - Ones complement of serial number
-* 30 - Board revision number
+* 28 - 序列号
+* 29 - 序列号的补码
+* 30 - 电路板修订号
 
-Also, from 36 to 43 (inclusive), there are eight rows of 32 bits available for the customer.
+此外，从36到43（包括），有8行32位可供客户使用。
 
-NOTE: On BCM2712 devices these numbers are different. Row 31 is the serial number and row 32 is the board revision number. The customer rows are 77 to 84 inclusive.
+NOTE: 在BCM2712设备上，这些数字是不同的。第31行是序列号，第32行是电路板修订号。客户行包括77到84行。
 
-Some of these rows can be programmed with `vcmailbox`. This is a Linux driver interface to the firmware which will handle the programming of the rows. To do this, please refer to the https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface[documentation], and the vcmailbox https://github.com/raspberrypi/userland/blob/master/host_applications/linux/apps/vcmailbox/vcmailbox.c[example application].
+其中一些行可以用 `vcmailbox` 编程。这是固件的Linux驱动程序接口，将处理行的编程。为此，请参阅 https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface[文档] 和vcmailbox https://github.com/raspberrypi/userland/blob/master/host_applications/linux/apps/vcmailbox/vcmailbox.c[示例应用程序]。
 
-The vcmailbox application can be used directly from the command line on Raspberry Pi OS. An example usage would be:
+vcmailbox应用程序可以直接从Raspberry Pi OS上的命令行使用。一个示例用法是：
 
 [source,console]
 ----
 $ vcmailbox 0x00010004 8 8 0 0
 ----
 
-...which will return something like:
+...它将返回如下内容：
 
 ----
 0x00000020 0x80000000 0x00010004 0x00000008 0x800000008 0xnnnnnnnn 0x00000000 0x00000000
 ----
 
-The above uses the https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface[mailbox property interface] `GET_BOARD_SERIAL` with a request size of 8 bytes and response size of 8 bytes (sending two integers for the request 0, 0). The response to this will be two integers (0x00000020 and 0x80000000) followed by the tag code, the request length, the response length (with the 31st bit set to indicate that it is a response) then the 64-bit serial number (where the MS 32 bits are always 0).
+上面使用 https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface[邮箱属性接口] `GET_BOARD_SERIAL` ，请求大小为8字节，响应大小为8字节（为请求0、0发送两个整数）。对此的响应将是两个整数（0x00000020和0x80000000），后跟标签代码、请求长度、响应长度（设置第31位以指示它是响应），然后是64位序列号（其中MS 32位始终为0）。
 
-=== Write and read customer OTP values
+[[write-and-read-customer-otp-values]]
+=== 写入和读取客户OTP值
 
-WARNING: The OTP values are one-time programmable. Once a bit has been changed from 0 to 1, it can't be changed back.
+WARNING: OTP值是一次性可编程的。一旦位从0更改为1，它就不能更改回来。
 
-To set the customer OTP values you will need to use the `SET_CUSTOMER_OTP` (0x38021) tag as follows:
+要设置客户OTP值，您需要使用 `SET_CUSTOMER_OTP` （0x38021）标记，如下所示：
 
 [source,console]
 ----
 $ vcmailbox 0x00038021 [8 + number * 4] [8 + number * 4] [start_num] [number] [value] [value] [value] ...
 ----
 
-* `start_num` = the first row to program from 0-7
-* `number` = number of rows to program
-* `value` = each value to program
+* `start_num` = 从0-7编程的第一行
+* `number` =要编程的行数
+* `value` = 要编程的每个值
 
-So, to program OTP customer rows 4, 5, and 6 to 0x11111111, 0x22222222, 0x33333333 respectively, you would use:
+因此，要将OTP客户行4、5和6分别编程为0x11111111、0x222222、0x33333333，您将使用：
 
 [source,console]
 ----
 $ vcmailbox 0x00038021 20 20 4 3 0x11111111 0x22222222 0x33333333
 ----
 
-This will then program rows 40, 41, and 42.
+然后这将对第40、41和42行进行编程。
 
-To read the values back, you can use:
+要读回值，您可以使用：
 
 [source,console]
 ----
 $ vcmailbox 0x00030021 20 20 4 3 0 0 0
 ----
 
-This should display:
+这应该显示：
 
 ----
 0x0000002c 0x80000000 0x00030021 0x00000014 0x80000014 0x00000000 0x00000003 0x11111111 0x22222222 0x33333333
 ----
 
-If you'd like to integrate this functionality into your own code, you should be able to achieve this by using the vcmailbox.c code as an example.
+如果您想将此功能集成到您自己的代码中，您应该能够通过使用vcmailbox.c代码作为示例来实现这一点。
 
-=== Locking OTP on non-BCM2712 devices
+[[locking-otp-on-non-bcm2712-devices]]
+=== 在非BCM2712设备上锁定OTP
 
-It is possible to lock the OTP changes to avoid them being edited again.
+可以锁定OTP更改以避免它们再次被编辑。
 
-This can be done using a special argument with the OTP write mailbox:
+这可以使用带有OTP写入邮箱的特殊参数来完成：
 
 [source,console]
 ----
 $ vcmailbox 0x00038021 8 8 0xffffffff 0xaffe0000
 ----
 
-Once locked, the customer OTP values can no longer be altered. Note that this locking operation is irreversible.
+一旦锁定，客户OTP值就不能再更改。请注意，此锁定操作是不可逆的。
 
-=== Locking OTP on BCM2712 devices
+[[locking-otp-on-bcm2712-devices]]
+=== 在BCM2712设备上锁定OTP
 
-The customer region can be marked as read only with the following command.
+可以使用以下命令将客户区域标记为只读。
 
 [source,console]
 ----
 $ vcmailbox 0x00030086 4 4 0
 ----
 
-OTP is only locked until the device is reset, so OTP locks need to be reapplied on every boot.
+OTP 仅在设备重置前锁定，因此每次启动时都需要重新应用 OTP 锁。
 
-=== Making customer OTP bits unreadable on non-BCM2712 devices
+[[making-customer-otp-bits-unreadable-on-non-bcm2712-devices]]
+=== 使非 BCM2712 设备上的客户 OTP 位不可读
 
-It is possible to prevent the customer OTP bits from being read at all. This can be done using a special argument with the OTP write mailbox:
+可以完全阻止读取客户 OTP 位。这可以通过使用 OTP 写入邮箱的特殊参数来实现：
 
 [source,console]
 ----
 $ vcmailbox 0x00038021 8 8 0xffffffff 0xaffebabe
 ----
 
-This operation is unlikely to be useful for the vast majority of users, and is irreversible.
+此操作不太可能对绝大多数用户有用，并且不可逆。
 
-=== Customer MAC addresses on BCM2712 devices
+[[customer-mac-addresses-on-bcm2712-devices]]
+=== BCM2712 设备上的客户 MAC 地址
 
-On BCM2712 devices the Ethernet, Wi-Fi and Bluetooth MAC addresses are set in OTP memory. These values can change with customer values.
+在 BCM2712 设备上，以太网、Wi-Fi 和蓝牙 MAC 地址设置在 OTP 内存中。这些值可以随客户值而变化。
 
-Get customer mac address `vcmailbox 0x00030082/3/4 6 6 0 0`, where 2 is Ethernet, 3 is Wi-Fi and 4 is Bluetooth:
+获取客户的 mac 地址 `vcmailbox 0x00030082/3/4 6 6 0 0`，其中 2 代表以太网，3 代表 Wi-Fi，4 代表蓝牙：
 
 [source,console]
 ----
@@ -131,14 +138,14 @@ $ vcmailbox 0x00030083 6 6 0 0
 0x00000020 0x80000000 0x00030083 0x00000006 0x80000006 0xddccbbaa 0x0000ffee 0x00000000
 ----
 
-In order to set a customer MAC address, it has to be sent as two 32 words with the bytes in the right order. You can run a command to check it's formatted properly:
+要设置客户 MAC 地址，必须以两个 32 字节的形式发送，字节顺序要正确。您可以运行命令检查格式是否正确：
 
 [source,console]
 ----
 $ vcmailbox 0x00030085 6 6 0x44332211 0x6655
 ----
 
-Check the log to see if the MAC address matches your expectations:
+检查日志，查看 MAC 地址是否符合您的预期：
 
 [source,console]
 ----
@@ -146,85 +153,84 @@ $ sudo vclog -m
 1057826.701: read mac address 11:22:33:44:55:66
 ----
 
-A multicast address is not considered valid. The least significant bit in the most significant octet of a MAC address is the multicast bit, so make sure this is not set.
+多播地址不被视为有效。MAC 地址最高有效八位字节中的最低有效位是多播位，因此请确保未设置该位。
 
-You can then set the customer MAC address with the command `vcmailbox 0x00038082/3/4 6 6 <row1> <row0>`:
+然后，您可以使用命令 `vcmailbox 0x00038082/3/4 6 6 <row1> <row0>` 设置客户 MAC 地址：
 
 [source,console]
 ----
 $ vcmailbox 0x00038082 6 6 0x44332211 0x6655
 ----
 
-If a customer MAC address is set to `ff:ff:ff:ff:ff:ff`, then it's ignored.
+如果客户 MAC 地址被设置为 `ff:ff:ff:ff:ff:ff`，则会被忽略。
 
-=== Device-specific private key
+[[device-specific-private-key]]
+=== 设备专用私钥
 
-Devices that use the Broadcom BCM2712 processor have 16 rows of OTP data (512 bits) to support filesystem encryption.
-Devices that do not use BCM2712 have 8 rows of OTP (256 bits) available for use as a device-specific private key.
+使用 Broadcom BCM2712 处理器的设备有 16 行 OTP 数据（512 位），支持文件系统加密。
 
-These rows can be programmed and read using similar `vcmailbox` commands to those used for managing customer OTP rows. If
-secure-boot / file-system encryption is not required, then the device private key rows can be used to store general-purpose information.
+不使用 BCM2712 的设备有 8 行 OTP 数据（256 位）可用作设备专用私钥。
 
-* The device private key rows can only be read via the `vcmailbox` command which requires access to `/dev/vcio` which is restricted to the `video` group on Raspberry Pi OS.
-* Raspberry Pi computers do not have a hardware protected key store.  It is recommended that this feature is used in conjunction with https://github.com/raspberrypi/usbboot/blob/master/secure-boot-example/README.md[Secure Boot] in order to restrict access to this data.
-* Raspberry Pi OS does not support an encrypted root-filesystem.
+可以使用与管理客户 OTP 行类似的 `vcmailbox` 命令对这些行进行编程和读取。如果
+不需要安全启动/文件系统加密，则设备私钥行可用于存储通用信息。
 
-See https://gitlab.com/cryptsetup/cryptsetup[Cryptsetup] for more information about open-source disk encryption.
+* 设备私钥行只能通过 `vcmailbox` 命令读取，该命令需要访问 `/dev/vcio` ，而该权限仅限于 Raspberry Pi OS 上的 `video` 组。
+* Raspberry Pi 计算机没有硬件保护的密钥存储。建议将此功能与 https://github.com/raspberrypi/usbboot/blob/master/secure-boot-example/README.md[安全启动] 结合使用，以限制对此数据的访问。
+* Raspberry Pi OS 不支持加密的根文件系统。
 
-==== Program a key into OTP with `rpi-otp-private-key`
+有关开源磁盘加密的更多信息，请参阅 https://gitlab.com/cryptsetup/cryptsetup[Cryptsetup]。
 
-The https://github.com/raspberrypi/rpi-eeprom/blob/master/tools/rpi-otp-private-key[`rpi-otp-private-key`] script wraps the device private key `vcmailbox` APIs to make it easier to read and write a key in the OpenSSL format.
+====  使用 `rpi-otp-private-key` 烧录密钥 
+https://github.com/raspberrypi/rpi-eeprom/blob/master/tools/rpi-otp-private-key[`rpi-otp-private-key`] 脚本包装了设备私钥 `vcmailbox` API，以便更轻松地以 OpenSSL 格式读取和写入密钥。
 
-NOTE: The https://github.com/raspberrypi/usbboot[`usbboot`] repository contains all the tools you need, including https://github.com/raspberrypi/rpi-eeprom[`rpi-eeprom`] as a Git submodule.
+NOTE: https://github.com/raspberrypi/usbboot[`usbboot`] 存储库包含您需要的所有工具，包括 https://github.com/raspberrypi/rpi-eeprom[`rpi-eeprom`] 作为 Git 子模块。
 
-Read the 32-byte key as a 64-character hex number:
+将 32 字节密钥读取为 64 个字符的十六进制数字：
 
 [source,console]
 ----
 $ cd usbboot/tools
 $ rpi-otp-private-key
 ----
-
-Example output:
-
+Example:
 ----
 f8dbc7b0a4fcfb1d706e298ac9d0485c2226ce8df7f7596ac77337bd09fbe160
 ----
 
-Writes a 32-byte randomly generated number to the device private key.
+将 32 字节随机生成的数字写入设备私钥。
 
-WARNING: This operation cannot be undone.
+WARNING: 此操作无法撤消。
 
 [source,console]
 ----
 $ rpi-otp-private-key -w $(openssl rand -hex 32)
 ----
 
-NOTE: To specify the number of OTP rows to use, pass `-l <word count>`. To specify a start location in the key store, pass `-o <word offset>`.
+NOTE: 要指定要使用的 OTP 行数，请传递 `-l <word count>` 。要指定密钥存储中的起始位置，请传递 `-o <word offset>` 。
 
-==== Mailbox API for reading/writing the key
+==== 用于读取/写入密钥的邮箱 API。
 
-Read all of the rows.
+读取所有行。
 
 [source,console]
 ----
 $ vcmailbox 0x00030081 40 40 0 8 0 0 0 0 0 0 0 0
 ----
 
-Example output:
-
+Example:
 ----
 0x00000040 0x80000000 0x00030081 0x00000028 0x80000028 0x00000000 0x00000008 0xf8dbc7b0 0xa4fcfb1d 0x706e298a 0xc9d0485c 0x2226ce8d 0xf7f7596a 0xc77337bd 0x09fbe160 0x00000000
 ----
 
-Write all of the row (replace the trailing eight zeros with the key data):
+写入所有行（将尾随的八个零替换为密钥数据）：
+
 
 [source,console]
 ----
 $ vcmailbox 0x00038081 40 40 0 8 0 0 0 0 0 0 0 0
 ----
 
-Write the key shown in the previous example:
+写入上例中显示的密钥：
 
 [source,console]
 ----

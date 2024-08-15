@@ -1,237 +1,250 @@
-== Boot Options
+[[boot-options]]
+== 启动选项
 
-=== `start_file`, `fixup_file`
+[[start_file-fixup_file]]
+=== `start_file` ，`fixup_file` 
 
-These options specify the firmware files transferred to the VideoCore GPU prior to booting.
+这些选项指定在引导之前传输到VideoCore GPU的固件文件。
 
-`start_file` specifies the VideoCore firmware file to use.
-`fixup_file` specifies the file used to fix up memory locations used in the `start_file` to match the GPU memory split. 
+`start_file` 指定要使用的VideoCore固件文件。
+`fixup_file` 指定用于修复start_file中使用的内存位置以匹配GPU内存拆分的文件。
 
-The `start_file` and the `fixup_file` are a matched pair - using unmatched files will stop the board from booting. This is an advanced option, so we advise that you use `start_x` and `start_debug` rather than this option.
+`start_file` 和 `fixup_file` 是匹配的一对 - 使用不匹配的文件导致板子无法启动。这是一个高级选项，因此我们建议您使用 `start_x` 和 `start_debug` 而不是此选项。
 
-NOTE: Cut-down firmware (`start*cd.elf` and `fixup*cd.dat`) cannot be selected this way - the system will fail to boot.  The only way to enable the cut-down firmware is to specify `gpu_mem=16`. The cut-down firmware removes support for codecs, 3D and debug logging as well as limiting the initial early-boot framebuffer to 1080p @16bpp - although KMS can replace this with up to 32bpp 4K framebuffer(s) at a later stage as with any firmware.
+NOTE: 不能以这种方式选择削减固件（ `start*cd.elf` 和 `fixup*cd.dat` ）- 系统将无法启动。启用削减固件的唯一方法是指定 `gpu_mem=16` 。削减固件删除了对编解码器、3D和调试日志记录的支持，并将初始早期启动帧缓冲区限制为1080p @16bpp - 尽管KMS可以在稍后阶段用32bpp 4K帧缓冲区替换它，就像任何固件一样。
 
-NOTE: The Raspberry Pi 5 firmware is self-contained in the bootloader EEPROM.
+NOTE: Raspberry Pi 5固件独立于引导加载程序EEPROM中。
 
-=== `cmdline`
+[[cmdline]]
+=== `cmdline` 
 
-`cmdline` is the alternative filename on the boot partition from which to read the kernel command line string; the default value is `cmdline.txt`.
+`cmdline` 是引导分区上用于读取内核命令行字符串的替代文件名；默认值为 `cmdline.txt` 。
 
-=== `kernel`
+[[kernel]]
+=== `kernel` 
 
-`kernel` is the alternative filename on the boot partition for loading the kernel. The default value on the Raspberry Pi 1, Zero and Zero W, and Raspberry Pi Compute Module 1 is `kernel.img`. The default value on the Raspberry Pi 2, 3, 3+ and Zero 2 W, and Raspberry Pi Compute Modules 3 and 3+ is `kernel7.img`. The default value on the Raspberry Pi 4 and 400, and Raspberry Pi Compute Module 4 is `kernel8.img`, or `kernel7l.img` if `arm_64bit` is set to 0.
+`kernel` 是引导分区上用于加载内核的替代文件名。Raspberry Pi 1、Zero和Zero W以及Raspberry Pi Compute Module 1的默认值为 `kernel.img` 。Raspberry Pi 2、3、3+和Zero 2 W以及Raspberry Pi Compute Module 3和3+的默认值为 `kernel7.img` 。Raspberry Pi 4和400以及Raspberry Pi Compute Module 4的默认值为 `kernel8.img` ，如果 `arm_64bit` 设置为0，则为 `kernel7l.img` 。
 
-The Raspberry Pi 5 firmware defaults to loading `kernel_2712.img` because this image contains optimisations specific to Raspberry Pi 5 (e.g. 16K page-size). If this file is not present, then the common 64-bit kernel (`kernel8.img`) will be loaded instead.
+Raspberry Pi 5固件默认加载 `kernel_2712.img` ，因为此映像包含特定于Raspberry Pi 5的优化（例如16K页面大小）。如果此文件不存在，则将加载通用64位内核（ `kernel8.img` ）。
 
-=== `arm_64bit`
+[[arm_64bit]]
+=== `arm_64bit` 
 
-If set to 1, the kernel will be started in 64-bit mode. Setting to 0 selects 32-bit mode.
+如果设置为1，内核将以64位模式启动。设置为0选择32位模式。
 
-In 64-bit mode, the firmware will choose an appropriate kernel (e.g. `kernel8.img`), unless there is an explicit `kernel` option defined, in which case that is used instead.
+在64位模式下，固件将选择适当的内核（例如 `kernel8.img` ），除非定义了显式的 `kernel` 选项，在这种情况下使用该选项。
 
-Defaults to 1 on Pi 4s (Pi 4B, Pi 400, CM4 and CM4S), and 0 on all other platforms. However, if the name given in an explicit `kernel` option matches one of the known kernels then `arm_64bit` will be set accordingly.
+在Pi 4系列（Pi4B、Pi 400、CM4和CM4S）上默认为1，在所有其他平台上默认为0。但是，如果显式 `kernel` 选项中给出的名称与已知内核之一匹配，则将相应地设置 `arm_64bit` 。
 
-NOTE: 64-bit kernels may be uncompressed image files or a gzip archive of an image (which can still be called kernel8.img; the bootloader will recognize the archive from the signature bytes at the beginning). The 64-bit kernel will only work on the Raspberry Pi 3, 3+, 4, 400, Zero 2 W and 2B rev 1.2, and Raspberry Pi Compute Modules 3, 3+ and 4. Raspberry Pi 5 only supports a 64-bit kernel, so this parameter has been removed for that device.
+NOTE: 64 位内核可能是未压缩的镜像文件或镜像的 gzip 压缩包（仍可称为 kernel8.img；引导加载程序将从开头的签名字节识别压缩包）。64 位内核仅适用于 Raspberry Pi 3、3+、4、400、Zero 2 W 和 2B rev 1.2，以及 Raspberry Pi Compute Modules 3、3+ 和 4。Raspberry Pi 5 仅支持 64 位内核，因此该设备已移除此参数。
 
-=== `ramfsfile`
+[[ramfsfile]]
+=== `ramfsfile` 
 
-`ramfsfile` is the optional filename on the boot partition of a `ramfs` to load. 
+`ramfsfile` 是要加载的 `ramfs` 的引导分区上的可选文件名。
 
-NOTE: Newer firmware supports the loading of multiple `ramfs` files. You should separate the multiple file names with commas, taking care not to exceed the 80-character line length limit. All the loaded files are concatenated in memory and treated as a single `ramfs` blob. More information is available https://forums.raspberrypi.com/viewtopic.php?f=63&t=10532[on the forums].
+NOTE: 较新的固件支持加载多个 `ramfs` 文件。您应该用逗号分隔多个文件名，注意不要超过80个字符的行长限制。所有加载的文件都在内存中连接起来，并被视为单个 `ramfs` blob。更多信息在 https://forums.raspberrypi.com/viewtopic.php?f=63&t=10532[论坛上]。
 
-=== `ramfsaddr`
+[[ramfsaddr]]
+=== `ramfsaddr` 
 
-`ramfsaddr` is the memory address to which the `ramfsfile` should be loaded.
+`ramfsaddr` 是应该加载 `ramfsfile` 的内存地址。
 
-=== `initramfs`
+[[initramfs]]
+=== `initramfs` 
 
-The `initramfs` command specifies both the ramfs filename *and* the memory address to which to load it. It performs the actions of both `ramfsfile` and `ramfsaddr` in one parameter. The address can also be `followkernel` (or `0`) to place it in memory after the kernel image. Example values are: `initramfs initramf.gz 0x00800000` or `initramfs init.gz followkernel`. As with `ramfsfile`, newer firmwares allow the loading of multiple files by comma-separating their names.
+`initramfs` 命令同时指定了 ramfs 文件名*和*内存地址。它在一个参数中同时执行 `ramfsfile` 和 `ramfsaddr` 的操作。地址也可以是 `followkernel` （或 `0` ），以便将其放在内核映像之后的内存中。示例值如下 `initramfs initramf.gz 0x00800000` 或 `initramfs init.gz followkernel`。与 `ramfsfile` 一样，较新的固件允许通过逗号分隔多个文件名来加载多个文件。
 
-NOTE: This option uses different syntax from all the other options, and you should not use the `=` character here.
+NOTE: 此选项使用与所有其他选项不同的语法，您不应在此处使用 `=` 字符。
 
 [[auto_initramfs]]
-=== `auto_initramfs`
+=== `auto_initramfs` 
 
-If `auto_initramfs` is set to `1`, look for an `initramfs` file using the same rules as the kernel selection.
+如果 `auto_initramfs` 设置为1，则使用与内核选择相同的规则查找initramfs文件。
 
 [[disable_poe_fan]]
-=== `disable_poe_fan`
+=== `disable_poe_fan` 
 
-By default, a probe on the I2C bus will happen at startup, even when a PoE HAT is not attached. Setting this option to 1 disables control of a PoE HAT fan through I2C (on pins ID_SD & ID_SC). If you are not intending to use a PoE HAT, this is a helpful way to minimise boot time.
+默认情况下，即使没有连接 PoE HAT，也会在启动时对 I2C 总线进行探测。将该选项设置为 1 将禁止通过 I2C（ID_SD 和 ID_SC）引脚控制 PoE HAT 风扇。如果不打算使用 PoE HAT，这将有助于缩短启动时间。
 
-=== `disable_splash`
+[[disable_splash]]
+=== `disable_splash` 
 
-If `disable_splash` is set to `1`, the rainbow splash screen will not be shown on boot. The default value is `0`.
+如果将 `disable_splash` 设置为 `1` ，则启动时不会显示彩虹闪屏。默认值为 `0` 。
 
-=== `enable_uart`
+[[enable_uart]]
+=== `enable_uart` 
 
-`enable_uart=1` (in conjunction with `console=serial0` in `cmdline.txt`) requests that the kernel creates a serial console, accessible using GPIOs 14 and 15 (pins 8 and 10 on the 40-pin header). Editing `cmdline.txt` to remove the line `quiet` enables boot messages from the kernel to also appear there. See also `uart_2ndstage`.
+`enable_uart=1` （与 `cmdline.txt` 中的 `console=serial0` 结合使用）要求内核创建一个串行控制台，可通过 GPIO 14 和 15（40 针接头的针脚 8 和 10）访问。编辑 `cmdline.txt` ，删除 `quiet` 行后，内核的启动信息也会出现在该行。另请参阅 `uart_2ndstage` 。
 
-=== `force_eeprom_read`
+[[force_eeprom_read]]
+=== `force_eeprom_read` 
 
-Set this option to `0` to prevent the firmware from trying to read an I2C HAT EEPROM (connected to pins ID_SD & ID_SC) at powerup. See also xref:config_txt.adoc#disable_poe_fan[`disable_poe_fan`].
+将该选项设为 `0` ，可防止固件在上电时尝试读取 I2C HAT EEPROM（连接到引脚 ID_SD 和 ID_SC）。另请参阅  xref:config_txt.adoc#disable_poe_fan[`disable_poe_fan`]。
 
 [[os_prefix]]
-=== `os_prefix`
+=== `os_prefix` 
 
-`os_prefix` is an optional setting that allows you to choose between multiple versions of the kernel and Device Tree files installed on the same card. Any value in `os_prefix` is prepended to the name of any operating system files loaded by the firmware, where "operating system files" is defined to mean kernels, `initramfs`, `cmdline.txt`, `.dtbs` and overlays. The prefix would commonly be a directory name, but it could also be part of the filename such as "test-". For this reason, directory prefixes must include the trailing `/` character.
+`os_prefix` 是一个可选设置，允许在同一卡上安装的多个版本的内核和设备树文件之间进行选择。操作系统文件 "指的是内核、initramfs、cmdline.txt、.dtbs 和 overlays。前缀通常是目录名，但也可以是文件名的一部分，如 "test-"。因此，目录前缀必须包括尾部的 `/` 字符。
 
-In an attempt to reduce the chance of a non-bootable system, the firmware first tests the supplied prefix value for viability - unless the expected kernel and .dtb can be found at the new location/name, the prefix is ignored (set to ""). A special case of this viability test is applied to overlays, which will only be loaded from `+${os_prefix}${overlay_prefix}+` (where the default value of <<overlay_prefix,`overlay_prefix`>> is "overlays/") if `+${os_prefix}${overlay_prefix}README+` exists, otherwise it ignores `os_prefix` and treats overlays as shared.
+为了减少系统无法启动的可能性，固件首先测试提供的前缀值的可行性 — 除非在新位置/名称处可以找到指定的内核和.dtb，否则前缀将被忽略（设置为""）。这种可行性测试的一个特殊情况应用于覆盖，如果 `+${os_prefix}${overlay_prefix}+` 存在，它只会从 `+${os_prefix}${overlay_prefix}README+` 加载（其中<<overlay_prefix， `overlay_prefix` >>的默认值是 `覆盖/` ），否则它会忽略 `os_prefix` 并将覆盖视为共享。
 
-(The reason the firmware checks for the existence of key files rather than directories when checking prefixes is twofold: the prefix may not be a directory, and not all boot methods support testing for the existence of a directory.)
+（固件在检查前缀时检查密钥文件而不是目录的存在的原因有两个：前缀可能不是目录，并且并非所有引导方法都支持测试目录的存在。）
 
-NOTE: Any user-specified OS file can bypass all prefixes by using an absolute path (with respect to the boot partition) - just start the file path with a `/`, e.g. `kernel=/my_common_kernel.img`.
+NOTE: 任何用户指定的操作系统文件都可以通过使用绝对路径（相对于引导分区）绕过所有前缀 - 只需使用 `kernel=/my_common_kernel.img` 
 
-See also <<overlay_prefix,`overlay_prefix`>> and xref:legacy_config_txt.adoc#upstream_kernel[`upstream_kernel`].
+另请参见 <<overlay_prefix, `overlay_prefix` >> 和 xref:legacy_config_txt.adoc#upstream_kernel[`upstream_kernel`]。
 
-=== `otg_mode` (Raspberry Pi 4 only)
 
-USB On-The-Go (often abbreviated to OTG) is a feature that allows supporting USB devices with an appropriate OTG cable to configure themselves as USB hosts. On older Raspberry Pis, a single USB 2 controller was used in both USB host and device mode.
+[[otg_mode-raspberry-pi-4-only]]
+=== `otg_mode` （仅限Raspberry Pi 4）
 
-Raspberry Pi 4B and Raspberry Pi 400 (not CM4 or CM4IO) add a high performance USB 3 controller, attached via PCIe, to drive the main USB ports. The legacy USB 2 controller is still available on the USB-C power connector for use as a device (`otg_mode=0`, the default).
+USB On-The-Go（通常缩写为OTG）是一项功能，允许支持带有适当OTG电缆的USB设备将自己配置为USB主机。在较旧的Raspberry Pi上，一个USB 2控制器用于USB主机和设备模式。
 
-`otg_mode=1` requests that a more capable XHCI USB 2 controller is used as another host controller on that USB-C connector. 
+Raspberry Pi4B和Raspberry Pi 400（不是CM4或CM4IO）添加了一个高性能USB 3控制器，通过PCIe连接，以驱动主USB端口。传统的USB 2控制器仍然可以在USB-C电源连接器上用作设备（ `otg_mode=0` ，默认值）。
 
-NOTE: Because CM4 and CM4IO don't include the external USB 3 controller, Raspberry Pi OS images set `otg_mode=1` on CM4 for better performance.
+`otg_mode=1` 请求将功能更强大的XHCI USB 2控制器用作该USB-C连接器上的另一个主机控制器。
+
+NOTE: 由于CM4和CM4IO不包括外部USB 3控制器，Raspberry Pi OS镜像在CM4上设置为 `otg_mode=1` 以获得更好的性能。
 
 [[overlay_prefix]]
-=== `overlay_prefix`
+=== `overlay_prefix` 
 
-Specifies a subdirectory/prefix from which to load overlays, and defaults to `overlays/` (note the trailing `/`). If used in conjunction with <<os_prefix,`os_prefix`>>, the `os_prefix` comes before the `overlay_prefix`, i.e. `dtoverlay=disable-bt` will attempt to load `+${os_prefix}${overlay_prefix}disable-bt.dtbo+`.
+指定加载overlays的子目录/前缀，默认为 `overlays/` （注意尾部的 `/` ）。如果与 <<os_prefix,`os_prefix`>> 结合使用， `os_prefix` 将位于 `overlay_prefix` 之前，例如， `dtoverlay=disable-bt` 将尝试加载 `+${os_prefix}${overlay_prefix}disable-bt.dtbo+` 。
 
-NOTE: Unless `+${os_prefix}${overlay_prefix}README+` exists, overlays are shared with the main OS (i.e. `os_prefix` is ignored).
+NOTE:  除非存在 `+${os_prefix}${overlay_prefix}README+` ，否则overlays将与主操作系统共享（即忽略 `os_prefix` ）。
 
-=== Configuration Properties
+=== 配置属性
 
-Raspberry Pi 5 requires a `config.txt` file to be present to indicate that the partition is bootable.
+Raspberry Pi 5 需要一个 `config.txt` 文件，以表明分区是可启动的。
 
 [[boot_ramdisk]]
 ==== `boot_ramdisk`
 
-If this property is set to `1` then the bootloader will attempt load a ramdisk file called `boot.img` containing the xref:configuration.adoc#boot-folder-contents[boot filesystem]. Subsequent files (e.g. `start4.elf`) are read from the ramdisk instead of the original boot file system.
+如果该属性设置为 `1`，则引导加载程序将尝试加载一个名为 `boot.img` 的内存盘文件，其中包含 xref:configuration.adoc#boot-folder-contents[boot filesystem]。随后的文件（如 `start4.elf`）将从内存盘读取，而不是原始启动文件系统。
 
-The primary purpose of `boot_ramdisk` is to support `secure-boot`, however, unsigned `boot.img` files can also be useful to Network Boot or `RPIBOOT` configurations.
+`boot_ramdisk` 的主要用途是支持 `安全启动`，不过，未签名的 `boot.img` 文件对网络启动或 `RPIBOOT` 配置也很有用。
 
-* The maximum size for a ramdisk file is 96MB.
-* `boot.img` files are raw disk `.img` files. The recommended format is a plain FAT32 partition with no MBR.
-* The memory for the ramdisk filesystem is released before the operating system is started.
-* If xref:raspberry-pi.adoc#fail-safe-os-updates-tryboot[TRYBOOT] is selected then the bootloader will search for `tryboot.img` instead of `boot.img`.
-* See also xref:config_txt.adoc#autoboot-txt[autoboot.txt].
+* ramdisk 文件的最大大小为 96MB。
+* `boot.img` 文件是原始磁盘 `.img` 文件。建议使用无 MBR 的普通 FAT32 分区格式。
+* 在操作系统启动之前，ramdisk 文件系统的内存会被释放。
+* 如果选择 xref:raspberry-pi.adoc#fail-safe-os-updates-tryboot[TRYBOOT]，引导加载程序将搜索 `tryboot.img` 而不是 `boot.img`。
+* 另请参阅 xref:config_txt.adoc#autoboot-txt[autoboot.txt]。
 
-For more information about `secure-boot` and creating `boot.img` files please see https://github.com/raspberrypi/usbboot/blob/master/Readme.md[USBBOOT].
+有关 `secure-boot` 和创建 `boot.img` 文件的更多信息，请参阅 https://github.com/raspberrypi/usbboot/blob/master/Readme.md[USBBOOT].
 
 Default: `0`
 
 [[boot_load_flags]]
 ==== `boot_load_flags`
 
-Experimental property for custom firmware (bare metal).
+自定义固件（裸机）的实验属性。
 
-Bit 0 (0x1) indicates that the .elf file is custom firmware. This disables any compatibility checks (e.g. is USB MSD boot supported) and resets PCIe before starting the executable.
+位 0 (0x1) 表示 .elf 文件是定制固件。这将禁用任何兼容性检查（例如，是否支持 USB MSD 启动），并在启动可执行文件前重置 PCIe。
 
-Not relevant on Raspberry Pi 5 because there is no `start.elf` file.
+与 Raspberry Pi 5 无关，因为没有 `start.elf` 文件。
 
 Default: `0x0`
 
 [[pciex4_reset]]
 ==== `pciex4_reset`
 
-Raspberry Pi 5 only.
+仅限 Raspberry Pi 5。
 
-By default, the PCIe x4 controller used by `RP1` is reset before starting the operating system. If this parameter is set to `0` then the reset is disabled allowing operating system or bare metal code to inherit the PCIe configuration setup from the bootloader.
+默认情况下，`RP1` 使用的 PCIe x4 控制器会在启动操作系统前复位。如果将该参数设置为 `0`，则重置将被禁用，操作系统或裸机代码可从引导加载程序继承 PCIe 配置设置。
 
 Default: `1`
 
 [[uart_2ndstage]]
 ==== `uart_2ndstage`
 
-If `uart_2ndstage` is `1` then enable debug logging to the UART. This option also automatically enables UART logging in `start.elf`. This is also described on the xref:config_txt.adoc#boot-options[Boot options] page.
+如果 `uart_2ndstage` 为 `1`，则启用 UART 的调试记录。该选项也会在 `start.elf` 中自动启用 UART 日志记录。xref:config_txt.adoc#boot-options[Boot options] 页面对此也有说明。
 
-The `BOOT_UART` property also enables bootloader UART logging but does not enable UART logging in `start.elf` unless `uart_2ndstage=1` is also set.
+BOOT_UART "属性也会启用引导加载器 UART 日志，但除非同时设置了 `uart_2ndstage=1`，否则不会在 `start.elf` 中启用 UART 日志。
 
 Default: `0`
 
 [[erase_eeprom]]
 ==== `erase_eeprom`
 
-If `erase_eeprom` is set to `1` then `recovery.bin` will erase the entire SPI EEPROM instead of flashing the bootloader image. This property has no effect during a normal boot.
+如果 `erase_eeprom` 设置为 `1`，那么 `recovery.bin` 将擦除整个 SPI EEPROM，而不是烧录引导程序映像。此属性对正常启动没有影响。
 
 Default: `0`
 
 [[eeprom_write_protect]]
 ==== `eeprom_write_protect`
 
-Configures the EEPROM `write status register`. This can be set either to mark the entire EEPROM as write-protected, or to clear write-protection.
+配置 EEPROM `写入状态寄存器`。可将其设置为将整个 EEPROM 标记为写保护，或清除写保护。
 
-This option must be used in conjunction with the EEPROM `/WP` pin which controls updates to the EEPROM `Write Status Register`.  Pulling `/WP` low (CM4 `EEPROM_nWP` or on a Raspberry Pi 4 `TP5`) does NOT write-protect the EEPROM unless the `Write Status Register` has also been configured.
+该选项必须与控制 EEPROM `写状态寄存器` 更新的 EEPROM `/WP` 引脚结合使用。 除非同时配置了 `写入状态寄存器`，否则将 `/WP` 拉低（CM4 的 `EEPROM_nWP` 或 Raspberry Pi 4 的 `TP5`）不会对 EEPROM 进行写保护。
 
-See the https://www.winbond.com/resource-files/w25x40cl_f%2020140325.pdf[Winbond W25x40cl] or https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q16JV[Winbond W25Q16JV] datasheets for further details.
+详情请参见 https://www.winbond.com/resource-files/w25x40cl_f%2020140325.pdf[Winbond W25x40cl] 或 https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q16JV[Winbond W25Q16JV] 数据表。
 
-`eeprom_write_protect` settings in `config.txt` for `recovery.bin`.
+`recovery.bin` 的 `config.txt` 中的 `eeprom_write_protect` 设置。
 
 |===
 | Value | Description
 
 | 1
-| Configures the write protect regions to cover the entire EEPROM.
+| 配置写保护区域以覆盖整个 EEPROM。
 
 | 0
-| Clears the write protect regions.
+| 清除写保护区域。
 
 | -1
-| Do nothing.
+| 什么也不做
 |===
 
-NOTE: `flashrom` does not support clearing of the write-protect regions and will fail to update the EEPROM if write-protect regions are defined.
+NOTE: `flashrom` 不支持清除写保护区域，如果定义了写保护区域，将无法更新 EEPROM。
 
-On Raspberry Pi 5 `/WP` is pulled low by default and consequently write-protect is enabled as soon as the `Write Status Register` is configured. To clear write-protect pull `/WP` high by connecting `TP14` and `TP1`.
+在 Raspberry Pi 5 上，`/WP` 默认为低电平，因此一旦配置了 `写状态寄存器`，就会启用写保护。要清除写保护，可通过连接 `TP14` 和 `TP1` 将 `/WP` 拉高。
 
 Default: `-1`
 
 [[os_check]]
 ==== `os_check`
 
-On Raspberry Pi 5 the firmware automatically checks for a compatible Device Tree file before attempting to boot from the current partition. Otherwise, older non-compatible kernels would be loaded and then hang.
-To disable this check (e.g. for bare-metal development), set `os_check=0` in config.txt
+在 Raspberry Pi 5 上，固件会自动检查兼容的设备树文件，然后再尝试从当前分区启动。否则，不兼容的旧内核将被加载，然后挂起。
+要禁用此检查（例如用于裸机开发），请在 config.txt 中设置 `os_check=0` 。
 
 Default: `1`
 
 [[bootloader_update]]
 ==== `bootloader_update`
 
-This option may be set to 0 to block self-update without requiring the EEPROM configuration to be updated. This is sometimes useful when updating multiple Raspberry Pis via network boot because this option can be controlled per Raspberry Pi (e.g. via a serial number filter in `config.txt`).
+该选项可设置为 0，以阻止自更新，而无需更新 EEPROM 配置。在通过网络启动更新多个 Raspberry Pi 时，该选项有时非常有用，因为可以对每个 Raspberry Pi 进行控制（例如，通过 `config.txt` 中的序列号过滤器）。
 
 Default: `1`
 
 === Secure Boot configuration properties
 
-[.whitepaper, title="How to use Raspberry Pi Secure Boot", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003466-WP/Boot-Security-Howto.pdf]
+[.whitepaper, title="如何使用 Raspberry Pi 安全启动", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003466-WP/Boot-Security-Howto.pdf]
 ****
-This whitepaper describes how to implement secure boot on devices based on Raspberry Pi 4. For an overview of our approach to implementing secure boot implementation, please see the https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-004651-WP/Raspberry-Pi-4-Boot-Security.pdf[Raspberry Pi 4 Boot Security] whitepaper. The secure boot system is intended for use with `buildroot`-based OS images; using it with Raspberry Pi OS is not recommended or supported.
+本白皮书介绍如何在基于 Raspberry Pi 4 的设备上实现安全启动。有关我们实现安全启动实施方法的概述，请参阅 https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-004651-WP/Raspberry-Pi-4-Boot-Security.pdf[Raspberry Pi 4 Boot Security] 白皮书。安全启动系统适用于基于  `buildroot` 的操作系统镜像；不建议或不支持将其用于 Raspberry Pi OS。
 ****
 
-The following `config.txt` properties are used to program the `secure-boot` OTP settings. These changes are irreversible and can only be programmed via `RPIBOOT` when flashing the bootloader EEPROM image. This ensures that `secure-boot` cannot be set remotely or by accidentally inserting a stale SD card image.
+下面的 `config.txt` 属性用于对 `secure-boot` OTP 设置进行编程。这些更改是不可逆的，只能在刷新引导加载程序 EEPROM 映像时通过 `RPIBOOT` 进行编程。这可确保 "安全启动 "无法通过远程或意外插入过期 SD 卡映像进行设置。
 
-For more information about enabling `secure-boot` please see the https://github.com/raspberrypi/usbboot/blob/master/Readme.md#secure-boot[Secure Boot readme] and the https://github.com/raspberrypi/usbboot/blob/master/secure-boot-example/README.md[Secure Boot tutorial] in the https://github.com/raspberrypi/usbboot[USBBOOT] repo.
+有关启用 `secure-boot` 的更多信息，请参阅 https://github.com/raspberrypi/usbboot[USBBOOT] repo 中的 https://github.com/raspberrypi/usbboot/blob/master/Readme.md#secure-boot[Secure Boot readme] 和 https://github.com/raspberrypi/usbboot/blob/master/secure-boot-example/README.md[Secure Boot tutorial]。
 
 [[program_pubkey]]
 ==== `program_pubkey`
 
-If this property is set to `1` then `recovery.bin` will write the hash of the public key in the EEPROM image to OTP.  Once set, the bootloader will reject EEPROM images signed with different RSA keys or unsigned images.
+如果该属性设置为 `1`，那么 `recovery.bin` 将把 EEPROM 映像中公钥的哈希值写入 OTP。 设置后，引导加载程序将拒绝使用不同 RSA 密钥签名的 EEPROM 映像或未签名的映像。
 
 Default: `0`
 
 [[revoke_devkey]]
 ==== `revoke_devkey`
 
-If this property is set to `1` then `recovery.bin` will write a value to OTP that prevents the ROM from loading old versions of the second stage bootloader which do not support `secure-boot`. This prevents `secure-boot` from being turned off by reverting to an older release of the bootloader.
+如果该属性设置为 `1`，`recovery.bin` 将向 OTP 写入一个值，防止 ROM 加载不支持 `安全启动` 的旧版本第二阶段引导加载程序。这可以防止通过恢复到旧版本的引导加载程序来关闭 `secure-boot` 。
 
 Default: `0`
 
 [[program_rpiboot_gpio]]
 ==== `program_rpiboot_gpio`
 
-Since there is no dedicated `nRPIBOOT` jumper on Raspberry Pi 4B or Raspberry Pi 400, an alternative GPIO must be used to select `RPIBOOT` mode by pulling the GPIO low. Select a single GPIO from the following options:
+由于 Raspberry Pi 4B 或 Raspberry Pi 400 上没有专用的 `nRPIBOOT` 跳线，因此必须使用另一个 GPIO，通过将 GPIO 拉低来选择 `RPIBOOT` 模式。从以下选项中选择一个 GPIO：
 
 * `2`
 * `4`
@@ -240,16 +253,16 @@ Since there is no dedicated `nRPIBOOT` jumper on Raspberry Pi 4B or Raspberry Pi
 * `7`
 * `8`
 
-This property does not depend on `secure-boot`, but verify that this GPIO configuration does not conflict with any HATs which might pull the GPIO low during boot.
+该属性不依赖于`secure-boot`，但要确认该 GPIO 配置不会与任何可能在启动期间将 GPIO 拉低的 HAT 冲突。
 
-Since for safety this property can only be programmed via `RPIBOOT`, the bootloader EEPROM must first be cleared using `erase_eeprom`. This causes the BCM2711 ROM to failover to `RPIBOOT` mode, which then allows this option to be set.
+为了安全起见，只能通过 `RPIBOOT` 对该属性进行编程，因此必须首先使用 `erase_eeprom` 清除引导加载程序 EEPROM。这将导致 BCM2711 ROM 故障切换到 `RPIBOOT` 模式，从而允许设置该选项。
 
 Default: `{nbsp}`
 
 [[program_jtag_lock]]
 ==== `program_jtag_lock`
 
-If this property is set to `1` then `recovery.bin` will program an OTP value that prevents VideoCore JTAG from being used. This option requires that `program_pubkey` and `revoke_devkey` are also set. This option can prevent failure analysis, and should only be set after the device has been fully tested.
+如果该属性设置为 `1`，则 `recovery.bin`将编程一个 OTP 值，阻止使用 VideoCore JTAG。该选项要求同时设置 `program_pubkey` 和 `revoke_devkey`。该选项可能会阻止故障分析，只有在设备经过全面测试后才可设置。
 
 Default: `0`
 

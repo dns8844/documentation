@@ -1,54 +1,59 @@
-== USB mass storage boot
+[[usb-mass-storage-boot]]
+== USB大容量存储启动
 
-NOTE: Available on the xref:raspberry-pi.adoc#compute-module-series[Compute Module series since Compute Module 3], xref:raspberry-pi.adoc#zero-series[Zero series since Zero 2 W], and xref:raspberry-pi.adoc#flagship-series[all flagship series devices since Raspberry Pi 2B (version 1.2)].
+NOTE: 适用于 xref:raspberry-pi.adoc#computute-module-series[自 Compute Module 3 起的 Compute Module 系列]、xref:raspberry-pi.adoc#zero-series[自 Zero 2 W 起的 Zero 系列] 和 xref:raspberry-pi.adoc#flagship-series[自 Raspberry Pi 2B（1.2 版）起的所有旗舰系列设备]。
 
-USB mass storage boot enables you to boot your Raspberry Pi from a USB mass storage device such as a flash drive or USB disk. When attaching USB devices, particularly hard disks and SSDs, be mindful of their power requirements. Attaching more than one disk typically requires additional external power from either a powered disk enclosure or a powered USB hub.
+USB 大容量存储启动让您可以从闪存盘或 USB 磁盘等 USB 大容量存储设备启动 Raspberry Pi。在连接 USB 设备（尤其是硬盘和固态硬盘）时，请注意它们的电源要求。连接一个以上的磁盘通常需要额外的外部电源，这些电源可以来自供电的磁盘盒或供电的 USB 集线器。
 
 NOTE: Models prior to Raspberry Pi 4B have known issues which prevent booting with some USB devices.
 
-=== Devices with an EEPROM bootloader
+=== 带有 EEPROM 引导加载程序的设备
 
 [[pi4]]
 
 [[cm4]]
 
-Raspberry Pi 4 and newer flagship series devices and Compute module devices since Compute Module 4 and 4S support USB boot by default, as long as you specify USB boot in the xref:raspberry-pi.adoc#BOOT_ORDER[`BOOT_ORDER`] configuration.
+只要在 xref:raspberry-pi.adoc#BOOT_ORDER[`BOOT_ORDER`] 配置中指定 USB 启动，Raspberry Pi 4 和更新的旗舰系列设备以及 Compute Module 4 和 4S 之后的 Compute Module 设备默认支持 USB 启动。
 
-NOTE: Early editions of Raspberry Pi 4 may require a xref:raspberry-pi.adoc#raspi-config[bootloader update] to boot from USB.
+NOTE: 早期版本的 Raspberry Pi 4 可能需要 xref:raspberry-pi.adoc#raspi-config[bootloader update] 才能从 USB 启动。
 
-NOTE: Early editions of Compute Module 4 may require a xref:compute-module.adoc#update-the-compute-module-bootloader[bootloader update] to boot from USB.
+NOTE: 早期版本的 Compute Module 4 可能需要 xref:compute-module.adoc#update-the-compute-module-bootloader[bootloader update] 才能从 USB 启动。
 
+
+[[raspberry-pi-3b]]
 === Raspberry Pi 3B+
 
-The Raspberry Pi 3B+ supports USB mass storage boot out of the box.
+Raspberry Pi 3B++支持直接使用USB大容量存储启动。
 
+[[raspberry-pi-2b-3a-3b-cm3-cm3-zero-2-w]]
 === Raspberry Pi 2B, 3A+, 3B, CM3, CM3+, Zero 2 W
 
-On Raspberry Pi 2B v1.2, 3A+, 3B, Zero 2 W, and Compute Module 3 and 3+, you must first enable xref:raspberry-pi.adoc#usb-host-boot-mode[USB host boot mode]. This allows USB mass storage boot and xref:raspberry-pi.adoc#network-booting[network boot].
+在 Raspberry Pi 2B v1.2、3A+、3B、Zero 2 W 以及 Compute Module 3 和 3+上，必须首先启用 xref:raspberry-pi.adoc#usb-host-boot-mode[USB主机启动模式]。这允许 USB 大容量存储器启动和 xref:raspberry-pi.adoc#network-booting[网络启动]。
 
-NOTE: Raspberry Pi 3A+ and Zero 2 W do not support network boot.
+NOTE: Raspberry Pi 3A+或Zero 2 W不支持网络启动。
 
-To enable USB host boot mode on these devices, set the USB host bit in OTP (one-time programmable) memory. To set the bit, boot from an SD card where xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] contains the line `program_usb_boot_mode=1`. Once you set the bit, you can boot from USB without the SD card.
+要在这些设备上启用 USB 主机启动模式，请在 OTP（一次性可编程）内存中设置 USB 主机位。要设置该位，请从 SD 卡启动，其中 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 包含 `program_usb_boot_mode=1` 行。一旦设置了该位，就可以不使用 SD 卡而通过 USB 启动。
 
-==== Enable USB host boot mode with OTP
+
+==== 启用带 OTP 的 USB 主机启动模式
 
 [WARNING]
 ====
-Any change you make to OTP (one-time programmable) memory is permanent and cannot be undone.
+对 OTP（一次性可编程）内存所做的任何更改都是永久性的，无法撤销。
 
-On Raspberry Pi 3A+, setting the OTP bit to enable USB host boot mode will permanently prevent that Raspberry Pi from booting in USB device mode.
+在 Raspberry Pi 3A+ 上，设置 OTP 位以启用 USB 主机启动模式将永久阻止 Raspberry Pi 以 USB 设备模式启动。
 ====
 
-Use any SD card flashed with Raspberry Pi OS to program the OTP bit.
+使用任何已刷新 Raspberry Pi OS 的 SD 卡来编程 OTP 位。
 
-To enable USB host boot mode, add the following line to `config.txt`:
+要启用 USB 主机启动模式，请在 `config.txt` 中添加以下一行：
 
 [source,ini]
 ----
 program_usb_boot_mode=1
 ----
 
-Then, use `sudo reboot` to reboot your Raspberry Pi. To check that the OTP has been programmed correctly, run the following command:
+然后，使用 `sudo reboot` 重启 Raspberry Pi。要检查 OTP 编程是否正确，请运行以下命令：
 
 [source,console]
 ----
@@ -56,37 +61,44 @@ $ vcgencmd otp_dump | grep 17:
 17:3020000a
 ----
 
-If the output reads `0x3020000a`, the OTP has been successfully programmed. If you see different output, try the programming procedure again. Make sure there is no blank line at the end of `config.txt`.
+检查是否显示输出 `0x3020000a` 。如果不是，则说明OTP位没有成功编程。在这种情况下，请再次进行编程过程。如果该位仍未设置，这可能表明Raspberry Pi硬件本身存在故障。
 
-You can now boot from a USB mass storage device in the same way as booting from an SD card. See the following section for further information.
 
-=== Boot from USB mass storage
+您现在可以像从SD卡启动一样从USB大容量存储设备启动。有关详细信息，请参阅以下部分。
 
-The xref:getting-started.adoc#installing-the-operating-system[procedure] is the same as for SD cards - flash the USB storage device with the operating system image.
+[[booting-from-usb-mass-storage]]
+=== 从USB大容量存储启动
 
-After preparing the storage device, connect the drive and power up the Raspberry Pi, being aware of the extra USB power requirements of the external drive.
+xref:getting-started.adoc#installing-the-operating-system[过程] 与SD卡相同 - 只需将USB存储设备镜像为操作系统镜像。
 
-After five to ten seconds, the Raspberry Pi should begin booting and show the rainbow splash screen on an attached display. Make sure that you do not have an SD card inserted in the Raspberry Pi, since if you do, it will boot from that first.
+准备好存储设备后，连接驱动器并启动Raspberry Pi，同时了解外部驱动器的额外USB电源要求。
 
-See the xref:raspberry-pi.adoc#raspberry-pi-boot-modes[boot modes documentation] for the boot sequence and alternative boot modes (network, USB device, GPIO or SD boot).
+5到10秒后，Raspberry Pi应该开始启动并在连接的显示器上显示彩虹启动屏幕。确保您没有在Raspberry Pi中插入SD卡，因为如果您这样做了，它将首先启动。
 
-=== Known issues 
+请参阅 xref:raspberry-pi.adoc#raspberry-pi-boot-modes[引导模式文档] 了解引导顺序和替代引导模式（网络、USB设备、GPIO或SD引导）。
 
-* The default timeout for checking bootable USB devices is two seconds. Some flash drives and hard disks power up too slowly. It is possible to extend this timeout to five seconds (add a new file `timeout` to the SD card), but note that some devices take even longer to respond.
-* Some flash drives have a very specific protocol requirement that is not handled by the bootcode and may thus be incompatible.
+=== 已知问题
 
-=== Special `bootcode.bin`-only boot mode
+ 
+* 检查可启动USB设备的默认超时时间为两秒。一些闪存驱动器和硬盘启动速度太慢。可以将此超时时间延长至五秒（向SD卡添加新文件 `timeout` ），但请注意，某些设备需要更长的时间才能响应。
+* 某些闪存驱动器具有非常特定的协议要求，引导代码无法处理，因此可能不兼容。
 
-On Raspberry Pi 2B v1.2, 3A+, 3B and 3B+, if you are unable to use a particular USB device to boot your Raspberry Pi, you can instead use xref:raspberry-pi.adoc#raspberry-pi-boot-modes[`bootcode.bin`-only] boot mode. The Raspberry Pi will still boot from the SD card, but only reads `bootcode.bin` from the SD card; the rest of your operating system lives on the USB device.
+=== 指定的 `bootcode.bin` -仅引导模式
 
-=== Hardware compatibility
+IMPORTANT: 这 *不* 适用于Raspberry Pi 4 Model B。
 
-Before booting from a USB mass storage device, verify that the device works correctly under Linux. Boot using an SD card and plug in the USB mass storage device. This should appear as a removable drive. This is especially important with USB SATA adapters, which may be supported by the bootloader in mass storage mode, but fail if Linux selects https://en.wikipedia.org/wiki/USB_Attached_SCSI[USB Attached SCSI-UAS] mode.
+如果您无法使用特定的USB设备来启动Raspberry Pi，另一种选择（适用于Raspberry Pi2Bv1.2、3A+、3B和3B+）是使用特殊的 xref:raspberry-pi.adoc#raspberry-pi-boot-modes[`bootcode.bin-only`] 启动模式。Raspberry Pi仍将从SD卡启动，但 `bootcode.bin` 是唯一从中读取的文件。
 
-Hard disk drives (HDDs) typically require a powered USB hub. Even if everything appears to work, you may encounter intermittent failures without a powered USB hub.
+[[hardware-compatibility]]
+=== 硬件兼容性
 
-=== Multiple bootable drives
+在尝试从USB大容量存储设备启动之前，建议验证设备在Linux下是否正常工作。使用SD卡启动并插入USB大容量存储设备。这应该显示为可移动驱动器。这对于USB SATA适配器尤其重要，引导加载程序在大容量存储模式下可能支持它，但如果Linux选择 https://en.wikipedia.org/wiki/USB_Attached_SCSI[USB Attached SCSI-UAS]，则会失败。
 
-When searching for a bootable partition, the bootloader scans all USB mass storage devices in parallel and selects the first to respond. If the boot partition does not contain a suitable `start.elf` file, the bootloader attempts the next available device. There is no method for specifying the boot device according to the USB topology; this would slow down boot and adds unnecessary configuration complexity.
+机械硬盘几乎总是需要一个供电的 USB 集线器。即使看起来一切正常，如果没有供电的 USB 集线器，也可能会遇到间歇性故障。
 
-NOTE: Use `config.txt` file xref:config_txt.adoc#conditional-filters[conditional filters] to select alternate firmware in complex device configurations.
+[[multiple-bootable-drives]]
+=== 多个可启动驱动器
+
+在搜索可启动分区时，引导程序会并行扫描所有 USB 大容量存储设备，并选择第一个作出响应的设备。如果引导分区不包含合适的 `start.elf` 文件，则会选择下一个可用设备。  没有根据 USB 拓扑指定启动设备的方法，因为这会减慢启动速度，并增加不必要且难以支持的复杂配置。
+
+NOTE:  `config.txt` 文件 xref:config_txt.adoc#conditional-filters[条件筛选器] 可用于在复杂设备配置中选择备用固件。

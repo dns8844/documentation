@@ -1,11 +1,12 @@
-=== Use multiple cameras
+[[use-multiple-cameras]]
+=== 使用多个摄像头
 
-`rpicam-apps` has basic support for multiple cameras. You can attach multiple cameras to a Raspberry Pi in the following ways:
+`rpicam-apps` 基本支持多个摄像头。您可以通过以下方式将多个摄像头连接到Raspberry Pi：
 
-* For Raspberry Pi Compute Modules, you can connect two cameras directly to a Raspberry Pi Compute Module I/O board. See the xref:../computers/compute-module.adoc#attach-a-camera-module[Compute Module documentation] for further details. With this method, you can _use both cameras simultaneously_.
-* For Raspberry Pi 5, you can connect two cameras directly to the board using the dual MIPI connectors.
-* For other Raspberry Pi devices with a camera port, you can attach two or more cameras with a Video Mux board such as https://www.arducam.com/product/multi-camera-v2-1-adapter-raspberry-pi/[this third-party product]. Since both cameras are attached to a single Unicam port, _only one camera may be used at a time_.
+* 对于 Raspberry Pi 计算模块，您可以将两个摄像头直接连接到 Raspberry Pi 计算模块的 I/O 板上。详情请参阅 xref:../computers/compute-module.adoc#attach-a-camera-module[计算模块文档]。使用这种方法，您可以 _同时使用两个摄像头_。    
+* 对于Raspberry Pi 5，您可以使用双MIPI连接器将两个摄像头直接连接到电路板。
+* 对于其他带有摄像头端口的树莓派设备，您可以将两个或多个摄像头与视频多路复用板连接，例如 https://www.arducam.com/product/multi-camera-v2-1-adapter-raspberry-pi/[此第三方产品]。由于两个摄像头都连接到单个Unicam端口，_同时只能有一个摄像头在_使用。
 
-To list all the cameras available on your platform, use the xref:camera_software.adoc#list-cameras[`list-cameras`] option. To choose which camera to use, pass the camera index to the xref:camera_software.adoc#camera[`camera`] option.
+要列出平台上所有可用的相机，请使用 xref:camera_software.adoc#list-cameras[`list-cameras` ] 选项。要选择要使用的相机，请将相机索引传递给 xref:camera_software.adoc#camera[ `相机`] 选项。
 
-NOTE: `libcamera` does not yet provide stereoscopic camera support. When running two cameras simultaneously, they must be run in separate processes. This means there is no way to synchronise sensor framing or 3A operation between them.  As a workaround, you could synchronise the cameras through an external sync signal for the HQ (IMX477) camera, and switch the 3A to manual mode if necessary.
+NOTE:  `libcamera` 尚不提供立体相机支持。当同时运行两个相机时，它们必须在不同的进程中运行。这意味着它们之间无法同步传感器取景或3A操作。作为一种解决方法，您可以通过HQ（IMX477）相机的外部同步信号同步相机，并在必要时将3A切换到手动模式。

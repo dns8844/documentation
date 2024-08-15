@@ -1,87 +1,87 @@
-== Play audio and video
+[[playing-audio-and-video]]
+== 播放音频和视频
 
-Raspberry Pi OS comes with https://www.videolan.org/[VLC media player] pre-installed. You can use VLC to play video and audio files. VLC uses hardware acceleration in Raspberry Pi OS, and supports many popular audio and video file formats.
+Raspberry Pi OS 预装了 https://www.videolan.org/[VLC 媒体播放器]。您可以使用 VLC 播放视频和音频文件。VLC 在 Raspberry Pi OS 中使用硬件加速，支持许多流行的音频和视频文件格式。
 
-=== VLC media player
+=== VLC 媒体播放器
 
 ==== VLC GUI
 
-To play an audio or video file from Raspberry Pi Desktop, double-click on a file in the file manager. This automatically launches VLC to play the file. Alternatively, from the *Sound & Video* menu, launch *VLC Media Player*. Then, from the *Media* menu, select *Open File...* and navigate to the file you want to play.
+要从 Raspberry Pi Desktop 播放音频或视频文件，请在文件管理器中双击文件。这会自动启动 VLC 播放该文件。或者，从 *Sound & Video* 菜单，启动 *VLC Media Player*。然后，从 *Media* 菜单中选择 *Open File...*，并导航到要播放的文件。
 
-By default, Raspberry Pi OS sends audio to your monitor over HDMI. To output audio to a different interface, such as the headphone jack or USB speakers, right-click on the speaker icon in the system tray and select an option.
+默认情况下，Raspberry Pi OS 通过 HDMI 将音频发送到显示器。要将音频输出到耳机插孔或 USB 扬声器等不同接口，请右键单击系统托盘中的扬声器图标并选择一个选项。
 
 ==== `vlc` CLI
 
-You can also launch VLC from the command line. For the examples below, we used a short clip from Big Buck Bunny. To download this clip from Raspberry Pi, run the following command:
+你也可以通过命令行启动 VLC。在下面的示例中，我们使用了 Big Buck Bunny 的一个短片。要从 Raspberry Pi 上下载该短片，请运行以下命令：
 
 [source,console]
 ----
 $ wget --trust-server-names http://rptl.io/big-buck-bunny
 ----
 
-To play the clip in VLC from the command line, run the following command:
+要在 VLC 中通过命令行播放片段，请运行以下命令：
 
 [source,console]
 ----
 $ vlc big-buck-bunny-1080p.mp4
 ----
 
-To prevent the VLC GUI staying open after your file has finished playing, add the `--play-and-exit` flag:
+要防止 VLC GUI 在文件播放完毕后继续打开，请添加 `--play-and-exit` 标记：
 
 [source,console]
 ----
 $ vlc --play-and-exit big-buck-bunny-1080p.mp4
 ----
 
-To play a video in fullscreen mode (which can result in smoother playback in some circumstances), add the `--fullscreen` flag:
+要以全屏模式播放视频（在某些情况下播放会更流畅），请添加 `--fullscreen` 标记：
 
 [source,console]
 ----
 $ vlc --play-and-exit --fullscreen big-buck-bunny-1080p.mp4
 ----
 
-==== Use `cvlc` to play media without a GUI
+==== 使用 `cvlc` 在没有图形用户界面的情况下播放媒体
 
-If you use `cvlc` instead of `vlc` with any of these commands, then the VLC GUI won't be shown:
+如果在这些命令中使用 `cvlc` 而不是 `vlc`，则不会显示 VLC 图形用户界面：
 
 [source,console]
 ----
 $ cvlc --play-and-exit big-buck-bunny-1080p.mp4
 ----
 
-=== Play audio and video on Raspberry Pi OS Lite
-
-Unlike the full version of Raspberry Pi OS, VLC doesn't come pre-installed on Raspberry Pi OS Lite. To play video and audio on Raspberry Pi OS Lite with VLC, install the required packages for playback without a desktop:
+=== 在 Raspberry Pi OS Lite 上播放音频和视频
+与完整版的 Raspberry Pi OS 不同，Raspberry Pi OS Lite 没有预装 VLC。要在 Raspberry Pi OS Lite 上使用 VLC 播放视频和音频，请安装所需的软件包，以便在没有桌面的情况下播放：
 
 [source,console]
 ----
 $ sudo apt install --no-install-recommends vlc-bin vlc-plugin-base
 ----
 
-For the examples below, we used a short audio clip. To download this clip from Raspberry Pi, run the following command:
+在下面的示例中，我们使用了一段简短的音频片段。要从 Raspberry Pi 上下载这个片段，请运行以下命令：
 
 [source,console]
 ----
 $ wget --trust-server-names http://rptl.io/startup-music
 ----
 
-To play the clip in VLC from the command line, run the following command:
+要在 VLC 中通过命令行播放片段，请运行以下命令：
 
 [source,console]
 ----
 $ cvlc --play-and-exit computer-startup-music.mp3
 ----
 
-=== Specify an audio output device
+=== 指定音频输出设备
 
-To force audio output to a particular device, pass the `alsa` value to the the `-A` option to use https://www.alsa-project.org/wiki/Main_Page[ALSA] audio output, and the `--alsa-audio-device` option to specify an audio output device:
+要强制将音频输出到特定设备，可在 `-A` 选项中加入 `alsa` 值以使用 https://www.alsa-project.org/wiki/Main_Page[ALSA] 音频输出，并在 `--alsa-audio-device` 选项中指定音频输出设备：
 
 [source,console]
 ----
 $ cvlc --play-and-exit -A alsa --alsa-audio-device <alsa-device> computer-startup-music.mp3
 ----
 
-Replace the `<alsa-device>` placeholder with one of the following options:
+用以下选项之一替换 `<alsa-device>` 占位符：
 
 |===
 | ALSA device | Description
@@ -98,24 +98,24 @@ Replace the `<alsa-device>` placeholder with one of the following options:
 
 [TIP]
 ====
-Use the following command to get a list of all ALSA devices on your Raspberry Pi:
+使用以下命令获取 Raspberry Pi 上所有 ALSA 设备的列表：
 
 [source,console]
 ----
-$ aplay -L | grep sysdefault
+aplay -L | grep sysdefault
 ----
 ====
 
-=== Specify a video output device
+=== 指定视频输出设备
 
-To force the video output to a particular device, use the `--drm-vout-display` option to specify a video output device:
+要强制将视频输出到特定设备，请使用 `--drm-vout-display` 选项指定视频输出设备：
 
 [source,console]
 ----
 $ cvlc --play-and-exit --drm-vout-display <drm-device> big-buck-bunny-1080p.mp4
 ----
 
-Replace the `<drm-device>` placeholder with one of the following options:
+用以下选项之一替换 `<drm-device>` 占位符：
 
 |===
 | DRM device | Description
@@ -130,7 +130,7 @@ Replace the `<drm-device>` placeholder with one of the following options:
 
 [TIP]
 ====
-Use the following command to get a list of all DRM devices on your Raspberry Pi:
+使用以下命令获取 Raspberry Pi 上所有 DRM 设备的列表：
 
 [source,console]
 ----
@@ -138,18 +138,18 @@ $ kmsprint | grep Connector
 ----
 ====
 
-=== Specify both audio and video output devices
+=== 同时指定音频和视频输出设备
 
-You can combine audio and video output options. For example, to direct video output to the touchscreen, and audio output to the headphone jack, use the following combination of the commands above:
+您可以将音频和视频输出选项结合起来。例如，要将视频输出引向触摸屏，将音频输出引向耳机插孔，请使用上述命令的以下组合：
 
 [source,console]
 ----
 $ cvlc --play-and-exit --fullscreen --drm-vout-display DSI-1 -A alsa --alsa-audio-device sysdefault:CARD=Headphones your_video.mp4
 ----
 
-=== Improve stream playback performance
+=== 提高数据流播放性能
 
-If you have a raw H.264 stream, like those captured from a Raspberry Pi Camera Module, you can improve playback performance in VLC by wrapping the stream inside a container format such as MP4. You can use `ffmpeg` to convert stream content into a container file. For example, the following command converts a stream named `video.h264` to a MP4 container named `video.mp4` at 30fps:
+如果您有原始的 H.264 数据流，例如从 Raspberry Pi 摄像头模块捕获的数据流，您可以通过将数据流封装在 MP4 等容器格式中来提高 VLC 的播放性能。你可以使用 `ffmpeg` 将流内容转换为容器文件。例如，下面的命令将名为 `video.h264` 的数据流以 30fps 的速度转换为名为 `video.mp4` 的 MP4 容器：
 
 [source,console]
 ----

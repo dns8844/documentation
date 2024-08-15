@@ -1,56 +1,59 @@
-== USB boot modes
+[[usb-boot-modes]]
+== USB启动模式
 
-There are two separate boot modes for USB:
+USB 有两种不同的启动模式：
 
-* USB device boot
-* USB host boot
+* USB 设备启动
+* USB 主机启动
 
-The firmware chooses between the two modes at boot time based on the OTP bits. Two bits control USB boot. The first enables USB device boot and is enabled by default; the second enables USB host boot.
+固件会根据 OTP 位在启动时选择这两种模式。有两个位控制 USB 启动。第一个位启用 USB 设备启动，默认为启用；第二个位启用 USB 主机启动。
 
-If the USB host boot mode bit is set, the processor reads the OTGID pin to decide whether to boot as a host (driven to zero as on any Raspberry Pi Model B/B+) or as a device (left floating). The Raspberry Pi Zero has access to the OTGID pin through the USB connector; the Compute Module has access to the OTGID pin on the edge connector.
+如果 USB 主机启动模式位被设置，处理器就会读取 OTGID 引脚，以决定是作为主机启动（与任何 Raspberry Pi Model B/B+ 一样驱动为零）还是作为设备启动（保持浮动）。Raspberry Pi Zero 可以通过 USB 连接器访问 OTGID 引脚；而 Compute Module 则可以访问边缘连接器上的 OTGID 引脚。
 
-Some other OTP bits allow certain GPIO pins to select the boot modes.
+其他一些 OTP 位允许某些 GPIO 引脚选择启动模式。
 
-=== USB device boot mode
+[[usb-device-boot-mode]]
+=== USB设备启动模式
 
-NOTE: USB device boot is available on the xref:raspberry-pi.adoc#compute-module-series[Compute Module series], xref:raspberry-pi.adoc#zero-series[Zero series], and xref:raspberry-pi.adoc#flagship-series[Model A variants of the flagship series].
+NOTE: USB 设备启动在 xref:raspberry-pi.adoc#compute-module-series[计算模块系列]、xref:raspberry-pi.adoc#zero-series[Zero系列] 和 xref:raspberry-pi.adoc#flagship-series[Model A 旗舰系列变体] 上可用。
 
-When this boot mode is activated (usually after a failure to boot from the SD card), the Raspberry Pi puts its USB port into device mode and awaits a USB reset from the host. Example code showing how the host needs to talk to the Raspberry Pi can be found https://github.com/raspberrypi/usbboot[on Github].
+当启动模式被激活时（通常是在从SD卡启动失败后），树莓派将其USB端口置于设备模式，并等待主机的USB重置。可以在 https://github.com/raspberrypi/usbboot[Github] 找到显示主机需要如何与树莓派对话的示例代码。
 
-The host first sends a structure to the device down control endpoint 0. This contains the size and signature for the boot (security is not enabled, so no signature is required). Secondly, code is transmitted down endpoint 1 (`bootcode.bin`). Finally, the device will reply with one of the following codes:
+主机首先通过控制端点 0 向设备发送一个结构，其中包含引导的大小和签名（未启用安全功能，因此不需要签名）。其次，向端点 1 发送代码（bootcode.bin）。 最后，设备将回复一个成功代码：
 
-* `0` - Success
-* `0x80` - Failure
+* `0` - 成功
+* `0x80` - 失败
 
-=== USB host boot mode
+[[usb-host-boot-mode]]
+=== USB主机启动模式
 
-NOTE: Host boot is available on the xref:raspberry-pi.adoc#compute-module-series[Compute Module series since Compute Module 3], xref:raspberry-pi.adoc#zero-series[Zero series since Zero 2 W], Raspberry Pi 2B (version 1.2), Raspberry Pi 3B, and xref:raspberry-pi.adoc#flagship-series[all flagship series devices since Raspberry Pi 3B+]. Raspberry Pi 3A+ supports mass storage boot, but not network boot.
+NOTE: xref:raspberry-pi.adoc#compute-module-series[Compute Module 系列（自 Compute Module 3 起）]、xref:raspberry-pi.adoc#zero-series[Zero 系列（自 Zero 2 W 起）]、Raspberry Pi 2B（1.2 版）、Raspberry Pi 3B 和 xref:raspberry-pi.adoc#flagship-series[所有旗舰系列设备（自 Raspberry Pi 3B+ 起）]支持主机启动。Raspberry Pi 3A+ 支持大容量存储器启动，但不支持网络启动。
 
-USB host boot mode uses the following logic:
+USB主机启动模式遵循以下顺序：
 
-. Enable the USB port and wait for D+ line to be pulled high indicating a USB 2.0 device (we only support USB2.0)
-. If the device is a hub:
-.. Enable power to all downstream ports of the hub
-.. For each port, loop for a maximum of two seconds (or five seconds if `program_usb_boot_timeout=1` has been set)
-... Release from reset and wait for D+ to be driven high to indicate that a device is connected
-... If a device is detected:
-.... Send "Get Device Descriptor"
-..... If `VID == SMSC` && `PID == 9500`
-...... Add device to Ethernet device list
-.... If the class interface is mass storage class
-..... Add device to mass storage device list
-. Else
-.. Enumerate single device
-. Go through mass storage device list
-.. Boot from xref:raspberry-pi.adoc#usb-mass-storage-boot[mass storage device]
-. Go through Ethernet device list
-.. Boot from xref:raspberry-pi.adoc#network-booting[Ethernet]
+* 启用USB端口并等待D+线拉高表示USB 2.0设备（我们只支持USB2.0）
+* 如果设备是集线器：
+ ** 为枢纽的所有下游端口供电
+ ** 对于每个端口，循环最多两秒（如果设置了 `program_usb_boot_timeout=1` ，则为五秒）
+  *** 从复位释放并等待D+被调高以指示设备已连接
+  *** 如果检测到设备：
+   **** 发送 `获取设备描述符` 
+    ***** 如果 VID == SMSC && PID == 9500
+     ****** 将设备添加到以太网设备列表
+   **** 如果类接口==大量储存类别
+    ***** 将设备添加到大容量存储设备列表
+* 否则
+ ** 枚举单个设备
+* 通过大容量存储设备列表
+ **从 xref:raspberry-pi.adoc#usb-mass-storage-boot[大容量存储设备] 启动
+* 通过以太网设备列表
+ ** 从 xref:raspberry-pi.adoc#network-booting[Ethernet] 启动
 
-On Raspberry Pi 3B, 3A+, and 3B+, host boot is disabled by default. To enable USB host boot, add a line containing `program_usb_boot_mode=1` to the end of xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`].
+在 Raspberry Pi 3B、3A+ 和 3B+ 上，主机启动默认为禁用。要启用 USB 主机启动，请在 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 的末尾添加一行包含 `program_usb_boot_mode=1` 的内容。
 
 [WARNING]
 ====
-Any change you make to the OTP is permanent and cannot be undone.
+您对 OTP 所做的任何更改都是永久性的，无法撤销。
 
-On Raspberry Pi 3A+, setting the OTP bit to enable USB host boot mode will permanently prevent that Raspberry Pi from booting in USB device mode.
+在 Raspberry Pi 3A+ 上，将 OTP 位设置为启用 USB 主机启动模式将永久阻止 Raspberry Pi 以 USB 设备模式启动。
 ====

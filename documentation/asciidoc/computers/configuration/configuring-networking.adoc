@@ -1,82 +1,88 @@
-== Networking
+[[configuring-networking]]
+== 配置网络
 
-Raspberry Pi OS provides a graphical user interface (GUI) for setting up wireless connections. Users of Raspberry Pi OS Lite and headless machines can set up wireless networking from the command line with https://networkmanager.dev/docs/api/latest/nmcli.html[`nmcli`].
+Raspberry Pi OS提供了用于设置无线连接的图形用户交互界面（GUI），Raspberry Pi OS Lite和headless机器的用户可以通过 https://networkmanager.dev/docs/api/latest/nmcli.html[`nmcli`] 从命令行设置无线网络。
 
-NOTE: Starting with Raspberry Pi OS _Bookworm_, Network Manager is the default networking configuration tool. Earlier versions of Raspberry Pi OS used `dhcpd` and other tools for network configuration.
+NOTE: 从 Raspberry Pi OS _Bookworm_ 开始，网络管理器是默认的网络配置工具。早期版本的 Raspberry Pi OS 使用 `dhcpd` 和其他工具进行网络配置。
+=== 连接到无线网络
 
-=== Connect to a wireless network
+[[using-the-desktop]]
+==== 使用桌面
 
-==== via the desktop
+通过菜单栏右端的网络图标访问网络管理器。如果您使用的是具有内置无线连接的Raspberry Pi，或者如果插入了无线加密狗，请单击此图标以显示可用无线网络列表。如果您看到消息'No APs found - scanning...'，请等待几秒钟，网络管理器应该会找到您的网络。
 
-Access Network Manager via the network icon at the right-hand end of the menu bar. If you are using a Raspberry Pi with built-in wireless connectivity, or if a wireless dongle is plugged in, click this icon to bring up a list of available wireless networks. If you see the message 'No APs found - scanning...', wait a few seconds, and Network Manager should find your network.
-
-NOTE: Raspberry Pi devices that support dual-band wireless (Raspberry Pi 3B+, Raspberry Pi 4, Compute Module 4, Raspberry Pi 400 and Raspberry Pi 5) automatically disable networking until a you assign a wireless LAN country. To set a wireless LAN country, open the Raspberry Pi Configuration application from the Preferences menu, select *Localisation* and select your country from the menu.
+NOTE: 支持双频无线的树莓派设备（Raspberry Pi 3B+, Raspberry Pi 4, Compute Module 4, Raspberry Pi 400 和 Raspberry Pi 5）会自动禁用网络，直到您分配无线局域网国家。要设置无线局域网国家，请从首选项菜单中打开树莓派配置应用程序，选择 *Localisation* 并从菜单中选择您的国家。
 
 image::images/wifi2.png[wifi2]
 
-The icons on the right show whether a network is secured or not, and give an indication of signal strength. Click the network that you want to connect to. If the network is secured, a dialogue box will prompt you to enter the network key:
+右侧的图标显示网络是否安全，并给出信号强度的指示。单击您要连接的网络。如果网络是安全的，一个对话框将提示您输入网络键：
 
 image::images/key.png[key]
 
-Enter the key and click *OK*, then wait a couple of seconds. The network icon will flash briefly to show that a connection is being made. When connected, the icon will stop flashing and show the signal strength.
+输入键并单击 *OK*，然后等待几秒钟。网络图标将短暂闪烁以显示正在建立连接。连接后，图标将停止闪烁并显示信号强度。
 
-===== Connect to a hidden network
 
+===== 连接到隐藏网络
+
+要使用隐藏网络，请导航至网络菜单中的 *高级选项* > *连接到隐藏的 Wi-Fi 网络*：
 To use a hidden network, navigate to *Advanced options* > *Connect to a hidden Wi-Fi network* in the network menu:
 
-image::images/network-hidden.png[the connect to a hidden wi-fi network option in advanced options]
+image::images/network-hidden.png[高级选项中的连接到隐藏的wi-fi网络选项]
 
-Then, enter the SSID for the hidden network. Ask your network administrator which type of security your network uses; while most home networks currently use WPA and WPA2 personal security, public networks sometimes use WPA and WPA2 enterprise security. Select the security type for your network, and enter your credentials:
+然后，输入隐藏网络的SSID。询问您的网络管理员您的网络使用哪种类型的安全性；虽然大多数家庭网络目前使用WPA和WPA2个人安全性，但公共网络有时使用WPA和WPA2企业安全性。选择您网络的安全类型，然后输入您的密码：
 
-image::images/network-hidden-authentication.png[hidden wi-fi network authentication]
+image::images/network-hidden-authentication.png[隐藏wi-fi网络认证]
 
-Click the *Connect* button to initiate the network connection.
+单击 *Connect* 按钮以启动网络连接。
 
 [[wireless-networking-command-line]]
-==== via the command line
+==== 使用命令行
 
-This guide will help you configure a wireless connection on your Raspberry Pi from a terminal without using graphical tools. No additional software is required.
+本指南将帮助您在不使用图形工具的情况下从终端在Raspberry Pi上配置无线连接。不需要额外的软件。
 
-NOTE: This guide should work for WEP, WPA, WPA2, or WPA3 networks, but may not work for enterprise networks.
+NOTE: 本指南应适用于WEP、WPA、WPA2或WPA3网络，但可能不适用于企业网络。
 
-===== Enable wireless networking
+[[enable-wireless-networking]]
+===== 启用无线网络
 
-On a fresh install, you must specify the country where you use your device. This allows your device to choose the correct frequency bands for 5GHz networking. Once you have specified a wireless LAN country, you can use your Raspberry Pi's built-in wireless networking module.
+重新安装后，您必须指定使用设备的国家/地区。这允许您的设备为5GHz网络选择正确的频段。指定无线LAN国家/地区后，您可以使用Raspberry Pi的内置无线网络模块。
 
-To do this, set your wireless LAN country with the command line `raspi-config` tool. Run the following command:
+为此，请使用命令行 `raspi-config` 工具设置您的无线LAN国家/地区。运行以下命令：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-Select the *Localisation options* menu item using the arrow keys. Choose the *WLAN country* option.
-Pick your country from the dropdown using the arrow keys. Press `Enter` to select your country.
+使用箭头键选择 *Localisation options* 菜单项。选择 *WLAN country* 选项。
+使用箭头键从下拉列表中选择您的国家/地区。按 `Enter` 选择您的国家/地区。
 
-You should now have access to wireless networking. Run the following command to check if your Wi-Fi radio is enabled:
+您现在应该可以访问无线网络。运行以下命令以检查您的Wi-Fi是否已启用：
 
 [source,console]
 ----
 $ nmcli radio wifi
 ----
 
-If this command returns the text "enabled", you're ready to configure a connection. If this command returns "disabled", try enabling Wi-Fi with the following command:
+
+如果此命令返回文本 "enabled"，则您已准备好配置连接。如果此命令返回 "disabled"，请尝试使用以下命令启用Wi-Fi：
 
 [source,console]
 ----
 $ nmcli radio wifi on
 ----
 
-===== Find networks
+[[find-networks]]
+===== 查找网络
 
-To scan for wireless networks, run the following command:
+要扫描无线网络，请运行以下命令：
 
 [source,console]
 ----
 $ nmcli dev wifi list
 ----
 
-You should see output similar to the following:
+您应该会看到类似于以下内容的输出：
 
 ----
 IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS  SECURITY
@@ -86,31 +92,33 @@ IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS
         B4:2A:0E:64:BD:BE  Example         Infra  6     195 Mbit/s  37      **    WPA1 WPA2
 ----
 
-Look in the "SSID" column for the name of the network you would like to connect to. Use the SSID and a password to connect to the network.
 
-===== Connect to a network
+在"SSID"列中查找您要连接的网络名称。使用SSID和密码连接到网络。
 
-Run the following command to configure a network connection, replacing the `<example_ssid>` placeholder with the name of the network you're trying to configure:
+[[connect-to-a-network]]
+===== 连接网络
+
+运行以下命令配置网络连接，将"<example_ssid>"占位符替换为要配置的网络名称：
 
 [source,console]
 ----
 $ sudo nmcli --ask dev wifi connect <example_ssid>
 ----
 
-Enter your network password when prompted.
+根据提示输入网络密码。
 
-Your Raspberry Pi should automatically connect to the network once you enter your password.
+输入密码后，Raspberry Pi 应该会自动连接网络。
 
-If you see error output that claims that "Secrets were required, but not provided", you entered an incorrect password. Run the above command again, carefully entering your password.
+如果出现 "Secrets were required, but not provided"（需要密码，但未提供）的错误输出，说明输入的密码不正确。再次运行上述命令，小心输入密码。
 
-To check if you're connected to a network, run the following command:
+要检查是否已连接到网络，请运行以下命令：
 
 [source,console]
 ----
 $ nmcli dev wifi list
 ----
 
-You should see output similar to the following:
+您应该会看到类似于以下内容的输出：
 
 ----
 IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS  SECURITY
@@ -120,40 +128,42 @@ IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS
         B4:2A:0E:64:BD:BE  Example         Infra  6     195 Mbit/s  37      **    WPA1 WPA2
 ----
 
-Check for an asterisk (`*`) in the "IN-USE" column; it should appear in the same row as the SSID of the network you intended to connect to.
+检查"IN-USE"列中的星号 ( `*` ) ；它应该与连接上的网络SSID出现在同一行中。
 
-NOTE: You can manually edit your connection configurations in the `/etc/NetworkManager/system-connections/` directory.
+NOTE: 您可以在 `/etc/NetworkManager/system-connections/` 目录中手动编辑您的连接配置。
 
-===== Connect to an unsecured network
+[[connect-to-an-unsecured-network]]
+===== 连接到不安全的网络
 
-If the network you are connecting to does not use a password, run the following command:
+如果连接的网络不使用密码，请运行以下命令：
 
 [source,console]
 ----
 $ sudo nmcli dev wifi connect <example_ssid>
 ----
 
-WARNING: Unsecured wireless networks can put your personal information at risk. Whenever possible, use a secured wireless network or VPN.
+WARNING: 不安全的无线网络会将您的个人信息置于危险之中。尽可能使用安全的无线网络或 VPN。
 
-===== Connect to a hidden network
+===== 连接到隐藏网络
 
-If you are using a hidden network, specify the "hidden" option with a value of "yes" when you run `nmcli`:
+如果使用的是隐藏网络，请在运行 `nmcli` 时将 "hidden"（隐藏）选项指定为 "yes"（是）：
 
 [source,console]
 ----
 $ sudo nmcli --ask dev wifi connect <example_ssid> hidden yes
 ----
 
-===== Set network priority
+===== 设置网络优先级
 
-If your device detects more than one known networks at the same time, it could connect any of the detected known networks. Use the priority option to force your Raspberry Pi to prefer certain networks. Your device will connect to the network that is in range with the highest priority. Run the following command to view the priority of known networks:
+
+如果您的设备同时检测到多个已知网络，它可以连接任何检测到的已知网络。使用优先级选项强制您的Raspberry Pi选择某些网络。您的设备将连接到具有最高优先级的范围内的网络。运行以下命令查看已知网络的优先级：
 
 [source,console]
 ----
 $ nmcli --fields autoconnect-priority,name connection
 ----
 
-You should see output similar to the following:
+您应该会看到类似于以下内容的输出：
 
 ----
 AUTOCONNECT-PRIORITY  NAME
@@ -164,15 +174,15 @@ AUTOCONNECT-PRIORITY  NAME
 -999                  Wired connection 1
 ----
 
-Use the `nmcli connection modify` command to set the priority of a network.
-The following example command sets the priority of a network named "Pi Towers" to `10`:
+使用 `nmcli connection modify` 命令设置网络的优先级。
+以下示例命令将名为"Pi Towers"的网络的优先级设置为 `10` ：
 
 [source,console]
 ----
 $ nmcli connection modify "Pi Towers" connection.autoconnect-priority 10
 ----
 
-Your device will always try to connect to the in-range network with the highest non-negative priority value. You can also assign a network a negative priority; your device will only attempt to connect to a negative priority network if no other known network is in range. For example, consider three networks:
+您的设备将始终尝试连接到具有最高非负优先级值的范围内网络。您也可以为网络分配负优先级；只有当范围内没有其他已知网络时，您的设备才会尝试连接到负优先级网络。例如，考虑三个网络：
 
 ----
 AUTOCONNECT-PRIORITY  NAME
@@ -182,15 +192,17 @@ AUTOCONNECT-PRIORITY  NAME
 1000                  dog
 ----
 
-* If all of these networks were in range, your device would first attempt to connect to the "dog" network.
-* If connection to the "dog" network fails, your device would attempt to connect to the "cat" network.
-* If connection to the "cat" network fails, your device would attempt to connect to the "rabbit" network.
-* If connection to the "rabbit" network fails, and your device detects no other known networks, your device will attempt to connect to the "snake" network.
+* 如果所有这些网络都在范围内，您的设备将首先尝试连接到 "dog" 网络。
+* 如果与 "dog" 网络的连接失败，您的设备将尝试连接到 "cat" 网络。
+* 如果与 "cat" 网络的连接失败，您的设备将尝试连接到 "rabbit" 网络。
+* 如果与 "rabbit" 网络的连接失败，并且您的设备没有检测到其他已知网络，您的设备将尝试连接到 "snake" 网络。
 
-=== Configure DHCP
+[[configure-dhcp]]
+=== 配置DHCP
 
-By default, Raspberry Pi OS attempts to automatically configure all network interfaces by DHCP, falling back to automatic private addresses in the range 169.254.0.0/16 if DHCP fails.
+默认情况下，Raspberry Pi OS会尝试通过DHCP自动配置所有网络接口，如果DHCP失败，则会回退到169.254.0.0/16范围内的自动私有地址。
 
-=== Assign a static IP address
+[[assign-a-static-ip-address]]
+=== 设置静态IP地址
 
-To allocate a static IP address to your Raspberry Pi, reserve an address for it on your router. Your Raspberry Pi will continue to have its address allocated via DHCP, but will receive the same address each time. A "fixed" address can be allocated by associating the MAC address of your Raspberry Pi with a static IP address in your DHCP server.
+要为 Raspberry Pi 分配静态 IP 地址，请在路由器上为它保留一个地址。你的 Raspberry Pi 将继续通过 DHCP 分配地址，但每次收到的地址都是一样的。通过将 Raspberry Pi 的 MAC 地址与 DHCP 服务器中的静态 IP 地址关联，可以分配一个 "固定 "地址。

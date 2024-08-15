@@ -1,32 +1,35 @@
-=== Post-Processing with TensorFlow Lite
+[[post-processing-with-tensorflow-lite]]
+=== 使用TensorFlow Lite进行后处理
 
-==== Prerequisites
+[[prerequisites]]
+==== 先决条件
 
-These stages require TensorFlow Lite (TFLite) libraries that export the {cpp} API. TFLite doesn't distribute libraries in this form, but you can download and install a version that exports the API from https://lindevs.com/install-precompiled-tensorflow-lite-on-raspberry-pi/[lindevs.com].
+这些阶段需要导出 {cpp} API 的 TensorFlow Lite (TFLite) 库。API 的库。TFLite 不发布这种形式的库，但您可以从 https://lindevs.com/install-precompiled-tensorflow-lite-on-raspberry-pi/[lindevs.com] 下载并安装导出 API 的版本。
 
-After installing, you must xref:camera_software.adoc#build-libcamera-and-rpicam-apps[recompile `rpicam-apps` with TensorFlow Lite support].
+安装后，您必须 xref:camera_software.adoc#build-libcamera-and-rpicam-apps[使用TensorFlow Lite支持重新编译 `rpicam-apps` ]。
 
-==== `object_classify_tf` stage
+[[object_classify_tf-stage]]
+==== `object_classify_tf` 阶段
 
-Download: https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224_quant.tgz[]
+下载: https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224_quant.tgz[]
 
-`object_classify_tf` uses a Google MobileNet v1 model to classify objects in the camera image. This stage requires a https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_1.0_224_frozen.tgz[`labels.txt` file].
+`object_classify_tf` 使用 Google MobileNet v1 模型对相机图像中的对象进行分类。此阶段需要 https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_1.0_224_frozen.tgz[ `labels.txt` 文件]。
 
-You can configure this stage with the following parameters:
+您可以使用以下参数配置此阶段：
 
 [cols="1,3"]
 |===
-| `top_n_results` | The number of results to show
-| `refresh_rate` | The number of frames that must elapse between model runs
-| `threshold_high` | Confidence threshold (between 0 and 1) where objects are considered as being present
-| `threshold_low` | Confidence threshold which objects must drop below before being discarded as matches
-| `model_file` | Filepath of the TFLite model file
-| `labels_file` | Filepath of the file containing the object labels
-| `display_labels` | Whether to display the object labels on the image; inserts `annotate.text` metadata for the `annotate_cv` stage to render
-| `verbose` | Output more information to the console
+| `top_n_results` | 要显示的结果数
+| `refresh_rate` | 模型运行之间必须经过的帧数
+| `threshold_high` | 对象被认为存在的置信度阈值（介于0和1之间）
+| `threshold_low` | 对象在作为匹配项丢弃之前必须低于的置信度阈值
+| `model_file` | TFLite模型文件的文件路径
+| `labels_file` | 包含对象标签的文件的文件路径
+| `display_labels` | 是否在图像上显示对象标签；插入 `annotate.text` 元数据以供 `annotate_cv` 阶段渲染
+| `verbose` | 向控制台输出更多信息
 |===
 
-Example `object_classify_tf.json` file:
+示例 `object_classify_tf.json` 文件：
 
 [source,json]
 ----
@@ -51,42 +54,43 @@ Example `object_classify_tf.json` file:
 }
 ----
 
-The stage operates on a low resolution stream image of size 224×224.
-Run the following command to use this stage file with `rpicam-hello`:
+该阶段在尺寸为 224×224 的低分辨率流图像上运行。
+运行以下命令，在 `rpicam-hello` 中使用该舞台文件：
 
 [source,console]
 ----
 $ rpicam-hello --post-process-file object_classify_tf.json --lores-width 224 --lores-height 224
 ----
 
-.Object classification of a desktop computer and monitor.
-image::images/classify.jpg[Object classification of a desktop computer and monitor]
+.台式计算机和显示器的对象分类。
+image::images/classify.jpg[台式计算机和显示器的对象分类]
 
-==== `pose_estimation_tf` stage
+[[pose_estimation_tf-stage]]
+==== `pose_estimation_tf` 阶段
 
-Download: https://github.com/Qengineering/TensorFlow_Lite_Pose_RPi_32-bits[]
+下载: https://github.com/Qengineering/TensorFlow_Lite_Pose_RPi_32-bits[]
 
-`pose_estimation_tf` uses a Google MobileNet v1 model to detect pose information.
+`pose_estimation_tf` 使用Google MobileNet v1模型来检测姿势信息。
 
-You can configure this stage with the following parameters:
-
-[cols="1,3"]
-|===
-| `refresh_rate` | The number of frames that must elapse between model runs
-| `model_file` | Filepath of the TFLite model file
-| `verbose` | Output extra information to the console
-|===
-
-Use the separate `plot_pose_cv` stage to draw the detected pose onto the main image.
-
-You can configure the `plot_pose_cv` stage with the following parameters:
+您可以使用以下参数配置此阶段：
 
 [cols="1,3"]
 |===
-| `confidence_threshold` | Confidence threshold determining how much to draw; can be less than zero
+| `refresh_rate` | 模型运行之间必须经过的帧数
+| `model_file` | TFLite模型文件的文件路径
+| `verbose` | 输出额外的信息到控制台
 |===
 
-Example `pose_estimation_tf.json` file:
+使用单独的 `plot_pose_cv` 阶段将检测到的姿势绘制到主图像上。
+
+您可以使用以下参数配置plot_pose_cv阶段：
+
+[cols="1,3"]
+|===
+| `confidence_threshold` | 确定抽取多少的置信度阈值；可以小于零
+|===
+
+示例 `pose_estimation_tf.json` 文件：
 
 [source,json]
 ----
@@ -101,47 +105,47 @@ Example `pose_estimation_tf.json` file:
 }
 ----
 
-The stage operates on a low resolution stream image of size 257×257. **Because YUV420 images must have even dimensions, round up to 258×258 for YUV420 images.**
+此阶段在尺寸为257×257的低分辨率流图像上运行。**因为YUV420图像必须具有均匀的尺寸，所以对于YUV420图像，取整为258×258。**
 
-Run the following command to use this stage file with `rpicam-hello`:
+运行以下命令以将此阶段文件与 `rpicam-hello` 一起使用：
 
 [source,console]
 ----
 $ rpicam-hello --post-process-file pose_estimation_tf.json --lores-width 258 --lores-height 258
 ----
 
-.Pose estimation of an adult human male.
-image::images/pose.jpg[Pose estimation of an adult human male]
+.一个成年男性的姿势估计。
+image::images/pose.jpg[一个成年人类男性的姿势估计]
 
-==== `object_detect_tf` stage
+[[object_detect_tf-stage]]
+==== `object_detect_tf` 阶段
 
-Download: https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip[]
+下载: https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip[]
 
-`object_detect_tf` uses a Google MobileNet v1 SSD (Single Shot Detector) model to detect and label objects.
+`object_detect_tf` 使用Google MobileNet v1 SSD（单发探测器）模型来检测和标记对象。
 
-You can configure this stage with the following parameters:
-
-[cols="1,3"]
-|===
-| `refresh_rate` | The number of frames that must elapse between model runs
-| `model_file` | Filepath of the TFLite model file
-| `labels_file` | Filepath of the file containing the list of labels
-| `confidence_threshold` | Confidence threshold before accepting a match
-| `overlap_threshold` | Determines the amount of overlap between matches for them to be merged as a single match.
-| `verbose` | Output extra information to the console
-|===
-
-Use the separate `object_detect_draw_cv` stage to draw the detected objects onto the main image.
-
-You can configure the `object_detect_draw_cv` stage with the following parameters:
+您可以使用以下参数配置此阶段：
 
 [cols="1,3"]
 |===
-| `line_thickness` | Thickness of the bounding box lines
-| `font_size` | Size of the font used for the label
+| `refresh_rate` | 模型运行之间必须经过的帧数
+| `model_file` | TFLite模型文件的文件路径
+| `confidence_threshold` | 接受匹配前的置信度阈值
+| `overlap_threshold` | 确定要合并为单个匹配项的匹配项之间的重叠量。
+| `verbose` | 输出额外的信息到控制台
 |===
 
-Example `object_detect_tf.json` file:
+使用单独的 `object_detect_draw_cv` 阶段将检测到的对象绘制到主图像上。
+
+您可以使用以下参数配置 `object_detect_draw_cv` 阶段：
+
+[cols="1,3"]
+|===
+| `line_thickness` | 边界框线的厚度
+| `font_size` | 用于标签的字体大小
+|===
+
+示例 `object_detect_tf.json` 文件：
 
 [source,json]
 ----
@@ -161,37 +165,38 @@ Example `object_detect_tf.json` file:
 }
 ----
 
-The stage operates on a low resolution stream image of size 300×300. Run the following command, which passes a 300×300 crop to the detector from the centre of the 400×300 low resolution image, to use this stage file with `rpicam-hello`:
+此阶段在 300×300 的低分辨率流图像上运行。运行以下命令，从 400×300 的低分辨率图像中心向检测器传递 300×300 的裁剪图像，即可将该阶段文件与 `rpicam-hello` 一起使用：
 
 [source,console]
 ----
 $ rpicam-hello --post-process-file object_detect_tf.json --lores-width 400 --lores-height 300
 ----
 
-.Detecting apple and cat objects.
-image::images/detection.jpg[Detecting apple and cat objects]
+.检测苹果和猫。
+image::images/detection.jpg[检测苹果和猫]
 
-==== `segmentation_tf` stage
+[[segmentation_tf-stage]]
+==== `segmentation_tf` 阶段
 
-Download: https://tfhub.dev/tensorflow/lite-model/deeplabv3/1/metadata/2?lite-format=tflite[]
+下载: https://tfhub.dev/tensorflow/lite-model/deeplabv3/1/metadata/2?lite-format=tflite[]
 
-`segmentation_tf` uses a Google MobileNet v1 model. This stage requires a label file, found at the `assets/segmentation_labels.txt`.
+`segmentation_tf` 使用Google MobileNet v1模型。此阶段需要一个标签文件，位于 `assets/segmentation_labels.txt` 。
 
-This stage runs on an image of size 257×257. Because YUV420 images must have even dimensions, the low resolution image should be at least 258 pixels in both width and height. The stage adds a vector of 257×257 values to the image metadata where each value indicates the categories a pixel belongs to. You can optionally draw a representation of the segmentation into the bottom right corner of the image.
+此阶段在大小为257×257的图像上运行。由于YUV420图像必须具有偶数尺寸，因此低分辨率图像的宽度和高度应至少为258像素。阶段将257×257值的向量添加到图像元数据中，其中每个值表示像素所属的类别。您可以选择在图像的右下角绘制分割的表示。
 
-You can configure this stage with the following parameters:
+您可以使用以下参数配置此阶段：
 
 [cols="1,3"]
 |===
-| `refresh_rate` | The number of frames that must elapse between model runs
-| `model_file` | Filepath of the TFLite model file
-| `labels_file` | Filepath of the file containing the list of labels
-| `threshold` | When verbose is set, prints when the number of pixels with any label exceeds this number
-| `draw` | Draws the segmentation map into the bottom right hand corner of the image
-| `verbose` | Output extra information to the console
+| `refresh_rate` | 模型运行之间必须经过的帧数
+| `model_file` | TFLite模型文件的文件路径
+| `labels_file` | 包含标签列表的文件路径
+| `threshold` | 设置详细时，当任何标签的像素数超过此数时打印
+| `draw` | 将分割图绘制到图像的右下角
+| `verbose` | 输出额外的信息到控制台
 |===
 
-Example `segmentation_tf.json` file:
+示例 `segmentation_tf.json` 文件：
 
 [source,json]
 ----
@@ -207,14 +212,15 @@ Example `segmentation_tf.json` file:
 }
 ----
 
-This example takes a camera image and reduces it to 258×258 pixels in size. This stage even works when squashing a non-square image without cropping. This example enables the segmentation map in the bottom right hand corner.
+此示例获取相机图像并将其缩小到258×258像素大小。此阶段甚至在不裁剪的情况下压缩非方形图像时也有效。此示例启用右下角的分割图。
 
-Run the following command to use this stage file with `rpicam-hello`:
+运行以下命令以将此阶段文件与 `rpicam-hello` 一起使用：
 
 [source,console]
 ----
 $ rpicam-hello --post-process-file segmentation_tf.json --lores-width 258 --lores-height 258 --viewfinder-width 1024 --viewfinder-height 1024
 ----
 
-.Running segmentation and displaying the results on a map in the bottom right.
-image::images/segmentation.jpg[Running segmentation and displaying the results on a map in the bottom right]
+
+.运行分割并在右下角的分割图上显示结果。
+image::images/segmentation.jpg[运行分割并在右下角的分割图上显示结果]

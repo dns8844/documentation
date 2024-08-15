@@ -1,66 +1,67 @@
 [[nfs]]
-== Network File System (NFS)
+== 网络文件系统 (NFS)
 
-Network File System (NFS) allows you to share a directory located on one networked computer with other computers or devices on the same network. The computer where the directory is located is called the *server*, and computers or devices connecting to that server are called clients. Clients usually `mount` the shared directory to make it a part of their own directory structure. The shared directory is an example of a shared resource or network share.
+网络文件系统 (NFS) 允许您与同一网络上的其他计算机或设备共享位于一台联网计算机上的目录。目录所在的计算机称为 *服务器*，连接到该服务器的计算机或设备称为客户端。客户端通常 `mount` 共享目录，使其成为其自身目录结构的一部分。共享目录是共享资源或网络共享的一个示例。
 
-NFS is a popular way to create a simple NAS (Network-attached storage) in a Linux/Unix environment.
+NFS 是在 Linux/Unix 环境中创建简单 NAS（网络附加存储）的流行方法。
 
-An NFS is perhaps best suited to more permanent network-mounted directories, such as `/home` directories or regularly-accessed shared resources. If you want a network share that guest users can easily connect to, Samba is better suited to the task. Tools to temporarily mount and detach from Samba shares are more readily available across operating systems.
+NFS 可能最适合更永久的网络挂载目录，例如 `/home` 目录或经常访问的共享资源。如果您想要一个来宾用户可以轻松连接的网络共享，Samba 更适合这项任务。临时挂载和分离 Samba 共享的工具在各个操作系统中都更容易获得。
 
-Before deploying an NFS, you should be familiar with:
+在部署 NFS 之前，您应该熟悉：
 
-* Linux file and directory permissions
-* mounting and unmounting filesystems
+* Linux 文件和目录权限
+* 挂载和卸载文件系统
 
-=== Set up a basic NFS server
+[[set-up-a-basic-nfs-server]]
+=== 设置基本 NFS 服务器
 
-Install the packages required using the command below:
+使用以下命令安装所需的软件包：
 
 [source,console]
 ----
 $ sudo apt install nfs-kernel-server
 ----
 
-For easier maintenance, we will isolate all NFS exports in single directory, into which the real directories will be mounted with the `--bind` option.
+为了便于维护，我们将所有 NFS 导出隔离在单个目录中，并使用 `--bind` 选项将实际目录挂载到该目录中。
 
-Suppose we want to export our users' home directories, which are in `/home/users`. First we create the export filesystem:
+假设我们要导出用户的主目录，这些目录位于 `/home/users` 中。首先，我们创建导出文件系统：
 
 [source,console]
 ----
 $ sudo mkdir -p /export/users
 ----
 
-TIP: If you plan to configure LDAP/NIS authentication, skip the `chmod` step below.
+TIP: 如果您计划配置 LDAP/NIS 身份验证，请跳过下面的 `chmod` 步骤。
 
-Grant `/export` and `/export/users` read, write, and execute permissions (`777`) so you can access the NFS share from the client without LDAP/NIS authentication:
+授予 `/export` 和 `/export/users` 读取、写入和执行权限 ( `777` )，以便您可以从客户端访问 NFS 共享，而无需 LDAP/NIS 身份验证：
 
 [source,console]
 ----
 $ chmod -R 777 777 /export
 ----
 
-Next, mount the real `users` directory with:
+接下来，使用以下命令挂载真正的 `users` 目录：
 
 [source,console]
 ----
 $ sudo mount --bind /home/users /export/users
 ----
 
-To save us from retyping this after every reboot, we add the following line to `/etc/fstab`:
+为了避免每次重启后都重新输入这些内容，我们将以下行添加到 `/etc/fstab` ：
 
 ----
 /home/users    /export/users   none    bind  0  0
 ----
 
-There are three configuration files that relate to an NFS server:
+有三个配置文件与 NFS 服务器相关：
 
-. `/etc/default/nfs-kernel-server`
-. `/etc/default/nfs-common`
-. `/etc/exports`
+.  `/etc/default/nfs-kernel-server` 
+.  `/etc/default/nfs-common` 
+.  `/etc/exports` 
 
-The only important option in `/etc/default/nfs-kernel-server` for now is `NEED_SVCGSSD`. It is set to `"no"` by default, which is fine, because we are not activating NFSv4 security this time.
+目前 `/etc/default/nfs-kernel-server` 中唯一重要的选项是 `NEED_SVCGSSD` 。默认情况下，它设置为 `"no"` ，这很好，因为我们这次不激活 NFSv4 安全性。
 
-In order for the ID names to be automatically mapped, the file `/etc/idmapd.conf` must exist on both the client and the server with the same contents and with the correct domain names. Furthermore, this file should have the following lines in the `Mapping` section:
+为了自动映射 ID 名称，文件 `/etc/idmapd.conf` 必须存在于客户端和服务器上，并且内容相同且域名正确。此外，此文件的 `Mapping` 部分应包含以下行：
 
 ----
 [Mapping]
@@ -69,7 +70,7 @@ Nobody-User = nobody
 Nobody-Group = nogroup
 ----
 
-However, note that the client may have different requirements for the Nobody-User and Nobody-Group. For example, on RedHat variants, it is `nfsnobody` for both. If you're not sure, check via the following commands to see if `nobody` and `nogroup` are there:
+但是，请注意，客户端对 Nobody-User 和 Nobody-Group 可能有不同的要求。例如，在 RedHat 变体上，两者都是 `nfsnobody` 。如果您不确定，请通过以下命令检查是否存在 `nobody` 和 `nogroup` ：
 
 [source,console]
 ----
@@ -77,7 +78,8 @@ $ cat /etc/passwd
 $ cat /etc/group
 ----
 
-This way, server and client do not need the users to share same UID/GUID. For those who use LDAP-based authentication, add the following lines to the `idmapd.conf` of your clients:
+这样，服务器和客户端就不需要用户共享相同的 UID/GUID。对于使用基于 LDAP 的身份验证的用户，请在客户端的 `idmapd.conf` 中添加以下几行：
+
 
 ----
 [Translation]
@@ -85,199 +87,206 @@ This way, server and client do not need the users to share same UID/GUID. For th
 Method = nsswitch
 ----
 
-This will cause `idmapd` to know to look at `nsswitch.conf` to determine where it should look for credential information. If you have LDAP authentication already working, `nsswitch` shouldn't require further explanation.
+这将让 `idmapd` 知道查看 `nsswitch.conf` 以确定应在何处查找凭据信息。如果您的 LDAP 身份验证已在运行，则 `nsswitch` 不需要进一步解释。
 
-To export our directories to a local network `192.168.1.0/24`, add the following two lines to `/etc/exports`:
+要将我们的目录导出到本地网络 `192.168.1.0/24` ，请将以下两行添加到 `/etc/exports` ：
 
 ----
 /export       192.168.1.0/24(rw,fsid=0,insecure,no_subtree_check,async)
 /export/users 192.168.1.0/24(rw,nohide,insecure,no_subtree_check,async)
 ----
 
-==== Portmap lockdown (optional)
+==== Portmap 锁定（可选）
 
-The files on your NFS are open to anyone on the network. As a security measure, you can restrict access to specified clients.
+NFS 上的文件对网络上的任何人都开放。作为一项安全措施，您可以限制对指定客户端的访问。
 
-Add the following line to `/etc/hosts.deny`:
+将以下行添加到 `/etc/hosts.deny` ：
 
 ----
 rpcbind mountd nfsd statd lockd rquotad : ALL
 ----
 
-By blocking all clients first, only clients in `/etc/hosts.allow` (added below) will be allowed to access the server.
+通过首先阻止所有客户端，只有 `/etc/hosts.allow` （下面添加）中的客户端才被允许访问服务器。
 
-Now add the following line to `/etc/hosts.allow`:
+现在将以下行添加到 `/etc/hosts.allow` ：
 
 ----
 rpcbind mountd nfsd statd lockd rquotad : <list of IPv4s>
 ----
 
-where `<list of IPv4s>` is a list of the IP addresses of the server and all clients. (These have to be IP addresses because of a limitation in `rpcbind`, which doesn't like hostnames.) Note that if you have NIS set up, you can just add these to the same line.
+其中 `<list of IPv4s>` 是服务器和所有客户端的 IP 地址列表。(这些必须是 IP 地址，因为 `rpcbind` 有限制，它支持主机名）。请注意，如果已经设置了 NIS，可以直接将这些地址添加到同一行。
 
-Please ensure that the list of authorised IP addresses includes the `localhost` address (`127.0.0.1`), as the startup scripts in recent versions of Ubuntu use the `rpcinfo` command to discover NFSv3 support, and this will be disabled if `localhost` is unable to connect.
+请确保授权 IP 地址列表包含 `localhost` 地址（ `127.0.0.1` ），因为 Ubuntu 最新版本的启动脚本使用 `rpcinfo` 命令来发现 NFSv3 支持，如果 `localhost` 无法连接，该命令将被禁用。
 
-Finally, to make your changes take effect, restart the service:
+最后，要使更改生效，请重新启动服务：
 
 [source,console]
 ----
 $ sudo systemctl restart nfs-kernel-server
 ----
 
-=== Configure an NFS client
+[[configure-an-nfs-client]]
+=== 配置 NFS 客户端
 
-Now that your server is running, you need to set up any clients to be able to access it. To start, install the required packages:
+现在您的服务器正在运行，您需要设置任何客户端以便能够访问它。首先，安装所需的软件包：
 
 [source,console]
 ----
 $ sudo apt install nfs-common
 ----
 
-On the client, we can mount the complete export tree with one command:
+在客户端，我们可以使用一个命令挂载：
 
 [source,console]
 ----
 $ mount -t nfs -o proto=tcp,port=2049 <nfs-server-IP>:/ /mnt
 ----
 
-You can also specify the NFS server hostname instead of its IP address, but in this case you need to ensure that the hostname can be resolved to an IP on the client side. A robust way of ensuring that this will always resolve is to use the `/etc/hosts` file.
+您还可以指定 NFS 服务器主机名而不是其 IP 地址，但在这种情况下，您需要确保主机名可以在客户端解析为 IP。确保始终解析此 IP 的可靠方法是使用 `/etc/hosts` 文件。
 
-Note that `<nfs-server-IP>:/export` is not necessary in NFSv4, as it was in NFSv3. The root export `:/` defaults to export with `fsid=0`.
+请注意，在 NFSv4 中不需要 `<nfs-server-IP>:/export` ，而在 NFSv3 中则不需要。根导出 `:/` 默认为使用 `fsid=0` 导出。
 
-We can also mount an exported subtree with:
+我们还可以使用以下命令挂载导出的子树：
 
 [source,console]
 ----
 $ mount -t nfs -o proto=tcp,port=2049 <nfs-server-IP>:/users /home/users
 ----
 
-To ensure this is mounted on every reboot, add the following line to `/etc/fstab`:
+为确保每次重新启动时都挂载该子树，请在 `/etc/fstab` 中添加以下行：
 
 ----
-<nfs-server-IP>:/   /mnt   nfs    auto  0  0
+<nfs-server-IP>:/ /mnt nfs auto 0 0
 ----
 
-If, after mounting, the entry in `/proc/mounts appears` as `<nfs-server-IP>://` (with two slashes), then you might need to specify two slashes in `/etc/fstab`, or else `umount` might complain that it cannot find the mount.
+如果挂载后， `/proc/mounts` 中的条目显示为 `<nfs-server-IP>://` （带有两个斜杠），则您可能需要在 `/etc/fstab` 中指定两个斜杠，否则 `umount` 可能会抱怨找不到挂载。
 
-==== Portmap lockdown (optional)
+==== 端口映射锁定（可选）
 
-Add the following line to `/etc/hosts.deny`:
+将以下行添加到 `/etc/hosts.deny` ：
 
 ----
 rpcbind : ALL
 ----
 
-By blocking all clients first, only clients in `/etc/hosts.allow` (added below) will be allowed to access the server.
+通过首先阻止所有客户端，只有 `/etc/hosts.allow` （下面添加）中的客户端才被允许访问服务器。
 
-Now add the following line to `/etc/hosts.allow`:
+现在将以下行添加到 `/etc/hosts.allow` ：
 
 ----
 rpcbind : <NFS server IP address>
 ----
 
-where `<NFS server IP address>` is the IP address of the server.
+其中 `<NFS server IP address>` 是服务器的 IP 地址。
 
-=== Configure a complex NFS server
+[[configure-a-complex-nfs-server]]
+=== 配置复杂的 NFS 服务器
 
-NFS user permissions are based on user ID (UID). UIDs of any users on the client must match those on the server in order for the users to have access. The typical ways of doing this are:
+NFS 用户权限基于用户 ID (UID)。客户端上任何用户的 UID 都必须与服务器上的 UID 匹配，用户才能访问。执行此操作的典型方法是：
 
-* Manual password file synchronisation
-* Use of LDAP
-* Use of DNS
-* Use of NIS
+* 手动密码文件同步
+* 使用 LDAP
+* 使用 DNS
+* 使用 NIS
 
-Note that you have to be careful on systems where the main user has root access: that user can change UIDs on the system to allow themselves access to anyone's files. This page assumes that the administrative team is the only group with root access and that they are all trusted. Anything else represents a more advanced configuration, and will not be addressed here.
+请注意，在主用户具有 root 访问权限的系统上，您必须小心：该用户可以更改系统上的 UID，以允许自己访问任何人的文件。本页假设管理团队是唯一具有 root 访问权限的组，并且他们都受到信任。其他任何内容都代表更高级的配置，这里不再赘述。
 
-==== Group permissions
+[[group-permissions]]
+==== 组权限
 
-A user's file access is determined by their membership of groups on the client, not on the server. However, there is an important limitation: a maximum of 16 groups are passed from the client to the server, and if a user is member of more than 16 groups on the client, some files or directories might be unexpectedly inaccessible.
+用户的文件访问权限由他们在客户端上的组成员身份决定，而不是服务器上的组成员身份。但是，有一个重要的限制：从客户端传递到服务器的组最多为 16 个，如果用户在客户端上是 16 个以上组的成员，则某些文件或目录可能会意外无法访问。
 
-==== DNS (optional, only if using DNS)
+[[dns-optional-only-if-using-dns]]
+==== DNS（可选，仅在使用 DNS 时）
 
-Add any client name and IP addresses to `/etc/hosts`. (The IP address of the server should already be there.) This ensures that NFS will still work even if DNS goes down. Alternatively you can rely on DNS if you want - it's up to you.
+将任何客户端名称和 IP 地址添加到 `/etc/hosts` 。 （服务器的 IP 地址应该已经存在。）这样可以确保即使 DNS 发生故障，NFS 仍能正常工作。或者，如果您愿意，也可以依赖 DNS - 这取决于您。
 
-==== NIS (optional, only if using NIS)
+[[nis-optional-only-if-using-nis]]
+==== NIS（可选，仅在使用 NIS 时）
 
-This applies to clients using NIS. Otherwise you can't use netgroups, and should specify individual IPs or hostnames in `/etc/exports`. Read the BUGS section in `man netgroup` for more information.
+这适用于使用 NIS 的客户端。否则，您无法使用网络组，并且应该在 `/etc/exports` 中指定单独的 IP 或主机名。请阅读 `man netgroup` 中的 BUGS 部分以获取更多信息。
 
-First, edit `/etc/netgroup` and add a line to classify your clients (this step is not necessary, but is for convenience):
+首先，编辑 `/etc/netgroup` 并添加一行来对您的客户端进行分类（此步骤不是必需的，但是为了方便）：
 
 ----
 myclients (client1,,) (client2,,) ...
 ----
 
-where `myclients` is the netgroup name.
+其中 `myclients` 是网络组名称。
 
-Next run this command to rebuild the NIS database:
+接下来运行此命令重建 NIS 数据库：
 
 [source,console]
 ----
 $ sudo make -C /var/yp
 ----
 
-The filename `yp` refers to Yellow Pages, the former name of NIS.
+文件名 `yp` 指的是黄页，即 NIS 的前身。
 
-==== Portmap lockdown (optional)
+==== 端口映射锁定（可选）
 
-Add the following line to `/etc/hosts.deny`:
+将以下行添加到 `/etc/hosts.deny` ：
 
 ----
 rpcbind mountd nfsd statd lockd rquotad : ALL
 ----
 
-By blocking all clients first, only clients in `/etc/hosts.allow` (added below) will be allowed to access the server.
+通过首先阻止所有客户端，只有 `/etc/hosts.allow` （下面添加）中的客户端才被允许访问服务器。
 
-Consider adding the following line to `/etc/hosts.allow`:
+考虑将以下行添加到 `/etc/hosts.allow` ：
 
 ----
 rpcbind mountd nfsd statd lockd rquotad : <list of IPs>
 ----
 
-where `<list of IPs>` is a list of the IP addresses of the server and all clients. These have to be IP addresses because of a limitation in `rpcbind`. Note that if you have NIS set up, you can just add these to the same line.
+其中 `<list of IPs>` 是服务器和所有客户端的 IP 地址列表。由于 `rpcbind` 中的限制，这些必须是 IP 地址。请注意，如果已经设置了 NIS，则只需将这些地址添加到同一行即可。
 
-==== Package installation and configuration
+[[package-installation-and-configuration]]
+==== 软件包安装和配置
 
-Install the necessary packages:
+安装必要的软件包：
 
 [source,console]
 ----
 $ sudo apt install rpcbind nfs-kernel-server
 ----
 
-Edit `/etc/exports` and add the shares:
+编辑 `/etc/exports` 并添加共享：
 
 ----
 /home @myclients(rw,sync,no_subtree_check)
 /usr/local @myclients(rw,sync,no_subtree_check)
 ----
 
-The example above shares `/home` and `/usr/local` to all clients in the `myclients` netgroup.
+上述示例将 `/home` 和 `/usr/local` 共享给 `myclients` 网络组中的所有客户端。
 
 ----
 /home 192.168.0.10(rw,sync,no_subtree_check) 192.168.0.11(rw,sync,no_subtree_check)
 /usr/local 192.168.0.10(rw,sync,no_subtree_check) 192.168.0.11(rw,sync,no_subtree_check)
 ----
 
-The example above shares `/home` and `/usr/local` to two clients with static IP addresses. If you want instead to allow access to all clients in the private network falling within a designated IP address range, consider the following:
+上述示例将 `/home` 和 `/usr/local` 共享给两个具有静态 IP 地址的客户端。如果您希望允许私有网络中指定 IP 地址范围内的所有客户端访问，请考虑以下操作：
 
 ----
 /home 192.168.0.0/255.255.255.0(rw,sync,no_subtree_check)
 /usr/local 192.168.0.0/255.255.255.0(rw,sync,no_subtree_check)
 ----
 
-Here, `rw` makes the share read/write, and `sync` requires the server to only reply to requests once any changes have been flushed to disk. This is the safest option; `async` is faster, but dangerous. It is strongly recommended that you read `man exports` if you are considering other options.
+此处， `rw` 使共享可读/写， `sync` 要求服务器仅在任何更改刷新到磁盘后才回复请求。这是最安全的选项； `async` 速度更快，但很危险。如果您正在考虑其他选项，强烈建议您阅读 `man exports` 。
 
-After setting up `/etc/exports`, export the shares:
+设置 `/etc/exports` 后，导出共享：
 
 [source,console]
 ----
 $ sudo exportfs -ra
 ----
 
-You'll want to run this command whenever `/etc/exports` is modified.
+每当修改 `/etc/exports` 时，您都需要运行此命令。
 
-==== Restart services
+[[restart-services]]
+==== 重新启动服务
 
-Restart `rpcbind` and NFS for the changes to take effect:
+重新启动 `rpcbind` 和 NFS 以使更改生效：
 
 [source,console]
 ----
@@ -285,19 +294,21 @@ $ sudo systemctl restart rpcbind
 $ sudo systemctl restart nfs-kernel-server
 ----
 
-==== Security items to consider
+[[security-items-to-consider]]
+==== 需要考虑的安全事项
 
-Aside from the UID issues discussed above, it should be noted that an attacker could potentially masquerade as a machine that is allowed to map the share, which allows them to create arbitrary UIDs to access your files. One potential solution to this is IPSec. You can set up all your domain members to talk to each other only over IPSec, which will effectively authenticate that your client is who it says it is.
+除了上面讨论的 UID 问题之外，还应注意，攻击者可能会伪装成允许映射共享的机器，这允许他们创建任意 UID 来访问您的文件。一个潜在的解决方案是 IPSec。您可以将所有域成员设置为仅通过 IPSec 相互通信，这将有效地验证您的客户端是否是它所说的那个客户端。
 
-IPSec works by encrypting traffic to the server with the server's public key, and the server sends back all replies encrypted with the client's public key. The traffic is decrypted with the respective private keys. If the client doesn't have the keys that it is supposed to have, it can't send or receive data.
+IPSec 的工作原理是使用服务器的公钥加密发往服务器的流量，然后服务器发回使用客户端的公钥加密的所有回复。流量使用相应的私钥解密。如果客户端没有它应该拥有的密钥，它就无法发送或接收数据。
 
-An alternative to IPSec is physically separate networks. This requires a separate network switch and separate Ethernet cards, and physical security of that network.
+IPSec 的替代方案是物理上独立的网络。这需要单独的网络交换机和单独的以太网卡，以及该网络的物理安全性。
 
-=== Troubleshooting
+[[troubleshooting]]
+=== 故障排除
 
-Mounting an NFS share inside an encrypted home directory will only work after you are successfully logged in and your home is decrypted. This means that using /etc/fstab to mount NFS shares on boot will not work, because your home has not been decrypted at the time of mounting. There is a simple way around this using symbolic links:
+只有在您成功登录并且您的主目录已解密后，才能在加密的主目录中安装 NFS 共享。这意味着使用 /etc/fstab 在启动时安装 NFS 共享将不起作用，因为您的主目录在安装时尚未解密。有一个简单的方法可以使用符号链接来解决这个问题：
 
-. Create an alternative directory to mount the NFS shares in:
+. 创建一个备用目录来安装 NFS 共享：
 
 [source,console]
 ----
@@ -305,13 +316,13 @@ $ sudo mkdir /nfs
 $ sudo mkdir /nfs/music
 ----
 
-. Edit `/etc/fstab` to mount the NFS share into that directory instead:
+. 编辑 `/etc/fstab` 以将 NFS 共享挂载到该目录中：
 
 ----
 nfsServer:music    /nfs/music    nfs    auto    0 0
 ----
 
-. Create a symbolic link inside your home, pointing to the actual mount location. For example, and in this case deleting the `Music` directory already existing there first:
+. 在您的 home 中创建一个符号链接，指向实际的挂载位置。例如，在这种情况下，首先删除已经存在的 `Music` 目录：
 
 [source,console]
 ----

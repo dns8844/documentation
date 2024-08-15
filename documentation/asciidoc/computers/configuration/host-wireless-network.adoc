@@ -1,65 +1,69 @@
-== Host a wireless network from your Raspberry Pi
+[[host-a-wireless-network-on-your-raspberry-pi]]
+== 在 Raspberry Pi 上托管无线网络
 
-Your Raspberry Pi can host its own wireless network using a wireless module. If you connect your Raspberry Pi to the internet via the Ethernet port (or a second wireless module), other devices connected to the wireless network can access the internet through your Raspberry Pi.
+Raspberry Pi 可以使用无线模块托管自己的无线网络。如果您通过以太网端口（或第二个无线模块）将 Raspberry Pi 连接到互联网，则连接到无线网络的其他设备可以通过 Raspberry Pi 访问互联网。
 
-Consider a wired network that uses the `10.x.x.x` IP block. You can connect your Raspberry Pi to that network and serve wireless clients on a separate network that uses another IP block, such as `192.168.x.x`.
+考虑使用 `10.x.x.x` IP 块的有线网络。您可以将 Raspberry Pi 连接到该网络，并在使用另一个 IP 块（例如 `192.168.x.x` ）的单独网络上为无线客户端提供服务。
 
-In the diagram below, note that the laptop exists in an IP block separate from the router and wired clients:
+在下图中，请注意笔记本电脑存在于与路由器和有线客户端分开的 IP 块中：
 
 image::images/host-a-network.png[]
 
+使用此网络配置，无线客户端都可以通过 Raspberry Pi 路由器相互通信。但是，无线网络上的客户端无法直接与有线网络上的客户端（Raspberry Pi 除外）交互；无线客户端存在于与为有线客户端提供服务的网络分开的私有网络中。
 
-With this network configuration, wireless clients can all communicate with each other through the Raspberry Pi router. However, clients on the wireless network cannot directly interact with clients on the wired network other than the Raspberry Pi; wireless clients exist in a private network separate from the network that serves wired clients.
+NOTE: Raspberry Pi 5、4、3、Zero W 和 Zero 2 W 可以使用内置无线模块托管无线网络。没有内置模块的 Raspberry Pi 型号可使用单独的无线加密狗支持该功能。
 
-NOTE: The Raspberry Pi 5, 4, 3, Zero W, and Zero 2 W can host a wireless network using the built-in wireless module. Raspberry Pi models that lack a built-in module support this functionality using a separate wireless dongle.
+[[enable-hotspot]]
+=== 启用热点
 
-=== Enable hotspot
-
-To create a hosted wireless network on the command line, run the following command, replacing the `<example-network-name>` and `<example-password>` placeholders with your own values:
+要在命令行上创建托管无线网络，请运行以下命令，将 `<example-network-name>` 和 `<example-password>` 占位符替换为您自己的值：
 
 [source,console]
 ----
 $ sudo nmcli device wifi hotspot ssid <example-network-name> password <example-password>
 ----
 
-Use another wireless client, such as a laptop or smartphone, to connect to the network. Look for a network with a SSID matching `<example-network-name>`. Enter your network password, and you should connect successfully to the network. If your Raspberry Pi has internet access via an Ethernet connection or a second wireless adapter, you should be able to access the internet.
+使用另一个无线客户端（例如笔记本电脑或智能手机）连接到网络。查找 SSID 与 `<example-network-name>` 匹配的网络。输入您的网络密码，您应该可以成功连接到网络。如果您的 Raspberry Pi 通过以太网连接或第二个无线适配器访问互联网，您应该能够访问互联网。
 
-=== Disable hotspot
+[[disable-hotspot]]
+=== 禁用热点
 
-To disable the hotspot network and resume use of your Pi as a wireless client, run the following command:
+要禁用热点网络并恢复使用 Pi 作为无线客户端，请运行以下命令：
 
 [source,console]
 ----
 $ sudo nmcli device disconnect wlan0
 ----
 
-After disabling the network, run the following command to reconnect to another Wi-Fi network:
+
+禁用网络后，运行以下命令重新连接到另一个 Wi-Fi 网络：
 
 [source,console]
 ----
 $ sudo nmcli device up wlan0
 ----
 
-TIP: For more information about connecting to wireless networks, see xref:configuration.adoc#networking[Configure networking].
+TIP: 有关连接无线网络的更多信息，请参阅 xref:configuration.adoc#networking[配置网络]。
 
-=== Use your Raspberry Pi as a network bridge
+[[use-your-raspberry-pi-as-a-network-bridge]]
+=== 使用 Raspberry Pi 作为网桥
 
-By default, the wireless network hosted from your Raspberry Pi exists separately from the parent network connected via Ethernet. In this arrangement, devices connected to the parent network cannot directly communicate with devices connected to the wireless network hosted from your Raspberry Pi. If you want connected wireless devices to be able to communicate with devices on the parent network, you can configure your Raspberry Pi as a https://en.wikipedia.org/wiki/Network_bridge[network bridge]. With a network bridge in place, each device connected to the Pi-hosted wireless network is assigned an IP address in the parent network.
+默认情况下，Raspberry Pi 托管的无线网络与通过以太网连接的父网络分开存在。在这种安排下，连接到父网络的设备无法直接与连接到 Raspberry Pi 托管的无线网络的设备通信。如果您希望连接的无线设备能够与父网络上的设备通信，您可以将 Raspberry Pi 配置为 https://en.wikipedia.org/wiki/Network_bridge[网桥]。建立网络桥接后，连接到 Pi 托管无线网络的每个设备都会在父网络中分配一个 IP 地址。
 
-In the diagram below, the laptop exists in the same IP block as the router and wired clients:
+在下图中，笔记本电脑与路由器和有线客户端存在于同一 IP 网段中：
 
 image::images/bridge-network.png[]
 
-The following steps describe how to set up a network bridge on your Raspberry Pi to enable communication between wireless clients and the parent network.
+以下步骤介绍了如何在 Raspberry Pi 上设置网络桥接，以启用无线客户端和父网络之间的通信。
 
-First, create a network bridge interface:
+首先，创建一个网络桥接接口：
 
 [source,console]
 ----
 $ sudo nmcli connection add type bridge con-name 'Bridge' ifname bridge0
 ----
 
-Next, add your device's Ethernet connection to the parent network to the bridge:
+接下来，将设备与父网络的以太网连接添加到桥接器：
 
 [source,console]
 ----
@@ -67,16 +71,16 @@ $ sudo nmcli connection add type ethernet slave-type bridge \
     con-name 'Ethernet' ifname eth0 master bridge0
 ----
 
-Finally, add your wireless hotspot connection to the bridge. You can either add an existing hotspot interface or create a new one:
+最后，将您的无线热点连接添加到桥接器。您可以添加现有热点接口或创建新接口：
 
-* If you have already created a wireless hotspot connection using the instructions above, add the existing interface to the bridge with the following command:
+* 如果您已使用上述说明创建了无线热点连接，请使用以下命令将现有接口添加到网桥：
 +
 [source,console]
 ----
 $ sudo nmcli connection modify 'Hotspot' master bridge0
 ----
 
-* If you have not yet created a wireless hotspot connection, create a new interface and add it to the bridge with a single command, replacing the `<hotspot-password>` placeholder with a password of your choice:
+* 如果您尚未创建无线热点连接，请使用单个命令创建一个新接口并将其添加到网桥，将 `<hotspot-password>` 占位符替换为您选择的密码：
 +
 [source,console?prompt=$]
 ----
@@ -87,21 +91,18 @@ $ sudo nmcli connection add con-name 'Hotspot' \
     wifi-sec.psk <hotspot-password>
 ----
 
-
-Now that you've configured your bridge, it's time to activate it. Run the following command to activate the bridge:
-
+配置好网桥后，就该激活它了。运行以下命令激活网桥：
 [source,console]
 ----
 $ sudo nmcli connection up Bridge
 ----
 
-And run the following command to start hosting your wireless network:
+并运行以下命令开始托管您的无线网络：
 
 [source,console]
 ----
 $ sudo nmcli connection up Hotspot
 ----
+您可以使用 `nmcli device` 命令来验证网桥、以太网接口和无线热点接口是否都处于活动状态。
 
-You can use the `nmcli device` command to verify that the bridge, Ethernet interface, and wireless hotspot interface are all active.
-
-TIP: Use a tool such as https://github.com/royhills/arp-scan[arp-scan] to check if devices on the parent network are accessible once connected to the hotspot.
+TIP: 一旦连接到热点，使用 https://github.com/royhills/arp-scan[arp-scan] 等工具检查父网络上的设备是否可访问。

@@ -1,13 +1,16 @@
-== Legacy overclocking options
-(See also xref:config_txt.adoc#overclocking-options[config.txt overclocking options].)
+[[legacy-overclocking-options]]
+== 传统超频选项
+（另请参见 xref:config_txt.adoc#overclocking-options[config.txt超频选项]。）
 
-=== Overclocking
+=== 超频
 
-==== `never_over_voltage`
+[[never_over_voltage]]
+==== `never_over_voltage` 
 
-Sets a bit in the one-time programmable (OTP) memory that prevents the device from being overvoltaged. This is intended to lock the Raspberry Pi down so the warranty bit cannot be set either inadvertently or maliciously by using an invalid overvoltage.
+在一次性可编程（OTP）存储器中设置一个位，以防止设备过压。这旨在锁定Raspberry Pi，从而防止使用无效过压无意或恶意设置保修位。
 
-==== `disable_auto_turbo`
+[[disable_auto_turbo]]
+==== `disable_auto_turbo` 
 
-On Raspberry Pi 2 and 3, setting this flag will disable the GPU from moving into turbo mode, which it can do under particular loads.
+在Raspberry Pi 2和3上，设置此标志将禁用GPU进入turbo模式，它可以在特定负载下执行此操作。
 

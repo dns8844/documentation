@@ -1,78 +1,85 @@
-== NVMe SSD boot
+[[nvme-ssd-boot]]
+== NVMe SSD启动
 
-NVMe (Non-Volatile Memory express) is a standard for external storage access over a PCIe bus. You can connect NVMe drives via the PCIe slot on a Compute Module 4 (CM4) IO board or Raspberry Pi 5. With some additional configuration, you can boot from an NVMe drive.
+NVMe（非易失性存储器）是通过PCIe总线进行外部存储访问的标准。您可以通过 Compute Module 4（CM4）IO板上的PCIe插槽或Raspberry Pi 5连接NVMe驱动器。通过一些额外的配置，您可以从NVMe驱动器启动。
 
-=== Prerequisites
+[[prerequisites]]
+=== 先决条件
 
-==== Hardware
+[[hardware]]
+==== 硬件
 
 * NVMe M.2 SSD
-* an adapter to convert from PCIe to an M.2 standard.
-** For Raspberry Pi 5, we recommend the xref:../accessories/m2-hat-plus.adoc[M.2 HAT+], which converts from the Raspberry Pi's *PCIe FFC* slot to an M Key interface.
-** For the CM4, search for a "PCI-E 3.0 ×1 lane to M.2 NGFF M-Key SSD NVMe PCI Express adapter card"
+* 从PCIe转换为M.2标准的适配器。
+** 对于Raspberry Pi 5，我们推荐 xref:../accessories/m2-hat-plus.adoc[M.2 HAT+]，它从Raspberry Pi的 *PCIe FFC* 插槽转换为M Key接口。
+** 对于CM4，搜索"PCI-E 3.0×1 通道到 M.2 NGFF M-Key SSD NVMe PCI Express适配器卡"
 
-To check that your NVMe drive is connected correctly, boot your Raspberry Pi from another storage device (such as an SD card) and run `ls -l /dev/nvme*`. Example output is shown below.
+要检查您的NVMe驱动器连接是否正确，请从另一个存储设备（例如SD卡）启动Raspberry Pi并运行 `ls -l /dev/nvme*` 。示例输出如下所示。
 
 ----
 crw------- 1 root root 245, 0 Mar  9 14:58 /dev/nvme0
 brw-rw---- 1 root disk 259, 0 Mar  9 14:58 /dev/nvme0n1
 ----
 
-==== Software
+[[software]]
+==== 软件
 
-Run the following command to see what firmware you're running:
+运行以下命令以查看您正在运行的固件：
 
 [source,console]
 ----
 $ sudo rpi-eeprom-update
 ----
 
-For Raspberry Pi 5, you need firmware released December 6, 2023 or later.
+对于Raspberry Pi 5，您需要在2023年12月6日或更晚发布固件。
 
-For CM4, NVMe boot support was introduced in July 2021. You need a version of the following software released since that date:
+对于CM4，NVMe启动支持于2021年7月推出。您需要自该日期以来发布的以下软件版本：
 
-* the bootloader
-* VideoCore firmware
-* the Raspberry Pi OS Linux kernel
+* bootloader
+* VideoCore固件
+* Raspberry Pi OS Linux内核
 
-The latest Raspberry Pi OS release has everything you need. Use  xref:getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] to install a Raspberry Pi OS image onto your drive.
+最新的Raspberry Pi OS版本拥有您需要的一切。使用 xref:getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 将Raspberry Pi OS安装到您的驱动器上。
 
-=== Edit EEPROM boot order
+[[edit-eeprom-boot-order]]
+=== 编辑EEPROM启动顺序
 
-For Raspberry Pi 5, you need to boot Raspberry Pi OS to edit the boot order. You can boot your Raspberry Pi from an SD card or USB drive for this step. The EEPROM configuration persists even when you change the boot device, since the EEPROM configuration is stored on the board itself.
+对于树莓派5，您需要启动树莓派操作系统来编辑启动顺序。您可以从SD卡或USB驱动器启动树莓派。即使您更改启动设备，EEPROM配置也会保持不变，因为EEPROM配置存储在主板本身上。
 
-Use the Raspberry Pi Configuration CLI to update the bootloader:
+使用Raspberry Pi配置CLI更新引导加载程序：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-Under `Advanced Options` > `Bootloader Version`, choose `Latest`. Then, exit `raspi-config` with `Finish` or the *Escape* key.
+在 `Advanced Options` > `Bootloader Version` 下，选择 `Latest` 。然后，使用 `Finish` 或*Escape*键退出 `raspi-config` 。
 
-Run the following command to update your firmware to the latest version:
+运行以下命令将固件更新到最新版本：
 
 [source,console]
 ----
 $ sudo rpi-eeprom-update -a
 ----
 
-Then, reboot with `sudo reboot`. Your Raspberry Pi 5 should boot from NVMe.
+然后，使用 `sudo reboot` 重新启动。您的Raspberry Pi 5应该从NVMe启动。
 
-For CM4, use `rpiboot` to update the bootloader. You can find instructions for building `rpiboot` and configuring the IO board to switch the ROM to usbboot mode in the https://github.com/raspberrypi/usbboot[USB boot GitHub repository].
+对于CM4，使用 `rpiboot` 更新引导加载程序。您可以在 https://github.com/raspberrypi/usbboot[USB boot GitHub存储库] 中找到构建 `rpiboot` 和配置IO板以将ROM切换到usbboot模式的说明。
 
-For versions of CM4 with an eMMC, make sure you have set NVMe first in the boot order. Remember to add the NVMe boot mode `6` to `BOOT_ORDER` in `recovery/boot.conf`.
+对于带有 eMMC 的 CM4 版本，请确保在启动顺序中将 NVMe 设为第一。记住在 `recovery/boot.conf` 中的 `BOOT_ORDER` 中添加 NVMe 启动模式 `6` 。
 
-CM4 Lite automatically boots from NVMe when the SD card slot is empty.
+当SD卡插槽为空时，CM4 Lite会自动从NVMe启动。
 
-=== NVMe `BOOT_ORDER`
+[[nvme-boot_order]]
+=== NVMe  `BOOT_ORDER` 
 
-The `BOOT_ORDER` setting in EEPROM configuration controls boot behaviour.
-For NVMe boot, use boot mode `6`. For more information, see xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi bootloader configuration].
+EEPROM配置中的 `BOOT_ORDER` 设置控制引导行为。
+对于NVMe引导，使用引导模式 `6` 。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi引导加载程序配置]。
 
-=== Example
+[[example]]
+=== 示例
 
-Below is an example of UART output when the bootloader detects the NVMe drive:
+以下是引导加载程序检测到NVMe驱动器时通用异步收发设备输出的示例：
 
 ----
 Boot mode: SD (01) order f64
@@ -82,13 +89,13 @@ VID 0x144d MN Samsung SSD 970 EVO Plus 250GB
 NVME on
 ----
 
-It will then find a FAT partition and load `start4.elf`:
+然后它会找到一个FAT分区并加载 `start4.elf` ：
 
 ----
 Read start4.elf bytes  2937840 hnd 0x00050287 hash ''
 ----
 
-It will then load the kernel and boot the OS:
+然后它将加载内核并启动操作系统：
 
 ----
 MESS:00:00:07.096119:0: brfs: File read: /mfs/sd/kernel8.img
@@ -96,7 +103,7 @@ MESS:00:00:07.098682:0: Loading 'kernel8.img' to 0x80000 size 0x1441a00
 MESS:00:00:07.146055:0:[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd083]
 ----
 
-In Linux the SSD appears as `/dev/nvme0` and the "namespace" as `/dev/nvme0n1`. There will be two partitions `/dev/nvme0n1p1` (FAT) and `/dev/nvme0n1p2` (EXT4). Use `lsblk` to check the partition assignments:
+在Linux系统中 SSD显示为 `/dev/nvme0` ，命名空间显示为 `/dev/nvme0n1` 。将有两个分区 `/dev/nvme0n1p1` （FAT）和 `/dev/nvme0n1p2` （EXT4）。使用 `lsblk` 检查分区分配：
 
 ----
 NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
@@ -105,6 +112,7 @@ nvme0n1     259:0    0 232.9G  0 disk
 └─nvme0n1p2 259:2    0 232.6G  0 part /
 ----
 
-=== Troubleshooting
+[[troubleshooting]]
+=== 故障排除
 
-If the boot process fails, please file an issue on the https://github.com/raspberrypi/rpi-eeprom[rpi-eeprom GitHub repository], being sure to attach a copy of the console and anything displayed on the screen during boot.
+如果启动过程失败，请在 https://github.com/raspberrypi/rpi-eeprom[rpi-eeprom GitHub存储库] 上提交问题，确保在启动期间附上控制台的副本和屏幕上显示的任何内容。

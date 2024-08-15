@@ -1,14 +1,16 @@
-== Overclocking options
+[[overclocking-options]]
+== 超频选项
 
-The kernel has a https://www.kernel.org/doc/html/latest/admin-guide/pm/cpufreq.html[CPUFreq] driver with the powersave governor enabled by default, switched to ondemand during boot, when xref:configuration.adoc#raspi-config[raspi-config] is installed. With the ondemand governor, CPU frequency will vary with processor load. You can adjust the minimum values with the `*_min` config options, or disable dynamic clocking by applying a static scaling governor (powersave or performance) or with `force_turbo=1`.
+内核有一个 https://www.kernel.org/doc/html/latest/admin-guide/pm/cpufreq.html[CPUFreq]驱动程序，默认情况下启用省电调速器，当安装 xref:configuration.adoc#raspi-config[raspi-config] 时，在启动过程中切换为按需调速器。使用按需调速器后，CPU 频率将随处理器负载而变化。您可以使用 `*_min` 配置选项调整最小值，或通过应用静态缩放调速器（powersave 或 performance）或 `force_turbo=1` 来禁用动态时钟。
 
-Overclocking and overvoltage will be disabled at runtime when the SoC reaches `temp_limit` (see below), which defaults to 85°C, in order to cool down the SoC. You should not hit this limit with Raspberry Pi 1 and Raspberry Pi 2, but you are more likely to with Raspberry Pi 3 and newer. Overclocking and overvoltage are also disabled when an undervoltage situation is detected.
+当 SoC 达到 `temp_limit`（见下文）（默认值为 85°C）时，超频和过压将在运行时被禁用，以降低 SoC 的发热量。Raspberry Pi 1 和 Raspberry Pi 2 应该不会达到这一上限，但 Raspberry Pi 3 及更新版本则更有可能达到这一上限。当检测到电压不足时，超频和过压也会被禁用。
 
-NOTE: For more information xref:raspberry-pi.adoc#frequency-management-and-thermal-control[see the section on frequency management and thermal control].
+NOTE: 更多信息 xref:raspberry-pi.adoc#frequency-management-and-thermal-control[参见频率管理和热控制部分]。
 
-WARNING: Setting any overclocking parameters to values other than those used by xref:configuration.adoc#overclock[`raspi-config`] may set a permanent bit within the SoC. This makes it possible to detect that your Raspberry Pi was once overclocked. The overclock bit sets when `force_turbo` is set to `1` and any of the `over_voltage_*` options are set to a value of more than `0`. See the https://www.raspberrypi.com/news/introducing-turbo-mode-up-to-50-more-performance-for-free/[blog post on Turbo mode] for more information.
+WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi-config`]所用值以外的值，可能会在 SoC 内设置一个永久位。这样就有可能检测到你的 Raspberry Pi 曾经超频。当 `force_turbo` 设置为 `1`，并且任何 `over_voltage_*` 选项设置为 `0` 以上时，超频位就会设置。更多信息，请参阅 https://www.raspberrypi.com/news/introducing-turbo-mode-up-to-50-more-performance-for-free/[关于 Turbo 模式的博文]。
 
-=== Overclocking
+[[overclocking]]
+=== 超频
 
 [cols="1m,3"]
 |===
@@ -99,7 +101,9 @@ WARNING: Setting any overclocking parameters to values other than those used by 
 | *3A+/3B+ only*. CPU speed throttle control. This sets the temperature at which the CPU clock speed throttling system activates. At this temperature, the clock speed is reduced from 1400MHz to 1200MHz.  Defaults to `60`, can be raised to a maximum of `70`, but this may cause instability.
 |===
 
-This table gives the default values for the options on various Raspberry Pi models, all frequencies are stated in MHz.
+
+此表给出了各种Raspberry Pi型号选项的默认值，所有频率均以MHz表示。
+
 
 [cols="m,^,^,^,^,^,^,^,^,^,^"]
 |===
@@ -274,7 +278,8 @@ This table gives the default values for the options on various Raspberry Pi mode
 | 4267
 |===
 
-This table gives defaults for options which are the same across all models.
+
+此表给出了所有模型中相同的选项的默认值。
 
 [cols="m,^"]
 |===
@@ -305,15 +310,15 @@ This table gives defaults for options which are the same across all models.
 | 0 (1.2V)
 |===
 
-The firmware uses Adaptive Voltage Scaling (AVS) to determine the optimum CPU/GPU core voltage in the range defined by `over_voltage` and `over_voltage_min`.
+固件使用自适应电压缩放（AVS）来确定由 `over_voltage` 和 `over_voltage_min` 定义的范围内的最佳CPU/GPU内核电压。
 
 [discrete]
-==== Specific to Raspberry Pi 4, Raspberry Pi 400 and CM4
+==== 特定于Raspberry Pi 4、Raspberry Pi 400和CM4
 
-The minimum core frequency when the system is idle must be fast enough to support the highest pixel clock (ignoring blanking) of the display(s). Consequently, `core_freq` will be boosted above 500 MHz if the display mode is 4Kp60.
+系统空闲时的最小核心频率必须足够快，以支持显示器的最高像素时钟（忽略消隐）。因此，如果显示模式为4Kp60， `core_freq` 将被提升到500 MHz以上。
 
 |===
-| Display option | Max `core_freq`
+| Display option | Max `core_freq` 
 
 | Default
 | 500
@@ -322,63 +327,69 @@ The minimum core frequency when the system is idle must be fast enough to suppor
 | 550
 |===
 
-NOTE: There is no need to use `hdmi_enable_4kp60` on Raspberry Pi 5; it supports dual-4Kp60 displays by default.
+NOTE: 在 Raspberry Pi 5 上无需使用 `hdmi_enable_4kp60`；它默认支持双 4Kp60 显示器。
 
-* Overclocking requires the latest firmware release.
-* The latest firmware automatically scales up the voltage if the system is overclocked. Manually setting `over_voltage` disables automatic voltage scaling for overclocking.
-* It is recommended when overclocking to use the individual frequency settings (`isp_freq`, `v3d_freq` etc) rather than `gpu_freq`, because the maximum stable frequency will be different for ISP, V3D, HEVC etc.
-* The SDRAM frequency is not configurable on Raspberry Pi 4 or later devices.
+* 超频需要最新的固件版本。
+* 如果系统超频，最新固件会自动放大电压。手动设置 `over_voltage` 会禁用超频的自动电压缩放。
+* 超频时建议使用单独的频率设置（ `isp_freq`、 `v3d_freq` 等）而不是 `gpu_freq` ，因为ISP、V3D、HEVC等的最大稳定频率会有所不同。
+* SDRAM频率无法在Raspberry Pi 4或更高版本的设备上配置。
 
-==== `force_turbo`
+[[force_turbo]]
+==== `force_turbo` 
 
-By default (`force_turbo=0`) the on-demand CPU frequency driver will raise clocks to their maximum frequencies when the ARM cores are busy, and will lower them to the minimum frequencies when the ARM cores are idle.
 
-`force_turbo=1` overrides this behaviour and forces maximum frequencies even when the ARM cores are not busy.
+`force_turbo=1` 会覆盖此行为并强制设置最高频率，即使在ARM内核不忙的情况下也是如此。
 
-=== Clocks relationship
+[[clocks-relationship]]
+=== 时钟关系
 
+[[raspberry-pi-4]]
 ==== Raspberry Pi 4
+GPU内核、CPU、SDRAM和GPU都有自己的PLL，并且可以有不相关的频率。h264、v3d和ISP块共享一个PLL。
 
-The GPU core, CPU, SDRAM and GPU each have their own PLLs and can have unrelated frequencies. The h264, v3d and ISP blocks share a PLL.
+要查看树莓派的当前频率（以KHz为单位），请键入： `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq` 。将结果除以1000以找到以MHz为单位的值。请注意，该频率是内核_requested_频率，任何节流（例如在高温下）都可能意味着CPU实际上运行得比报告的要慢。可以使用 `vcgencmd measure_clockarm` 检索实际ARM CPU频率的瞬时测量值。这以赫兹显示。
 
-To view the Raspberry Pi's current frequency in KHz, type: `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq`. Divide the result by 1000 to find the value in MHz. Note that this frequency is the kernel _requested_ frequency, and it is possible that any throttling (for example at high temperatures) may mean the CPU is actually running more slowly than reported. An instantaneous measurement of the actual ARM CPU frequency can be retrieved using the vcgencmd `vcgencmd measure_clock arm`. This is displayed in Hertz.
+[[monitoring-core-temperature]]
+=== 监测核心温度
 
-=== Monitoring core temperature
-[.whitepaper, title="Cooling a Raspberry Pi device", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003608-WP/Cooling-a-Raspberry-Pi-device.pdf]
+[.whitepaper, title="冷却树莓派设备", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003608-WP/Cooling-a-Raspberry-Pi-device.pdf]
 ****
-This white paper goes through the reasons why your Raspberry Pi may get hot and why you might want to cool it back down, offering options on the cooling process.
+本白皮书介绍了Raspberry Pi可能变热的原因以及您可能希望将其冷却下来的原因，并提供了冷却过程的选项。
 ****
 
-To view the temperature of a Raspberry Pi, run the following command:
+要查看 Raspberry Pi 的温度，请运行以下命令：
 
 [source,console]
 ----
 $ cat /sys/class/thermal/thermal_zone0/temp
 ----
 
-Divide the result by 1000 to find the value in degrees Celsius. Alternatively, you can use `vcgencmd measure_temp` to report the GPU temperature.
+将结果除以 1000 即可得出以摄氏度为单位的数值。或者，您也可以使用 `vcgencmd measure_temp` 来报告 GPU 温度。
 
-Hitting the temperature limit is not harmful to the SoC, but it will cause the CPU to throttle. A heat sink can help to control the core temperature, and therefore performance. This is especially useful if the Raspberry Pi is running inside a case. Airflow over the heat sink will make cooling more efficient.
+达到温度上限不会对 SoC 造成伤害，但会导致 CPU 节流。散热器有助于控制核心温度，从而提高性能。如果 Raspberry Pi 在机箱内运行，这一点尤其有用。散热片上的气流可提高冷却效率。
 
-When the core temperature is between 80°C and 85°C, the ARM cores will be throttled back. If the temperature exceeds 85°C, the ARM cores and the GPU will be throttled back.
+达到温度限制不会损坏SoC，但会导致CPU节流。散热器有助于控制核心温度，从而控制性能。如果Raspberry Pi在机箱内运行，这尤其有用。散热器上的气流可以提高冷却效率。
 
-For the Raspberry Pi 3 Model B+, the PCB technology has been changed to provide better heat dissipation and increased thermal mass. In addition, a soft temperature limit has been introduced, with the goal of maximising the time for which a device can "sprint" before reaching the hard limit at 85°C. When the soft limit is reached, the clock speed is reduced from 1.4GHz to 1.2GHz, and the operating voltage is reduced slightly. This reduces the rate of temperature increase: we trade a short period at 1.4GHz for a longer period at 1.2GHz. By default, the soft limit is 60°C. This can be changed via the `temp_soft_limit` setting in `config.txt`.
+当内核温度在80°C到85°C之间时，ARM内核将被限制。如果温度超过85°C，ARM内核和GPU将被限制。
 
-=== Monitoring voltage
+对于Raspberry Pi 3 Model B+，PCB技术进行了更改，以提供更好的散热和增加的热质量。此外，还引入了软温度限制，目标是最大限度地延长设备在达到85°C的硬限制之前可以 `冲刺` 的时间。当达到软限制时，时钟速度从1.4GHz降低到1.2GHz，工作电压略有降低。这降低了温度上升的速度：我们将1.4GHz的短周期换成1.2GHz的较长周期。默认情况下，软限制为60°C。这可以通过 `config.txt` 中的 `temp_soft_limit` 设置进行更改。
 
-It is essential to keep the supply voltage above 4.8V for reliable performance. Note that the voltage from some USB chargers/power supplies can fall as low as 4.2V. This is because they are usually designed to charge a 3.7V LiPo battery, not to supply 5V to a computer.
+[[monitoring-voltage]]
+=== 监控电压
 
-To monitor the Raspberry Pi's PSU voltage, you will need to use a multimeter to measure between the VCC and GND pins on the GPIO. More information is available in the xref:raspberry-pi.adoc#power-supply[power] section of the documentation.
+保持电源电压在4.8V以上对可靠性能至关重要。请注意，某些USB充电器/电源的电压可能低至4.2V。这是因为它们通常设计用于为3.7V锂电池充电，而不是为计算机提供5V。
 
-If the voltage drops below 4.63V (±5%), the ARM cores and the GPU will be throttled back, and a message indicating the low voltage state will be added to the kernel log.
+要监控Raspberry Pi的PSU电压，您需要使用万用表来测量GPIO上的VCC和GND引脚之间的电压。更多信息可在文档的 xref:raspberry-pi.adoc#power-supply[电源] 部分获得。
 
-The Raspberry Pi 5 PMIC has built in ADCs that allow the supply voltage to be measured. To view the current supply voltage, run the following command:
+如果电压降至4.63V（±5%）以下，ARM内核和GPU将被限制，并将指示低压状态的消息添加到内核日志中。
+
+Raspberry Pi 5 PMIC 内置 ADC，可以测量电源电压。要查看当前电源电压，请运行以下命令：
 
 [source,console]
 ----
 $ vcgencmd pmic_read_adc EXT5V_V
 ----
 
-=== Overclocking problems
+=== 超频问题
 
-Most overclocking issues show up immediately with a failure to boot. If this occurs, hold down the `shift` key during the next boot. This will temporarily disable all overclocking, allowing you to boot successfully and then edit your settings.
+大多数超频问题会在启动失败时立即出现。如果发生这种情况，请在下次启动时按住 `shift` 键。这将暂时禁用所有超频，允许您成功启动，然后编辑您的设置。

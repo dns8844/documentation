@@ -1,13 +1,14 @@
-== Real Time Clock (RTC)
+[[real-time-clock-rtc]]
+== 实时时钟（RTC）
 
-The Raspberry Pi 5 includes an RTC module. This can be battery powered via the J5 (BAT) connector on the board located to the right of the USB-C power connector. 
+Raspberry Pi 5包括一个RTC模块。这可以通过位于USB-C电源连接器右侧的板上的J5（BAT）连接器由电池供电。
 
 .The J5 battery connector
 image::images/j5.png[alt="The J5 battery connector",width="70%"]
 
-You can set a wake alarm which will switch the board to a very low-power state (approximately 3mA). When the alarm time is reached, the board will power back on. This can be useful for periodic jobs like time-lapse imagery.
+您可以设置唤醒闹钟，将电路板切换到极低功耗状态（约 3mA）。达到闹钟时间后，电路板将重新开启。这对延时摄影等周期性工作非常有用。
 
-To support the low-power mode for wake alarms, edit the bootloader configuration:
+要支持唤醒警报的低功耗模式，请编辑引导加载程序配置：
 
 [source,console]
 ----
@@ -22,7 +23,7 @@ POWER_OFF_ON_HALT=1
 WAKE_ON_GPIO=0
 ----
 
-You can test the functionality with:
+您可以使用以下方法测试功能：
 
 [source,console]
 ----
@@ -30,32 +31,34 @@ $ echo +600 | sudo tee /sys/class/rtc/rtc0/wakealarm
 $ sudo halt
 ----
 
-That will halt the board into a very low-power state, then wake and restart after 10 minutes.
+这将使电路板停止进入非常低的功耗状态，然后唤醒并在10分钟后重新启动。
 
-The RTC also provides the time on boot e.g. in `dmesg`, for use cases that lack access to NTP:
+RTC还提供启动时间，例如在 `dmesg` 中，对于无法访问NTP的用例：
 
 ----
 [    1.295799] rpi-rtc soc:rpi_rtc: setting system clock to 2023-08-16T15:58:50 UTC (1692201530)
 ----
 
-NOTE: The RTC is still usable even when there is no backup battery attached to the J5 connector. 
+NOTE: 即使没有连接到J5连接器的备用电池，RTC仍然可用。
 
-=== Add a backup battery
+[[add-a-backup-battery]]
+=== 添加备用电池
 
 .Lithium-manganese rechargeable RTC battery
 image::images/rtc-battery.jpg[alt="Lithium-manganese rechargeable RTC battery",width="70%"]
 
-The official battery part is a rechargeable lithium manganese coin cell, with a pre-fitted two-pin JST-SH plug and an adhesive mounting pad. This is suitable for powering the RTC when the main power supply for the board is disconnected. Since the current draw when powered down measures in single-digit µA, the retention time measures in months.
+官方电池部分是可充电锂锰纽扣电池，带有预装的两针JST-SH插头和粘合剂安装垫。这适用于在板的主电源断开时为RTC供电。由于断电时的电流消耗以个位数µA为单位，因此保持时间以月为单位。
 
-NOTE: We do not recommend using a primary (non-rechargeable) lithium cell for the RTC. The RTC backup current consumption is higher than most dedicated RTC modules and will result in a short service life.
+NOTE: 我们不建议将初级（不可充电）锂电池用于RTC。RTC备用电流消耗高于大多数专用RTC模块，并将导致较短的使用寿命。
 
-WARNING: Do not use a Lithium Ion cell for the RTC.
+WARNING: 请勿将锂离子电池用于RTC。
 
-=== Enable battery charging
+[[enable-battery-charging]]
+=== 启用电池充电
 
-The RTC is equipped with a constant-current (3mA) constant-voltage charger.
+RTC配备了一个恒流（3mA）恒压充电器。
 
-Charging of the battery is disabled by default. There are `sysfs` files that show the charging voltage and limits:
+默认情况下禁用电池充电。有显示充电电压和限制的 `sysfs` 文件：
 
 ----
 /sys/devices/platform/soc/soc:rpi_rtc/rtc/rtc0/charging_voltage:0
@@ -63,15 +66,16 @@ Charging of the battery is disabled by default. There are `sysfs` files that sho
 /sys/devices/platform/soc/soc:rpi_rtc/rtc/rtc0/charging_voltage_min:1300000
 ----
 
-To charge the battery at a set voltage, add https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L279[`rtc_bbat_vchg`] to `/boot/firmware/config.txt`:
+要以设定电压为电池充电，请将 https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L279[`rtc_bbat_vchg`] 添加到 `/boot/firmware/config.txt` :
 
 [source,ini]
 ----
 dtparam=rtc_bbat_vchg=3000000
 ----
 
-Reboot with `sudo reboot` to use the new voltage setting. Check the `sysfs` files to ensure that the charging voltage was correctly set.
+使用 `sudo reboot` 重新启动以使用新的电压设置。检查 `sysfs` 文件以确保充电电压设置正确。
 
-=== Disable battery charging
+[[disable-battery-charging]]
+=== 禁用电池充电
 
-To stop charging, remove any lines that contain https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L279[`rtc_bbat_vchg`] from `config.txt`.
+要停止充电，请从 `config.txt` 中删除任何包含 https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L279[`rtc_bbat_vchg`] 的行。

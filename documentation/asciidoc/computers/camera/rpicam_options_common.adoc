@@ -1,39 +1,44 @@
-== `rpicam-apps` options reference
+[[rpicam-apps-options-reference]]
+== `rpicam-apps` 选项参考
 
-=== Common options
+[[common-options]]
+=== 常用选项
 
-The following options apply across all the `rpicam-apps` with similar or identical semantics, unless otherwise noted.
+除非另有说明，否则以下选项适用于所有具有相似或相同语义学的 `rpicam-apps` 。
 
-To pass one of the following options to an application, prefix the option name with `--`. If the option requires a value, pass the value immediately after the option name, separated by a single space. If the value contains a space, surround the value in quotes.
+要将以下选项之一传递给应用程序，请在选项名称前加上 `--` .如果选项需要值，请在选项名称后立即传递该值，并用单个空格分隔。如果值包含空格，请将值用引号括起来。
 
-Some options have shorthand aliases, for example `-h` instead of `--help`. Use these shorthand aliases instead of the full option name to save space and time at the expense of readability.
+一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会降低易读性。
 
-==== `help`
+[[help]]
+==== `help` 
 
-Alias: `-h`
+别名： `-h` 
 
-Prints the full set of options, along with a brief synopsis of each option. Does not accept a value.
+打印完整的选项集，以及每个选项的简要概要。不接受值。
 
-==== `version`
+[[version]]
+==== `version` 
 
-Prints out version strings for `libcamera` and `rpicam-apps`. Does not accept a value.
+打印 `libcam` 和 `rpicam-apps` 的版本字符串。不接受值。
 
-Example output:
+示例输出：
 
 ----
 rpicam-apps build: ca559f46a97a 27-09-2021 (14:10:24)
 libcamera build: v0.0.0+3058-c29143f7
 ----
 
-==== `list-cameras`
+[[list-cameras]]
+==== `list-cameras` 
 
-Lists the detected cameras attached to your Raspberry Pi and their available sensor modes. Does not accept a value.
+列出连接到Raspberry Pi的检测到的相机及其可用的传感器模式。不接受值。
 
-Sensor mode identifiers have the following form: `S<Bayer order><Bit-depth>_<Optional packing> : <Resolution list>`
+传感器模式标识符具有以下形式： `S<Bayer order><Bit-depth>_<Optional packing> : <Resolution list>` 
 
-Crop is specified in native sensor pixels (even in pixel binning mode) as `(<x>, <y>)/<Width>×<Height>`. `(x, y)` specifies the location of the crop window of size `width × height` in the sensor array.
+裁剪在本机传感器像素中（即使在像素合并模式下）指定为 `(<x>, <y>)/<Width>×<Height>` . `(x, y)` 指定传感器阵列中大小为 `width x height` 的裁剪窗口的位置。
 
-For example, the following output displays information about an `IMX219` sensor at index 0 and an `IMX477` sensor at index 1:
+例如，以下输出显示有关索引0的 `IMX219` 传感器和索引1的 `IMX477` 传感器的信息：
 
 ----
 Available cameras
@@ -54,502 +59,546 @@ Available cameras
                              4056x3040 [10.00 fps - (0, 0)/4056x3040 crop]
 ----
 
-For the IMX219 sensor in the above example:
 
-* all modes have an `RGGB` Bayer ordering
-* all modes provide either 8-bit or 10-bit CSI2 packed readout at the listed resolutions
+对于上面示例中的IMX219传感器：
 
-==== `camera`
+* 所有模式都有 `RGGB` Bayer排序
+* 所有模式均可在所列分辨率下提供 8 位或 10 位 CSI2 封装读数
 
-Selects the camera to use. Specify an index from the xref:camera_software.adoc#list-cameras[list of available cameras].
+[[camera]]
+==== `camera` 
 
-==== `config`
+选择要使用的相机。从 xref:camera_software.adoc#list-cameras[可用相机列表]。
 
-Alias: `-c`
+[[config]]
+==== `config` 
 
-Specify a file containing CLI options and values. Consider a file named `example_configuration.txt` that contains the following text, specifying options and values as key-value pairs, one option per line, long (non-alias) option names only:
+别名： `-c` 
+
+指定一个包含CLI选项和值的文件。考虑一个名为 `example_configuration.txt` 的文件，该文件包含以下文本，将选项和值指定为键值对，每行一个选项，仅长（非别名）选项名称：
 
 ----
 timeout=99000
 verbose=
 ----
 
-TIP: Omit the leading `--` that you normally pass on the command line. For flags that lack a value, such as `verbose` in the above example, you must include a trailing `=`.
+TIP: 省略您通常在命令行上传递的前导 `--` 。对于缺少值的标志，例如上面示例中的 `verbose` ，您必须在后面添加 `=` 。
 
-You could then run the following command to specify a timeout of 99000 milliseconds and verbose output:
+然后，您可以运行以下命令来指定99000毫秒的超时和详细输出：
 
 [source,console]
 ----
 $ rpicam-hello --config example_configuration.txt
 ----
 
-==== `timeout`
+[[timeout]]
+==== `timeout` 
 
-Alias: `-t`
+别名： `-t` 
 
-Default value: 5000 milliseconds (5 seconds)
+默认值：5000毫秒（5秒）
 
-Specify how long the application runs before closing. This applies to both video recording and preview windows. When capturing a still image, the application shows a preview window for `timeout` milliseconds before capturing the output image.
+指定应用程序在关闭前运行多长时间。这适用于视频录制和预览窗口。捕获静止图像时，应用程序会在捕获输出图像之前显示 `timeout` 毫秒的预览窗口。
 
-To run the application indefinitely, specify a value of `0`.
+要无限期运行应用程序，请指定值 `0` 。
 
-==== `preview`
+[[preview]]
+==== `preview` 
 
-Alias: `-p`
+别名： `-p` 
 
-Sets the location (x,y coordinates) and size (w,h dimensions) of the desktop or DRM preview window. Does not affect the resolution or aspect ratio of images requested from the camera. Scales image size and pillar or letterboxes image aspect ratio to fit within the preview window.
+设置桌面或DRM预览窗口的位置（x，y坐标）和大小（w，h尺寸）。不影响相机请求的图像的分辨率或长宽比。缩放图像大小和柱子或信箱图像长宽比以适应预览窗口。
 
-Pass the preview window dimensions in the following comma-separated form: `x,y,w,h`
+以逗号分隔的形式传递预览窗口尺寸： `x， y，w，h` 
 
-Example: `rpicam-hello --preview 100,100,500,500`
+示例： `rpicam-hello --preview 100,100,500,500` 
 
-image::images/preview_window.jpg[Letterboxed preview image]
+image::images/preview_window.jpg[信箱预览图像]
 
-==== `fullscreen`
+[[fullscreen]]
+==== `fullscreen` 
 
-Alias: `-f`
+别名： `-f` 
 
-Forces the preview window to use the entire screen with no border or title bar. Scales image size and pillar or letterboxes image aspect ratio to fit within the entire screen. Does not accept a value.
+强制预览窗口使用整个屏幕，没有边框或标题栏。缩放图像大小并调整图像宽高比，使其适合整个屏幕。不接受数值。
 
-==== `qt-preview`
+[[qt-preview]]
+==== `qt-preview` 
 
-Uses the Qt preview window, which consumes more resources than the alternatives, but supports X window forwarding. Incompatible with the xref:camera_software.adoc#fullscreen[`fullscreen`] flag. Does not accept a value.
+使用Qt预览窗口，它比替代窗口消耗更多资源，但支持X窗口转发。与 xref:camera_software.adoc#fullscreen[`fullscreen`] 标志不兼容。不接受值。
 
-==== `nopreview`
+[[nopreview]]
+==== `nopreview` 
 
-Alias: `-n`
+别名： `-n` 
 
-Causes the application to _not_ display a preview window at all. Does not accept a value.
+使应用程序_不_显示预览窗口。不接受值。
 
 
-==== `info-text`
+[[info-text]]
+==== `info-text` 
 
-Default value: `"#%frame (%fps fps) exp %exp ag %ag dg %dg"`
+默认值： `"#%frame (%fps fps) exp %exp ag %ag dg %dg"` 
 
-Sets the supplied string as the title of the preview window when running in a desktop environment. Supports the following image metadata substitutions:
+在桌面环境中运行时，将提供的字符串设置为预览窗口的标题。支持以下图像元数据替换：
 
 |===
-| Directive | Substitution
+| 指令 | 替代
 
-| `%frame`
-| Sequence number of the frame.
+|  `%帧` 
+| 帧的序列号。
 
-| `%fps`
-| Instantaneous frame rate.
+|  `%fps` 
+| 瞬时帧率。
 
-| `%exp`
-| Shutter speed used to capture the image, in microseconds.
+|  `%exp` 
+| 用于捕获图像的快门速度，以微秒为单位。
 
-| `%ag`
-| Analogue gain applied to the image in the sensor.
+|  `%ag` 
+| 模拟增益应用于传感器中的图像。
 
-| `%dg`
-| Digital gain applied to the image by the ISP.
+|  `%dg` 
+| ISP应用于图像的数字增益。
 
-| `%rg`
-| Gain applied to the red component of each pixel.
+|  `%rg` 
+| 增益应用于每个像素的红色分量。
 
-| `%bg`
-| Gain applied to the blue component of each pixel.
+|  `%bg` 
+| 增益应用于每个像素的蓝色分量。
 
-| `%focus`
-| Focus metric for the image, where a larger value implies a sharper image.
+|  `%焦点` 
+| 图像的焦点指标，其中较大的值意味着更清晰的图像。
 
-| `%lp`
-| Current lens position in dioptres (1 / distance in metres).
+|  `%lp` 
+| 以屈光度为单位的当前镜头位置（1/距离，以米为单位）。
 
-| `%afstate`
-| Autofocus algorithm state (`idle`, `scanning`, `focused` or `failed`).
+|  `%afstate` 
+| 自动对焦算法状态（ `idle` ， `scanning` ， `focused` 或 `failed` ）。
 |===
 
-image::images/focus.jpg[Image showing focus measure]
+image::images/focus.jpg[显示焦点测量的图像]
 
-==== `width` and `height`
+[[width-and-height]]
+==== `width` 和 `height` 
 
-Each accepts a single number defining the dimensions, in pixels, of the captured image.
+每个都接受一个数字，定义捕获图像的尺寸（以像素为单位）。
 
-For `rpicam-still`, `rpicam-jpeg` and `rpicam-vid`, specifies output resolution.
+对于 `rpicam-still`、 `rpicam-jpeg` 和 `rpicam-vid` ，指定输出分辨率。
 
-For `rpicam-raw`, specifies raw frame resolution. For cameras with a 2×2 binned readout mode, specifying a resolution equal to or smaller than the binned mode captures 2×2 binned raw frames.
+对于 `rpicam-raw` ，指定原始图像的分辨率。对于采用 2×2 分档读出模式的相机，指定等于或小于分档模式的分辨率可捕获 2×2 分档的原始图像。
 
-For `rpicam-hello`, has no effect.
+对于 `rpicam-hello` ，没有效果。
 
-Examples:
+例子：
 
-* `rpicam-vid -o test.h264 --width 1920 --height 1080` captures 1080p video.
+* `rpicam-vid -o test.h264 --width 1920 --height 1080` 捕获1080p视频。
 
-* `rpicam-still -r -o test.jpg --width 2028 --height 1520` captures a 2028×1520 resolution JPEG. If used with the HQ camera, uses 2×2 binned mode, so the raw file (`test.dng`) contains a 2028×1520 raw Bayer image.
+* `rpicam-still -r -o test.jpg --width 2028 --height 1520` 捕获2028×1520分辨率的JPEG。如果与HQ相机一起使用，则使用2×2 像素合并模式，因此原始文件（ `test.dng` ）包含2028×1520原始Bayer图像。
 
-==== `viewfinder-width` and `viewfinder-height`
+[[viewfinder-width-and-viewfinder-height]]
+==== `viewfinder-width` 和 `viewfinder-height` 
 
-Each accepts a single number defining the dimensions, in pixels, of the image displayed in the preview window. Does not effect the preview window dimensions, since images are resized to fit. Does not affect captured still images or videos.
+每个都接受一个数字，定义预览窗口中显示的图像的尺寸（以像素为单位）。不影响预览窗口尺寸，因为图像会调整大小以适应。不影响捕获的静止图像或视频。
 
-==== `mode`
 
-Allows you to specify a camera mode in the following colon-separated format: `<width>:<height>:<bit-depth>:<packing>`. The system selects the closest available option for the sensor if there is not an exact match for a provided value. You can use the packed (`P`) or unpacked (`U`) packing formats. Impacts the format of stored videos and stills, but not the format of frames passed to the preview window.
+==== `mode` 
 
-Bit-depth and packing are optional.
-Bit-depth defaults to 12.
-Packing defaults to `P` (packed).
+允许您以下列以冒号分隔的格式指定摄像机模式： `<宽度>:<高度>:<比特深度>:<包装>`。如果所提供的值不完全匹配，系统会为传感器选择最接近的可用选项。您可以使用打包 (`P`) 或未打包 (`U`) 的打包格式。影响存储视频和照片的格式，但不影响传递到预览窗口的帧格式。
 
-For information about the bit-depth, resolution, and packing options available for your sensor, see xref:camera_software.adoc#list-cameras[`list-cameras`].
+位深和封装是可选的。
+位深度默认为12。
+打包默认为 `P` （打包）。
 
-Examples:
+有关传感器可用的位深度、分辨率和封装选项的信息，请参阅 xref:camera_software.adoc#list-cameras[`list-cameras`]。
 
-* `4056:3040:12:P` - 4056×3040 resolution, 12 bits per pixel, packed.
-* `1632:1224:10` - 1632×1224 resolution, 10 bits per pixel.
-* `2592:1944:10:U` - 2592×1944 resolution, 10 bits per pixel, unpacked.
-* `3264:2448` - 3264×2448 resolution.
+例子：
 
-===== Packed format details
+* `4056:3040:12:P` - 4056×3040 分辨率，每像素 12 位，打包。
+* `1632:1224:10` - 1632×1224 分辨率，每个像素 10 位。
+* `2592:1944:10:U` - 2592×1944 分辨率，每像素 10 位，未打包。
+* `3264:2448` - 3264×2448 分辨率。
 
-The packed format uses less storage for pixel data.
+[[packed-format-details]]
+===== 打包格式详细信息
 
-_On Raspberry Pi 4 and earlier devices_, the packed format packs pixels using the MIPI CSI-2 standard. This means:
+打包格式使用较少的像素数据存储空间。
 
-* 10-bit camera modes pack 4 pixels into 5 bytes. The first 4 bytes contain the 8 most significant bits (MSBs) of each pixel, and the final byte contains the 4 pairs of least significant bits (LSBs).
-* 12-bit camera modes pack 2 pixels into 3 bytes. The first 2 bytes contain the 8 most significant bits (MSBs) of each pixel, and the final byte contains the 4 least significant bits (LSBs) of both pixels.
+在 Raspberry Pi 4 和更早的设备上，打包格式使用 MIPI CSI-2 标准打包像素。这意味着
 
-_On Raspberry Pi 5 and later devices_, the packed format compresses pixel values with a visually lossless compression scheme into 8 bits (1 byte) per pixel.
+* 10 位摄像头模式将 4 个像素打包成 5 个字节。前 4 个字节包含每个像素的 8 个最有效位（MSB），最后一个字节包含 4 对最小有效位（LSB）。
+* 12 位摄像机模式将 2 个像素打包成 3 个字节。前 2 个字节包含每个像素的 8 个最有效位 (MSB)，最后一个字节包含两个像素的 4 个最小有效位 (LSB)。
 
-===== Unpacked format details
+在 Raspberry Pi 5 及更高版本的设备上_，打包格式通过视觉无损压缩方案将像素值压缩为每个像素 8 位（1 个字节）。
 
-The unpacked format provides pixel values that are much easier to manually manipulate, at the expense of using more storage for pixel data.
+[[unpacked-format-details]]
+===== 解压格式详细信息
 
-On all devices, the unpacked format uses 2 bytes per pixel.
 
-_On Raspberry Pi 4 and earlier devices_, applications apply zero padding at the *most significant end*. In the unpacked format, a pixel from a 10-bit camera mode cannot exceed the value 1023.
+解压缩格式提供的像素值更易于手动操作，但像素数据的存储空间却更大。
 
-_On Raspberry Pi 5 and later devices_, applications apply zero padding at the *least significant end*, so images use the full 16-bit dynamic range of the pixel depth delivered by the sensor.
+在所有设备上，未打包格式每个像素使用 2 个字节。
 
-==== `viewfinder-mode`
+在 Raspberry Pi 4 和更早的设备上，应用程序会在 *most significant end* 应用零填充。在未打包格式中，10 位相机模式的像素值不能超过 1023。
 
-Identical to the `mode` option, but it applies to the data passed to the preview window. For more information, see the xref:camera_software.adoc#mode[`mode` documentation].
+在 Raspberry Pi 5 及更早的设备上，应用程序会在 *least significant end* 应用零填充，因此图像会使用传感器提供的像素深度的全部 16 位动态范围。
 
-==== `lores-width` and `lores-height`
+[[viewfinder-mode]]
+==== `viewfinder-mode` 
 
-Delivers a second, lower-resolution image stream from the camera, scaled down to the specified dimensions.
+与 `mode` 选项相同，但它适用于传递到预览窗口的数据。有关详细信息，请参阅 xref:camera_software.adoc#mode[ `mode` 文档]。
 
-Each accepts a single number defining the dimensions, in pixels, of the lower-resolution stream.
+[[lores-width-and-lores-height]]
+==== `lores-width` 和 `lores-height` 
 
-Available for preview and video modes. Not available for still captures. If you specify a aspect ratio different from the normal resolution stream, generates non-square pixels.
+从相机传送第二个分辨率较低的图像流，缩小到指定的尺寸。
 
-For `rpicam-vid`, disables extra colour-denoise processing.
+每个都接受一个数字，定义低分辨率流的维度（以像素为单位）。
 
+可用于预览和视频模式。不适用于静态捕获。如果您指定的长宽比与正常分辨率流不同，则会生成非方形像素。
 
-Useful for image analysis when combined with xref:camera_software.adoc#post-processing-with-rpicam-apps[image post-processing].
+对于 `rpicam-vid` ，禁用额外的颜色去噪处理。
 
-==== `hflip`
 
-Flips the image horizontally. Does not accept a value.
+与 xref:camera_software.adoc#post-processing-with-rpicam-apps[图像后处理] 结合使用时对图像分析很有用。
 
-==== `vflip`
+[[hflip]]
+==== `hflip` 
 
-Flips the image vertically. Does not accept a value.
+水平翻转图像。不接受值。
 
-==== `rotation`
+[[vflip]]
+==== `vflip` 
 
-Rotates the image extracted from the sensor. Accepts only the values 0 or 180.
+垂直翻转图像。不接受值。
 
-==== `roi`
+[[rotation]]
+==== `rotation` 
 
-Crops the image extracted from the full field of the sensor. Accepts four decimal values, _ranged 0 to 1_, in the following format: `<x>,<y>,<w>,h>`. Each of these values represents a percentage of the available width and heights as a decimal between 0 and 1.
+旋转从传感器提取的图像。仅接受值0或180。
 
-These values define the following proportions:
+[[roi]]
+==== `roi` 
 
-* `<x>`: X coordinates to skip before extracting an image
-* `<y>`: Y coordinates to skip before extracting an image
-* `<w>`: image width to extract
-* `<h>`: image height to extract
+裁剪从传感器的完整字段中提取的图像。接受四个十进制值，_ranged0到1_，格式如下： `<x>，<y>，<w>， h>` 。这些值中的每一个都代表可用宽度和高度的百分比，作为0到1之间的小数。
 
-Defaults to `0,0,1,1` (starts at the first X coordinate and the first Y coordinate, uses 100% of the image width, uses 100% of the image height).
+这些值定义了以下比例：
 
-Examples:
+* `<x>` ：提取图像前要跳过的X坐标
+* `<y>` ：提取图像前要跳过的Y坐标
+* `<w>` ：要提取的图像宽度
+* `<h>` ：要提取的图像高度
 
-* `rpicam-hello --roi 0.25,0.25,0.5,0.5` selects exactly a half of the total number of pixels cropped from the centre of the image (skips the first 25% of X coordinates, skips the first 25% of Y coordinates, uses 50% of the total image width, uses 50% of the total image height).
-* `rpicam-hello --roi 0,0,0.25,0.25` selects exactly a quarter of the total number of pixels cropped from the top left of the image (skips the first 0% of X coordinates, skips the first 0% of Y coordinates, uses 25% of the image width, uses 25% of the image height).
+默认为 `0,0,1,1` （从第一个X坐标和第一个Y坐标开始，使用100%的图像宽度，使用100%的图像高度）。
 
-==== `hdr`
+例子：
 
-Default value: `off`
+* `rpicam-hello--roi 0.25,0.25,0.5,0.5` 选择从图像中心裁剪的总像素数的一半（跳过X坐标的前25%，跳过Y坐标的前25%，使用总图像宽度的50%，使用总图像高度的50%）。
+* `rpicam-hello--roi 0,0,0.25,0.25` 选择从图像左上角裁剪的总像素数的四分之一（跳过X坐标的前0%，跳过Y坐标的前0%，使用25%的图像宽度，使用25%的图像高度）。
 
-Runs the camera in HDR mode. If passed without a value, assumes `auto`. Accepts one of the following values:
+[[hdr]]
+==== `hdr` 
 
-* `off` - Disables HDR.
-* `auto` - Enables HDR on supported devices. Uses the sensor's built-in HDR mode if available. If the sensor lacks a built-in HDR mode, uses on-board HDR mode, if available.
-* `single-exp` - Uses on-board HDR mode, if available, even if the sensor has a built-in HDR mode. If on-board HDR mode is not available, disables HDR.
+默认值： `off` 
 
-Raspberry Pi 5 and later devices have an on-board HDR mode.
+以HDR模式运行相机。如果不带值传递，则假定 `auto` 。接受以下值之一：
 
-To check for built-in HDR modes in a sensor, pass this option in addition to xref:camera_software.adoc#list-cameras[`list-cameras`].
+* `off` - 禁用 HDR。
+* `auto` - 在支持的设备上启用 HDR。使用传感器的内置 HDR 模式（如果可用）。如果传感器没有内置 HDR 模式，则使用可用的板载 HDR 模式。
+* `single-exp` - 使用板载 HDR 模式（如果可用），即使传感器有内置 HDR 模式。如果板载 HDR 模式不可用，则禁用 HDR
 
-=== Camera control options
+Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
-The following options control image processing and algorithms that affect camera image quality.
+要检查传感器中的内置 HDR 模式，除了 xref:camera_software.adoc#list-cameras[`list-cameras`] 之外，还需传递此选项。
 
-==== `sharpness`
+[[camera-control-options]]
+=== 相机控制选项
 
-Sets image sharpness. Accepts a numeric value along the following spectrum:
+以下选项控制影响相机画质的图像处理和算法。
 
-* `0.0` applies no sharpening
-* values greater than `0.0`, but less than `1.0` apply less than the default amount of sharpening
-* `1.0` applies the default amount of sharpening
-* values greater than `1.0` apply extra sharpening
+[[sharpness]]
+==== `sharpness` `锐化` 
 
-==== `contrast`
+设置图像清晰度。接受以下光谱的数值：
 
-Specifies the image contrast. Accepts a numeric value along the following spectrum:
+* `0.0` 不适用锐化
+* 大于 `0.0` 但小于 `1.0` 的值适用于小于默认锐化量
+* `1.0` 应用默认的锐化量
+* 大于 `1.0` 的值应用额外的锐化
 
-* `0.0` applies minimum contrast
-* values greater than `0.0`, but less than `1.0` apply less than the default amount of contrast
-* `1.0` applies the default amount of contrast
-* values greater than `1.0` apply extra contrast
+[[contrast]]
+==== `contrast` `对比度` 
 
+指定图像对比度。接受以下光谱的数值：
 
-==== `brightness`
+* `0.0` 应用最小对比度
+* 大于 `0.0` 但小于 `1.0` 的值应用于小于默认对比度量
+* `1.0` 应用默认对比度量
+* 大于 `1.0` 的值应用额外的对比度
 
-Specifies the image brightness, added as an offset to all pixels in the output image. Accepts a numeric value along the following spectrum:
 
-* `-1.0` applies minimum brightness (black)
-* `0.0` applies standard brightness
-* `1.0` applies maximum brightness (white)
+[[brightness]]
+==== `brightness` `亮度` 
 
-For many use cases, prefer xref:camera_software.adoc#ev[`ev`].
+指定图像亮度，作为输出图像中所有像素的偏移量添加。接受以下光谱的数值：
 
-==== `saturation`
+* `-1.0` 适用于最小亮度（黑色）
+* `0.0` 适用标准亮度
+* `1.0` 适用于最大亮度（白色）
 
-Specifies the image colour saturation. Accepts a numeric value along the following spectrum:
+对于许多用例，更喜欢 xref:camera_software.adoc#ev[`ev`]。
 
-* `0.0` applies minimum saturation (grayscale)
-* values greater than `0.0`, but less than `1.0` apply less than the default amount of saturation
-* `1.0` applies the default amount of saturation
-* values greater than `1.0` apply extra saturation
+[[saturation]]
+==== `saturation` `饱和度` 
 
-==== `ev`
 
-Specifies the https://en.wikipedia.org/wiki/Exposure_value[exposure value (EV)] compensation of the image in stops. Accepts a numeric value that controls target values passed to the Automatic Exposure/Gain Control (AEC/AGC) processing algorithm along the following spectrum:
+* `0.0` 适用于最小饱和度（灰度）
+* 大于 `0.0` 但小于 `1.0` 的值适用于小于默认饱和量
+* `1.0` 应用默认的饱和度量
+* 大于 `1.0` 的值应用额外的饱和度
 
-* `-10.0` applies minimum target values
-* `0.0` applies standard target values
-* `10.0` applies maximum target values
+[[ev]]
+==== `ev` 
 
-==== `shutter`
+指定图像的 https://en.wikipedia.org/wiki/Exposure_value[曝光值（EV）] 补偿。接受一个数值，该数值控制沿着以下光谱传递给自动曝光/增益控制（AEC/AGC）处理算法的目标值：
 
-Specifies the exposure time, using the shutter, in _microseconds_. Gain can still vary when you use this option. If the camera runs at a framerate so fast it does not allow for the specified exposure time (for instance, a framerate of 1fps and an exposure time of 10000 microseconds), the sensor will use the maximum exposure time allowed by the framerate.
+* `-10.0` 应用最小目标值
+* `0.0` 应用标准目标值
+* `10.0` 适用最大目标值
 
-For a list of minimum and maximum shutter times for official cameras, see the xref:../accessories/camera.adoc#hardware-specification[camera hardware documentation]. Values above the maximum result in undefined behaviour.
+[[shutter]]
+==== `shutter` `快门` 
 
-==== `gain`
+使用快门以_microseconds_指定曝光时间。使用此选项时，增益仍然会有所不同。如果相机以帧速率运行得太快，以至于不允许指定的曝光时间（例如，帧速率为1fps，曝光时间为10000微秒），传感器将使用帧速率允许的最大曝光时间。
 
-Alias: `--analoggain`
+有关官方相机的最小和最大快门时间列表，请参阅 xref:../accessories/camera.adoc#hardware-specification[相机硬件文档]。高于最大值的值会导致未定义的行为。
 
-Sets the combined analogue and digital gain. When the sensor driver can provide the requested gain, only uses analogue gain. When analogue gain reaches the maximum value, the ISP applies digital gain. Accepts a numeric value.
+[[gain]]
+==== `gain` `增益` 
 
-For a list of analogue gain limits, for official cameras, see the xref:../accessories/camera.adoc#hardware-specification[camera hardware documentation].
+别名： `--analoggain` 
 
-Sometimes, digital gain can exceed 1.0 even when the analogue gain limit is not exceeded. This can occur in the following situations:
+设置模拟和数字增益的组合。当传感器驱动器可以提供请求的增益时，仅使用模拟增益。当模拟增益达到最大值时，ISP应用数字增益。接受一个数值。
 
-* Either of the colour gains drops below 1.0, which will cause the digital gain to settle to 1.0/min(red_gain,blue_gain). This keeps the total digital gain applied to any colour channel above 1.0 to avoid discolouration artefacts.
-* Slight variances during Automatic Exposure/Gain Control (AEC/AGC) changes.
+有关官方相机的模拟增益限制列表，请参阅 xref:../accessories/camera.adoc#hardware-specification[相机硬件文档]。
 
-==== `metering`
+有时，即使没有超过模拟增益限制，数字增益也可能超过1.0。这可能发生在以下情况下：
 
-Default value: `centre`
+* 任一颜色增益低于1.0，这将导致数字增益稳定在1.0/min（red_gain，blue_gain）。这使应用于任何颜色通道的总数字增益保持在1.0以上，以避免变色伪影。
+* 自动曝光/增益控制（AEC/AGC）更改期间的轻微差异。
 
-Sets the metering mode of the Automatic Exposure/Gain Control (AEC/AGC) algorithm. Accepts the following values:
+[[metering]]
+==== `metering` `测光` 
 
-* `centre` - centre weighted metering
-* `spot` - spot metering
-* `average` - average or whole frame metering
-* `custom` - custom metering mode defined in the camera tuning file
+默认值： `centre` 
 
-For more information on defining a custom metering mode, and adjusting region weights in existing metering modes, see the https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[Tuning guide for the Raspberry Pi cameras and libcamera].
+设置自动曝光/增益控制（AEC/AGC）算法的计量模式。接受以下值：
 
-==== `exposure`
+* `中心` -中心加权计量
+* `spot` -点计量
+* `平均` -平均或整个帧计量
+* `自定义` -相机调谐文件中定义的自定义测光模式
 
-Sets the exposure profile. Changing the exposure profile should not affect the image exposure. Instead, different modes adjust gain settings to achieve the same net result. Accepts the following values:
+有关定义自定义计量模式和调整现有计量模式中的区域权重的更多信息，请参阅 https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[Raspberry Pi相机和lib相机的调整指南]。
 
-* `sport`: short exposure, larger gains
-* `normal`: normal exposure, normal gains
-* `long`: long exposure, smaller gains
+[[exposure]]
+==== `exposure` `曝光` 
 
-You can edit exposure profiles using tuning files. For more information, see the https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[Tuning guide for the Raspberry Pi cameras and libcamera].
+设置曝光配置文件。更改曝光配置文件不应影响图像曝光。相反，不同模式会调整增益设置以实现相同的净结果。接受以下值：
 
-==== `awb`
+* `运动` ：短曝光，大收益
+* `normal` ：正常曝光，正常增益
+* `long` ：长期敞口，收益较小
 
-Sets the Auto White Balance (AWB) mode. Accepts the following values:
+您可以使用调谐文件编辑曝光配置文件。有关详细信息，请参阅 https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[树莓派相机和lib相机的调整指南]。
+
+[[awb]]
+==== `awb` `白平衡` 
+
+设置自动白平衡（AWB）模式。接受以下值：
 
 |===
-| Mode name | Colour temperature range
+|模式名称|颜色温度范围
 
-| `auto`
-| 2500K to 8000K
+|  `auto` 
+| 2500K 到 8000K
 
-| `incandescent`
-| 2500K to 3000K
+|  `incandescent` 
+| 2500K 到 3000K
 
-| `tungsten`
-| 3000K to 3500K
+|  `tungsten` 
+| 3000K 到 3500K
 
-| `fluorescent`
-| 4000K to 4700K
+|  `fluorescent` 
+| 4000K 到 4700K
 
-| `indoor`
-| 3000K to 5000K
+|  `indoor` 
+| 3000K 到 5000K
 
-| `daylight`
-| 5500K to 6500K
+|  `daylight` 
+| 5500K 到 6500K
 
-| `cloudy`
-| 7000K to 8500K
+|  `cloudy` 
+| 7000K 到 8500K
 
-| `custom`
-| A custom range defined in the tuning file.
+|  `custom` 
+| 在调谐文件中定义的自定义范围。
 |===
 
-These values are only approximate: values could vary according to the camera tuning.
+这些值只是近似值：值可能会根据相机调整而有所不同。
 
-No mode fully disables AWB. Instead, you can fix colour gains with xref:camera_software.adoc#awbgains[`awbgains`].
+没有模式完全禁用AWB。相反，您可以使用 xref:camera_software.adoc#awbgains[`awbgains`] 修复颜色增益。
 
-For more information on AWB modes, including how to define a custom one, see the https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[Tuning guide for the Raspberry Pi cameras and libcamera].
+有关AWB模式的更多信息，包括如何定义自定义模式，请参阅 https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[树莓派相机和lib相机的调整指南]。
 
-==== `awbgains`
+[[awbgains]]
+==== `awbgains` 
 
-Sets a fixed red and blue gain value to be used instead of an Auto White Balance (AWB) algorithm. Set non-zero values to disable AWB. Accepts comma-separated numeric input in the following format: `<red_gain>,<blue_gain>`
+设置要使用的固定红色和蓝色增益值，而不是自动白平衡（AWB）算法。设置非零值以禁用AWB。接受逗号分隔的数字输入，格式如下： `<red_gain>,<blue_gain>` 
 
-==== `denoise`
+[[denoise]]
+==== `denoise` `降噪` 
 
-Default value: `auto`
+默认值： `auto` 
 
-Sets the denoising mode. Accepts the following values:
+设置去噪模式。接受以下值：
 
-* `auto`: Enables standard spatial denoise. Uses extra-fast colour denoise for video, and high-quality colour denoise for images. Enables no extra colour denoise in the preview window.
+* `auto` ：启用标准空间去噪。对视频使用超快的色彩去噪，对图像使用高质量的色彩去噪。在预览窗口中不启用额外的色彩去噪。
 
-* `off`: Disables spatial and colour denoise.
+* `off` ： 禁用空间和色彩去噪
 
-* `cdn_off`: Disables colour denoise.
+* `cdn_off` ：禁用颜色降噪。
 
-* `cdn_fast`: Uses fast colour denoise.
+* `cdn_fast` ：使用快速颜色降噪。
 
-* `cdn_hq`: Uses high-quality colour denoise. Not appropriate for video/viewfinder due to reduced throughput.
+* `cdn_hq` ：使用高质量的色彩去噪。由于吞吐量降低，不适合视频/取景器。
 
-Even fast colour denoise can lower framerates. High quality colour denoise _significantly_ lowers framerates.
+即使是快速的色彩去噪也能降低帧率。高质量的色彩去噪_大幅地_降低帧率。
 
-==== `tuning-file`
+[[tuning-file]]
+==== `tuning-file` `调谐文件` 
 
-Specifies the camera tuning file. The tuning file allows you to control many aspects of image processing, including the  Automatic Exposure/Gain Control (AEC/AGC), Auto White Balance (AWB), colour shading correction, colour processing, denoising and more. Accepts a tuning file path as input.
+指定相机调谐文件。调谐文件允许您控制图像处理的许多方面，包括自动曝光/增益控制（AEC/AGC）、自动白平衡（AWB）、颜色阴影校正、颜色处理、去噪等。接受调谐文件路径作为输入。
 
-For more information about tuning files, see xref:camera_software.adoc#tuning-files[Tuning Files].
+有关调优文件的详细信息，请参见 xref:camera_software.adoc#tuning-files[调谐文件]。
 
-==== `autofocus-mode`
+[[autofocus-mode]]
+==== `autofocus-mode` `自动对焦模式` 
 
-Default value: `default`
+默认值： `default` 
 
-Specifies the autofocus mode. Accepts the following values:
+指定自动对焦模式。接受以下值：
 
-* `default`: puts the camera into continuous autofocus mode unless xref:camera_software.adoc#lens-position[`lens-position`] or xref:camera_software.adoc#autofocus-on-capture[`autofocus-on-capture`] override the mode to manual
-* `manual`: does not move the lens at all unless manually configured with xref:camera_software.adoc#lens-position[`lens-position`]
-* `auto`: only moves the lens for an autofocus sweep when the camera starts or just before capture if xref:camera_software.adoc#autofocus-on-capture[`autofocus-on-capture`] is also used
-* `continuous`: adjusts the lens position automatically as the scene changes
+* `default` ：将相机置于连续自动对焦模式，除非 xref:camera_software.adoc#lens-position[`lens-position` ]或 xref:camera_software.adoc#autofocus-on-capture[ `autofocus-on-capture`] 将模式改成手动
+* `manual` ：根本不会移动镜头，除非手动配置 xref:camera_software.adoc#lens-position[`lens-position`]
+* `auto` ：仅在相机启动时或拍摄前移动镜头进行自动对焦扫描，如果还使用了 xref:camera_software.adoc#autofocus-on-capture[`autofocus-on-capture`]
+* `continuous` ：随着场景的变化自动调整镜头位置
 
-This option is only supported for certain camera modules.
+此选项仅适用于某些相机模块。
 
-==== `autofocus-range`
+==== `autofocus-range` `自动对焦范围` 
 
-Default value: `normal`
+默认值： `normal` 
 
-Specifies the autofocus range. Accepts the following values:
+指定自动对焦范围。接受以下值：
 
-* `normal`: focuses from reasonably close to infinity
-* `macro`: focuses only on close objects, including the closest focal distances supported by the camera
-* `full`: focus on the entire range, from the very closest objects to infinity
+* `normal` ：从合理接近到无穷大的焦点
+* `macro` ：只关注近距离物体，包括相机支持的最近焦距
+* `full` ：关注整个范围，从最接近的物体到无穷大
 
-This option is only supported for certain camera modules.
+此选项仅适用于某些相机模块。
 
-==== `autofocus-speed`
+[[autofocus-speed]]
+==== `autofocus-speed` `自动对焦速度` 
 
-Default value: `normal`
+默认值： `normal` 
 
-Specifies the autofocus speed. Accepts the following values:
+指定自动对焦速度。接受以下值：
 
-* `normal`: changes the lens position at normal speed
-* `fast`: changes the lens position quickly
+* `normal` ：以正常速度改变镜头位置
+* `fast` ：快速改变镜头位置
 
-This option is only supported for certain camera modules.
+此选项仅适用于某些相机模块。
 
-==== `autofocus-range`
+==== `autofocus-range` `自动对焦范围` 
 
-Specifies the autofocus window within the full field of the sensor. Accepts four decimal values, _ranged 0 to 1_, in the following format: `<x>,<y>,<w>,h>`. Each of these values represents a percentage of the available width and heights as a decimal between 0 and 1.
+指定传感器完整字段内的自动对焦窗口。接受四个十进制值，_范围0到1_，格式如下： `<x>,<y>,<w>,h>` 。这些值中的每一个都表示可用宽度和高度的百分比，作为0到1之间的小数。
 
-These values define the following proportions:
+这些值定义了以下比例：
 
-* `<x>`: X coordinates to skip before applying autofocus
-* `<y>`: Y coordinates to skip before applying autofocus
-* `<w>`: autofocus area width
-* `<h>`: autofocus area height
+* `<x>` ：在应用自动对焦之前要跳过的X坐标
+* `<y>` ：在应用自动对焦之前要跳过的Y坐标
+* `<w>` ：自动对焦区域宽度
+* `<h>` ：自动对焦区域高度
 
-The default value uses the middle third of the output image in both dimensions (1/9 of the total image area).
+默认值使用两个维度中输出图像的中间三分之一（总图像区域的1/9）。
 
-Examples:
+例子：
 
-* `rpicam-hello --autofocus-window 0.25,0.25,0.5,0.5` selects exactly half of the total number of pixels cropped from the centre of the image (skips the first 25% of X coordinates, skips the first 25% of Y coordinates, uses 50% of the total image width, uses 50% of the total image height).
-* `rpicam-hello --autofocus-window 0,0,0.25,0.25` selects exactly a quarter of the total number of pixels cropped from the top left of the image (skips the first 0% of X coordinates, skips the first 0% of Y coordinates, uses 25% of the image width, uses 25% of the image height).
+* `rpicam-hello --autofocus-window 0.25,0.25,0.5,0.5` 选择从图像中心裁剪的总像素数的一半（跳过X坐标的前25%，跳过Y坐标的前25%，使用总图像宽度的50%，使用总图像高度的50%）。
+* `rpicam-hello --autofocus-window 0,0,0.25,0.25` 选择从图像左上角裁剪的总像素数的四分之一（跳过X坐标的前0%，跳过Y坐标的前0%，使用25%的图像宽度，使用25%的图像高度）。
 
-This option is only supported for certain camera modules.
+此选项仅适用于某些相机模块。
 
-==== `lens-position`
+[[lens-position]]
+==== `lens-position` `镜头位置` 
 
-Default value: `default`
+默认值： `default` 
 
-Moves the lens to a fixed focal distance, normally given in dioptres (units of 1 / _distance in metres_). Accepts the following spectrum of values:
+将镜头移动到固定焦距，通常以屈光度（单位为1/_distancemetres_）给出。接受以下值光谱：
 
-* `0.0`: moves the lens to the "infinity" position
-* Any other `number`: moves the lens to the 1 / `number` position. For example, the value `2.0` would focus at approximately 0.5m
-* `default`: move the lens to a default position which corresponds to the hyperfocal position of the lens
+* `0.0` ：将镜头移动到 `无穷大` 位置
+* 任何其他 `number` ：将镜头移动到1/ `数字` 位置。例如，值 `2.0` 将聚焦在大约0.5m
+* `default` ：将镜头移动到与镜头超焦位置相对应的默认位置
 
-Lens calibration is imperfect, so different camera modules of the same model may vary.
+镜头校准不完美，因此同一型号的不同相机模块可能会有所不同。
 
-==== `verbose`
+[[verbose]]
+==== `verbose` 
 
-Alias: `-v`
+别名： `-v` 
 
-Default value: `1`
+默认值： `1` 
 
-Sets the verbosity level. Accepts the following values:
+设置详细级别。接受以下值：
 
-* `0`: no output
-* `1`: normal output
-* `2`: verbose output
+* `0` ：无输出
+* `1` ：正常输出
+* `2` ：详细输出
 
-=== Output file options
+[[output-file-options]]
+=== 输出文件选项
 
-==== `output`
+[[output]]
+==== `输出` 
 
-Alias: `-o`
+别名： `-o` 
 
-Sets the name of the file used to record images or video. Besides plaintext file names, accepts the following special values:
+设置用于录制图像或视频的文件的名称。除了明文文件名外，还接受以下特殊值：
 
-* `-`: write to stdout.
-* `udp://` (prefix): a network address for UDP streaming.
-* `tcp://` (prefix): a network address for TCP streaming.
-* Include the `%d` directive in the file name to replace the directive with a count that increments for each opened file. This directive supports standard C format directive modifiers.
+* `-` : 写入标准输出。
+* `udp://` （前缀）：UDP流的网络地址。
+* `tcp://` （前缀）：TCP流的网络地址。
+* 在文件名中包含 `%d` 指令，以替换为每打开一个文件就递增一次的计数指令。该指令支持标准 C 格式指令修饰符。
 
-Examples:
+例子：
 
-* `rpicam-vid -t 100000 --segment 10000 -o chunk%04d.h264` records a 100 second file in 10 second segments, where each file includes an incrementing four-digit counter padded with leading zeros: e.g. `chunk0001.h264`, `chunk0002.h264`, etc.
+* `rpicam-vid -t 100000 --segment 10000 -o chunk%04d.h264` 在10秒段中记录一个100秒的文件，其中每个文件都包含一个递增的四位数计数器，并用前导零填充：例如 `chunk0001.h264`、 `chunk0002.h264` 等。
 
-* `rpicam-vid -t 0 --inline -o udp://192.168.1.13:5000` streams H.264 video to network address 192.168.1.13 using UDP on port 5000.
+* `rpicam-vid -t 0 --inline -o udp://192.168.1.13:5000` 在端口5000上使用UDP将H.264视频流式传输到网络地址192.168.1.13。
 
-==== `wrap`
+[[wrap]]
+==== `wrap` `包装` 
 
-Sets a maximum value for the counter used by the xref:camera_software.adoc#output[`output`] `%d` directive. The counter resets to zero after reaching this value. Accepts a numeric value.
+设置 xref:camera_software.adoc#output[`输出`] `%d` 指令使用的计数器的最大值。计数器在达到此值后重置为零。接受一个数值。
 
-==== `flush`
+[[flush]]
+==== `flush` `刷新` 
 
-Flushes output files to disk as soon as a frame finishes writing, instead of waiting for the system to handle it. Does not accept a value.
+帧完成写入后立即将输出文件刷新到磁盘，而不是等待系统处理它。不接受值。
 
-==== `post-process-file`
+[[post-process-file]]
+==== `post-process-file` `处理后文件` 
 
-Specifies a JSON file that configures the post-processing applied by the imaging pipeline. This applies to camera images _before_ they reach the application. This works similarly to the legacy `raspicam` "image effects". Accepts a file name path as input.
+指定一个 JSON 文件，用于配置成像管道应用的后处理。这适用于相机图像到达应用程序之前。其工作原理类似于传统的 `raspicam` "图像特效"。接受文件名路径作为输入。
 
-Post-processing is a large topic and admits the use of third-party software like OpenCV and TensorFlowLite to analyse and manipulate images. For more information, see xref:camera_software.adoc#post-processing-with-rpicam-apps[post-processing].
+后处理是一个大课题，需要使用 OpenCV 和 TensorFlowLite 等第三方软件来分析和处理图像。有关详细信息，请参阅 xref:camera_software.adoc#post-processing-with-rpicam-apps[后处理]。

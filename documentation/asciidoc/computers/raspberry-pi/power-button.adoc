@@ -1,28 +1,32 @@
-== Power button
+[[power-button]]
+== 电源按钮
 
-NOTE: This section only applies to Raspberry Pi models with a power button, such as the Raspberry Pi 5.
+NOTE: 本节仅适用于带有电源按钮的Raspberry Pi型号，例如Raspberry Pi 5。
 
-When you plug your Raspberry Pi into power for the first time, it will automatically turn on and boot into the operating system without having to push the button.
+当您第一次将Raspberry Pi插入电源时，它会自动打开并启动到操作系统，而无需按下按钮。
 
-If you run Raspberry Pi Desktop, you can initiate a clean shutdown by briefly pressing the power button. A window will appear asking whether you want to shutdown, reboot, or logout.
+如果您运行Raspberry Pi Desktop，您可以通过短暂按下电源按钮来启动彻底关闭。将出现一个窗口，询问您是要关闭、重新启动还是注销。
 
-Select an option or press the power button again to initiate a clean shutdown.
+选择一个选项或再次按下电源按钮以启动干净的关机。
 
-NOTE: If you run Raspberry Pi Desktop, you can press the power button twice in quick succession to shut down. If you run Raspberry Pi OS Lite without a desktop, press the power button a single time to initiate a shutdown.
+NOTE: 如果您运行Raspberry Pi Desktop，您可以快速连续按两次电源按钮以关闭。如果您在没有桌面的情况下运行Raspberry Pi OS Lite，请按一次电源按钮以启动关机。
 
-=== Restart
+[[restart]]
+=== 重启
 
-If the Raspberry Pi board is turned off, but still connected to power, pressing the power button restarts the board.
+如果Raspberry Pi板已关闭，但仍连接到电源，请按电源按钮重新启动板。
 
-NOTE: Resetting the Power Management Integrated Circuit (PMIC) can also restart the board. Connecting a HAT can reset the PMIC. Always disconnect your device from the power supply before connecting a HAT.
+NOTE: 重置电源管理集成电路（PMIC）也可以重新启动电路板。连接HAT可以重置PMIC。在连接HAT之前，请务必断开设备与电源的连接。
 
-=== Hard shutdown
+[[hard-shutdown]]
+=== 强制关机
 
-To force a hard shutdown, press and hold the power button.
+要强制硬关机，请按住电源按钮。
 
-=== Add your own power button
+[[add-your-own-power-button]]
+=== 添加自己的电源按钮
 
 .The J2 jumper
 image::images/j2.jpg[alt="The J2 jumper on Raspberry Pi 5",width="70%"]
 
-The J2 jumper is located between the RTC battery connector and the board edge. This breakout allows you to add your own power button to Raspberry Pi 5 by adding a Normally Open (NO) momentary switch bridging the two pads. Briefly closing this switch will perform the same actions as the onboard power button.
+J2 跳线位于 RTC 电池连接器和电路板边缘之间。通过在这两个焊盘之间添加一个常开（NO）瞬时开关，您就可以在 Raspberry Pi 5 上添加自己的电源按钮。短暂闭合该开关将执行与板载电源按钮相同的操作。

@@ -1,15 +1,18 @@
-=== Detection options
+[[detection-options]]
+=== 检测选项
 
-The command line options specified in this section apply only to object detection using `rpicam-detect`.
+本节中指定的命令行选项仅适用于使用 `rpicam-detect` 的目标检测。
 
-To pass one of the following options to `rpicam-detect`, prefix the option name with `--`. If the option requires a value, pass the value immediately after the option name, separated by a single space. If the value contains a space, surround the value in quotes.
+要将以下选项之一传递给 `rpicam-detect` ，请在选项名称前加上 `--` .如果选项需要值，请在选项名称后立即传递该值，并用单个空格分隔。如果值包含空格，请将值用引号括起来。
 
-Some options have shorthand aliases, for example `-h` instead of `--help`. Use these shorthand aliases instead of the full option name to save space and time at the expense of readability.
+一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会牺牲易读性。
 
-==== `object`
+[[object]]
+==== `object` 
 
-Detects objects with the given name, sourced from the model's label file. Accepts a plaintext file name as input.
+检测具有给定名称的对象，来自模型的标签文件。接受明文文件名作为输入。
 
-==== `gap`
+[[gap]]
+==== `gap` 
 
-Wait at least this many frames between captures. Accepts numeric values.
+在捕获之间至少等待这么多帧。接受数值。

@@ -1,127 +1,133 @@
-== Stream video over a network with `rpicam-apps`
+[[stream-video-over-a-network-with-rpicam-apps]]
+== 使用 `rpicam-app` 通过网络流式传输视频
 
-This section describes native streaming from `rpicam-vid`. You can also use the xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`] backend for network streaming.
+本节介绍来自 `rpicam-vid` 的本机流。您还可以使用 xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`] 后端进行网络流。
 
+[[udp]]
 === UDP
 
-To stream video over UDP using a Raspberry Pi as a server, use the following command, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
+要使用Raspberry Pi作为服务器通过UDP流式传输视频，请使用以下命令，将 `<ip-addr>` 占位符替换为客户端或多播地址的IP地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：
 
 [source,console]
 ----
 $ rpicam-vid -t 0 --inline -o udp://<ip-addr>:<port>
 ----
 
-To view video streamed over UDP using a Raspberry Pi as a client, use the following command, replacing the `<port>` placeholder with the port you would like to stream from:
+要使用Raspberry Pi作为客户端查看通过UDP流式传输的视频，请使用以下命令，将 `<port>` 占位符替换为您要从中流式传输的端口：
 
 [source,console]
 ----
 $ vlc udp://@:<port> :demux=h264
 ----
 
-Alternatively, use the following command on a client to stream using `ffplay`:
+或者，在客户端上使用以下命令使用 `ffplay` 进行流式传输：
 
 [source,console]
 ----
 $ ffplay udp://<ip-addr-of-server>:<port> -fflags nobuffer -flags low_delay -framedrop
 ----
 
+[[tcp]]
 === TCP
 
-You can also stream video over TCP. To use a Raspberry Pi as a server:
+您还可以通过TCP流式传输视频。要将Raspberry Pi用作服务器：
 
 [source,console]
 ----
 $ rpicam-vid -t 0 --inline --listen -o tcp://0.0.0.0:<port>
 ----
 
-To view video streamed over TCP using a Raspberry Pi as a client, use the following command:
+要使用Raspberry Pi作为客户端查看通过TCP流式传输的视频，请使用以下命令：
 
 [source,console]
 ----
 $ vlc tcp/h264://<ip-addr-of-server>:<port>
 ----
 
-Alternatively, use the following command on a client to stream using `ffplay` at 30 frames per second:
+或者，在客户端上使用以下命令以每秒30帧的速度使用 `ffplay` 进行流式传输：
 
 [source,console]
 ----
 $ ffplay tcp://<ip-addr-of-server>:<port> -vf "setpts=N/30" -fflags nobuffer -flags low_delay -framedrop
 ----
 
+[[rtsp]]
 === RTSP
 
-To use VLC to stream video over RTSP using a Raspberry Pi as a server, use the following command:
+要使用VLC使用Raspberry Pi作为服务器通过RTSP流式传输视频，请使用以下命令：
 
 [source,console]
 ----
 $ rpicam-vid -t 0 --inline -o - | cvlc stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8554/stream1}' :demux=h264
 ----
 
-To view video streamed over RTSP using a Raspberry Pi as a client, use the following command:
+要使用Raspberry Pi作为客户端查看通过RTSP流式传输的视频，请使用以下命令：
 
 [source,console]
 ----
 $ ffplay rtsp://<ip-addr-of-server>:8554/stream1 -vf "setpts=N/30" -fflags nobuffer -flags low_delay -framedrop
 ----
 
-Alternatively, use the following command on a client to stream using VLC:
+或者，在客户端上使用以下命令使用VLC进行流式传输：
 
 [source,console]
 ----
 $ vlc rtsp://<ip-addr-of-server>:8554/stream1
 ----
 
-To suppress the preview window on the server, use xref:camera_software.adoc#nopreview[`nopreview`].
+要取消服务器上的预览窗口，请使用 xref:camera_software.adoc#nopreview[`nopreview`]。
 
-Use the xref:camera_software.adoc#inline[`inline`] flag to force stream header information into every intra frame, which helps clients understand the stream if they miss the beginning.
+使用 xref:camera_software.adoc#inline[`inline`] 标志强制流头信息进入每个帧内，这有助于客户端在错过开头时理解流。
 
-=== `libav`
+[[libav]]
+=== `libav` 
 
-You can use the `libav` backend as a network streaming source for audio/video.
-To stream video over TCP using a Raspberry Pi as a server, use the following command, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
+您可以将 `libav` 后端用作音频/视频的网络流源。
+要使用Raspberry Pi作为服务器通过TCP流式传输视频，请使用以下命令，将 `<ip-addr>` 占位符替换为客户端或多播地址的IP地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：
 
 [source,console]
 ----
 $ rpicam-vid -t 0 --codec libav --libav-format mpegts --libav-audio -o "tcp://<ip-addr>:<port>?listen=1"
 ----
 
-You can stream over UDP with a similar command:
+您可以使用类似的命令通过UDP流式传输：
 
 [source,console]
 ----
 $ rpicam-vid -t 0 --codec libav --libav-format mpegts --libav-audio  -o "udp://<ip-addr>:<port>"
 ----
 
+[[gstreamer]]
 === GStreamer
 
-https://gstreamer.freedesktop.org/[GStreamer] is a Linux framework for reading, processing and playing multimedia files. This section shows how to use `rpicam-vid` to stream video over a network.
+ https://gstreamer.freedesktop.org/[GStreamer] 是一个用于读取、处理和播放多媒体文件的Linux框架。本节展示如何使用 `rpicam-vid` 通过网络流式传输视频。
 
-This setup uses `rpicam-vid` to output an encoded h.264 bitstream to stdout. Then, we use the GStreamer `fdsrc` element to receive the bitstream, and extra GStreamer elements to send it over the network. On the server, run the following command to start the stream, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
+此设置使用 `rpicam-vid` 将编码的h.264比特流输出到标准输出。然后，我们使用GStreamer `fdsrc` 元素接收比特流，并使用额外的GStreamer元素通过网络发送它。在服务器上，运行以下命令来启动流，将 `<ip-addr>` 占位符替换为客户端的IP地址或多播地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：
 
 [source,console]
 ----
 $ rpicam-vid -t 0 -n --inline -o - | gst-launch-1.0 fdsrc fd=0 ! udpsink host=<ip-addr> port=<port>
 ----
 
-On the client, run the following command to receive the stream, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
+在客户端上，运行以下命令来接收流，将 `<ip-addr>` 占位符替换为客户端的IP地址或多播地址，并将 `<port>` 占位符替换为您要用于流的端口：
 
 [source,console]
 ----
 $ gst-launch-1.0 udpsrc address=<ip-addr> port=<port> ! h264parse ! v4l2h264dec ! autovideosink
 ----
 
-TIP: To test this configuration, run the server and client commands in separate terminals on the same device, using `localhost` as the address.
+TIP: 要测试此配置，请在同一设备上的不同终端中运行服务器和客户端命令，使用 `localhost` 作为地址。
 
+[[rtp]]
 ==== RTP
 
-To stream using RTP, run the following command on the server, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
 
 [source,console]
 ----
 $ rpicam-vid -t 0 -n --inline -o - | gst-launch-1.0 fdsrc fd=0 ! h264parse ! rtph264pay ! udpsink host=<ip-addr> port=<port>
 ----
 
-To receive over RTP, run the following command on the client, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
+要通过RTP接收，请在客户端上运行以下命令，将 `<ip-addr>` 占位符替换为客户端的IP地址或多播地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：
 
 [source,console]
 ----
@@ -129,21 +135,22 @@ $ gst-launch-1.0 udpsrc address=<ip-addr> port=<port> caps=application/x-rtp ! r
 ----
 
 
-If the client is not a Raspberry Pi it may have different GStreamer elements available. On an x86 device running Linux, you might run the following command instead:
+如果客户端不是Raspberry Pi，它可能有不同的GStreamer元素可用。在运行Linux的x86设备上，您可以改为运行以下命令：
 
 [source,console]
 ----
 $ gst-launch-1.0 udpsrc address=<ip-addr> port=<port> caps=application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! autovideosink
 ----
 
-==== `libcamerasrc` GStreamer element
+[[libcamerasrc-gstreamer-element]]
+==== `libcamerasrc` GStreamer 元素
 
-`libcamera` provides a `libcamerasrc` GStreamer element which can be used directly instead of `rpicam-vid`. To use this element, run the following command on the server, replacing the `<ip-addr>` placeholder with the IP address of the client or multicast address and replacing the `<port>` placeholder with the port you would like to use for streaming:
+`libcam` 提供了一个 `libcamasrc` GStreamer元素，可以直接使用它来代替 `rpicam-vid` 。要使用此元素，请在服务器上运行以下命令，将 `<ip-addr>` 占位符替换为客户端或多播地址的IP地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：
 
 [source,console]
 ----
 $ gst-launch-1.0 libcamerasrc ! capsfilter caps=video/x-raw,width=1280,height=720,format=NV12 ! v4l2convert ! v4l2h264enc extra-controls="controls,repeat_sequence_header=1" ! 'video/x-h264,level=(string)4.1' ! h264parse ! rtph264pay ! udpsink host=<ip-addr> port=<port>
 ----
 
-and on the client we use the same playback pipeline as previously.
+在客户端上，我们使用与以前相同的播放管道。
 

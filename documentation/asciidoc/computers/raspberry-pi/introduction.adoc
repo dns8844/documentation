@@ -1,17 +1,17 @@
-== Introduction
+== 简介
 
-Raspberry Pi makes computers in several different **series**:
+Raspberry Pi 电脑分为几个不同的系列：
 
-* The *flagship* series, often referred to by the shorthand "Raspberry Pi", offers high-performance hardware, a full Linux operating system, and a variety of common ports in a form factor roughly the size of a credit card.
-* The *Zero* series offers a full Linux operating system and essential ports at an affordable price point in a minimal form factor with low power consumption.
-* The *Compute Module* series, often referred to by the shorthand "CM", offers high-performance hardware and a full Linux operating system in a minimal form factor suitable for industrial and embedded applications. Compute Module models feature hardware equivalent to the corresponding flagship models, but with fewer ports and no on-board GPIO pins. Instead, users should connect Compute Modules to a separate baseboard that provides the ports and pins required for a given application.
+* *旗舰* 系列通常简称为 "Raspberry Pi"，提供高性能硬件、完整的 Linux 操作系统和各种常用端口，外形尺寸与信用卡差不多。
+* *Zero* 系列提供完整的 Linux 操作系统和基本端口，价格实惠，外形小巧，功耗低。
+* *计算模块* 系列，通常简称为 "CM"，在适合工业和嵌入式应用的最小外形中提供高性能硬件和完整的 Linux 操作系统。Compute Module 型号的硬件与相应的旗舰型号相当，但端口较少，没有板载 GPIO 引脚。用户应将计算模块连接到一个单独的底板上，该底板可提供特定应用所需的端口和引脚。
 
-Additionally, Raspberry Pi makes the *Pico* series of tiny, versatile https://en.wikipedia.org/wiki/Microcontroller[microcontroller] boards. Pico models do not run Linux or allow for removable storage, but instead allow programming by flashing a binary onto on-board flash storage.
+此外，Raspberry Pi 还生产 *Pico* 系列小巧、多功能的 https://en.wikipedia.org/wiki/Microcontroller[微控制器]板。Pico 型号不运行 Linux，也不允许使用可移动存储器，而是允许通过将二进制文件闪存到板载Flash上进行编程。
 
-=== Flagship series
+=== 旗舰系列
 
-*Model B* indicates the presence of an Ethernet port.
-*Model A* indicates a lower-cost model in a smaller form factor with no Ethernet port, reduced RAM, and fewer USB ports to limit board height.
+*型号 B* 表示有以太网端口。
+*型号 A* 表示成本较低的型号，外形较小，没有以太网端口，内存减少，USB 端口减少，以限制电路板高度。
 
 [cols="7a,1,2,3,5"]
 |===
@@ -195,13 +195,13 @@ a|
 * USB-C power (5V, 5A (25W) or 5V, 3A (15W) with a 600mA peripheral limit)
 |===
 
-For more information about the ports on the Raspberry Pi flagship series, see the xref:raspberry-pi.adoc#schematics-and-mechanical-drawings[Schematics and mechanical drawings].
+有关 Raspberry Pi 旗舰系列端口的更多信息，请参阅 xref:raspberry-pi.adoc#schematics-and-mechanical-drawings[原理图和机械图纸]。
 
 === Zero series
 
-Models with the *H* suffix have header pins pre-soldered to the GPIO header. Models that lack the *H* suffix do not come with header pins attached to the GPIO header; the user must solder pins manually or attach a third-party pin kit.
+后缀为 *H* 的型号已将针脚预焊在 GPIO 针脚上。没有 *H* 后缀的型号没有连接到 GPIO 针座的针座引脚；用户必须手动焊接引脚或安装第三方引脚套件。
 
-All Zero models have the following connectivity:
+所有 Zero 型号都具有以下连接功能：
 
 * a microSD card slot
 * a CSI camera port (version 1.3 of the original Zero introduced this port)
@@ -321,13 +321,13 @@ a| optional:
 
 |===
 
-NOTE: Several Compute Modules use the physical DDR2 SO-DIMM form factor, but are not compatible with DDR2 SO-DIMM electrical specifications.
+NOTE: 一些计算模块使用 DDR2 SO-DIMM 物理外形，但与 DDR2 SO-DIMM 电气规格不兼容。
 
-For more information about Raspberry Pi Compute Modules, see xref:../computers/compute-module.adoc[the Compute Module documentation].
+有关 Raspberry Pi 计算模块的更多信息，请参阅 xref:../computers/compute-module.adoc[计算模块文档]。
 
 === Pico microcontrollers
 
-Models with the *H* suffix have header pins pre-soldered to the GPIO header. Models that lack the *H* suffix do not come with header pins attached to the GPIO header; the user must solder pins manually or attach a third-party pin kit.
+后缀为 *H* 的型号已将针脚预焊在 GPIO 针脚上。没有 *H* 后缀的型号没有连接到 GPIO 针座的针座引脚；用户必须手动焊接引脚或安装第三方引脚套件。
 
 [cols="3,1,1,1,1,2"]
 |===
@@ -358,4 +358,4 @@ a|
 
 |===
 
-For more information about Raspberry Pi Pico models, see xref:../microcontrollers/raspberry-pi-pico.adoc[the Pico documentation].
+有关 Raspberry Pi Pico 型号的更多信息，请参阅 xref:../microcontrollers/raspberry-pi-pico.adoc[Pico 文档]。

@@ -1,26 +1,27 @@
-== Device Trees, overlays, and parameters
+[[device-trees-overlays-and-parameters]]
+== Device Trees, overlays, 和 parameters
 
-Raspberry Pi kernels and firmware use a Device Tree (DT) to describe hardware. These Device Trees may include DT parameters that to control onboard features. DT overlays allow optional external hardware to be described and configured, and they also support parameters for more control.
+Raspberry Pi 内核和固件使用设备树（DT）来描述硬件。这些设备树可能包括用于控制板上功能的 DT 参数。DT 覆盖层允许对可选的外部硬件进行描述和配置，它们还支持更多控制参数。
 
-The firmware loader (`start.elf` and its variants) is responsible for loading the DTB (Device Tree Blob - a machine-readable DT file). It chooses which one to load based on the board revision number, and makes modifications to further tailor it. This runtime customisation avoids the need for many DTBs with only minor differences.
+固件加载器（ `start.elf` 及其变体）负责加载DTB（Device Trees Blob-机器可读的DT文件）。它根据产品型号选择要加载的版本，并进行修改。这种方式避免了对许多只有微小的差异DTB的需求，
 
-User-provided parameters in `config.txt` are scanned, along with any overlays and their parameters, which are then applied. The loader examines the result to learn (for example) which UART, if any, is to be used for the console. Finally it launches the kernel, passing a pointer to the merged DTB.
+读取 config.txt 中用户提供的参数，以及所有 overlay 及其参数，然后使用它们。加载程序检查结果来确认（例如）控制台将使用哪个通用异步收发设备（如果有）。最后它启动内核，并传递一个指向合并后DTB的指针。
 
 [[part1]]
 === Device Trees
 
-A Device Tree (DT) is a description of the hardware in a system. It should include the name of the base CPU, its memory configuration, and any peripherals (internal and external). A DT should not be used to describe the software, although by listing the hardware modules it does usually cause driver modules to be loaded. 
+Device Trees（Device Tree，DT）是对系统中硬件的描述。它应该包括基本CPU的名称、内存配置和所有外设（内部和外部）。DT不应该用于描述软件，尽管通过给出的硬件模块，它通常会加载对应驱动程序模块。
 
-NOTE: It helps to remember that DTs are supposed to be OS-neutral, so anything which is Linux-specific shouldn't be there.
+NOTE: 这有助于记住DT应该是操作系统中立的，所以任何特定于Linux的东西都不应该存在。
 
-A Device Tree represents the hardware configuration as a hierarchy of nodes. Each node may contain properties and subnodes. Properties are named arrays of bytes, which may contain strings, numbers (big-endian), arbitrary sequences of bytes, and any combination thereof. By analogy to a filesystem, nodes are directories and properties are files. The locations of nodes and properties within the tree can be described using a path, with slashes as separators and a single slash (`/`) to indicate the root.
+Device Trees 将硬件配置表示为节点的层次结构。每个节点可能包含属性和子节点。属性被命名为字节数组，其中可能包含字符串、数字（大端）、任意字节序列以及它们的任何组合。通过类比文件系统，节点是目录，属性是文件。树中节点和属性的位置可以使用路径来描述，斜杠作为分隔符，单个斜杠 ( `/` ) 表示根。
 
 [[part1.1]]
-==== Basic DTS syntax
+==== 基本DTS语法
 
-Device Trees are usually written in a textual form known as Device Tree Source (DTS), and are stored in files with a `.dts` suffix. DTS syntax is C-like, with braces for grouping and semicolons at the end of each line. Note that DTS requires semicolons after closing braces: think of C ``struct``s rather than functions. The compiled binary format is referred to as Flattened Device Tree (FDT) or Device Tree Blob (DTB), and is stored in `.dtb` files.
+Device Trees通常用称为Device Trees源（DTS）的文本形式编写，并保存在带有 `.dts` 后缀的文件中。DTS语法类似于C，带有用于分组的大括号和每行末尾的分号。请注意，DTS在关闭大括号后需要分号：就像C语言中的 `` struct `` 而不是函数。编译后的二进制格式称为 Flattened Device Tree（FDT）或 Device Tree Blob (DTB)，并存储在 `.dtb` 文件中。
 
-The following is a simple tree in the `.dts` format:
+以下是一个简单的 `.dts` 格式设备树：
 
 [source,kotlin]
 ----
@@ -54,48 +55,48 @@ The following is a simple tree in the `.dts` format:
 };
 ----
 
-This tree contains:
+这棵树包含：
 
-* a required header: `/dts-v1/`
-* The inclusion of another DTS file, conventionally named `*.dtsi` and analogous to a `.h` header file in C 
-* a single root node: `/`
-* a couple of child nodes: `node1` and `node2`
-* some children for node1: `child-node1` and `child-node2`
-* a label (`cousin`) and a reference to that label (`&cousin`)
-* several properties scattered through the tree
-* a repeated node (`/node2`) 
+* 必需的标头： `/dts-v1/` 
+* 包含另一个DTS文件，通常命名为 `*.dtsi` ，类似于C中的 `.h` 头文件
+* 单个根节点： `/` 
+* 几个子节点： `node1` 和 `node2` 
+* node1的一些子节点： `child-node1` 和 `child-node2` 
+* 标签 ( `cousin` ) 和对该标签的引用 ( `&cousin` )
+* 几个分散的属性
+* 一个重复节点（ `/node2` ）
 
-Properties are simple key-value pairs where the value can either be empty or contain an arbitrary byte stream. While data types are not encoded in the data structure, there are a few fundamental data representations that can be expressed in a Device Tree source file.
+属性是简单的键值对，其值可以为空，也可以包含任意字节。虽然数据类型未在数据结构中编码，但有一些基本数据表示可以在 Device Trees 源文件中表示。
 
-Text strings (NUL-terminated) are indicated with double quotes:
+文本字符串（以NUL结尾）用双引号表示：
 
 [source,kotlin]
 ----
 string-property = "a string";
 ----
 
-Cells are 32-bit unsigned integers delimited by angle brackets:
+单元格是由尖括号分隔的32位无符号整数：
 
 [source,kotlin]
 ----
 cell-property = <0xbeef 123 0xabcd1234>;
 ----
 
-Arbitrary byte data is delimited with square brackets, and entered in hex:
+任意字节数据用方括号分隔，并以十六进制输入：
 
 [source,kotlin]
 ----
 binary-property = [01 23 45 67 89 ab cd ef];
 ----
 
-Data of differing representations can be concatenated using a comma:
+不同表示的数据可以使用逗号连接：
 
 [source,kotlin]
 ----
 mixed-property = "a string", [01 23 45 67], <0x12345678>;
 ----
 
-Commas are also used to create lists of strings:
+逗号也用于创建字符串列表：
 
 [source,kotlin]
 ----
@@ -103,11 +104,11 @@ string-list = "red fish", "blue fish";
 ----
 
 [[part1.2]]
-==== An aside about `/include/`
+==== 关于 `/include/` 的介绍
 
-The `/include/` directive results in simple textual inclusion, much like C's `#include` directive, but a feature of the Device Tree compiler leads to different usage patterns. Given that nodes are named, potentially with absolute paths, it is possible for the same node to appear twice in a DTS file (and its inclusions). When this happens, the nodes and properties are combined, interleaving and overwriting properties as required (later values override earlier ones).
+通过 `/include/` 指令实现简单的文本包含，很像 C 的 `#include` 指令，但设备树编译器的一个特性导致不同的使用模式。由于节点是以绝对路径命名的，同一节点有可能在 DTS 文件（及其包含文件）中出现两次。出现这种情况时，节点和属性会合并，根据需要交错并覆盖属性（后面的值覆盖前面的值）。
 
-In the example above, the second appearance of `/node2` causes a new property to be added to the original:
+在上面的示例中， `/node2` 的第二次出现会导致在原始属性中添加一个新属性：
 
 [source,kotlin]
 ----
@@ -121,49 +122,49 @@ In the example above, the second appearance of `/node2` causes a new property to
 };
 ----
 
-It is therefore possible for one `.dtsi` to overwrite, or provide defaults for, multiple places in a tree.
+因此，一个 `.dtsi` 可以覆盖设备树中的多个位置或为其提供默认值。
 
 [[part1.3]]
-==== Labels and references
+==== 标签和引用
 
-It is often necessary for one part of the tree to refer to another, and there are four ways to do this:
+树的一部分通常需要引用另一个部分，有四种方法可以做到这一点：
 
-Path strings:: Similar to filesystem paths, e.g. `/soc/i2s@7e203000` is the full path to the I2S device in BCM2835 and BCM2836. The standard APIs don't create paths to properties like `/soc/i2s@7e203000/status`: instead, you first find a node, then choose properties of that node.
+Path strings:: 与文件系统路径类似，例如 `/soc/i2s@7e203000` 是 BCM2835 和 BCM2836 中 I2S 设备的完整路径。标准 API 不会创建类似 `/soc/i2s@7e203000/status`这样的属性路径：而是首先找到一个节点，然后选择该节点的属性。
 
-Phandles:: A unique 32-bit integer assigned to a node in its `phandle` property. For historical reasons, you may also see a redundant, matching `linux,phandle`. Phandles are numbered sequentially, starting from 1; 0 is not a valid phandle. They are usually allocated by the DT compiler when it encounters a reference to a node in an integer context, usually in the form of a label. References to nodes using phandles are simply encoded as the corresponding integer (cell) values; there is no markup to indicate that they should be interpreted as phandles, as that is application-defined.
+Phandles::  在节点的 `phandle` 属性中分配给节点的唯一 32 位整数。由于历史原因，你可能还会看到一个多余的、匹配的 `linux,phandle`。phandle 按顺序编号，从 1 开始；0 不是有效的 phandle。当 DT 编译器在整数上下文中遇到对节点的引用时，通常会以标签的形式分配它们。对使用 phandle 的节点的引用会被简单地编码为相应的整数（单元格）值；没有标记表明它们应被解释为 phandle，因为这是由应用程序定义的。
 
-Labels:: Just as a label in C gives a name to a place in the code, a DT label assigns a name to a node in the hierarchy. The compiler takes references to labels and converts them into paths when used in string context (`&node`) and phandles in integer context (`<&node>`); the original labels do not appear in the compiled output. Note that labels contain no structure; they are just tokens in a flat, global namespace.
+Labels:: 就像 C 语言中的标签给代码中的一个位置命名一样，DT 标签也给层次结构中的一个节点命名。编译器会引用标签，并在字符串上下文（`&node`）中将其转换为路径，在整数上下文（`<&node>`）中将其转换为phandles；原始标签不会出现在编译输出中。请注意，标签不包含任何结构；它们只是平面全局名称空间中的标记。
 
-Aliases:: Similar to labels, except that they do appear in the FDT output as a form of index. They are stored as properties of the `/aliases` node, with each property mapping an alias name to a path string. Although the aliases node appears in the source, the path strings usually appear as references to labels (`&node`), rather then being written out in full. DT APIs that resolve a path string to a node typically look at the first character of the path, treating paths that do not start with a slash as aliases that must first be converted to a path using the `/aliases` table.
+Aliases:: 与标签类似，但它们作为一种索引形式出现在 FDT 输出中。它们存储为 `/aliases` 节点的属性，每个属性将别名映射为路径字符串。虽然别名节点出现在源代码中，但路径字符串通常是作为对标签 (`&node`)的引用出现，而不是全部写出。将路径字符串解析为节点的 DT API 通常会查看路径的第一个字符，将不以斜线开头的路径视为别名，必须首先使用 `/aliases` 表将其转换为路径。
+
 
 [[part1.4]]
-==== Device Tree semantics
+==== Device Tree 语义
 
-How to construct a Device Tree, and how best to use it to capture the configuration of some hardware, is a large and complex subject. There are many resources available, some of which are listed below, but several points deserve highlighting:
+如何构建Device Trees，以及如何最好地使用它来捕获某些硬件的配置，是一个庞大而复杂的主题。有许多可用的资源，其中一些如下所列，但有几点值得强调：
 
-* `compatible` properties are the link between the hardware description and the driver software. When an OS encounters a node with a `compatible` property, it looks it up in its database of device drivers to find the best match. In Linux, this usually results in the driver module being automatically loaded, provided it has been appropriately labelled and not blacklisted.
+* `compatible` 属性是硬件描述和驱动程序软件之间的联系。当操作系统遇到具有 `compatible` 属性的节点时，它会在其设备驱动程序数据库中查找它以找到最佳匹配项。在Linux，这通常会自动加载驱动程序模块，但前提是它已经被适当标记并且没有被列入黑名单。
 
-* The `status` property indicates whether a device is enabled or disabled. If the `status` is `ok`, `okay` or absent, then the device is enabled. Otherwise, `status` should be `disabled`, so that the device is disabled. It can be useful to place devices in a `.dtsi` file with the status set to `disabled`. A derived configuration can then include that `.dtsi` and set the status for the devices which are needed to `okay`.
+* `status` 属性表示设备是启用还是禁用。如果 `status` 为 `ok`、 `okay` 或缺失，则表示设备已启用。否则，"status "应为 "disabled"，这样设备就被禁用了。将状态设置为 "disabled "的设备放在 `.dtsi` 文件中可能很有用。派生配置可以包含该 `.dtsi` 文件，并将所需设备的状态设置为 `okay` 。
 
 [[part2]]
 === Device Tree overlays
 
-A modern System on a Chip (SoC) is a very complicated device; a complete Device Tree could be hundreds of lines long. Taking that one step further and placing the SoC on a board with other components only makes matters more complicated. To keep that manageable, particularly if there are related devices which share components, it makes sense to put the common elements in `.dtsi` files, to be included from possibly multiple `.dts` files.
+片上系统（SoC）是一个非常复杂的设备；一个完整的 Device Trees 可能有数百行长。更进一步，把SoC和其他组件放在一块板上只会让事情变得更加复杂。为了保持这种可管理性，对于有相同组件的相关设备，把公共元素放在 `.dtsi` 文件中是有意义的，这些元素可能包含在多个 `.dts` 文件中。
 
-When a system like Raspberry Pi also supports optional plug-in accessories such as HATs, the problem grows. Ultimately, each possible configuration requires a Device Tree to describe it, but once you factor in all the different base models and the large number of available accessories, the number of combinations starts to multiply rapidly.
+当像Raspberry Pi这样的系统还支持可选的插件附件（如HAT）时，问题就会增加。最终，每个可能的配置都需要一个Device Trees来描述它，但是一旦你考虑到所有不同的基本模型和大量可用的附件，组合的数量就会开始迅速增加。
 
-What is needed is a way to describe these optional components using a partial Device Tree, and then to be able to build a complete tree by taking a base DT and adding a number of optional elements. You can do this, and these optional elements are called "overlays".
 
-Unless you want to learn how to write overlays for Raspberry Pis, you might prefer to skip on to <<part3,Use Device Trees>>.
+除非您想学习如何为Raspberry Pis编写overlays，否则您可能更愿意跳过 <<part3,Use Device Trees>>。
 
 [[part2.1]]
 ==== Fragments
 
-A DT overlay comprises a number of fragments, each of which targets one node and its subnodes. Although the concept sounds simple enough, the syntax seems rather strange at first:
+DT overlay 包含许多片段，每个片段都针对一个节点及其子节点。虽然这个概念听起来很简单，但一开始语法似乎很奇怪：
 
 [source,kotlin]
 ----
-// Enable the i2s interface
+//启用i2s接口
 /dts-v1/;
 /plugin/;
 
@@ -183,9 +184,9 @@ A DT overlay comprises a number of fragments, each of which targets one node and
 };
 ----
 
-The `compatible` string identifies this as being for BCM2835, which is the base architecture for the Raspberry Pi SoCs; if the overlay makes use of features of a Raspberry Pi 4 then `brcm,bcm2711` is the correct value to use, otherwise `brcm,bcm2835` can be used for all Raspberry Pi overlays. Then comes the first (and in this case only) fragment. Fragments should be numbered sequentially from zero. Failure to adhere to this may cause some or all of your fragments to be missed.
+`compatible` 字符串将其标识为BCM2835，这是Raspberry Pi SoC的基本架构；如果 overlay 使用了Raspberry Pi 4的功能，则应该使用 `brcm,bcm2711` ，否则就应该使用 `brcm,bcm2835` ，它可用于所有Raspberry Pi overlays。然后是第一个（仅在本例中）片段。片段应从0开始按顺序编号。不遵守这一点可能会导致部分或全部片段被遗漏。
 
-Each fragment consists of two parts: a `target` property, identifying the node to apply the overlay to; and the `+__overlay__+` itself, the body of which is added to the target node. The example above can be interpreted as if it were written like this:
+每个片段由两部分组成：一个 `target` 属性，标识要应用overlay的节点；和 `+__overlay__+` 本身，其主体被添加到目标节点。上面的例子可以解释为它是这样写的：
 
 [source,kotlin]
 ----
@@ -205,45 +206,45 @@ Each fragment consists of two parts: a `target` property, identifying the node t
 };
 ----
 
-With a sufficiently new version of `dtc` you can write the example exactly as above and get identical output, but some homegrown tools don't understand this format yet. Any overlay that you might want to see included in the standard Raspberry Pi OS kernel should be written in the old format for now.
+使用新的 `dtc` 版本，你就可以完全按照上面的方法编写示例，并获得相同的输出，但有些自制工具还不能理解这种格式。您可能希望在标准 Raspberry Pi 操作系统内核中包含的任何overlay都应暂时以旧格式编写。
 
-The effect of merging that overlay with a standard Raspberry Pi base Device Tree (e.g. `bcm2708-rpi-b-plus.dtb`), provided the overlay is loaded afterwards, would be to enable the I2S interface by changing its status to `okay`. But if you try to compile this overlay using:
+如果之后加载overlay，将该overlay与标准Raspberry Pi基础Device Trees（例如 `bcm2708-rpi-b-plus.dtb` ）合并的效果是通过将其状态更改为 `okay` 来启用I2S接口。但是如果您尝试使用以下方式编译此overlay：
 
 [source,console]
 ----
 $ dtc -I dts -O dtb -o 2nd.dtbo 2nd-overlay.dts
 ----
 
-...you will get an error:
+…您将收到错误：
 
 ----
 Label or path i2s not found
 ----
 
-This shouldn't be too unexpected, since there is no reference to the base `.dtb` or `.dts` file to allow the compiler to find the `i2s` label.
+这应该不会太出乎意料，因为没有对基本 `.dtb` 或 `.dts` 文件的引用来允许编译器找到 `i2s` 标签。
 
-Trying again, this time using the original example and adding the `-@` option to allow unresolved references (and `-Hepapr` to remove some clutter):
+再次尝试，这次使用原始示例并添加 `-@` 选项以允许未解析的引用（和 `-Hepapr` 以减少一些混乱）：
 
 [source,console]
 ----
 $ dtc -@ -Hepapr -I dts -O dtb -o 1st.dtbo 1st-overlay.dts
 ----
 
-If `dtc` returns an error about the third line, it doesn't have the extensions required for overlay work. Run `sudo apt install device-tree-compiler` and try again - this time, compilation should complete successfully. Note that a suitable compiler is also available in the kernel tree as `scripts/dtc/dtc`, built when the `dtbs` make target is used:
+如果 `dtc` 返回有关第三行的错误信息，说明它没有编译设备树的软件。运行 `sudo apt install device-tree-compiler` 并再试一次，这次编译应该会成功完成。请注意，内核树中也有一个合适的编译器，即 `scripts/dtc/dtc` ，在使用 `dtbs` make target 时编译：
 
 [source,console]
 ----
 $ make ARCH=arm dtbs
 ----
 
-Dump the contents of the DTB file to see what the compiler has generated:
+转储DTB文件的内容以查看编译器生成了什么：
 
 [source,console]
 ----
 $ fdtdump 1st.dtbo
 ----
 
-This should output something similar to the following:
+输出结果应与下面类似：
 
 [source,kotlin]
 ----
@@ -288,41 +289,41 @@ This should output something similar to the following:
 };
 ----
 
-After the verbose description of the file structure there is our fragment. But look carefully - where we wrote `&i2s` it now says `0xffffffff`, a clue that something strange has happened (older versions of dtc might say `0xdeadbeef` instead). The compiler has also added a `phandle` property containing a unique (to this overlay) small integer to indicate that the node has a label, and replaced all references to the label with the same small integer.
+在对文件结构的详细描述之后是我们的片段。但是仔细看——我们写 `&i2s` 的地方现在写着 `0xffffffff` ，这是一个奇怪的事情的线索（旧版本的dtc可能会说 `0xdebef` ）。编译器还添加了一个 `phandle` 属性，其中包含一个唯一的（到这个overlay）小整数来指示节点有一个标签，并用相同的小整数替换对标签的所有引用。
 
-After the fragment there are three new nodes:
+在 fragment 之后有三个新节点：
 
-* `+__symbols__+` lists the labels used in the overlay (`test_label` here), and the path to the labelled node. This node is the key to how unresolved symbols are dealt with.
-* `+__fixups__+` contains a list of properties mapping the names of unresolved symbols to lists of paths to cells within the fragments that need patching with the phandle of the target node, once that target has been located. In this case, the path is to the `0xffffffff` value of `target`, but fragments can contain other unresolved references which would require additional fixes.
-* `+__local_fixups__+` holds the locations of any references to labels that exist within the overlay - the `test_ref` property. This is required because the program performing the merge will have to ensure that phandle numbers are sequential and unique.
+* `+__symbols__+` 列出了 overlay 中使用的标签（此处为 `test_label` ），以及通往标签节点的路径。这个节点是如何处理未解决符号的关键。
+* `+__fixups__+` 包含一个属性列表，它将未解决符号的名称映射到片段中需要用目标节点的 phandle 进行修补的单元格的路径列表，一旦找到目标节点。在本例中，路径指向 `target` 的 `0xffffffffff` 值，但片段可能包含其他未解决的引用，需要额外的修补。
+* `+__local_fixups__+` 保存了 overlay 中存在的任何标签引用的位置-- `test_ref` 属性。之所以需要这样做，是因为执行合并的程序必须确保 phandle 编号是连续和唯一的。
 
-Back in <<part1.3,section 1.3>> it says that "the original labels do not appear in the compiled output", but this isn't true when using the `-@` switch. Instead, every label results in a property in the `+__symbols__+` node, mapping a label to a path, exactly like the `aliases` node. In fact, the mechanism is so similar that when resolving symbols, the Raspberry Pi loader will search the "aliases" node in the absence of a `+__symbols__+` node. This was useful at one time because providing sufficient aliases allowed very old versions of `dtc` to be used to build the base DTB files, but fortunately that is ancient history now.
+
+在 <<part1.3 第 1.3 节>> 中说 "原始标签不会出现在编译输出中"，但使用 `-@` 开关时并非如此。相反，每个标签都会在 `+__symbols__+` 节点中产生一个属性，将标签映射到路径，这与 `aliases` 节点完全相同。事实上，这种机制非常相似，以至于在解析符号时，如果没有 `+__symbols__+` 节点，Raspberry Pi 载入器也会搜索 "aliases "节点。这曾一度很有用，因为提供足够的别名可以让非常旧版本的 `dtc` 被用来构建基础 DTB 文件，但幸运的是，这已经成为历史了。
 
 [[part2.2]]
-==== Device Tree parameters
+==== Device Trees参数
 
-To avoid the need for lots of Device Tree overlays, and to reduce the need for users of peripherals to modify DTS files, the Raspberry Pi loader supports a new feature - Device Tree parameters. This permits small changes to the DT using named parameters, similar to the way kernel modules receive parameters from `modprobe` and the kernel command line. Parameters can be exposed by the base DTBs and by overlays, including HAT overlays.
+为了避免需要大量的Device Treesoverlay，并减少用户修改外围设备DTS文件的需要，树莓派加载器支持一项新功能——Device Trees参数。这支持使用命名参数对DT进行微小的更改，类似于内核模块从 `modprobe` 和内核命令行接收参数的方式。参数可以通过基本 DTB 和 overlay 来引出，包括HAT overlay。
 
-Parameters are defined in the DTS by adding an `+__overrides__+` node to the root. It contains properties whose names are the chosen parameter names, and whose values are a sequence comprising a phandle (reference to a label) for the target node, and a string indicating the target property; string, integer (cell) and boolean properties are supported.
+在DTS中通过向根添加一个 `+__overrides__+` 节点来定义参数。它包含属性，其名称是所选参数名称，其值是一个序列，包括目标节点的phandle（对标签的引用）和指示目标属性的字符串；支持字符串、整数（单元格）和布尔属性。
 
 [[part2.2.1]]
-===== String parameters
+===== 字符串参数（String parameters）
 
-String parameters are declared like this:
+字符串参数是这样声明的：
 
-[source,kotlin]
 ----
 name = <&label>,"property";
 ----
 
-where `label` and `property` are replaced by suitable values. String parameters can cause their target properties to grow, shrink, or be created.
+其中 `label` 和 `property` 被合适的值替换。字符串参数可以修改其目标属性。
 
-Note that properties called `status` are treated specially; non-zero/true/yes/on values are converted to the string `"okay"`, while zero/false/no/off becomes `"disabled"`.
+请注意，名为 `status` 的属性会被特殊处理；非 0/true/yes/on 的值会转换为字符串 `"okay"`，而 0/false/no/off 则会变成 `"disabled"`。
 
 [[part2.2.2]]
-===== Integer parameters
+===== 整数参数（Integer parameters）
 
-Integer parameters are declared like this:
+整数参数声明如下：
 
 [source,kotlin]
 ----
@@ -332,54 +333,55 @@ name = <&label>,"property:offset"; // 32-bit
 name = <&label>,"property#offset"; // 64-bit
 ----
 
-Here, `label`, `property` and `offset` are replaced by suitable values; the offset is specified in bytes relative to the start of the property (in decimal by default), and the preceding separator dictates the size of the parameter. In a change from earlier implementations, integer parameters may refer to non-existent properties or to offsets beyond the end of an existing property.
+这里， `label` , `property` 和 `offset` 由合适的值代替；偏移量以字节为单位指定，相对于属性的起点（默认为十进制），前面的分隔符决定了参数的大小。与以前的实现不同，整数参数可以指向不存在的属性或超出现有属性末尾的偏移量。
 
 [[part2.2.3]]
-===== Boolean parameters
+===== 布尔参数（Boolean parameters）
 
-Device Tree encodes boolean values as zero-length properties; if present then the property is true, otherwise it is false. They are defined like this:
+Device Trees将布尔值编码为零长度属性；如果存在，则该属性为真，否则为假。它们是这样定义的：
 
 [source,kotlin]
 ----
 boolean_property; // Set 'boolean_property' to true
 ----
 
-A property is assigned the value `false` by not defining it. Boolean parameters are declared like this, replacing the `label` and `property` placeholders with suitable values:
+如果不定义一个属性，该属性就会被赋值为 `false`。布尔参数也是这样声明的，用合适的值代替 `label` 和 `property` 占位符：
 
 [source,kotlin]
 ----
 name = <&label>,"property?";
 ----
 
-Inverted booleans invert the input value before applying it in the same way as a regular boolean; they are declared similarly, but use `!` to indicate the inversion:
+反转布尔值在以与常规布尔值相同的方式应用输入值之前反转输入值；它们的声明类似，但使用 `！` 表示反转：
 
 [source,kotlin]
 ----
 name = <&label>,"<property>!";
 ----
 
-Boolean parameters can cause properties to be created or deleted, but they can't delete a property that already exists in the base DTB.
+布尔参数可以创建或删除属性，但不能删除基础 DTB 中已存在的属性。
 
 [[part2.2.4]]
-===== Byte string parameters
+===== 字节字符串参数（Byte string parameters）
 
-Byte string properties are arbitrary sequences of bytes, e.g. MAC addresses. They accept strings of hexadecimal bytes, with or without colons between the bytes.
+字节字符串属性是任意的字节序列，如 MAC 地址。它们接受十六进制字节字符串，字节之间可以有冒号，也可以没有冒号。
 
 [source,kotlin]
 ----
 mac_address = <&ethernet0>,"local_mac_address[";
 ----
 
-The `[` was chosen to match the DT syntax for declaring a byte string:
+
+选择 `[` 来匹配声明字节字符串的DT语法：
 
 ----
 local_mac_address = [aa bb cc dd ee ff];
 ----
 
 [[part2.2.5]]
-===== Parameters with multiple targets
+===== 具有多个目标的参数（Parameters with multiple targets）
 
-There are some situations where it is convenient to be able to set the same value in multiple locations within the Device Tree. Rather than the ungainly approach of creating multiple parameters, it is possible to add multiple targets to a single parameter by concatenating them, like this:
+在某些情况下，在设备树的多个位置设置相同的值会很方便。与创建多个参数的笨拙方法相比，我们可以通过串联的方式为单个参数添加多个目标，如下所示：
 
 [source,kotlin]
 ----
@@ -390,16 +392,16 @@ __overrides__ {
 };
 ----
 
-(example taken from the `w1-gpio` overlay)
+（示例取自 `w1-gpio` overlay）
 
-NOTE: It is even possible to target properties of different types with a single parameter. You could reasonably connect an "enable" parameter to a `status` string, cells containing zero or one, and a proper boolean property.
+NOTE: 甚至可以用一个参数针对不同类型的属性。您可以合理地将 "enable "参数连接到 "status "字符串、包含 0 或 1 的单元格以及适当的布尔属性。
 
 [[part2.2.6]]
-===== Literal assignments
+===== 文字赋值（Literal assignments）
 
-The DT parameter mechanism allows multiple targets to be patched from the same parameter, but the utility is limited by the fact that the same value has to be written to all locations (except for format conversion and the negation available from inverted booleans). The addition of embedded literal assignments allows a parameter to write arbitrary values, regardless of the parameter value supplied by the user.
+DT 参数机制允许对同一参数的多个目标进行修补，但由于必须将相同的值写入所有位置（格式转换和反布尔值的否定除外），因此实用性受到限制。增加嵌入式字面赋值后，一个参数可以写入任意值，与用户提供的参数值无关。
 
-Assignments appear at the end of a declaration, and are indicated by a `=`:
+赋值在声明的末尾出现，并由 `=` 表示：
 
 [source,kotlin]
 ----
@@ -409,23 +411,24 @@ int_val2 = <&target>,"intprop:0=",<42>;            // 3
 bytes    = <&target>,"bytestr[=b8:27:eb:01:23:45"; // 4
 ----
 
-Lines 1, 2 and 4 are fairly obvious, but line 3 is more interesting because the value appears as an integer (cell) value. The DT compiler evaluates integer expressions at compile time, which might be convenient (particularly if macro values are used), but the cell can also contain a reference to a label:
+第1、2和4行相当明显，但第3行更有趣，因为该值显示为整数（单元格）值。DT编译器在编译时计算整数表达式，这可能很方便（特别是如果使用宏值），但单元格也可以包含对标签的引用：
 
 [source,kotlin]
 ----
-// Force an LED to use a GPIO on the internal GPIO controller.
+//强制LED在内部GPIO控制器上使用GPIO。
 exp_led = <&led1>,"gpios:0=",<&gpio>,
           <&led1>,"gpios:4";
 ----
 
-When the overlay is applied, the label will be resolved against the base DTB in the usual way. It is a good idea to split multi-part parameters over multiple lines like this to make them easier to read - something that becomes more necessary with the addition of cell value assignments.
 
-Bear in mind that parameters do nothing unless they are applied - a default value in a lookup table is ignored unless the parameter name is used without assigning a value.
+使用overlay时，标签通常根据基础 DTB 进行解析。最好将多部分参数拆分到多行，这样更容易阅读 - 随着单元格值分配的增加，这变得更加必要。
+
+请注意，除非应用参数，否则参数不起任何作用 - 查找表中的默认值会被忽略，除非在使用参数名称时没有赋值。
 
 [[part2.2.7]]
-===== Lookup tables
+===== 查找表（Lookup tables）
 
-Lookup tables allow parameter input values to be transformed before they are used. They act as associative arrays, rather like switch/case statements:
+查找表允许在使用参数输入值之前对其进行转换。它们充当关联数组，就像switch/case语句一样：
 
 [source,kotlin]
 ----
@@ -433,18 +436,18 @@ phonetic = <&node>,"letter{a=alpha,b=bravo,c=charlie,d,e,='tango uniform'}";
 bus      = <&fragment>,"target:0{0=",<&i2c0>,"1=",<&i2c1>,"}";
 ----
 
-A key with no `=value` means to use the key as the value, an `=` with no key before it is the default value in the case of no match, and starting or ending the list with a comma (or an empty key=value pair anywhere) indicates that the unmatched input value should be used unaltered; otherwise, not finding a match is an error.
+一个没有 `=value` 的键表示使用该键作为值，一个前面没有键的 `=` 表示在没有匹配的情况下使用默认值，用逗号（或任何地方的空 key=value 对）开始或结束的列表表示应使用未匹配的输入值，否则，找不到匹配的值出现错误。
 
-NOTE: The comma separator within the table string after a cell integer value is implicit - adding one explicitly creates an empty pair (see above).
+NOTE: 单元格整数值后的表格字符串中的逗号分隔符是隐式的，显式添加逗号分隔符会产生空对（见上文）。
 
-NOTE: As lookup tables operate on input values and literal assignments ignore them, it's not possible to combine the two - characters after the closing `}` in the lookup declaration are treated as an error.
+NOTE: 由于查找表对输入值进行操作，而字面赋值会忽略输入值，因此无法将两者结合起来--查找声明中结尾 `}` 后的字符会被视为错误。
 
 [[part2.2.8]]
-===== Overlay/fragment parameters
+===== Overlay/fragment 参数（Overlay/fragment parameters）
 
-The DT parameter mechanism as described has a number of limitations, including the lack of an easy way to create arrays of integers, and the inability to create new nodes. One way to overcome some of these limitations is to conditionally include or exclude certain fragments.
+所描述的DT参数机制有许多限制，包括缺乏创建整数数组的简单方法，以及无法创建新节点。克服其中一些限制的一种方法是有条件地包含或去除某些片段。
 
-A fragment can be excluded from the final merge process (disabled) by renaming the `+__overlay__+` node to `+__dormant__+`. The parameter declaration syntax has been extended to allow the otherwise illegal zero target phandle to indicate that the following string contains operations at fragment or overlay scope. So far, four operations have been implemented:
+通过将 `+__overlay__+` 节点重命名为 `+__dormant__+` ，可以将片段从最终合并过程中排除（禁用）。参数声明语法已扩展为允许否则非法的零目标phandle指示以下字符串包含片段或overlay范围内的操作。到目前为止，已经实现了四个操作：
 
 [source,kotlin]
 ----
@@ -454,7 +457,7 @@ A fragment can be excluded from the final merge process (disabled) by renaming t
 !<n>    // Enable fragment <n> if the assigned parameter value is false, otherwise disable it
 ----
 
-Examples:
+例子：
 
 [source,kotlin]
 ----
@@ -463,16 +466,16 @@ conditional = <0>,"=3!4"; // Enable 3, disable 4 if value is true,
                           // otherwise disable 3, enable 4.
 ----
 
-The `i2c-rtc` overlay uses this technique.
+`i2c-rtc` overlay 使用这种技术。
 
 [[part2.2.9]]
-===== Special properties
+===== 特殊属性（Special properties）
 
-A few property names, when targeted by a parameter, get special handling. One you may have noticed already - `status` -  will convert a boolean to either `okay` for true and `disabled` for false.
+有几个属性名在被参数锁定后会得到特殊处理。其中一个你可能已经注意到了-- `status` --会将布尔值转换为 `okay` 为真、 `disabled` 为假。
 
-Assigning to the `bootargs` property appends to it rather than overwriting it - this is how settings can be added to the kernel command line.
+赋值给 `bootargs` 属性会追加而不是覆盖它--这就是如何将设置添加到内核命令行的方法。
 
-The `reg` property is used to specify device addresses - the location of a memory-mapped hardware block, the address on an I2C bus, etc. The names of child nodes should be qualified with their addresses in hexadecimal, using `@` as a separator:
+`reg` 属性用于指定设备地址--内存映射硬件块的位置、I2C 总线上的地址等。子节点的名称应以十六进制地址限定，并使用 `@` 作为分隔符：
 
 [source,kotlin]
 ----
@@ -482,20 +485,20 @@ bmp280@76 {
 };
 ----
 
-When assigning to the `reg` property, the address portion of the parent node name will be replaced with the assigned value. This can be used to prevent a node name clash when using the same overlay multiple times - a technique used by the `i2c-gpio` overlay.
+分配给 `reg` 属性时，父节点名称的地址部分将被替换为分配的值。这可用于防止多次使用相同 overlay 时节点名称冲突 — `i2c-gpio` overlay 就使用了这种方法。
 
-The `name` property is a pseudo-property - it shouldn't appear in a DT, but assigning to it causes the name of its parent node to be changed to the assigned value. Like the `reg` property, this can be used to give nodes unique names.
+`name` 属性是一个伪属性--它不应该出现在 DT 中，但对其赋值可以改变父节点的名称。与 `reg` 属性一样，该属性可用于为节点赋予唯一的名称。
 
 [[part2.2.10]]
-===== The overlay map file
+===== overlay 映射文件（The overlay map file）
 
-The introduction of the Raspberry Pi 4, built around the BCM2711 SoC, brought with it many changes; some of these changes are additional interfaces, and some are modifications to (or removals of) existing interfaces. There are new overlays intended specifically for the Raspberry Pi 4 that don't make sense on older hardware, e.g. overlays that enable the new SPI, I2C and UART interfaces, but other overlays don't apply correctly even though they control features that are still relevant on the new device.
+基于BCM2711 SoC设计的Raspberry Pi 4带来了许多变化；其中一些变化是额外的接口，一些是对现有接口的修改（或删除）。有专门为Raspberry Pi 4设计的新 overlay， 他们在旧硬件上没有意义，例如支持新SPI、I2C和通用异步收发设备接口的overlay，老的overlay将无法工作，即使它们仍然控制着新设备上相关的功能。
 
-There is therefore a need for a method of tailoring an overlay to multiple platforms with differing hardware. Supporting them all in a single .dtbo file would require heavy use of hidden ("dormant") fragments and a switch to an on-demand symbol resolution mechanism so that a missing symbol that isn't needed doesn't cause a failure. A simpler solution is to add a facility to map an overlay name to one of several implementation files depending on the current platform.
+因此，我们需要一种方法，为硬件不同的多个平台量身定制 overlay。要在单个 .dtbo 文件中支持所有平台，就需要大量使用隐藏（"休眠"）片段，并改用按需符号解析机制，这样就不会因为缺少不需要的符号而导致故障。一个更简单的解决方案是根据当前平台，添加一个将 overlay 名称映射到多个实现文件之一的工具。
 
-The overlay map is a file that gets loaded by the firmware at bootup. It is written in DTS source format - `overlay_map.dts`, compiled to `overlay_map.dtb` and stored in the overlays directory.
+overlay 映射是固件在启动时加载的文件。它以DTS源代码格式 - `overlay_map.dts` 编写，编译为 `overlay_map.dtb` 并存储在 overlays 目录中。
 
-This is an extract from the current map file (see the https://github.com/raspberrypi/linux/blob/rpi-6.6.y/arch/arm/boot/dts/overlays/overlay_map.dts[full version]):
+这是当前映射文件的摘录（详见 https://github.com/raspberrypi/linux/blob/rpi-6.6.y/arch/arm/boot/dts/overlays/overlay_map.dts[完整文件]）：
 
 [source,kotlin]
 ----
@@ -524,36 +527,36 @@ This is an extract from the current map file (see the https://github.com/raspber
 };
 ----
 
-Each node has the name of an overlay that requires special handling. The properties of each node are either platform names or one of a small number of special directives. The current supported platforms are `bcm2835`, which includes all Raspberry Pis built around the BCM2835, BCM2836 and BCM2837 SoCs, `bcm2711` for Raspberry Pi 4B, 400 and CM4, and `bcm2712` for Raspberry Pi 5 and CM5.
+每个节点都有一个需要特殊处理的 overlay 的名称。每个节点的属性要么是平台名称，要么是少数特殊指令之一。目前支持的平台有： `bcm2835` （包括所有围绕 BCM2835、BCM2836 和 BCM2837 SoC 构建的树莓派）； `bcm2711` （用于树莓派 4B、400 和 CM4）； `bcm2712` （用于树莓派 5 和 CM5）。
 
-A platform name with no value (an empty property) indicates that the current overlay is compatible with the platform; for example, `uart5` is compatible with the `bcm2711` platform. A non-empty value for a platform is the name of an alternative overlay to use in place of the requested one; asking for `disable-bt` on BCM2712 results in `disable-bt-pi5` being loaded instead. Any platform not included in an overlay's node is not compatible with that overlay. Any overlay not mentioned in the map is assumed to be compatible with all platforms.
+没有值的平台名称（空属性）表示当前 overlay 与平台兼容；例如， `uart5` 与 `bcm2711` 平台兼容。平台的非空值是替代请求 overlay 的替代 overlay 的名称；在BCM2712上使用 `disable-bt` 会加载 `disable-bt-pi5` 。overlay 节点中未包含的任何平台都与该 overlay 不兼容。映射文件中未提及的任何 overlay 都假定与所有平台兼容。
 
-The second example node - `disable-bt-pi5` - could be inferred from the content of `disable-bt`, but that intelligence goes into the construction of the file, not its interpretation.
+第二个示例节点 "disable-bt-pi5 "可以从 "disable-bt "的内容中推断出来，但这种智能是用于构建文件，而不是解释文件。
 
-The `uart5` overlay only makes sense on BCM2711.
+`uart5` overlay 仅在BCM2711上有意义。
 
-In the event that a platform is not listed for an overlay, one of the special directives may apply:
+如果平台未列出 overlay ，则可能适用以下特殊指令之一：
 
-* The `renamed` directive indicates the new name of the overlay (which should be largely compatible with the original), but also logs a warning about the rename.
-* The `deprecated` directive contains a brief explanatory error message which will be logged after the common prefix `+overlay '...' is deprecated:+`.
+* `renamed` 指令指示 overlay 的新名称（应与原名称基本兼容），但也会出现重命名记录。
+* deprecated "指令包含一条简短的解释性错误信息，该信息将在常用前缀 `+overlay '...' is deprecated:+` 之后记录。
 
-Chaining renames and platform-specific implementations is possible, but be careful to avoid loops!
+重命名和特定平台的链式实现是可能的，但要注意避免循环！
 
-Remember: only exceptions need to be listed - the absence of a node for an overlay means that the default file should be used for all platforms.
+请记住：只需要列出异常-没有 overlay 节点意味着默认文件应用于所有平台。
 
-Accessing diagnostic messages from the firmware is covered in <<part5.1,Debugging>>.
+在 <<part5.1,Debugging>> 中介绍了如何从固件获取诊断消息。
 
-The `dtoverlay` and `dtmerge` utilities have been extended to support the map file:
+`dtoverlay` 和 `dtmerge` 实用程序已扩展为支持映射文件：
 
-* `dtmerge` extracts the platform name from the compatible string in the base DTB.
-* `dtoverlay` reads the compatible string from the live Device Tree at `/proc/device-tree`, but you can use the `-p` option to supply an alternate platform name (useful for dry runs on a different platform).
+* `dtmerge` 从基础 DTB 中的兼容字符串中提取平台名称。
+* `dtoverlay` 从 `/proc/device-tree` 中的实时设备树中读取兼容字符串，但也可以使用 `-p` 选项提供另一个平台名称（对于在不同平台上的模拟运行非常有用）。
 
-They both send errors, warnings and any debug output to STDERR.
+它们都向STDERR发送错误、警告和任何调试输出。
 
 [[part2.2.11]]
-===== Examples
+===== 示例
 
-Here are some examples of different types of properties, with parameters to modify them:
+以下是不同类型属性的一些示例，以及修改它们的参数：
 
 [source,kotlin]
 ----
@@ -617,14 +620,14 @@ Here are some examples of different types of properties, with parameters to modi
 };
 ----
 
-For further examples, a large collection of overlay source files is hosted in the https://github.com/raspberrypi/linux/tree/rpi-6.1.y/arch/arm/boot/dts/overlays[Raspberry Pi Linux GitHub repository].
+对于更多的例子，大量的 overlay 源文件被托管在 https://github.com/raspberrypi/linux/tree/rpi-6.1.y/arch/arm/boot/dts/overlays[Raspberry PiLinuxGitHub存储库] 中。
 
 [[part2.3]]
-==== Export labels
+==== 导出标签（Export labels）
 
-The overlay handling in the firmware, and the run-time overlay application using the `dtoverlay` utility, treat labels defined in an overlay as being private to that overlay. This avoids the need to invent globally unique names for labels (which keeps them short), and it allows the same overlay to be used multiple times without clashing (provided some tricks are used - see <<part2.2.9,Special properties>>).
+固件中的 dtoverlay 处理以及使用 "dtoverlay" 工具的运行时 `dtoverlay` 应用，都将 dtoverlay 中定义的标签视为该 dtoverlay 的私有标签。这避免了为标签创建全局唯一名称（使标签保持简短），并允许多次使用同一 dtoverlay 而不发生冲突（前提是使用了一些技巧 - 请参阅 <<part2.2.9,Special properties>> ）。
 
-Sometimes it is very useful to be able to create a label with one overlay and use it from another. Firmware released since 14th February 2020 has the ability to declare some labels as being global - the `+__exports__+` node:
+有时，创建带有一个overlay的标签并从另一个overlay使用它是非常有用的。自2020年2月14日以来发布的固件能够将某些标签声明为全局标签 - `+__exports__+` 节点：
 
 [source,kotlin]
 ----
@@ -637,31 +640,31 @@ Sometimes it is very useful to be able to create a label with one overlay and us
 };
 ----
 
-When this overlay is applied, the loader strips out all symbols except those that have been exported, in this case `public`, and rewrites the path to make it relative to the target of the fragment containing the label. Overlays loaded after this one can then refer to `&public`.
+应用此 dtoverlay 时，加载程序会删除除已导出符号之外的所有符号，在本例中为 `public` ，并重写路径以使其相对于包含标签的片段的目标。在此之后加载的 dtoverlay 可以引用 `&public` 。
 
 [[part2.4]]
-==== Overlay application order
+==== overlay 应用顺序（Overlay application order）
 
-Under most circumstances it shouldn't matter in which order the fragments are applied, but for overlays that patch themselves (where the target of a fragment is a label in the overlay, known as an intra-overlay fragment) it becomes important. In older firmware, fragments are applied strictly in order, top to bottom. With firmware released since 14th February 2020, fragments are applied in two passes:
+在大多数情况下，应用片段的顺序并不重要，但对于修补自身的 dtoverlay （其中片段的目标是overlay中的标签，称为 dtoverlay 内片段），这变得很重要。在较旧的固件中，片段严格按从上到下的顺序应用。自2020年2月14日发布固件后，片段分两次应用：
 
-* First the fragments that target other fragments are applied and hidden.
-* Then the regular fragments are applied.
+* 首先应用和隐藏以其他片段为目标的片段。
+* 然后应用规则片段。
 
-This split is particularly important for runtime overlays, since the first step occurs in the `dtoverlay` utility, and the second is performed by the kernel (which can't handle intra-overlay fragments).
+这种拆分对于运行中的 dtoverlay 尤其重要，因为第一步发生在 dtoverlay 实用程序中，第二步由内核执行（内核不能处理overlay内片段）。
 
 [[part3]]
-=== Using Device Trees on Raspberry Pi
+=== 在树莓派上使用Device Trees（Using Device Trees on Raspberry Pi）
 
 [[part3.1]]
-==== DTBs, overlays and `config.txt`
+==== DTB、overlays 和 config.txt（DTBs, overlays and `config.txt`）
 
-On a Raspberry Pi it is the job of the loader (one of the `start.elf` images) to combine overlays with an appropriate base device tree, and then to pass a fully resolved Device Tree to the kernel. The base Device Trees are located alongside `start.elf` in the FAT partition (`/boot/firmware/` from Linux), named `bcm2711-rpi-4-b.dtb`, `bcm2710-rpi-3-b-plus.dtb`, etc. Note that some models (3A+, A, A+) will use the "b" equivalents (3B+, B, B+), respectively. This selection is automatic, and allows the same SD card image to be used in a variety of devices.
+在 Raspberry Pi 上，加载器（"start.elf "映像之一）的工作是将overlay层与适当的基础设备树结合起来，然后将完全解析的设备树传递给内核。基本设备树与 `start.elf` 一起位于 FAT 分区（Linux 中为 `/boot/firmware/` ）中，名为 `bcm2711-rpi-4-b.dtb`、 `bcm2710-rpi-3-b-plus.dtb` 等。请注意，某些型号（3A+、A、A+）将分别使用 "b "对应的型号（3B+、B、B+）。这种选择是自动的，允许在各种设备中使用相同的 SD 卡映像。
 
-NOTE: DT and ATAGs are mutually exclusive, and passing a DT blob to a kernel that doesn't understand it will cause a boot failure. The firmware will always try to load the DT and pass it to the kernel, since all kernels since rpi-4.4.y will not function without a DTB. You can override this by adding `device_tree=` in config.txt, which forces the use of ATAGs, which can be useful for simple bare-metal kernels.
+NOTE: DT 和 ATAG 是互斥的，将 DT blob 传递给无法理解它的内核会导致启动失败。固件将始终尝试加载 DT 并将其传递给内核，因为自 rpi-4.4.y 以来的所有内核如果没有 DTB 就无法运行。您可以通过在 config.txt 中添加 `device_tree=` 来覆盖此设置，这会强制使用 ATAG，这对于简单的裸机内核非常有用。
 
-The loader now supports builds using bcm2835_defconfig, which selects the upstreamed BCM2835 support. This configuration will cause `bcm2835-rpi-b.dtb` and `bcm2835-rpi-b-plus.dtb` to be built. If these files are copied with the kernel, then the loader will attempt to load one of those DTBs by default.
+加载器现在支持使用 bcm2835_defconfig 进行构建，它选择上游的 BCM2835 支持。此配置将构建 `bcm2835-rpi-b.dtb` 和 `bcm2835-rpi-b-plus.dtb` 。如果这些文件与内核一起复制，则加载器将默认尝试加载其中一个 DTB。
 
-In order to manage Device Tree and overlays, the loader supports a number of `config.txt` directives:
+为了管理Device Trees和 overlays，加载程序支持许多 `config.txt` 指令：
 
 [source,ini]
 ----
@@ -669,32 +672,32 @@ dtoverlay=acme-board
 dtparam=foo=bar,level=42
 ----
 
-This will cause the loader to look for `overlays/acme-board.dtbo` in the firmware partition, which Raspberry Pi OS mounts on `/boot/firmware/`. It will then search for parameters `foo` and `level`, and assign the indicated values to them.
+加载程序会在固件分区中查找 `overlays/acme-board.dtbo` ，Raspberry Pi OS 将其安装在 `/boot/firmware/` 上。然后它将搜索参数 `foo` 和 `level` ，并为它们分配指示的值。
 
-The loader will also search for an attached HAT with a programmed EEPROM, and load the supporting overlay from there - either directly or by name from the "overlays" directory; this happens without any user intervention.
+加载程序还将搜索带有编程 EEPROM 的附加 HAT，并从那里加载支持 overlay - 直接加载或按名称从 `overlays` 目录中加载；这无需任何用户干预。
 
-There are multiple ways to tell that the kernel is using Device Tree:
+有多种方法可以判断内核正在使用Device Trees：
 
-* The "Machine model:" kernel message during bootup has a board-specific value such as "Raspberry Pi 2 Model B", rather than "BCM2709".
-* `/proc/device-tree` exists, and contains subdirectories and files that exactly mirror the nodes and properties of the DT.
+* 启动过程中的内核信息 "Machine model:（机器型号：）"具有特定板卡的值，如 "Raspberry Pi 2 Model B"，而不是 "BCM2709"。
+* 存在 `/proc/device-tree` ，其中包含的子目录和文件与 DT 的节点和属性完全一致。
 
-With a Device Tree, the kernel will automatically search for and load modules that support the indicated enabled devices. As a result, by creating an appropriate DT overlay for a device you save users of the device from having to edit `/etc/modules`; all of the configuration goes in `config.txt`, and in the case of a HAT, even that step is unnecessary. Note, however, that layered modules such as `i2c-dev` still need to be loaded explicitly.
+使用Device Trees，内核将自动搜索并加载支持已启用设备的模块。因此，通过为设备创建适当的 DT overlay，您可以节省设备用户编辑 `/etc/modules` 的时间；所有配置都放在 `config.txt` 中，对于 HAT，甚至该步骤也是不必要的。但请注意，分层模块（例如 `i2c-dev` ）仍需要指明加载。
 
-The flipside is that because platform devices don't get created unless requested by the DTB, it should no longer be necessary to blacklist modules that used to be loaded as a result of platform devices defined in the board support code. In fact, current Raspberry Pi OS images ship with no blacklist files (except for some WLAN devices where multiple drivers are available).
+另一方面，由于平台设备只有在 DTB 请求时才会创建，因此不再需要将以前由于板支持代码中定义的平台设备而加载的模块列入黑名单。事实上，当前的 Raspberry Pi OS 镜像不附带黑名单文件（某些 WLAN 设备除外，因为有多个驱动程序可用）。
 
 [[part3.2]]
-==== DT parameters
+==== DT 参数（DT parameters）
 
-As described above, DT parameters are a convenient way to make small changes to a device's configuration. The current base DTBs support parameters for enabling and controlling the onboard audio, I2C, I2S and SPI interfaces without using dedicated overlays. In use, parameters look like this:
+如上所述，DT 参数是一种方便对设备配置进行细微更改的方法。当前基础 DTB 支持启用和控制板载音频、I2C、I2S 和 SPI 接口的参数，而无需使用专用 overlay。在使用中，参数如下所示：
 
 [source,ini]
 ----
 dtparam=audio=on,i2c_arm=on,i2c_arm_baudrate=400000,spi=on
 ----
 
-NOTE: Multiple assignments can be placed on the same line, but ensure you don't exceed the 80-character limit.
+NOTE: 可以在同一行上放置多个分配，但请确保不超过 80 个字符的限制。
 
-If you have an overlay that defines some parameters, they can be specified either on subsequent lines like this:
+如果您的overlay定义了一些参数，则可以在后续行中指定这些参数，如下所示：
 
 [source,ini]
 ----
@@ -704,14 +707,14 @@ dtparam=gpio_in_pin=17
 dtparam=gpio_in_pull=down
 ----
 
-...or appended to the overlay line like this:
+...或附加到 overlay 行，如下所示：
 
 [source,ini]
 ----
 dtoverlay=lirc-rpi,gpio_out_pin=16,gpio_in_pin=17,gpio_in_pull=down
 ----
 
-Overlay parameters are only in scope until the next overlay is loaded. In the event of a parameter with the same name being exported by both the overlay and the base, the parameter in the overlay takes precedence; it's recommended that you avoid doing this. To expose the parameter exported by the base DTB instead, end the current overlay scope using:
+dtoverlay 参数的作用域只到下一个 dtoverlay 被加载为止。如果 dtoverlay 和基本 DTB 都导出了同名参数，则 dtoverlay 中的参数优先；建议避免这样做。要使用基础 DTB 导出的参数，请使用以下命令结束当前的 overlay 作用域：
 
 [source,ini]
 ----
@@ -719,11 +722,11 @@ dtoverlay=
 ----
 
 [[part3.3]]
-==== Board-specific labels and parameters
+==== 特定于电路板的标签和参数（Board-specific labels and parameters）
 
-Raspberry Pi boards have two I2C interfaces. These are nominally split: one for the ARM, and one for VideoCore (the GPU). On almost all models, `i2c1` belongs to the ARM and `i2c0` to VC, where it is used to control the camera and read the HAT EEPROM. However, there are two early revisions of the Model B that have those roles reversed.
+Raspberry Pi 板有两个 I2C 接口。它们名义上是分开的：一个用于 ARM，一个用于 VideoCore（GPU）。在几乎所有型号上， `i2c1` 属于 ARM，而 `i2c0` 属于 VC，它用于控制摄像头和读取 HAT EEPROM。但是，B 型有两个早期版本，它们的角色互换了。
 
-To make it possible to use one set of overlays and parameters with all Raspberry Pis, the firmware creates some board-specific DT parameters. These are:
+为了能够在所有 Raspberry Pi 上使用一组 overlay 和参数，固件创建了一些特定于板的 DT 参数。这些是：
 
 ----
 i2c/i2c_arm
@@ -732,9 +735,9 @@ i2c_baudrate/i2c_arm_baudrate
 i2c_vc_baudrate
 ----
 
-These are aliases for `i2c0`, `i2c1`, `i2c0_baudrate`, and `i2c1_baudrate`. It is recommended that you only use `i2c_vc` and `i2c_vc_baudrate` if you really need to - for example, if you are programming a HAT EEPROM (which is better done using a software I2C bus using the `i2c-gpio` overlay). Enabling `i2c_vc` can stop the Raspberry Pi Camera or Raspberry Pi Touch Display functioning correctly.
+这些是 `i2c0`、 `i2c1`、 `i2c0_baudrate` 和 `i2c1_baudrate` 的别名。建议只在确实需要时才使用 `i2c_vc` 和 `i2c_vc_baudrate` - 例如，在对 HAT EEPROM 编程时（最好使用软件 I2C 总线，并使用 `i2c-gpio` overlay）。启用 `i2c_vc` 会导致 Raspberry Pi 摄像头或 Raspberry Pi 触摸显示器无法正常工作。
 
-For people writing overlays, the same aliasing has been applied to the labels on the I2C DT nodes. Thus, you should write:
+对于编写 overlay 的人来说，同样的混淆现象也适用于I2C DT节点上的标签。因此，您应该编写：
 
 [source,kotlin]
 ----
@@ -746,30 +749,30 @@ fragment@0 {
 };
 ----
 
-Any overlays using the numeric variants will be modified to use the new aliases.
+任何使用数字变体的 overlay 都将被修改为使用新的别名。
 
 [[part3.4]]
-==== HATs and Device Tree
+==== HAT 和 Device Trees
 
-A Raspberry Pi HAT is an add-on board with an embedded EEPROM designed for a Raspberry Pi with a 40-pin header. The EEPROM includes any DT overlay required to enable the board (or the name of an overlay to load from the filing system), and this overlay can also expose parameters.
+Raspberry Pi HAT是一个带有嵌入式EEPROM的附加板，专为具有40引脚排针的Raspberry Pi设计。EEPROM包括启用电路板所需的所有 DT overlay （或从文件系统加载的 overlay 名称），此 overlay 还可以引出参数。
 
-The HAT overlay is automatically loaded by the firmware after the base DTB, so its parameters are accessible until any other overlays are loaded, or until the overlay scope is ended using `dtoverlay=`. If for some reason you want to suppress the loading of the HAT overlay, put `dtoverlay=` before any other `dtoverlay` or `dtparam` directive.
+在加载基础 DTB 之后，固件会自动加载 HAT overlay ，因此在加载任何其他 overlay 之前，或者在使用 `dtoverlay=` 结束 overlay 范围之前，可以访问其参数。如果出于某种原因您想禁止加载 HAT overlay ，请将 `dtoverlay=` 放在所有 `dtoverlay` 或 `dtparam` 指令之前。
 
 [[part3.5]]
-==== Dynamic Device Tree
+==== 动态Device Trees（Dynamic Device Tree）
 
-As of Linux 4.4, Raspberry Pi kernels support the dynamic loading of overlays and parameters. Compatible kernels manage a stack of overlays that are applied on top of the base DTB. Changes are immediately reflected in `/proc/device-tree` and can cause modules to be loaded and platform devices to be created and destroyed.
+从 Linux 4.4 开始，树莓派内核支持overlay和参数的动态加载。兼容内核管理应用于 基础 DTB 之上的 overlay 堆栈。更改会立即反映在 `/proc/device-tree` 中，并可能使模块被加载，平台设备被创建和销毁。
 
-The use of the word "stack" above is important - overlays can only be added and removed at the top of the stack; changing something further down the stack requires that anything on top of it must first be removed.
+上面 `堆栈` 这个词的使用很重要—— overlay 只能在堆栈顶部添加和删除；更改堆栈中下面的东西需要首先删除它上面的所有东西。
 
-There are some new commands for managing overlays:
+有一些用于管理 overlay 的新命令：
 
 [[part3.5.1]]
-===== The `dtoverlay` command
+===== `dtoverlay` 命令
 
-`dtoverlay` is a command line utility that loads and removes overlays while the system is running, as well as listing the available overlays and displaying their help information.
+`dtoverlay` 是一个命令行实用程序，它在系统运行时加载和删除 overlay ，以及列出可用的 overlay 并显示它们的帮助信息。
 
-Use `dtoverlay -h` to get usage information:
+使用 `dtoverlay -h` 获取使用信息：
 
 ----
 Usage:
@@ -791,133 +794,131 @@ Options applicable to most variants:
     -v          Verbose operation
 ----
 
-Unlike the `config.txt` equivalent, all parameters to an overlay must be included in the same command line - the <<part3.5.2,dtparam>> command is only for parameters of the base DTB.
+与 `config.txt` 等效项不同， overlay 的所有参数都必须包含在同一个命令行中 - <<part3.5.2,dtparam>> 命令仅用于基础 DTB 的参数。
 
-Command variants that change kernel state (adding and removing things) require root privilege, so you may need to prefix the command with `sudo`. Only overlays and parameters applied at run-time can be unloaded - an overlay or parameter applied by the firmware becomes "baked in" such that it won't be listed by `dtoverlay` and can't be removed.
+更改内核状态（添加和删除内容）的命令需要root权限，因此您可能需要在命令前加上 `sudo` 。只有运行时应用的overlay和参数可以卸载 - 固件使用的 overlay 或参数会被 "嵌入"，因此它不会被 `dtoverlay` 列出，也不能被删除。
 
 [[part3.5.2]]
-===== The `dtparam` command
+===== `dtparam` 命令
 
-`dtparam` creates and loads an overlay that has largely the same effect as using a dtparam directive in `config.txt`. In usage it is largely equivalent to `dtoverlay` with an overlay name of `-`, but there are a few differences: `dtparam` will list the help information for all known parameters of the base DTB. Help on the dtparam command is still available using `dtparam -h`. When indicating a parameter for removal, only index numbers can be used (not names). Not all Linux subsystems respond to the addition of devices at runtime - I2C, SPI and sound devices work, but some won't.
+`dtparam` 创建并加载一个 overlay ，其效果与在 `config.txt` 中使用 dtparam 指令基本相同。在用法上，它与称为 `-` 的 `dtoverlay` 大致相同，但也有一些不同之处： dtparam `会列出基本 DTB 所有已知参数的帮助信息。dtparam 命令的帮助仍可使用 ` dtparam -h` 。在指明要删除的参数时，只能使用索引号（而不能使用名称）。并非所有 Linux 子系统都会对运行时添加的设备做出响应--I2C、SPI 和声音设备可以工作，但有些则不行。
 
 [[part3.5.3]]
-===== Guidelines for writing runtime-capable overlays
+===== 编写支持运行时的 overlay 的指南
 
-The creation or deletion of a device object is triggered by a node being added or removed, or by the status of a node changing from disabled to enabled or vice versa. The absence of a "status" property means the node is enabled.
+设备对象的创建或删除由添加或删除节点触发，或者由节点状态从禁用更改为启用触发，反之亦然。没有 `status` 属性意味着节点已启用。
 
-Don't create a node within a fragment that will overwrite an existing node in the base DTB - the kernel will rename the new node to make it unique. If you want to change the properties of an existing node, create a fragment that targets it.
+不要在片段中创建会覆盖基础 DTB 中现有节点的节点，内核会重命名新节点，使其独一无二。如果要更改现有节点的属性，请创建一个针对该节点的片段。
 
-ALSA doesn't prevent its codecs and other components from being unloaded while they are in use. Removing an overlay can cause a kernel exception if it deletes a codec that is still being used by a sound card. Experimentation found that devices are deleted in the reverse of fragment order in the overlay, so placing the node for the card after the nodes for the components allows an orderly shutdown.
+ALSA 不会阻止其编解码器和其他组件在使用中被卸载。如果删除的编解码器仍被声卡使用，那么删除 overlay 就会导致内核异常。实验发现，设备的删除顺序与 overlay 中片段的删除顺序相反，因此将声卡的节点放在组件的节点之后，可以实现有序关闭。
 
 [[part3.5.4]]
-===== Caveats
+===== 注意事项
 
-The loading of overlays at runtime is a recent addition to the kernel, and at the time of writing there is no accepted way to do this from userspace. By hiding the details of this mechanism behind commands, users are insulated from changes in the event that a different kernel interface becomes standardised.
+在运行时加载 overlay 是内核的最新功能，在撰写本报告时，还没有从用户空间加载 overlay 的公认方法。通过将这一机制的细节隐藏在命令之后，用户可以避免在不同的内核接口标准化后发生变化。
 
-* Some overlays work better at run-time than others. Parts of the Device Tree are only used at boot time - changing them using an overlay will not have any effect.
-* Applying or removing some overlays may cause unexpected behaviour, so it should be done with caution. This is one of the reasons it requires `sudo`.
-* Unloading the overlay for an ALSA card can stall if something is actively using ALSA - the LXPanel volume slider plugin demonstrates this effect. To enable overlays for sound cards to be removed, the `lxpanelctl` utility has been given two new options - `alsastop` and `alsastart` - and these are called from the auxiliary scripts `dtoverlay-pre` and `dtoverlay-post` before and after overlays are loaded or unloaded, respectively.
-* Removing an overlay will not cause a loaded module to be unloaded, but it may cause the reference count of some modules to drop to zero. Running `rmmod -a` twice will cause unused modules to be unloaded.
-* Overlays have to be removed in reverse order. The commands will allow you to remove an earlier one, but all the intermediate ones will be removed and re-applied, which may have unintended consequences.
-* Only Device Tree nodes at the top level of the tree and children of a bus node will be probed. For nodes added at run-time there is the further limitation that the bus must register for notifications of the addition and removal of children. However, there are exceptions that break this rule and cause confusion: the kernel explicitly scans the entire tree for some device types - clocks and interrupt controller being the two main ones - in order to (for clocks) initialise them early and/or (for interrupt controllers) in a particular order. This search mechanism only happens during booting and so doesn't work for nodes added by an overlay at run-time. It is therefore recommended for overlays to place fixed-clock nodes in the root of the tree unless it is guaranteed that the overlay will not be used at run-time.
+* 有些 overlay 在运行时比其他 overlay 更好用。设备树的部分内容只在启动时使用，使用 overlay 更改这些内容不会产生任何影响。
+* 应用或删除某些 overlay 可能会导致意想不到的行为，因此应谨慎操作。这也是需要 "sudo "的原因之一。
+* 如果有东西正在使用 ALSA，卸载 ALSA 卡的 overlay 可能会导致停滞，LXPanel 音量滑块插件就有这种效果。为了能够移除声卡的 overlay ， `lxpanelctl` 工具新增了两个选项-- `alsastop` 和 `alsastart` - 它们分别在加载或卸载 overlay 之前和之后从辅助脚本 `dtoverlay-pre` 和 `dtoverlay-post` 中调用。
+* 移除 overlay 不会导致已加载模块被卸载，但可能会导致某些模块的引用计数降为零。运行两次 `rmmod -a` 会导致卸载未使用的模块。
+* 必须以相反的顺序移除 overlay 。命令允许你移除较早的 overlay ，但所有中间的 overlay 都会被移除并重新应用，这可能会产生意想不到的后果。
+* 只探测设备树顶层的节点和总线节点的子节点。对于运行时添加的节点，还有一个限制条件，即总线必须注册以接收添加和删除子节点的通知。不过，也有一些例外情况会打破这一规则并造成混乱：内核会明确扫描整个树中的某些设备类型（时钟和中断控制器是两个主要类型），以便（对于时钟）提前初始化和/或（对于中断控制器）按特定顺序初始化。这种搜索机制只在启动过程中进行，因此对运行时由 overlay 添加的节点不起作用。因此，建议 overlay 将固定时钟节点放在树的根部，除非能保证 overlay 在运行时不会被使用。
 
 [[part3.6]]
-==== Supported overlays and parameters
+==== 支持的 overlay 和参数
 
-Please refer to the https://github.com/raspberrypi/firmware/blob/master/boot/firmware/overlays/README[README] file found alongside the overlay `.dtbo` files in `/boot/firmware/overlays`. It is kept up-to-date with additions and changes.
+请参阅 `/boot/firmware/overays` 中 `.dtbo` 文件旁边的 https://github.com/raspberrypi/firmware/blob/master/boot/firmware/overlays/README[README] 文件。它会及时添加和更改保持最新的状态。
 
 [[part4]]
-=== Firmware parameters
+=== 固件参数
+固件使用特殊的 https://www.kernel.org/doc/html/latest/devicetree/usage-model.html#runtime-configuration[/chosen] 节点在引导加载程序和/或固件与操作系统之间传递参数。除非另有说明，否则每个属性都存储为 32 位整数。
 
-The firmware uses the special https://www.kernel.org/doc/html/latest/devicetree/usage-model.html#runtime-configuration[/chosen] node to pass parameters between the bootloader and/or firmware and the operating system. Each property is stored as a 32-bit integer unless indicated otherwise.
+`overlay_prefix`:: _(string)_ `config.txt` 选择的 xref:config_txt.adoc#overlay_prefix[overlay_prefix] 字符串。
 
-`overlay_prefix`:: _(string)_ The xref:config_txt.adoc#overlay_prefix[overlay_prefix] string selected by `config.txt`.
+`os_prefix`:: _(string)_ 由 `config.txt` 选取的 xref:config_txt.adoc#os_prefix[os_prefix] 字符串。
 
-`os_prefix`:: _(string)_ The xref:config_txt.adoc#os_prefix[os_prefix] string selected by `config.txt`.
+`rpi-boardrev-ext`:: 扩展电路板修订代码来自 xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP 行 33]。
 
-`rpi-boardrev-ext`:: The extended board revision code from xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP row 33].
+`rpi-country-code`:: https://github.com/raspberrypi-ui/piwiz[PiWiz] 使用的国家代码。仅限 Raspberry Pi 400。
 
-`rpi-country-code`:: The country code used used by https://github.com/raspberrypi-ui/piwiz[PiWiz]. Raspberry Pi 400 only.
-
-`rpi-duid`:: _(string)_ Raspberry Pi 5 only. A string representation of the QR code on the PCB.
+`rpi-duid`:: _(string)_ 仅限 Raspberry Pi 5。PCB 上 QR 码的字符串表示。
 
 ==== Common bootloader properties `/chosen/bootloader`
 
-Each property is stored as a 32-bit integer unless indicated otherwise.
+除非另有说明，否则每个属性都存储为 32 位整数。
 
-`boot-mode`:: The boot-mode used to load the kernel. See xref:raspberry-pi.adoc#BOOT_ORDER[BOOT_ORDER].
+`boot-mode`:: 用于加载内核的启动模式。参见 xref:raspberry-pi.adoc#BOOT_ORDER[BOOT_ORDER]。
 
-`partition`:: The partition number used during boot. If a `boot.img` ramdisk is loaded then this refers to partition that the ramdisk was loaded from rather than the partition number within the ramdisk.
+`partition`:: 启动时使用的分区号。如果加载的是 `boot.img` ramdisk，则指的是内存盘加载的分区，而不是内存盘中的分区号。
 
-`pm_rsts`:: The value of the `PM_RSTS` register during boot.
+`pm_rsts`:: 启动时 `PM_RSTS` 寄存器的值。
 
-`tryboot`:: Set to `1` if the `tryboot` flag was set at boot.
+`tryboot`:: 如果启动时设置了 `tryboot` 标志，则设为 `1`。
 
 ==== Power supply properties `/chosen/power`
 
-Raspberry Pi 5 only. Each property is stored as a 32-bit integer unless indicated otherwise.
+仅限 Raspberry Pi 5。除非另有说明，否则每个属性都存储为 32 位整数。
 
-`max_current`:: The maximum current in mA that the power supply can supply. The firmware reports the value indicated by the USB-C, USB-PD or PoE interfaces. For bench power supplies (e.g. connected to the GPIO header) define `PSU_MAX_CURRENT` in the bootloader configuration to indicate the power supply current capability.
+`max_current`:: 电源可提供的最大电流（毫安）。固件会报告 USB-C、USB-PD 或 PoE 接口指示的值。对于台式电源（例如连接到 GPIO 头），在引导加载程序配置中定义 `PSU_MAX_CURRENT`，以指示电源电流能力。
 
-`power_reset`:: Raspberry Pi 5 only. A bit field indicating the reason why the PMIC was reset.
+`power_reset`:: 仅限 Raspberry Pi 5。表明 PMIC 复位原因的位字段。
 
 |===
-| Bit | Reason
+| 位 | 原因
 
 | 0
-| Over voltage
+| 过电压
 
 | 1
-| Under voltage
+| 欠压
 
 | 2
-| Over temperature
+| 温度过高
 
 | 3
-| Enable signal
+| 启用信号
 
 | 4
-| Watchdog
+| 看门狗
 |===
 
-`rpi_power_supply`:: _(two 32-bit integers)_ The USB VID and Product VDO of the official Raspberry Pi 27W power supply (if connected).
+`rpi_power_supply`:: _(two 32-bit integers)_ Raspberry Pi 27W 官方电源的 USB VID 和产品 VDO（如果已连接）。
 
-`usb_max_current_enable`:: Zero if the USB port current limiter was set to the low-limit during boot; or non-zero if the high limit was enabled. The high level is automatically enabled if the power supply claims 5A max-current OR `usb_max_current_enable=1` is forced in `config.txt`
+`usb_max_current_enable`:: 如果 USB 端口电流限制器在启动过程中设置为低限值，则为零；如果启用了高限值，则为非零。如果电源要求最大电流为 5A 或在 `config.txt` 中强制设置了 `usb_max_current_enable=1` ，则会自动启用高电平。
 
-`usb_over_current_detected`:: Non-zero if a USB over-current event occurred during USB boot.
+`usb_over_current_detected`:: 如果 USB 启动期间发生 USB 过流事件，则为非零。
 
-`usbpd_power_data_objects`:: _(binary blob containing multiple 32-bit integers)_ The raw binary USB-PD objects (fixed supply only) received by the bootloader during USB-PD negotiation. To capture this for a bug report, run `hexdump -C /proc/device-tree/chosen/power/usbpd_power_data_objects`.
+`usbpd_power_data_objects`:: _(binary blob containing multiple 32-bit integers)_ 在 USB-PD 协商过程中，引导加载程序接收到的原始二进制 USB-PD 对象（仅限固定电源）。要捕获这些信息以用于错误报告，请运行 `hexdump -C /proc/device-tree/chosen/power/usbpd_power_data_objects`。
 
-The format is defined by the https://usb.org/document-library/usb-power-delivery[USB Power Delivery] specification.
+格式由 https://usb.org/document-library/usb-power-delivery [USB Power Delivery] 规范定义。
 
 ==== BCM2711 and BCM2712 specific bootloader properties `/chosen/bootloader`
 
-The following properties are specific to the BCM2711 and BCM2712 SPI EEPROM bootloaders. Each property is stored as a 32-bit integer unless indicated otherwise.
+以下属性针对 BCM2711 和 BCM2712 SPI EEPROM 引导加载程序。除非另有说明，否则每个属性都存储为 32 位整数。
 
-`build_timestamp`:: The UTC build time for the EEPROM bootloader.
+`build_timestamp`:: EEPROM 引导加载程序的 UTC 生成时间。
 
-`capabilities`:: This bit-field describes the features supported by the current bootloader. This may be used to check whether a feature (e.g. USB boot) is supported before enabling it in the bootloader EEPROM config.
-
+`capabilities`:: 该位字段描述当前引导加载程序支持的功能。在引导加载程序 EEPROM 配置中启用某项功能（如 USB 启动）之前，可以用它来检查该功能是否受支持。
 |===
-| Bit | Feature
+| 位 | 功能
 
 | 0
-| xref:raspberry-pi.adoc#usb-mass-storage-boot[USB boot] using the VLI USB host controller
+| xref:raspberry-pi.adoc#usb-mass-storage-boot[USB boot] 使用VLI USB主机控制器
 
 | 1
-| xref:remote-access.adoc#network-boot-your-raspberry-pi[Network boot]
+| xref:remote-access.adoc#network-boot-your-raspberry-pi[网络启动]
 
 | 2
-| xref:raspberry-pi.adoc#fail-safe-os-updates-tryboot[TRYBOOT_A_B] mode
+| xref:raspberry-pi.adoc#fail-safe-os-updates-tryboot[TRYBOOT_A_B] 模式
 
 | 3
 | xref:raspberry-pi.adoc#fail-safe-os-updates-tryboot[TRYBOOT]
 
 | 4
-| xref:raspberry-pi.adoc#usb-mass-storage-boot[USB boot] using the BCM2711 USB host controller
+| xref:raspberry-pi.adoc#usb-mass-storage-boot[USB boot] 使用BCM2711 USB主机控制器
 
 | 5
-| xref:config_txt.adoc#boot_ramdisk[RAM disk - boot.img]
+| xref:raspberry-pi.adoc#boot_ramdisk[RAM disk - boot.img]
 
 | 6
 | xref:raspberry-pi.adoc#nvme-ssd-boot[NVMe boot]
@@ -926,50 +927,50 @@ The following properties are specific to the BCM2711 and BCM2712 SPI EEPROM boot
 | https://github.com/raspberrypi/usbboot/blob/master/Readme.md#secure-boot[Secure Boot]
 |===
 
-`update_timestamp`:: The UTC update timestamp set by `rpi-eeprom-update`.
+`update_timestamp`:: 由 `rpi-eeprom-update` 设置的 UTC 更新时间戳。
 
-`signed`:: If Secure Boot is enabled, this bit-field will be non-zero. The individual bits indicate the current Secure Boot configuration.
+`signed`:: 如果启用了安全启动，该位字段将不为零。各个位表示当前的安全启动配置。
 
 |===
-| Bit | Description
+| 位 | 描述
 
 | 0
-| `SIGNED_BOOT` was defined in the EEPROM config file.
+| `SIGNED_BOOT` 在EEPROM配置文件中定义。
 
 | 1
-| Reserved
+| 保留
 
 | 2
-| The ROM development key has been revoked.  See xref:config_txt.adoc#revoke_devkey[revoke_devkey].
+| ROM开发密钥已被撤销，参见 xref:config_txt.adoc#revoke_devkey[revoke_devkey]。
 
 | 3
-| The customer public key digest has been written to OTP. See xref:config_txt.adoc#program_pubkey[program_pubkey].
+| 客户公钥摘要已写入OTP，参见 xref:config_txt.adoc#program_pubkey[program_pubkey]。
 
 | 4...31
-| Reserved
+| 保留
 |===
 
-`version`:: _(string)_ The Git version string for the bootloader.
+`version`:: _(string)_ 引导加载程序的 Git 版本字符串。
 
-==== BCM2711 and BCM2712 USB boot properties `/chosen/bootloader/usb`
+==== BCM2711和BCM2712 USB启动属性  `/chosen/bootloader/usb` 
 
-The following properties are defined if the system was booted from USB. These may be used to uniquely identify the USB boot device. Each property is stored as a 32-bit integer.
+如果系统是从 USB 启动的，则会定义以下属性。这些属性可用于唯一标识 USB 启动设备。每个属性都存储为 32 位整数。
 
-`usb-version`:: The USB major protocol version (2 or 3).
+`usb-version`:: USB 主要协议版本（2 或 3）。
 
-`route-string`:: The USB route-string identifier for the device as defined by the USB 3.0 specification.
+`route-string`:: 设备的 USB 路由字符串标识符，由 USB 3.0 规范定义。
 
-`root-hub-port-number`:: The root hub port number that the boot device is connected to - possibly via other USB hubs.
+`root-hub-port-number`:: 启动设备连接的根集线器端口号，可能通过其他 USB 集线器连接。
 
-`lun`:: The Logical Unit Number for the mass-storage device.
+`lun`:: 大容量存储设备的逻辑单元编号。
 
 ==== NVMEM nodes
 
-The firmware provides read-only, in-memory copies of portions of the bootloader EEPROM via the https://www.kernel.org/doc/html/latest/driver-api/nvmem.html[NVMEM] subsystem.
+固件通过 https://www.kernel.org/doc/html/latest/driver-api/nvmem.html[NVMEM] 子系统提供引导加载程序 EEPROM 部分的只读内存副本。
 
-Each region appears as an NVMEM device under `/sys/bus/nvmem/devices/` with a named alias under `/sys/firmware/devicetree/base/aliases`.
+每个区域在 `/sys/bus/nvmem/devices/` 下显示为一个 NVMEM 设备，在 `/sys/firmware/devicetree/base/aliases` 下有一个命名的别名。
 
-Example shell script code for reading an NVMEM mode from https://github.com/raspberrypi/rpi-eeprom/blob/master/rpi-eeprom-update[rpi-eeprom-update]:
+从 https://github.com/raspberrypi/rpi-eeprom/blob/master/rpi-eeprom-update[rpi-eeprom-update] 读取 NVMEM 模式的 shell 脚本代码示例：
 
 [source,shell]
 ----
@@ -986,75 +987,74 @@ if [ -f "${blconfig_alias}" ]; then
 fi
 ----
 
-`blconfig`:: alias that refers to an NVMEM device that stores a copy of the bootloader EEPROM config file.
+`blconfig`:: 别名，指的是存储引导加载程序 EEPROM 配置文件副本的 NVMEM 设备。
 
-`blpubkey`:: alias that points to an NVMEM device that stores a copy of the bootloader EEPROM public key (if defined) in binary format.
-The https://github.com/raspberrypi/usbboot/blob/master/tools/rpi-bootloader-key-convert[rpi-bootloader-key-convert] utility can be used to convert the data into PEM format for use with OpenSSL.
+`blpubkey`:: 别名，该别名指向一个 NVMEM 设备，该设备以二进制格式存储引导加载器 EEPROM 公钥（如果定义了）的副本。
+https://github.com/raspberrypi/usbboot/blob/master/tools/rpi-bootloader-key-convert[rpi-bootloader-key-convert]实用程序可用于将数据转换为 PEM 格式，以便与 OpenSSL 配合使用。
 
-For more information, see https://github.com/raspberrypi/usbboot#secure-boot[secure-boot].
+更多信息，请参阅 https://github.com/raspberrypi/usbboot#secure-boot[secure-boot]。
 
 [[part5]]
-=== Troubleshooting
+=== 故障排除
 
 [[part5.1]]
-==== Debugging
+==== 调试
 
-The loader will skip over missing overlays and bad parameters, but if there are serious errors, such as a missing or corrupt base DTB or a failed overlay merge, then the loader will fall back to a non-DT boot. If this happens, or if your settings don't behave as you expect, it is worth checking for warnings or errors from the loader:
+加载程序将跳过丢失的 overlay 和错误参数，但如果出现严重错误，例如丢失或损坏的基础 DTB 或失败的 overlay 合并，则加载程序将回退到非DT引导。如果发生这种情况，或者您的设置没有按您的预期运行，则值得检查加载程序的警告或错误：
 
 [source,console]
 ----
 $ sudo vclog --msg
 ----
 
-Extra debugging can be enabled by adding `dtdebug=1` to `config.txt`.
+可以通过将 `dtdebug=1` 添加到 `config.txt` 来启用额外的调试。
 
-You can create a human-readable representation of the current state of DT like this:
+您可以导出DT当前状态的可读表示，如下所示：
 
 [source,console]
 ----
 $ dtc -I fs /proc/device-tree
 ----
 
-This can be useful to see the effect of merging overlays onto the underlying tree.
+这对于查看将 overlay 合并到底层树上的效果很有用。
 
-If kernel modules don't load as expected, check that they aren't blacklisted in `/etc/modprobe.d/raspi-blacklist.conf`; blacklisting shouldn't be necessary when using Device Tree. If that shows nothing untoward, you can also check that the module is exporting the correct aliases by searching `/lib/modules/<version>/modules.alias` for the `compatible` value. Otherwise, your driver is probably missing either:
+如果内核模块未按预期加载，请检查它们是否未在 `/etc/modprobe.d/raspi-Blacklist.conf` 中列入黑名单；使用Device Trees时不需要列入黑名单。如果没有显示任何异常，您还可以通过搜索 `/lib/modules/<version>/modules.alias` 以获取 `compatible` 值来检查模块是否导出了正确的别名。否则，您的驱动程序可能会丢失：
 
 ----
 .of_match_table = xxx_of_match,
 ----
 
-or:
+或：
 
 ----
 MODULE_DEVICE_TABLE(of, xxx_of_match);
 ----
 
-Failing that, `depmod` has failed or the updated modules haven't been installed on the target filesystem.
-
+否则， `depmod` 就会失败，或者更新的模块尚未安装在目标文件系统上。
 [[part5.2]]
-==== Test overlays using `dtmerge`, `dtdiff` and `ovmerge`
+==== 使用 `dtmerge`、`dtdiff` 和 `ovmerge` 测试 overlay 
 
-Alongside the `dtoverlay` and `dtparam` commands is a utility for applying an overlay to a DTB - `dtmerge`. To use it you first need to obtain your base DTB, which can be obtained in one of two ways:
+除了 `dtoverlay` 和 `dtparam` 命令之外，还有一个用于将 overlay 应用于DTB的实用程序- `dtmerge` 。要使用它，您首先需要获取您的基础 DTB ，可以通过以下两种方式之一获得：
 
-Generate it from the live DT state in `/proc/device-tree`:
+从 `/proc/device-tree` 中的实时DT状态生成它：
 
 [source,console]
 ----
 $ dtc -I fs -O dtb -o base.dtb /proc/device-tree
 ----
 
-This will include any overlays and parameters you have applied so far, either in `config.txt` or by loading them at runtime, which may or may not be what you want. Alternatively:
+这将包括您到目前为止应用的任何 overlay 和参数，无论是在 `config.txt` 中还是在运行时加载它们，这可能是您想要的，也可能不是您想要的。或者：
 
-Copy it from the source DTBs in `/boot/firmware/`. This won't include overlays and parameters, but it also won't include any other modifications by the firmware. To allow testing of all overlays, the `dtmerge` utility will create some of the board-specific aliases ("i2c_arm", etc.), but this means that the result of a merge will include more differences from the original DTB than you might expect. The solution to this is to use dtmerge to make the copy:
+从 `/boot/firmware/` 中的源DTB复制它。这不包括 overlay 和参数，但也不包括固件的任何其他修改。为了允许测试所有 overlay ， `dtmerge` 实用程序将创建一些特定于板的别名（ `i2c_arm` 等），但这意味着合并的结果将包含比您预期的更多与原始DTB的差异。解决这个问题的方法是使用dt合并来进行复制：
 
 [source,console]
 ----
 $ dtmerge /boot/firmware/bcm2710-rpi-3-b.dtb base.dtb -
 ----
 
-(the `-` indicates an absent overlay name).
+（ `-` 表示不存在 overlay 名称）。
 
-You can now try applying an overlay or parameter:
+您现在可以尝试应用 overlay 或参数：
 
 [source,console]
 ----
@@ -1062,7 +1062,7 @@ $ dtmerge base.dtb merged.dtb - sd_overclock=62
 $ dtdiff base.dtb merged.dtb
 ----
 
-which will return:
+哪个将返回：
 
 [source,diff]
 ----
@@ -1079,7 +1079,7 @@ which will return:
                         clocks = <0x8>;
 ----
 
-You can also compare different overlays or parameters.
+您还可以比较不同的 overlay 或参数。
 
 [source,console]
 ----
@@ -1088,7 +1088,7 @@ $ dtmerge base.dtb merged2.dtb /boot/firmware/overlays/spi1-2cs.dtbo
 $ dtdiff merged1.dtb merged2.dtb
 ----
 
-to get:
+得到：
 
 [source,diff]
 ----
@@ -1131,12 +1131,12 @@ to get:
                 spi@7e2150C0 {
 ----
 
-The https://github.com/raspberrypi/utils[Utils] repo includes another DT utility - `ovmerge`. Unlike `dtmerge`, `ovmerge` combines file and applies overlays in source form. Because the overlay is never compiled, labels are preserved and the result is usually more readable. It also has a number of other tricks, such as the ability to list the order of file inclusion.
+ https://github.com/raspberrypi/utils[Utils] 存储库包括另一个DT实用程序- `ovmerge` 。与 `dtmerge` 不同， `ovmerge` 结合了文件并以源代码形式应用overlay。因为overlay永远不会被编译，所以标签会被保留，结果通常更具可读性。它还具有许多其他技巧，例如列出文件包含顺序的能力。
 
 [[part5.3]]
-==== Force a specific Device Tree
+==== 强制使用特定Device Trees
 
-If you have very specific needs that aren't supported by the default DTBs, or if you just want to experiment with writing your own DTs, you can tell the loader to load an alternate DTB file like this:
+如果您有默认 DTB 不支持的特殊需求，或者您只是想尝试编写自己的 DTB，您可以告诉加载器加载类似这样的备用 DTB 文件：
 
 [source,ini]
 ----
@@ -1144,21 +1144,21 @@ device_tree=my-pi.dtb
 ----
 
 [[part5.4]]
-==== Disable Device Tree usage
+==== 禁用Device Trees使用
 
-Device Tree usage is required in Raspberry Pi Linux kernels. For bare metal and other OSs, DT usage can be disabled by adding:
+Raspberry PiLinux内核中需要使用Device Trees。对于裸机和其他操作系统，可以通过添加以下内容来禁用DT使用：
 
 [source,ini]
 ----
 device_tree=
 ----
 
-to `config.txt`.
+到 `config.txt` 。
 
 [[part5.5]]
-==== Shortcuts and syntax variants
+==== 快捷方式和语法变体
 
-The loader understands a few shortcuts:
+加载器理解一些快捷方式：
 
 [source,ini]
 ----
@@ -1166,32 +1166,31 @@ dtparam=i2c_arm=on
 dtparam=i2s=on
 ----
 
-can be shortened to:
+可以缩短为：
 
 [source,ini]
 ----
 dtparam=i2c,i2s
 ----
 
-(`i2c` is an alias of `i2c_arm`, and the `=on` is assumed). It also still accepts the long-form versions: `device_tree_overlay` and `device_tree_param`.
+（ `i2c` 是 `i2c_arm` 的别名，假设为 `=on` ）。它仍然接受长格式版本： `device_tree_overlay` 和 `device_tree_param` 。
 
 [[part5.6]]
-==== Other DT commands available in `config.txt`
+==== config.txt 中可用的其他 DT 命令
 
-`device_tree_address`:: This is used to override the address where the firmware loads the device tree (not dt-blob). By default the firmware will choose a suitable place.
+`device_tree_address`:： 用于更改固件加载设备树（非 dt-blob）的地址。默认情况下，固件会选择一个合适的位置。
 
-`device_tree_end`:: This sets an (exclusive) limit to the loaded device tree. By default the device tree can grow to the end of usable memory, which is almost certainly what is required.
+`device_tree_end`:： 为加载的设备树设置（排他性）限制。默认情况下，设备树可以增长到可用内存的尽头，这几乎肯定是需要的。
 
-`dtdebug`:: If non-zero, turn on some extra logging for the firmware's device tree processing.
+`dtdebug`:： 如果非零，则为固件的设备树处理开启一些额外的日志记录。
 
-`enable_uart`:: Enable the primary/console xref:configuration.adoc#configure-uarts[UART] (ttyS0 on a Raspberry Pi 3, 4, 400, Zero W and Zero 2 W, ttyAMA0 otherwise - unless swapped with an overlay such as miniuart-bt). If the primary UART is ttyAMA0 then `enable_uart` defaults to 1 (enabled), otherwise it defaults to 0 (disabled). This is because it is necessary to stop the core frequency from changing which would make ttyS0 unusable, so `enable_uart=1` implies `core_freq=250` (unless `force_turbo=1`). In some cases this is a performance hit, so it is off by default.
+`enable_uart`:： 启用主/控制台 xref:configuration.adoc#configure-uarts[UART]（Raspberry Pi 3、4、400、Zero W 和 Zero 2 W 上为 ttyS0，其他情况下为 ttyAMA0 - 除非与 miniuart-bt 等覆层交换）。如果主 UART 为 ttyAMA0，则`enable_uart`默认为 1（启用），否则默认为 0（禁用）。这是因为必须阻止内核频率发生变化，否则 ttyS0 将无法使用，因此 `enable_uart=1` 意味着 `core_freq=250`（除非 `force_turbo=1`）。在某些情况下，这会影响性能，因此默认关闭。
 
-`overlay_prefix`:: Specifies a subdirectory/prefix from which to load overlays - defaults to "overlays/". Note the trailing "/". If desired you can add something after the final "/" to add a prefix to each file, although this is not likely to be needed.
+`overlay_prefix`:： 指定加载覆盖层的子目录/前缀--默认为 "overlay/"。注意尾部的"/"。如果需要，你可以在最后的"/"后面添加一些内容，为每个文件添加一个前缀，不过这不大可能需要。
 
-Further ports can be controlled by the DT. For more details see <<part3,section 3>>.
+DT可以控制更多端口。有关详细信息，请参阅 <<part3,section 3>>。
 
 [[part5.7]]
-==== Further help
+==== 进一步的帮助
 
-If you've read through this document and have not found the answer to a Device Tree problem, there is help available. The author can usually be found on Raspberry Pi forums, particularly the https://forums.raspberrypi.com/viewforum.php?f=107[Device Tree] forum.
-
+如果您已经阅读了本文档，但仍未找到 "设备树 "问题的答案，我们可以提供帮助。通常可以在 Raspberry Pi 论坛上找到作者，尤其是 https://forums.raspberrypi.com/viewforum.php?f=107[Device Tree] 论坛。

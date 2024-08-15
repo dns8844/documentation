@@ -1,17 +1,18 @@
-== Getting help
+[[getting-help]]
+== 获取帮助
 
-For further help with `libcamera` and the `rpicam-apps`, check the https://forums.raspberrypi.com/viewforum.php?f=43[Raspberry Pi Camera forum]. Before posting:
+有关 `libcamera` 和 `rpicam-apps` 的进一步帮助，请查看 https://forums.raspberrypi.com/viewforum.php?f=43[树莓派相机论坛]。发帖前：
 
-* Make a note of your operating system version (`uname -a`).
+* 记下您的操作系统版本（ `uname -a` ）。
 
-* Make a note of your `libcamera` and `rpicam-apps` versions (`rpicam-hello --version`).
+* 记下您的 `libcamera` 和 `rpicam-apps` 版本（ `rpicam-hello--version` ）。
 
-* Report the make and model of the camera module you are using.
+* 告您正在使用的相机模块的品牌和型号。
 
-* Report the software you are trying to use. We don't support third-party camera module vendor software.
+* 报告您尝试使用的软件。我们不支持第三方相机模组供应商软件。
 
-* Report your Raspberry Pi model, including memory size.
+* 报告您的Raspberry Pi型号，包括内存大小。
 
-* Include any relevant excerpts from the application's console output.
+* 包括应用程序控制台输出的任何相关信息。
 
-If there are specific problems in the camera software (such as crashes), consider https://github.com/raspberrypi/rpicam-apps[creating an issue in the `rpicam-apps` GitHub repository], including the same details listed above.
+如果相机软件中存在特定问题（例如崩溃），请考虑 https://github.com/raspberrypi/rpicam-apps[在 `rpicam-apps` GitHub存储库中创建问题]，包括上面列出的相同详细信息。

@@ -1,28 +1,31 @@
-== Video options
+[[video-options]]
+== 视频选项
 
-=== HDMI mode
+[[hdmi-mode]]
+=== HDMI模式
 
-To control HDMI settings, use the xref:configuration.adoc#set-resolution-and-rotation[Screen Configuration utility] or xref:configuration.adoc#set-the-kms-display-mode[KMS video settings] in `cmdline.txt`.
+要控制 HDMI 设置，请使用 `cmdline.txt` 中的 xref:configuration.adoc#set-resolution-and-rotation[屏幕配置实用程序] 或 xref:configuration.adoc#set-the-kms-display-mode[KMS 视频设置]。
 
-==== HDMI Pipeline for Raspberry Pi 4
+==== Raspberry Pi 4 的 HDMI
 
-In order to support dual displays and modes up to 4Kp60, the Raspberry Pi 4 generates 2 output pixels for every clock cycle.
+为了支持双显示器和高达 4Kp60 的模式，Raspberry Pi 4 在每个时钟周期生成 2 个输出像素。
 
-Every HDMI mode has a list of timings that control all the parameters around sync pulse durations. These are typically defined via a pixel clock, and then a number of active pixels, a front porch, sync pulse, and back porch for each of the horizontal and vertical directions.
+每种 HDMI 模式都有一个时序列表，用于控制同步脉冲持续时间周围的所有参数。这些时序通常通过像素时钟、活动像素数量、前廊、同步脉冲以及水平和垂直方向的后廊来定义。
 
-Running everything at 2 pixels per clock means that the Raspberry Pi 4 cannot support a timing where _any_ of the horizontal timings are not divisible by 2. The firmware and Linux kernel filter out any mode that does not fulfil this criteria.
+以每时钟 2 像素的速度运行所有程序意味着 Raspberry Pi 4 不能支持任何不能被 2 整除的时序。
 
-There is only one incompatible mode in the CEA and DMT standards: DMT mode 81, 1366x768 @ 60Hz. This mode has odd-numbered values for the horizontal sync and back porch timings and a width that indivisible by 8.
+CEA 和 DMT标准中只有一种不兼容的模式：DMT模式81、1366x768@60Hz。这种模式的水平同步和后门廊时序具有奇数值，宽度不能被8整除。
 
-If your monitor has this resolution, Raspberry Pi 4 automatically drops down to the next mode advertised by the monitor; typically 1280x720.
+如果您的显示器具有这种分辨率，Raspberry Pi 4 会自动降到显示器所宣传的下一模式；通常为 1280x720。
 
-==== HDMI Pipeline for Raspberry Pi 5
+==== Raspberry Pi 5 的 HDMI
 
-While Raspberry Pi 5 also works at 2 output pixels per clock cycle, it has special handling for odd timings and can handle these modes directly.
+虽然 Raspberry Pi 5 也是每个时钟周期输出 2 个像素，但它对奇数时序有特殊处理，可以直接处理这些模式。
 
-=== Composite video mode
+[[composite-video-mode]]
+=== 复合视频模式
 
-Composite video output can be found on each model of Raspberry Pi computer:
+复合视频输出可以在每个型号的Raspberry Pi计算机上找到：
 
 |===
 | model | composite output
@@ -43,11 +46,12 @@ Composite video output can be found on each model of Raspberry Pi computer:
 | 3.5mm AV jack
 |===
 
-NOTE: Composite video output is not available on Raspberry Pi 400.
+NOTE: Raspberry Pi 400上不提供复合视频输出。
 
-==== `enable_tvout`
+[[enable_tvout]]
+==== `enable_tvout` 
 
-Set to `1` to enable composite video output and `0` to disable. On Raspberry Pi 4 and 5, composite output is only available if you set this to `1`, which also disables HDMI output. Composite output is not available on the Raspberry Pi 400.
+设置为 `1` 以启用复合视频输出，设置为 `0` 以禁用。在Raspberry Pi 4和5上，复合输出仅在您将其设置为 `1` 时可用，这也会禁用HDMI输出。Raspberry Pi 400上不提供复合输出。
 
 [%header,cols="1,1"]
 
@@ -62,23 +66,23 @@ Set to `1` to enable composite video output and `0` to disable. On Raspberry Pi 
 |1
 |===
 
-On all models except Raspberry Pi 4 and 5, HDMI output needs to be disabled in order for composite output to be enabled. HDMI output is disabled when no HDMI display is connected / detected. Set `enable_tvout=0` to prevent composite being enabled when HDMI is disabled.
+在除树莓派4和5之外的所有型号上，需要禁用HDMI输出才能启用复合输出。当没有连接/检测到HDMI显示器时，HDMI输出被禁用。设置 `enable_tvout=0` 以防止在禁用HDMI时启用复合。
 
-To enable composite output, append `,composite` to the end of the `dtoverlay=vc4-kms-v3d` line in xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`]:
+要启用复合输出，请在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中的 `dtoverlay=vc4-kms-v3d` 行末尾添加 `,composite` ：
 
 [source,ini]
 ----
 dtoverlay=vc4-kms-v3d,composite
 ----
 
-By default, this outputs composite NTSC video. To choose a different mode, instead append the following to the single line in `/boot/firmware/cmdline.txt`:
+默认情况下，这会输出复合NTSC视频。要选择不同的模式，请将以下内容附加到 `/boot/firmware/cmdline.txt` 中的单行：
 
 [source,ini]
 ----
 vc4.tv_norm=<video_mode>
 ----
 
-Replace the `<video_mode>` placeholder with one of the following values:
+将 `<video_mode>` 占位符替换为以下值之一：
 
 * `NTSC`
 * `NTSC-J`
@@ -89,23 +93,28 @@ Replace the `<video_mode>` placeholder with one of the following values:
 * `PAL60`
 * `SECAM`
 
-=== LCD displays and touchscreens
+[[lcd-displays-and-touchscreens]]
+=== LCD显示器和触摸屏
 
-==== `ignore_lcd`
+[[ignore_lcd]]
+==== `ignore_lcd` 
 
-By default, the Raspberry Pi Touch Display is used when detected on the I2C bus. `ignore_lcd=1` skips this detection phase. This prevents the LCD display from being used.
+默认情况下，在I2C总线上检测到Raspberry Pi Touch Display时使用。 `ignore_lcd=1` 跳过此检测阶段。这会阻止使用LCD显示屏。
 
-==== `disable_touchscreen`
+[[disable_touchscreen]]
+==== `disable_touchscreen` 
 
-Enables and disables the touchscreen.
+启用和禁用触摸屏。
 
-`disable_touchscreen=1` disables the touchscreen component of the official Raspberry Pi Touch Display.
+`disable_touchscreen=1` 禁用官方Raspberry Pi Touch Display的触摸屏组件。
 
-=== Generic display options
+[[generic-display-options]]
+=== 通用显示选项
 
-==== `disable_fw_kms_setup`
+[[disable_fw_kms_setup]]
+==== `disable_fw_kms_setup` 
 
-By default, the firmware parses the EDID of any HDMI attached display, picks an appropriate video mode, then passes the resolution and frame rate of the mode (and overscan parameters) to the Linux kernel via settings on the kernel command line. In rare circumstances, the firmware can choose a mode not in the EDID that may be incompatible with the device. Use `disable_fw_kms_setup=1` to disable passing video mode parameters, which can avoid this problem. The Linux video mode system (KMS) instead parses the EDID itself and picks an appropriate mode.
+默认情况下，固件会解析任何连接的 HDMI 显示器的 EDID，选择合适的视频模式，然后通过内核命令行上的设置将该模式的分辨率和帧频（以及过扫描参数）传递给 Linux 内核。在极少数情况下，固件可能会选择与设备不兼容的 EDID 以外的模式。使用 `disable_fw_kms_setup=1` 禁用视频模式参数传递，可以避免这一问题。Linux 视频模式系统 (KMS) 会自行解析 EDID 并选择合适的模式。
 
-NOTE: On Raspberry Pi 5, this parameter defaults to `1`.
+NOTE: 在 Raspberry Pi 5 上，该参数默认为 `1` 。
 

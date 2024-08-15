@@ -1,13 +1,14 @@
-== Accessibility options
+[[accessibility-options]]
+== 无障碍选项
 
-=== Visual aids
+=== 视觉辅助工具
 
-Users of Raspberry Pi OS with visual impairments can find helpful tools in the *Recommended Software* menu.
+有视觉障碍的 Raspberry Pi 操作系统用户可以在 *Recommended Software* 菜单中找到有用的工具。
 
-We offer https://help.gnome.org/users/orca/stable/introduction.html.en[Orca screen reader] to ease navigation of Raspberry Pi Desktop. Additionally, we offer screen magnifier to increase the readability of UI and screen elements.
+我们提供 https://help.gnome.org/users/orca/stable/introduction.html.en[Orca屏幕阅读器]，以方便 Raspberry Pi 桌面的导航。此外，我们还提供屏幕放大镜，以提高用户界面和屏幕元素的可读性。
 
-==== Orca screen reader
+==== Orca 屏幕阅读器
 
-You can install Orca screen reader from the *Recommended Software* section of the main Raspberry Pi menu. Alternatively, press *Ctrl* + *Alt* + *Space* to automatically install Orca.
+您可以从 Raspberry Pi 主菜单的 *Recommended Software* 部分安装 Orca 屏幕阅读器。或者，按 *Ctrl* + *Alt* + *Space* 键自动安装 Orca。
 
-When booting Raspberry Pi OS for the first time after installing a new image, an automatic spoken reminder plays after 30 seconds. This reminder provides instructions on how to install Orca.
+安装新镜像后首次启动 Raspberry Pi OS 时，系统会在 30 秒后自动播放语音提醒。该提示提供了如何安装 Orca 的说明。

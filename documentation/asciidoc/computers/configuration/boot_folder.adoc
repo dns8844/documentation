@@ -1,101 +1,112 @@
-== `boot` folder contents
+[[the-boot-folder]]
+== `boot` 文件夹内容
 
-Raspberry Pi OS stores boot files on the first partition of the SD card, formatted with the FAT file system.
+Raspberry Pi OS将引导文件存储在SD卡的第一个分区上，使用FAT文件系统。
 
-On startup, each Raspberry Pi loads various files from the boot partition in order to start up the various processors before the Linux kernel boots.
+启动时，每个Raspberry Pi都会从引导分区加载各种文件，以便在Linux内核启动之前启动各种处理器。
 
-On boot, Linux mounts the boot partition as `/boot/firmware/`.
+在引导时，Linux将引导分区挂载为 `/boot/firmware/` 。
 
-NOTE: Prior to _Bookworm_, Raspberry Pi OS stored the boot partition at `/boot/`. Since _Bookworm_, the boot partition is located at `/boot/firmware/`.
+NOTE: 在 _Bookworm_ 之前，树莓派操作系统将引导分区存储在 `/boot/` 。从 _Bookworm_ 开始，引导分区位于 `/boot/firmware/` 。
 
-=== `bootcode.bin`
+[[bootcode-bin]]
+=== `bootcode.bin` 
 
-The bootloader, loaded by the SoC on boot. It performs some very basic setup, and then loads one of the `start*.elf` files.
+引导加载程序，由SoC在引导时加载。它执行一些非常基本的设置，然后加载其中一个 `start*.elf` 文件。
 
-The Raspberry Pi 4 and 5 do not use `bootcode.bin`. It has been replaced by boot code in the xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[onboard EEPROM].
+Raspberry Pi 4和5不使用bootcode.bin。它已被 xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[板载EEPROM] 中的引导代码代替。
 
-=== `start*.elf`
+=== `start*.elf` 
 
-Binary firmware blobs loaded onto the VideoCore GPU in the SoC, which then take over the boot process.
+二进制固件块加载到 SoC 中的 VideoCore GPU 上，然后接管启动过程。
 
-`start.elf`:: the basic firmware.
-`start_x.elf`:: includes additional codecs.
-`start_db.elf`:: used for debugging.
-`start_cd.elf`:: a cut-down version of the firmware that removes support for hardware blocks such as codecs and 3D as well as debug logging support; it also imposes initial frame buffer limitations. The cut-down firmware is automatically used when `gpu_mem=16` is specified in `config.txt`.
+`start.elf`:: 基本固件。
+`start_x.elf`:: 包含额外的编解码器。
+`start_db.elf`:: 用于调试。
+`start_cd.elf`:: 固件的精简版，删除了对编解码器和 3D 等硬件模块的支持以及调试日志支持；它还施加了初始帧缓冲区限制。如果在 `config.txt` 中指定了 `gpu_mem=16`，则会自动使用精简版固件。
 
-`start4.elf`, `start4x.elf`, `start4db.elf` and `start4cd.elf` are equivalent firmware files specific to the Raspberry Pi 4-series (Model 4B, Pi 400, Compute Module 4 and Compute Module 4S).
 
-For more information on how to use these files, see the xref:config_txt.adoc#boot-options[`config.txt` documentation].
+`start4.elf` , `start4x.elf` , `start4db.elf` 和 `start4cd.elf` 是特定于Raspberry Pi 4系列（Model 4B, Pi 400, Compute Module 4 和 Compute Module 4S）的同功能固件文件。
 
-The Raspberry Pi 5 does not use `elf` files. The firmware is self-contained within the bootloader EEPROM.
+有关如何使用这些文件的详细信息，请参阅 xref:config_txt.adoc#boot-options[ `config.txt` 文档].
 
-=== `fixup*.dat`
+Raspberry Pi 5 不使用 `elf` 文件。固件独立包含在引导加载程序EEPROM中。
 
-Linker files found in matched pairs with the `start*.elf` files listed in the previous section.
+=== `fixup*.dat` 
 
-=== `cmdline.txt`
+与上一节中列出的 `start*.elf` 文件配对的链接器文件。
 
-The <<kernel-command-line-cmdline-txt,kernel command line>> passed into the kernel at boot.
+[[cmdline-txt]]
+=== `cmdline.txt` 
 
-=== `config.txt`
+启动时传入内核的 <<kernel-command-line-cmdline-txt,kernel command line>>
 
-Contains many configuration parameters for setting up the Raspberry Pi. For more information, see the xref:config_txt.adoc[`config.txt` documentation].
+[[config-txt]]
+=== `config.txt` 
 
-IMPORTANT: Raspberry Pi 5 requires a non-empty `config.txt` file in the boot partition.
+包含用于设置Raspberry Pi的许多配置参数。有关详细信息，请参阅 xref:config_txt.adoc[ `config.txt` 文档].。
 
-=== `issue.txt`
+IMPORTANT: Raspberry Pi 5 要求启动分区中有一个非空的 `config.txt` 文件。
 
-Text-based housekeeping information containing the date and git commit ID of the distribution.
+[[issue-txt]]
+=== `issue.txt` 
 
-=== `initramfs*`
+基于文本的内务信息，包含发行版的日期和 git commit ID。
 
-Contents of the initial ramdisk. This loads a temporary root file system into memory before the real root file system can be mounted.
+=== `initramfs*` 
 
-Since Bookworm, Raspberry Pi OS includes an `initramfs` file by default. To enable the initial ramdisk, configure it in xref:config_txt.adoc[`config.txt`] with the xref:config_txt.adoc#auto_initramfs[`auto_initramfs`] keyword.
+初始ramdisk的内容。这会在挂载真正的根文件系统之前将临时根文件系统加载到内存中。
 
-=== `ssh` or `ssh.txt`
+从 Bookworm 开始，Raspberry Pi OS 默认包含一个 `initramfs` 文件。要启用初始 ramdisk，请在 xref:config_txt.adoc[`config.txt`] 中使用 xref:config_txt.adoc#auto_initramfs[`auto_initramfs`] 关键字进行配置。
 
-When this file is present, enables SSH at boot. SSH is otherwise disabled by default. The contents do not matter. Even an empty file enables SSH.
+[[ssh-or-ssh-txt]]
+=== `ssh` 或 `ssh.txt` 
 
-=== Device Tree blob files (`*.dtb`)
+如果存在该文件，则在启动时启用 SSH。否则 SSH 默认为禁用。文件内容并不重要。即使是空文件也能启用 SSH。
 
-Device tree blob files contain the hardware definitions of the various models of Raspberry Pi. These files set up the kernel at boot xref:configuration.adoc#part3.1[based on the detected Raspberry Pi model].
 
-=== Kernel files (`*.img`)
+NOTE: 内容无关紧要。即使是一个空文件也可以使能SSH。
 
-Various xref:linux_kernel.adoc#kernel[kernel] image files that correspond to Raspberry Pi models:
+=== 设备树blob文件 ( `*.dtb` )
+
+设备树blob文件包含Raspberry Pi各种型号的硬件定义。这些文件在引导 xref:configuration.adoc#part3.1[基于检测到的Raspberry Pi模型]。
+
+=== 内核文件 ( `*.img` )
+
+与树莓派型号对应的各种 xref:linux_kernel.adoc#kernel[kernel] 内核文件：
 
 |===
-| Filename | Processor | Raspberry Pi model | Notes
+| 文件名 | 处理器 | 型号 | 说明
 
-| `kernel.img`
+|  `kernel.img` 
 | BCM2835
 | Pi Zero, Pi 1
 |
 
-| `kernel7.img`
-| BCM2836, BCM2837
+|  `kernel7.img` 
+| BCM2836， BCM2837
 | Pi Zero 2 W, Pi 2, Pi 3
-| Later Pi 2 uses the BCM2837
+| 后来的Pi 2使用BCM2837
 
-| `kernel7l.img`
+|  `kernel7l.img` 
 | BCM2711
-| Pi 4, Pi 400, CM4, CM4S
-| Large Physical Address Extension (LPAE)
+| Pi 4， Pi 400，CM4，CM4S
+| 大型物理地址扩展 (LPAE)
 
-| `kernel8.img`
-| BCM2837, BCM2711, BCM2712
+|  `kernel8.img` 
+| BCM2837、BCM2711、BCM2712
 | Pi Zero 2 W, Pi 2, Pi 3, Pi 4, Pi 400, CM4, CM4S, Pi 5
-| xref:config_txt.adoc#boot-options[64-bit kernel]. Raspberry Pi 2 with BCM2836 does not support 64-bit kernels.
+| xref:config_txt.adoc#boot-options[64位内核]。带有BCM2836的Raspberry Pi 2不支持64位内核。
 
-| `kernel_2712.img`
+|  `kernel_2712.img` 
 | BCM2712
 | Pi 5
-| Pi 5-optimized xref:config_txt.adoc#boot-options[64-bit kernel].
+| Pi 5优化的 xref:config_txt.adoc#boot-options[64-bit kernel]。
 |===
 
-NOTE: `lscpu` reports a CPU architecture of `armv7l` for systems running a 32-bit kernel, and `aarch64` for systems running a 64-bit kernel. The `l` in the `armv7l` case refers to little-endian CPU architecture, not `LPAE` as is indicated by the `l` in the `kernel7l.img` filename.
+NOTE: 对于运行 32 位内核的系统，`lscpu` 报告的 CPU 架构为 `armv7l`；对于运行 64 位内核的系统，`aarch64` 报告的 CPU 架构为 `armv7l`。`armv7l` 中的 `l`指的是小端 CPU 架构，而不是 `kernel7l.img` 文件名中的 `l` 所表示的 `LPAE`。
 
-=== `overlays` folder
+[[overlays-folder]]
+=== `overlays` 文件夹
 
-Contains Device Tree overlays. These are used to configure various hardware devices, such as third-party sound boards. Entries in `config.txt` select these overlays. For more information, see xref:configuration.adoc#part2[Device Trees, overlays and parameters].
+包含设备树overlay。这些用于配置各种硬件设备，例如第三方声卡。通过修改 `config.txt` 中的配置选择这些overlay。有关详细信息，请参阅 xref:configuration.adoc#part2[Device Trees, overlays and parameters]。

@@ -1,124 +1,124 @@
 [[flash-compute-module-emmc]]
-== Flash an image to a Compute Module
+== 将图像烧录到计算模块
 
 [[flashing-the-compute-module-emmc]]
 
-The Compute Module has an on-board eMMC device connected to the primary SD card interface. This guide explains how to flash (write) an operating system image to the eMMC storage of a single Compute Module.
+计算模块有一个连接到主 SD 卡接口的板载 eMMC 设备。本指南介绍如何将操作系统映像闪存（写入）到单个计算模块的 eMMC 存储器中。
 
-NOTE: **Lite** variants of Compute Modules do not have on-board eMMC. Instead, you can follow the procedure to flash a storage device for other Raspberry Pi devices at xref:../computers/getting-started.adoc#installing-the-operating-system[Install an operating system].
+NOTE: **Lite** 版本的计算模块没有板载 eMMC。相反，您可以按照 xref:../computers/getting-started.adoc#installing-the-operating-system[Install an operating system] 中为其他 Raspberry Pi 设备烧录存储设备的步骤进行操作。
 
-When flashing an image to multiple Compute Modules, consider using the Compute Module Provisioner instead:
+将映像烧录到多个计算模块时，请考虑使用计算模块供应程序：
 
-[.whitepaper, title="Mass Provision with the Compute Module Provisioner", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003468-WP/Using-the-Compute-Module-Provisioner.pdf]
+[.whitepaper, title="使用Compute Module Provisioner进行大规模烧录", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003468-WP/Using-the-Compute-Module-Provisioner.pdf]
 ****
-The Compute Module Provisioner is a web application that helps developers program many Compute Module devices simultaneously.
+Compute Module Provisioner 是一款网络应用程序，可帮助开发人员同时对多个 Compute Module 设备进行编程。
 
-It provides a database of kernel images and the ability to run scripts during the flashing process, in addition to automated label printing and firmware updating.
+除了自动标签打印和固件更新外，它还提供内核映像数据库，并能在闪存过程中运行脚本。
 ****
 
-=== Prerequisites
+=== 前提条件
 
-To flash the Compute Module eMMC, you need the following:
+要闪存计算模块 eMMC，您需要具备以下条件：
 
-* Another computer, referred to in this guide as the *host device*. You can use Linux (Raspberry Pi OS or Ubuntu), Windows, or macOS.
-* The Compute Module IO Board xref:compute-module.adoc#io-board-compatibility[that corresponds to your Compute Module model].
-* A micro USB cable.
+* 另一台计算机，在本指南中称为 *主机设备*。您可以使用 Linux（Raspberry Pi OS 或 Ubuntu）、Windows 或 macOS。
+* Compute Module IO 板 xref:compute-module.adoc#io-board-compatibility[与您的 Compute Module 型号相对应]。
+* 微型 USB 电缆。
 
-=== Set up the IO Board
+=== 安装 IO 板
 
-To begin, physically set up your IO Board. This includes connecting the Compute Module and host device to the IO Board.
+首先，物理安装 IO 板。这包括将计算模块和主机设备连接到 IO 板。
 
-==== with Compute Module 4 IO Board
+==== Compute Module 4 IO 板
 
-To set up the Compute Module 4 IO Board:
+设置计算模块 4 IO 板：
 
-. Connect the Compute Module to the IO board. When connected, the Compute Module should lie flat.
+. 将计算模块连接到 IO 板。连接后，计算模块应平放。
 
-. Fit `nRPI_BOOT` to J2 (`disable eMMC Boot`) on the IO board jumper.
+. 将 "nRPI_BOOT "安装到 IO 板跳线 J2（"禁用 eMMC 启动"）上。
 
-. Connect a cable from micro USB slave port J11 on the IO board to the host device.
+. 将电缆从 IO 板上的微型 USB 从端口 J11 连接到主机设备。
 
-==== with Compute Module IO Board
+==== Compute Module IO 板
 
-To set up the Compute Module IO Board:
+设置计算模块 IO 板：
 
-. Connect the Compute Module to the IO board. When connected, the Compute Module should lie parallel to the board, with the engagement clips firmly clicked into place.
+. 将计算模块连接到 IO 板。连接时，计算模块应平行于电路板，啮合夹应卡紧到位。
 
-. Set J4 (`USB SLAVE BOOT ENABLE`) to 1-2 = (`USB BOOT ENABLED`)
+. 将 J4（"USB SLAVE BOOT ENABLE"）设为 1-2 =（"USB BOOT ENABLED"）。
 
-. Connect a cable from micro USB slave port J15 on the IO board to the host device.
+. 将电缆从 IO 板上的微型 USB 从端口 J15 连接到主机设备。
 
-=== Set up the host device
+=== 设置主机设备
 
-Next, let's set up software on the host device.
+接下来，让我们在主机设备上设置软件。
 
-==== on Linux
+==== Linux
 
-To set up software on a Linux host device:
+在 Linux 主机设备上设置软件：
 
-. Run the following command to install `rpiboot`:
+. 运行以下命令安装 `rpiboot`：
 +
 [source,console]
 ----
 $ sudo apt install rpiboot
 ----
 
-. Connect the IO Board to power.
+. 连接 IO 板电源。
 
-. Then, run `rpiboot`:
+. 然后运行 `rpiboot`：
 +
 [source,console]
 ----
 $ sudo rpiboot
 ----
 
-. After a few seconds, the Compute Module should appear as a mass storage device. Check the `/dev/` directory, likely `/dev/sda` or `/dev/sdb`, for the device. Alternatively, run `lsblk` and search for a device with a storage capacity that matches the capacity of your Compute Module.
+. 几秒钟后，计算模块应显示为一个大容量存储设备。检查 `/dev/` 目录，可能是 `/dev/sda` 或 `/dev/sdb`。或者，运行 `lsblk` 查找存储容量与计算模块容量相匹配的设备。
 
-TIP: Alternatively, you can https://github.com/raspberrypi/usbboot[build `rpiboot` from source].
+TIP: 或者，您也可以 https://github.com/raspberrypi/usbboot[从源代码构建 `rpiboot`]。
 
-==== on macOS
+==== macOS
 
-To set up software on a macOS host device:
+在 macOS 主机设备上设置软件：
 
-. First, https://github.com/raspberrypi/usbboot?tab=readme-ov-file#macos[build `rpiboot` from source].
+. 首先，https://github.com/raspberrypi/usbboot?tab=readme-ov-file#macos[从源代码构建`rpiboot`]。
 
-. Connect the IO Board to power.
+. 连接 IO 板电源。
 
-. Then, run the `rpiboot` executable with the following command:
+. 然后，使用以下命令运行 `rpiboot` 可执行文件：
 +
 [source,console]
 ----
 $ sudo ./rpiboot
 ----
 
-. When the command finishes running, you should see a message stating "The disk you inserted was not readable by this computer." Click **Ignore**. Your Compute Module should now appear as a mass storage device.
+. 命令运行完成后，你会看到一条信息，提示 "你插入的磁盘本计算机无法读取"。单击**忽略**。现在，您的计算模块应显示为大容量存储设备。
 
-==== on Windows
+==== Windows
 
-To set up software on a Windows host device:
+在 Windows 主机设备上设置软件：
 
-. Download the https://github.com/raspberrypi/usbboot/raw/master/win32/rpiboot_setup.exe[Windows installer]
+. 下载 https://github.com/raspberrypi/usbboot/raw/master/win32/rpiboot_setup.exe[Windows 安装程序］
 
-. Double-click on the installer to run it. This installs the drivers and boot tool.
+. 双击安装程序运行。这将安装驱动程序和启动工具。
 
-. Connect the IO Board to power. Windows should discover the hardware and configure the required drivers.
+. 连接 IO 板电源。Windows 将发现硬件并配置所需的驱动程序。
 
-. Double-click on `RPiBoot.exe` to run it. After a few seconds, the Compute Module eMMC should appear as a USB mass storage device.
+. 双击 `RPiBoot.exe` 运行。几秒钟后，计算模块 eMMC 应显示为 USB 大容量存储设备。
 
-TIP: Alternatively, you can https://github.com/raspberrypi/usbboot[build `rpiboot` from source].
+TIP: 或者，您也可以 https://github.com/raspberrypi/usbboot[从源代码构建 `rpiboot`]。
 
 === Flash the eMMC
 
-You can use xref:../computers/getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] to flash an operating system image to a Compute Module.
+您可以使用 xref:../computers/getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 将操作系统映像烧录到计算模块。
 
-Alternatively, use `dd` to write a raw OS image (such as xref:../computers/os.adoc#introduction[Raspberry Pi OS]) to your Compute Module. Run the following command, replacing `/dev/sdX` with the path to the mass storage device representation of your Compute Module and `raw_os_image.img` with the path to your raw OS image:
+或者，使用 `dd` 将原始操作系统映像 xref:../computers/getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 写入计算模块。运行以下命令，将 `/dev/sdX` 替换为计算模块的大容量存储设备表示路径，将 `raw_os_image.img` 替换为原始操作系统映像的路径：
 
 [source,console]
 ----
 $ sudo dd if=raw_os_image.img of=/dev/sdX bs=4MiB
 ----
 
-Once the image has been written, disconnect and reconnect the Compute Module. You should now see two partitions (for Raspberry Pi OS):
+写入映像后，断开并重新连接计算模块。现在你应该能看到两个分区（Raspberry Pi OS）：
 
 [source,console]
 ----
@@ -127,25 +127,25 @@ Once the image has been written, disconnect and reconnect the Compute Module. Yo
 /dev/sdX2   <- Second partition (Linux filesystem)
 ----
 
-You can mount the `/dev/sdX1` and `/dev/sdX2` partitions normally.
+您可以正常挂载 `/dev/sdX1` 和 `/dev/sdX2` 分区。
 
-=== Boot from eMMC
+=== 从 eMMC 启动
 
-==== with Compute Module 4 IO Board
+==== Compute Module 4 IO 板
 
-Disconnect `nRPI_BOOT` from J2 (`disable eMMC Boot`) on the IO board jumper.
+断开 IO 板跳线 J2（`禁用 eMMC 启动`）上的 `nRPI_BOOT`。
 
-==== with Compute Module IO Board
+==== Compute Module IO 板
 
-Set J4 (`USB SLAVE BOOT ENABLE`) to 2-3 (`USB BOOT DISABLED`).
+将 J4（`USB SLAVE BOOT ENABLE`）设置为 2-3（`USB BOOT DISABLED`）。
 
 ==== Boot
 
-Disconnect the USB slave port. Power-cycle the IO board to boot the Compute Module from the new image you just wrote to eMMC.
+断开 USB 从端口。关闭 IO 板电源，从刚写入 eMMC 的新映像启动计算模块。
 
-=== Known issues
+=== 已知问题
 
-* A small percentage of CM3 experienced booting problems. We have traced these back to the method used to create the FAT32 partition; we believe the problem is due to a difference in timing between the CPU and eMMC. If you have trouble booting your CM3, create the partitions manually with the following commands:
+* 一小部分 CM3 出现了启动问题。我们已将这些问题追溯到创建 FAT32 分区的方法；我们认为问题是由于 CPU 和 eMMC 之间的时间差造成的。如果在启动 CM3 时遇到问题，请使用以下命令手动创建分区：
 +
 [source,console]
 ----
@@ -156,4 +156,4 @@ $ sudo mkfs.vfat -F32 /dev/<device>
 $ sudo cp -r <files>/* <mountpoint>
 ----
 
-* The CM1 bootloader returns a slightly incorrect USB packet to the host. Most USB hosts ignore it, but some USB ports don't work due to this bug. CM3 fixed this bug.
+* CM1 引导加载程序会向主机返回一个略微不正确的 USB 数据包。大多数 USB 主机会忽略它，但有些 USB 端口会因为这个错误而无法工作。CM3 修正了这一错误。

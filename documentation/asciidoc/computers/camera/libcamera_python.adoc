@@ -1,25 +1,27 @@
-=== Use `libcamera` from Python with Picamera2
+[[use-libcamera-from-python-with-picamera2]]
+=== 在Picamera2中使用Python中的 `libcamera` 
 
-The https://github.com/raspberrypi/picamera2[Picamera2 library] is a `rpicam`-based replacement for Picamera, which was a Python interface to Raspberry Pi's legacy camera stack. Picamera2 presents an easy-to-use Python API.
+https://github.com/raspberrypi/picamera2[Picamera2库] 是基于 `rpicam` 的Picamera替代品，Picamera是Raspberry Pi传统相机堆栈的Python接口。Picamera2提供了一个易于使用的Python API。
 
-Documentation about Picamera2 is available https://github.com/raspberrypi/picamera2[on GitHub] and in the https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf[Picamera2 manual].
+关于Picamera2的文档 https://github.com/raspberrypi/picamera2[在GitHub上] 和 https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf[Picamera2手册中]。
 
-==== Installation
+[[installation]]
+==== 安装
 
-Recent Raspberry Pi OS images include Picamera2 with all the GUI (Qt and OpenGL) dependencies. Recent Raspberry Pi OS Lite images include Picamera2 without the GUI dependencies, although preview images can still be displayed using DRM/KMS.
+最近的Raspberry Pi OS镜像包括具有所有GUI（Qt和OpenGL）依赖项的Picamera2。最近的Raspberry Pi OS Lite映像包括没有GUI依赖项的Picamera2，尽管仍然可以使用DRM/KMS显示预览图像。
 
-If your image did not include Picamera2, run the following command to install Picamera2 with all of the GUI dependencies:
+如果您的映像不包含Picamera2，请运行以下命令以安装具有所有GUI依赖项的Picamera2：
 
 [source,console]
 ----
 $ sudo apt install -y python3-picamera2
 ----
 
-If you don't want the GUI dependencies, you can run the following command to install Picamera2 without the GUI dependencies:
+如果您不想要GUI依赖项，您可以运行以下命令来安装没有GUI依赖项的Picamera2：
 
 [source,console]
 ----
 $ sudo apt install -y python3-picamera2 --no-install-recommends
 ----
 
-NOTE: If you previously installed Picamera2 with `pip`, uninstall it with: `pip3 uninstall picamera2`.
+NOTE: 如果您之前使用 `pip` 安装了Picamera2，请使用： `pip3 uninstall picamera2` 卸载它。

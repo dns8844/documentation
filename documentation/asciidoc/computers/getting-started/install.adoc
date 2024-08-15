@@ -1,160 +1,169 @@
 [[installing-the-operating-system]]
-== Install an operating system
+== 安装操作系统
 
-To use your Raspberry Pi, you'll need an operating system. By default, Raspberry Pis check for an operating system on any SD card inserted in the SD card slot.
+要使用您的Raspberry Pi，需要首先安装一个操作系统。默认情况下，Raspberry Pis会检查插入SD卡插槽的SD卡上的操作系统。
 
-Depending on your Raspberry Pi model, you can also boot an operating system from other storage devices, including USB drives, storage connected via a HAT, and network storage.
+根据您的Raspberry Pi型号，您还可以从其他存储介质启动操作系统，包括USB驱动器、通过HAT连接的硬盘和或者网络磁盘。
 
-To install an operating system on a storage device for your Raspberry Pi, you'll need:
+要在Raspberry Pi的存储介质上安装操作系统，您需要：
 
-* a computer you can use to image the storage device into a boot device
-* a way to plug your storage device into that computer
+* 一台可用于将镜像烧录到存储介质的计算机
+* 可以在计算机上使用的存储介质
 
-Most Raspberry Pi users choose microSD cards as their boot device.
+大多数Raspberry Pi用户选择microSD卡作为他们的启动设备。
 
-We recommend installing an operating system using xref:getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager].
+我们建议使用 xref:getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 安装操作系统。
 
-Raspberry Pi Imager is a tool that helps you download and write images on macOS, Windows, and Linux. Imager includes many popular operating system images for Raspberry Pi. Imager also supports loading images downloaded directly from https://www.raspberrypi.com/software/operating-systems/[Raspberry Pi] or third-party vendors such as https://ubuntu.com/download/raspberry-pi[Ubuntu]. You can use Imager to preconfigure credentials and remote access settings for your Raspberry Pi.
+Raspberry Pi Imager 是一款工具，可用于在 macOS、Windows 和 Linux 上下载和写入镜像。Imager 包含许多适用于 Raspberry Pi 的流行操作系统镜像。Imager 还支持直接从 https://www.raspberrypi.com/software/operating-systems/[Raspberry Pi] 或第三方供应商 https://ubuntu.com/download/raspberry-pi[Ubuntu] 下载的镜像。您可以使用 Imager 预先配置 Raspberry Pi 用户名密码和 SSH 等。
 
-Imager supports images packaged in the `.img` format as well as container formats like `.zip`.
+Imager支持直接使用 `.img` 格式以及 `.zip` 等格式的镜像。
 
-If you have no other computer to write an image to a boot device, you may be able to install an operating system xref:getting-started.adoc#install-over-the-network[directly on your Raspberry Pi from the internet].
+如果您没有其他计算机可以将镜像写入引导设备，您可以安装操作系统 xref:getting-started.adoc#install-over-the-network[直接通过网络为Raspberry Pi安装镜像].
 
 [[raspberry-pi-imager]]
-=== Install using Imager
+=== 使用Imager安装
 
 ////
 TODO: Update this video for the new Imager look & flow (video::ntaXWS8Lk34[youtube])
 ////
 
-You can install Imager in the following ways:
+您可以通过以下方式安装Imager：
 
-* Download the latest version from https://www.raspberrypi.com/software/[raspberrypi.com/software] and run the installer.
-* Install it from a terminal using your package manager, e.g. `sudo apt install rpi-imager`.
+* 从 https://www.raspberrypi.com/software/[raspberrypi.com/software] 下载最新版本并运行安装程序。
+* 使用包管理器从终端安装它，例如 `sudo apt install rpi-imager` 。
 
-Once you've installed Imager, launch the application by clicking the Raspberry Pi Imager icon or running `rpi-imager`.
+安装Imager后，通过单击Raspberry Pi Imager图标或运行 `rpi-Imager` 来启动应用程序。
 
 image::images/imager/welcome.png[alt="Raspberry Pi Imager main window."]
 
-Click **Choose device** and select your Raspberry Pi model from the list.
+单击**选择设备**并从列表中选择您的Raspberry Pi型号。
 
 image::images/imager/choose-model.png[alt="Raspberry Pi model selections in Imager."]
 
-Next, click **Choose OS** and select an operating system to install. Imager always shows the recommended version of Raspberry Pi OS for your model at the top of the list.
+
+接下来，单击**选择OS**并选择要安装的操作系统。Imager始终在列表顶部显示适用于您的型号的Raspberry Pi OS推荐版本。
 
 image::images/imager/choose-os.png[alt="Operating system selections in Imager."]
 
-Connect your preferred storage device to your computer. For example, plug a microSD card in using an external or built-in SD card reader. Then, click **Choose storage** and select your storage device.
 
-WARNING: If you have more than one storage device connected to your computer, _be sure to choose the correct device!_ You can often identify storage devices by size. If you're unsure, disconnect other devices until you've identified the device you want to image.
+将您首选的存储介质连接到您的计算机。例如，使用外部或内置SD读卡器插入microSD卡。然后，单击**选择存储**并选择您的存储介质。
+
+警告：如果您有一个以上的存储介质连接到您的计算机，确保选择正确的设备！您通常可以通过大小来识别存储介质。如果您不确定，请断开其他设备，直到找到要安装镜像的设备。
 
 image::images/imager/choose-storage.png[alt="Storage selection options in Imager."]
 
-Next, click **Next**.
+接下来，单击**Next**。
 
 image::images/imager/os-customisation-prompt.png[alt="Imager prompt to open OS customisation menu."]
 
-In a popup, Imager will ask you to apply OS customisation. We strongly recommend configuring your Raspberry Pi via the OS customisation settings. Click the **Edit Settings** button to open xref:getting-started.adoc#advanced-options[OS customisation].
+在弹出窗口中，Imager会提示您使用自定义配置。我们强烈建议通过自定义配置来配置您的Raspberry Pi。单击**编辑设置**按钮打开 xref:getting-started.adoc#advanced-options[自定义配置]。
 
-If you don't configure your Raspberry Pi via OS customisation settings, Raspberry Pi OS will ask you for the same information at first boot during the xref:getting-started.adoc#configuration-on-first-boot[configuration wizard]. You can click the **No** button to skip OS customisation.
+如果您不通过操作系统自定义配置来配置Raspberry Pi，Raspberry Pi OS将在 xref:getting-started.adoc#configuration-on-first-boot[配置向导] 首次启动期间要求您配置系统。您可以单击**否**按钮跳过自定义配置。
 
 [[advanced-options]]
-==== OS customisation
+==== 个性化配置
 
-The OS customisation menu lets you set up your Raspberry Pi before first boot. You can preconfigure:
+个性化配置菜单可让您在首次启动之前设置Raspberry Pi。您可以预先配置：
 
-* a username and password
-* Wi-Fi credentials
-* the device hostname
-* the time zone
-* your keyboard layout
-* remote connectivity
+* 用户名和密码
+* Wi-Fi
+* 设备主机名
+* 时区
+* 您的键盘布局
+* SSH
 
-When you first open the OS customisation menu, you might see a prompt asking for permission to load Wi-Fi credentials from your host computer. If you respond "yes", Imager will prefill Wi-Fi credentials from the network you're currently connected to. If you respond "no", you can enter Wi-Fi credentials manually.
+当您第一次打开个性化配置时，您可能会看到一个提示，要求允许从您的主机设置Wi-Fi。如果您回答 "是"，Imager将从您当前连接的网络配置Wi-Fi。如果您回答 "否"，您可以手动设置Wi-Fi。
 
-The **hostname** option defines the hostname your Raspberry Pi broadcasts to the network using https://en.wikipedia.org/wiki/Multicast_DNS[mDNS]. When you connect your Raspberry Pi to your network, other devices on the network can communicate with your computer using `<hostname>.local` or `<hostname>.lan`.
+**hostname** 选项定义 Raspberry Pi 使用 https://en.wikipedia.org/wiki/Multicast_DNS[mDNS] 向网络广播的主机名。当您将 Raspberry Pi 连接到网络时，网络上的其他设备可以使用 `<hostname>.local` 或 `<hostname>.lan` 与您的电脑通信。
 
-The **username and password** option defines the username and password of the admin user account on your Raspberry Pi.
+**用户名和密码**选项设置Raspberry Pi上管理员用户帐户的用户名和密码。
 
-The **wireless LAN** option allows you to enter an SSID (name) and password for your wireless network. If your network does not broadcast an SSID publicly, you should enable the "Hidden SSID" setting. By default, Imager uses the country you're currently in as the "Wireless LAN country". This setting controls the Wi-Fi broadcast frequencies used by your Raspberry Pi. Enter credentials for the wireless LAN option if you plan to run a headless Raspberry Pi.
+**无线LAN**选项允许您输入无线网络的SSID（名称）和密码。如果您的网络没有公开SSID，您应该启用 "隐藏SSID" 设置。默认情况下，Imager使用您当前所在的国家/地区作为 "无线LAN国家/地区"。此设置配置您的Raspberry Pi使用的Wi-Fi频率。如果您计划运行headless Raspberry Pi，请输入无线LAN选项的凭据。
 
-The **locale settings** option allows you to define the time zone and default keyboard layout for your Pi. 
+**语言环境设置**选项允许您为Pi定义时区和默认键盘布局。
 
 image::images/imager/os-customisation-general.png[alt="General settings in the OS customisation menu."]
 
-The **Services** tab includes settings to help you connect to your Raspberry Pi remotely.
+**Services**选项卡包括帮助您远程连接到Raspberry Pi的设置。
 
-If you plan to use your Raspberry Pi remotely over your network, check the box next to **Enable SSH**. You should enable this option if you plan to run a headless Raspberry Pi.
+如果您计划通过网络远程使用Raspberry Pi，请选中**启用SSH**旁边的框。如果您计划运行headless Raspberry Pi，您应该启用此选项。
 
-* Choose the **password authentication** option to SSH into your Raspberry Pi over the network using the username and password you provided in the general tab of OS customisation.
+* 选择**密码验证**选项，使用您在个性化配置菜单中设置的用户名和密码通过网络SSH您的树莓派。
 
-* Choose **Allow public-key authentication only** to preconfigure your Raspberry Pi for passwordless public-key SSH authentication using a private key from the computer you're currently using. If already have an RSA key in your SSH configuration, Imager uses that public key. If you don't, you can click **Run SSH-keygen** to generate a public/private key pair. Imager will use the newly-generated public key.
+* 选择**仅允许公钥身份验证**来预配置您的Raspberry Pi，以便使用您当前使用的计算机的私钥进行无密码公钥SSH身份验证。如果SSH配置中已经有RSA密钥，Imager将使用该公钥。如果没有，您可以单击**运行SSH-keygen**生成公钥/私钥对。Imager将使用新生成的公钥。
 
 image::images/imager/os-customisation-services.png[alt="Services settings in the OS customisation menu."]
 
-OS customisation also includes an **Options** menu that allows you to configure the behaviour of Imager during a write. These options allow you to play a noise when Imager finishes verifying an image, to automatically unmount storage media after verification, and to disable telemetry.
+操作系统自定义还包括一个**Options**菜单，允许您在写入期间配置Imager。这些选项允许您在Imager完成验证镜像时播放噪音，验证后自动卸载存储介质，并禁用遥测。
 
 image::images/imager/os-customisation-options.png[alt="Options in the OS customisation menu."]
 
-==== Write
+[[write]]
+==== 烧录
 
-When you've finished entering OS customisation settings, click **Save** to save your customisation.
+完成个性化配置输入后，单击**保存**保存自定义设置。
 
-Then, click **Yes** to apply OS customisation settings when you write the image to the storage device.
+然后，单击**是**将镜像写入存储介质时应用个性化配置。
 
-Finally, respond **Yes** to the "Are you sure you want to continue?" popup to begin writing data to the storage device.
+最后，在 "您确定要继续吗？" 弹出以后选择**是**开始将数据写入存储介质。
 
 image::images/imager/are-you-sure.png[alt="Confirming a reimage of a storage device in Imager."]
 
-If you see an admin prompt asking for permissions to read and write to your storage medium, grant Imager the permissions to proceed.
+如果您看到管理员提示，要求获得读取和写入存储介质的权限，请授予Imager继续的权限。
 
-.Grab a cup of coffee or go for a walk. This could take a few minutes.
+.刷会视频或者开局游戏。这一般需要几分钟。
 image::images/imager/writing.png[alt="Writing an image to a device in Imager."]
 
-.If you want to live especially dangerously, you can click **cancel verify** to skip the verification process.
+
+.如果完全不担心烧录镜像时烧录出错，可以点击**取消验证**跳过验证过程。
 image::images/imager/stop-ask-verify.png[alt="Verifying an image on a device in Imager."]
 
-When you see the "Write Successful" popup, your image has been completely written and verified. You're now ready to boot a Raspberry Pi from the storage device!
+
+当您看到 "写入成功" 弹出窗口时，您的镜像已完全写入并通过验证。您现在已准备好从存储介质启动Raspberry Pi！
 
 image::images/imager/finished.png[alt="The screen Imager shows when it finishes writing an image to a storage device."]
 
-Next, proceed to the xref:getting-started.adoc#configuration-on-first-boot[first boot configuration instructions] to get your Raspberry Pi up and running.
+接下来，转到 xref:getting-started.adoc#configuration-on-first-boot[第一次引导配置说明] 以配置并运行您的Raspberry Pi。
 
-=== Install over the network
+[[install-over-the-network]]
+=== 通过网络安装
 
-Network Install enables a Raspberry Pi to install an operating system on a storage device using a version of Raspberry Pi Imager downloaded over the network. With Network Install, you can get an operating system installed on your Raspberry Pi with no separate SD card reader and no computer other than your Raspberry Pi. You can run Network Install on any compatible storage device, including SD cards and USB storage.
+NOTE: 国内不好用，完全不推荐
 
-Network Install only runs on Raspberry Pi 4, 400, and 5. If your Raspberry Pi runs an older bootloader, you may need to xref:raspberry-pi.adoc#bootloader_update_stable[update the bootloader] to use Network Install.
+网络安装使 Raspberry Pi 能够使用通过网络下载的 Raspberry Pi Imager 版本在存储设备上安装操作系统。有了网络安装，你就可以在 Raspberry Pi 上安装操作系统，无需单独的 SD 卡阅读器，也无需 Raspberry Pi 以外的电脑。你可以在任何兼容的存储设备上运行网络安装，包括 SD 卡和 USB 存储设备。
+
+Network Install仅在Raspberry Pi 4、400和5上运行。如果您的Raspberry Pi运行较旧的引导加载程序，您可能需要 xref:raspberry-pi.adoc#bootloader_update_stable[更新bootloader] 才能使用Network Install。
 
 ////
 TODO: Update this video for the new Imager look & flow video::b1SYVpM9lto[youtube]
 ////
 
-Network Install requires the following:
+网络安装需要以下内容：
 
-* a compatible Raspberry Pi model running firmware that supports Network Install
-* a monitor
-* a keyboard
-* a wired internet connection
+* 兼容的Raspberry Pi型号运行支持网络安装的固件
+* 显示器
+* 键盘
+* 有线互联网连接
 
-To launch Network Install, power on your Raspberry Pi _while pressing and holding the **SHIFT** key_ in the following configuration:
+要启动 "网络安装"，请打开 Raspberry Pi 电源，同时按住 **SHIFT** 键，并按以下配置：
 
-* no bootable storage device
-* attached keyboard
-* attached compatible storage device, such as an SD card or USB storage
+* 没有可启动存储设备
+* 连接键盘
+* 已连接兼容存储设备，如 SD 卡或 USB 存储设备
 
 image::images/network-install-1.png[alt="The Network Install screen."]
 
-If you haven't already connected your Raspberry Pi to the internet, connect it with an Ethernet cable.
+如果您尚未将Raspberry Pi连接到Internet，请接入网线。
 
 image::images/network-install-2.png[alt="Starting Network Install."]
 
-Once you're connected to the internet, your Raspberry Pi will download Raspberry Pi installer. If the download fails, you can repeat the process to try again.
+连接到Internet后，您的Raspberry Pi将下载Raspberry Pi安装程序。如果下载失败，您可以重复该过程重试。
 
 image::images/network-install-3.png[alt="Downloading Imager using Network Install."]
 
-Once you finish downloading Raspberry Pi Installer, your Raspberry Pi will automatically start Raspberry Pi Imager. For more information about running Raspberry Pi Imager, see xref:getting-started.adoc#installing-the-operating-system[install an operating system].
+下载完成Raspberry Pi安装程序后，您的Raspberry Pi将自动启动Raspberry Pi Imager。有关运行Raspberry Pi Imager的更多信息，请参阅 xref:getting-started.adoc#installing-the-operating-system[安装操作系统]。
 
 image::images/network-install-4.png[alt="Choose a storage device."]
 
-For more information about Network Install configuration, see xref:raspberry-pi.adoc#http-boot[HTTP boot].
+
+有关网络安装配置的更多信息，请参考 xref:raspberry-pi.adoc#http-boot[HTTP启动].

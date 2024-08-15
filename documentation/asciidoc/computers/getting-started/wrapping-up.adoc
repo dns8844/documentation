@@ -1,37 +1,43 @@
-== Next steps
+[[next-steps]]
+== 下一步
 
-Now that your Raspberry Pi is set up and ready to go, what's next?
+现在您的Raspberry Pi已设置好并准备就绪，下一步是什么？
 
-=== Recommended software
+[[recommended-software]]
+=== 推荐软件
 
-Raspberry Pi OS comes with many essential applications pre-installed so you can start using them straight away. If you'd like to take advantage of other applications we find useful, click the raspberry icon in the top left corner of the screen. Select **Preferences > Recommended Software** from the drop-down menu, and you'll find the package manager. You can install a wide variety of recommended software here for free.
+树莓派操作系统预装了许多基本应用程序，因此您可以立即开始使用它们。如果您想利用我们认为有用的其他应用程序，请单击屏幕左上角的树莓图标。从下拉菜单中选择**Preferences > Recommended Software**，您将找到包管理器。您可以在这里免费安装各种推荐软件。
 
 image::images/recommended-software.png[Opening the package manager GUI in Raspberry Pi OS]
 
-For example, if you plan to use your Raspberry Pi as a home computer, you might find LibreOffice useful for writing and editing documents and spreadsheets. You can also make your Raspberry Pi more accessible with apps like a screen magnifier and Orca screen reader, found under Universal Access.
+例如，如果您计划将Raspberry Pi用作家用计算机，您可能会发现LibreOffice对于编写和编辑文档和电子表格很有用。您还可以通过Universal Access下的屏幕放大镜和Orca屏幕阅读器等应用程序使您的Raspberry Pi更易于访问。
 
-=== Tutorials
+[[tutorials]]
+=== 教程
 
-Our tutorials demonstrate various ways you can use your new computer. You can learn to code, control external devices, and build exciting new projects by following https://www.raspberrypi.com/tutorials/[tutorials] that pique your interest.
+我们的教程演示了使用新计算机的各种方式。您可以通过学习您兴趣的 https://www.raspberrypi.com/tutorials/[教程] 来学习编码、控制外部设备和构建令人兴奋的新项目。
 
-=== Support
+[[support]]
+=== 支持
 
-For support with official Raspberry Pi products, or to connect with other Raspberry Pi users, visit the https://forums.raspberrypi.com/[Raspberry Pi forums].
+如需支持官方Raspberry Pi产品，或与其他Raspberry Pi用户联系，请访问 https://forums.raspberrypi.com/[Raspberry Pi论坛]。
 
 
 [.booklink, booktype="buy", link=https://store.rpipress.cc/products/the-official-raspberry-pi-beginners-guide-5th-edition,image=image::images/fifth-editon-cover.png[]]
-=== Further reading
 
-You can find more information on how get started with your Raspberry Pi in the latest edition of https://store.rpipress.cc/collections/latest-releases/products/the-official-raspberry-pi-beginners-guide-5th-edition[Official Raspberry Pi Beginners Guide] by Gareth Halfacree.
+[[further-reading]]
+=== 进一步阅读
 
-Learn how to:
+您可以在Gareth Halfacree的最新版 https://store.rpipress.cc/collections/latest-releases/products/the-official-raspberry-pi-beginners-guide-5th-edition[Official Raspberry Pi Beginners Guide] 中找到有关如何开始使用Raspberry Pi的更多信息。
 
-* Set up your Raspberry Pi, install its operating system, and start using this fully functional computer.
-* Start coding projects, with step-by-step guides using the Scratch 3, Python, and MicroPython programming languages.
-* Experiment with connecting electronic components, and have fun creating amazing projects.
+了解如何：
 
-New in the 5th edition:
+* 设置您的Raspberry Pi，安装其操作系统，然后开始使用这台功能齐全的计算机。
+* 开始编码项目，使用Scratch 3、Python和MicroPython编程语言的分步指南。
+* 尝试连接电子元件，并享受创建令人惊叹的项目的乐趣。
 
-* Updated for the latest Raspberry Pi computers: Raspberry Pi 5 and Raspberry Pi Zero 2 W.
-* Covers the latest Raspberry Pi OS.
-* Includes a new chapter on the Raspberry Pi Pico!
+第5版新增：
+
+* 针对最新的Raspberry Pi计算机进行了更新：Raspberry Pi 5和Raspberry Pi Zero 2 W。
+* 涵盖最新的Raspberry Pi OS。
+* 包括树莓派Pico的新篇章！

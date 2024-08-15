@@ -1,134 +1,149 @@
-=== Video options
+[[video-options]]
+=== 视频选项
 
-The command line options specified in this section apply only to video output.
+本节中指定的命令行选项仅适用于视频输出。
 
-To pass one of the following options to an application, prefix the option name with `--`. If the option requires a value, pass the value immediately after the option name, separated by a single space. If the value contains a space, surround the value in quotes.
+要将以下选项之一传递给应用程序，请在选项名称前加上 `--` .如果选项需要值，请在选项名称后立即传递该值，并用单个空格分隔。如果值包含空格，请将值用引号括起来。
 
-Some options have shorthand aliases, for example `-h` instead of `--help`. Use these shorthand aliases instead of the full option name to save space and time at the expense of readability.
+一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会牺牲易读性。
 
-==== `quality`
+==== `quality` 
 
-Alias: `-q`
+别名： `-q` 
 
-Default value: `50`
+默认值： `50` 
 
-Accepts an MJPEG quality level between 1 and 100. Only applies to videos encoded in the MJPEG format.
+接受1到100之间的MJPEG质量级别。仅适用于以MJPEG格式编码的视频。
 
-==== `bitrate`
+[[bitrate]]
+==== `bitrate` 
 
-Alias: `-b`
+别名： `-b` 
 
-Controls the target bitrate used by the H.264 encoder in bits per second. Only applies to videos encoded in the H.264 format. Impacts the size of the output video.
+以每秒比特数控制H.264编码器使用的目标比特率。仅适用于以H.264格式编码的视频。影响输出视频的大小。
 
 
-Example: `rpicam-vid -b 10000000 --width 1920 --height 1080 -o test.h264`
+示例： `rpicam-vid -b 10000000 --width 1920 --height 1080 -o test.h264` 
 
-==== `intra`
+[[intra]]
+==== `intra` 
 
-Alias: `-g`
+别名： `-g` 
 
-Default value: `60`
+默认值： `60` 
 
-Sets the frequency of Iframes (intra frames) in the H.264 bitstream. Accepts a number of frames. Only applies to videos encoded in the H.264 format.
+设置H.264比特流中Iframe（帧内帧）的频率。接受一定数量的帧。仅适用于以H.264格式编码的视频。
 
-==== `profile`
+[[profile]]
+==== `profile` 
 
-Sets the H.264 profile. Accepts the following values:
+设置H.264配置文件。接受以下值：
 
-* `baseline`
-* `main`
-* `high`
+*  `baseline` 
+*  `main` 
+*  `high` 
 
-Only applies to videos encoded in the H.264 format.
+仅适用于以H.264格式编码的视频。
 
-==== `level`
+[[level]]
+==== `level` 
 
-Sets the H.264 level. Accepts the following values:
+设置H.264级别。接受以下值：
 
-* `4`
-* `4.1`
-* `4.2`
+*  `4` 
+*  `4.1` 
+*  `4.2` 
 
-Only applies to videos encoded in the H.264 format.
+仅适用于以H.264格式编码的视频。
 
-==== `codec`
+[[codec]]
+==== `codec` 
 
-Sets the encoder to use for video output. Accepts the following values:
+设置用于视频输出的编码器。接受以下值：
 
-* `h264` - use H.264 encoder (the default)
-* `mjpeg` - use MJPEG encoder
-* `yuv420` - output uncompressed YUV420 frames.
-* `libav` - use the libav backend to encode audio and video (for more information, see xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`])
+* `h264` - 使用H.264编码器（默认）
+* `mjpeg` - 使用MJPEG编码器
+* `yuv420` - 输出未压缩的YUV420帧。
+* `libav` - 使用libav后端编码音频和视频（有关详细信息，请参阅 xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`]）
 
-==== `save-pts`
+[[save-pts]]
+==== `save-pts` 
 
-WARNING: Raspberry Pi 5 does not support the `save-pts` option. Use `libav` to automatically generate timestamps for container formats instead.
+WARNING: Raspberry Pi 5不支持 `save-pts` 选项。改用 `libav` 自动生成容器格式的时间戳。
 
-Enables frame timestamp output, which allow you to convert the bitstream into a container format using a tool like `mkvmerge`. Accepts a plaintext file name for the timestamp output file.
+启用帧时间戳输出，允许您使用 `mkvmerge` 等工具将比特流转换为容器格式。接受时间戳输出文件的文件名。
 
-Example: `rpicam-vid -o test.h264 --save-pts timestamps.txt`
+示例： `rpicam-vid -o test.h264 --save-pts timestamps.txt` 
 
-You can then use the following command to generate an MKV container file from the bitstream and timestamps file:
+然后，您可以使用以下命令从比特流和时间戳文件生成MKV容器文件：
 
 [source,console]
 ----
 $ mkvmerge -o test.mkv --timecodes 0:timestamps.txt test.h264
 ----
 
-==== `keypress`
+==== `keypress` 
 
-Alias: `-k`
+别名： `-k` 
 
-Allows the CLI to enable and disable video output using the *Enter* key. Always starts in the recording state unless specified otherwise with xref:camera_software.adoc#initial[`initial`]. Type the `x` key and press *Enter* to exit. Does not accept a value.
+允许 CLI 使用 *Enter* 键启用或禁用视频输出。除非使用 xref:camera_software.adoc#initial[`initial`] 另行指定，否则始终以记录状态启动。键入 `x` 键并按 *Enter* 退出。不接受数值。
 
-==== `signal`
+==== `signal` 
 
-Alias: `-s`
+别名： `-s` 
 
-Allows the CLI to enable and disable video output using `SIGUSR1`. Use `SIGUSR2` to exit. Always starts in the recording state unless specified otherwise with xref:camera_software.adoc#initial[`initial`]. Does not accept a value.
+允许CLI使用 `SIGUSR1` 启用和禁用视频输出。使用 `SIGUSR2` 退出。除非使用 xref:camera_software.adoc#initial[`初始`] 另有说明，否则始终以录制状态开始。不接受值。
 
-==== `initial`
+[[initial]]
+==== `initial` 
 
-Default value: `record`
+默认值： `record` 
 
-Specifies whether to start the application with video output enabled or disabled. Accepts the following values:
+指定是启用还是禁用视频输出来启动应用程序。接受以下值：
 
-* `record`: Starts with video output enabled.
-* `pause`: Starts with video output disabled.
+* `record` ：从启用视频输出开始。
+* `pause` ：从禁用视频输出开始。
 
-Use this option with either xref:camera_software.adoc#keypress[`keypress`] or xref:camera_software.adoc#signal[`signal`] to toggle between the two states.
+将此选项与 xref:camera_software.adoc#keypress[`keypress` ] 或 xref:camera_software.adoc#signal[ `signal`] 配合使用，可在两种状态之间切换。
 
-==== `split`
+[[split]]
+==== `split` 
 
-When toggling recording with xref:camera_software.adoc#keypress[`keypress`] or xref:camera_software.adoc#signal[`signal`], writes the video output from separate recording sessions into separate files. Does not accept a value. Unless combined with xref:camera_software.adoc#output[`output`] to specify unique names for each file, overwrites each time it writes a file.
+使用 xref:camera_software.adoc#keypress[`keypress`] 或 xref:camera_software.adoc#signal[`signal`] 切换录制时，会将不同录制会话的视频输出写入不同的文件。不接受值。除非与 xref:camera_software.adoc#output[`output`] 结合使用，为每个文件指定唯一的名称，否则每次写入文件时都会覆盖。
 
-==== `segment`
+[[segment]]
+==== `segment` 
 
-Cuts video output into multiple files of the passed duration. Accepts a duration in milliseconds. If passed a very small duration (for instance, `1`), records each frame to a separate output file to simulate burst capture.
+将视频输出剪切为多个文件，文件长度与所传递的时间长度相同。接受以毫秒为单位的持续时间。如果传入的持续时间很小（例如 "1"），则会将每一帧记录到单独的输出文件中，以模拟突发捕捉。
 
-You can specify separate filenames for each file using string formatting, e.g. `--output test%04d.h264`.
+您可以使用字符串格式为每个文件指定单独的文件名，例如 `--output test%04d.h264` 。
 
-==== `circular`
+[[circular]]
+==== `circular` 
 
-Default value: `4`
+默认值： `4` 
 
-Writes video recording into a circular buffer in memory. When the application quits, records the circular buffer to disk. Accepts an optional size in megabytes.
+将视频记录写入内存中的循环缓冲区。应用程序退出时，将循环缓冲区记录到磁盘。接受以兆字节为单位的可选大小。
 
-==== `inline`
+[[inline]]
+==== `inline` 
 
-Writes a sequence header in every Iframe (intra frame). This can help clients decode the video sequence from any point in the video, instead of just the beginning. Recommended with xref:camera_software.adoc#segment[`segment`], xref:camera_software.adoc#split[`split`], xref:camera_software.adoc#circular[`circular`], and streaming options.
+在每个 Iframe（帧内）写入序列头。这可以帮助客户端从视频中的任意点解码视频序列，而不只是从开头解码。建议与 xref:camera_software.adoc#segment[`segment` ]、xref:camera_software.adoc#split[`split`]、xref:camera_software.adoc#circular[ `circular`] 和流媒体选项一起使用。
 
-Only applies to videos encoded in the H.264 format. Does not accept a value.
+仅适用于以H.264格式编码的视频。不接受值。
 
-==== `listen`
+[[listen]]
+==== `listen` 
 
-Waits for an incoming client connection before encoding video. Intended for network streaming over TCP/IP. Does not accept a value.
+在编码视频之前等待传入的客户端连接。用于通过TCP/IP进行网络流传输。不接受值。
 
-==== `frames`
+[[frames]]
+==== `frames` 
 
-Records exactly the specified number of frames. Any non-zero value overrides xref:camera_software.adoc#timeout[`timeout`]. Accepts a nonzero integer.
+准确记录指定的帧数。任何非零值都会覆盖 xref:camera_software.adoc#timeout[`timeout`]。接受非零整数。
 
-==== `framerate`
+[[framerate]]
+==== `framerate` 
 
-Records exactly the specified framerate. Accepts a nonzero integer.
+准确记录指定的帧率。接受非零整数。
 

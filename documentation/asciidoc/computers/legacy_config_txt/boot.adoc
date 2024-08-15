@@ -1,94 +1,108 @@
-== Legacy boot options
-(See also xref:config_txt.adoc#boot-options[config.txt Boot Options].)
+[[legacy-boot-options]]
+== 旧版引导选项
+（另请参见 xref:config_txt.adoc#boot-options[config.txt Boot Options]。）
 
-=== `start_x`, `start_debug`
+[[start_x-start_debug]]
+=== `start_x` , `start_debug` 
 
-These provide a shortcut to some alternative `start_file` and `fixup_file` settings, and are the recommended methods for selecting firmware configurations.
+这些提供了一些替代 `start_file` 和 `fixup_file` 设置的快捷方式，并且是选择固件配置的推荐方法。
 
-`start_x=1` implies
+`start_x=1` 
 ----
   start_file=start_x.elf
   fixup_file=fixup_x.dat
 ----
 
-On Raspberry Pi 4, if the files `start4x.elf` and `fixup4x.dat` are present, these files will be used instead.
+在Raspberry Pi 4上，如果存在文件 `start4x.elf` 和 `fixup4x.dat` ，则将使用这些文件。
 
-`start_debug=1` implies
+`start_debug=1` 
 ----
   start_file=start_db.elf
   fixup_file=fixup_db.dat
 ----
 
-=== `disable_commandline_tags`
+[[disable_commandline_tags]]
+=== `disable_commandline_tags` 
 
-Set the `disable_commandline_tags` command to `1` to stop `start.elf` from filling in ATAGS (memory from `0x100`) before launching the kernel.
+将 `disable_commandline_tags` 命令设为 `1` ，以阻止 `start.elf` 在启动内核前填写 ATAGS（来自 `0x100` 的内存）。
 
-=== `arm_control`
+[[arm_control]]
+=== `arm_control` 
 
-WARNING: This setting is deprecated. Use `arm_64bit` instead to enable 64-bit kernels.
+WARNING: 此设置已弃用。请改用 `arm_64bit` 来启用64位内核。
 
-Sets board-specific control bits.
+设置特定于板的控制位。
 
-=== `armstub`
+[[armstub]]
+=== `armstub` 
 
-`armstub` is the filename on the boot partition from which to load the ARM stub. The default ARM stub is stored in firmware and is selected automatically based on the Raspberry Pi model and various settings.
+`armstub` 是引导分区中加载 ARM 存根的文件名。默认 ARM 存根存储在固件中，并根据 Raspberry Pi 型号和各种设置自动选择。
 
-The stub is a small piece of ARM code that is run before the kernel. Its job is to set up low-level hardware like the interrupt controller before passing control to the kernel.
+存根是先于内核运行的一小段 ARM 代码。它的任务是在将控制权传递给内核之前设置中断控制器等低级硬件。
 
-=== `arm_peri_high`
+[[arm_peri_high]]
+=== `arm_peri_high` 
 
-Set `arm_peri_high` to `1` to enable high peripheral mode on Raspberry Pi 4. It is set automatically if a suitable DTB is loaded.
+将 `arm_peri_high` 设置为 `1` 以在 Raspberry Pi 4 上启用高外设模式。如果加载了合适的DTB，它会自动设置。
 
-NOTE: Enabling high peripheral mode without a compatible Device Tree will make your system fail to boot. Currently ARM stub support is missing, so you will also need to load a suitable file using `armstub`.
+NOTE: 在没有兼容设备树的情况下启用高外设模式将使您的系统无法启动。目前缺少 ARM 存根支持，因此您还需要使用 `armstub` 加载合适的文件。
 
-=== `kernel_address`
+[[kernel_address]]
+=== `kernel_address` 
 
-`kernel_address` is the memory address to which the kernel image should be loaded. By default, 32-bit kernels are loaded to address `0x8000`, and 64-bit kernels to address `0x200000`. If `kernel_old` is set, kernels are loaded to the address `0x0`.
+`kernel_address` 是加载内核映像的内存地址。默认情况下，32 位内核加载到地址 `0x8000` ，64 位内核加载到地址 `0x200000` 。如果设置了 `kernel_old` ，内核将被加载到地址 `0x0` 。
 
-=== `kernel_old`
+[[kernel_old]]
+=== `kernel_old` 
 
-Set `kernel_old` to `1` to load the kernel to the memory address `0x0`.
+将 `kernel_old` 设置为1，将内核加载到内存地址 `0x0` 。
 
-=== `init_uart_baud`
+[[init_uart_baud]]
+=== `init_uart_baud` 
 
-`init_uart_baud` is the initial UART baud rate. The default value is `115200`.
+`init_uart_baud` 是UART的初始波特率。默认值为 `115200` 。
 
-=== `init_uart_clock`
+[[init_uart_clock]]
+=== `init_uart_clock` 
 
-`init_uart_clock` is the initial UART clock frequency. The default value is `48000000` (48MHz). Note that this clock only applies to UART0 (ttyAMA0 in Linux), and that the maximum baudrate for the UART is limited to 1/16th of the clock. The default UART on the Raspberry Pi 3 and Raspberry Pi Zero is UART1 (ttyS0 in Linux), and its clock is the core VPU clock - at least 250MHz.
+`init_uart_clock` 是初始 UART 时钟频率。默认值为 `48000000` (48MHz)。请注意，该时钟仅适用于 UART0（Linux 中为 ttyAMA0），UART 的最大波特率限制为时钟的 1/16。Raspberry Pi 3 和 Raspberry Pi Zero 的默认 UART 为 UART1（Linux 中为 ttyS0），其时钟为核心 VPU 时钟 - 至少 250MHz。
 
-=== `bootcode_delay`
+[[bootcode_delay]]
+=== `bootcode_delay` 
 
-The `bootcode_delay` command delays for a given number of seconds in `bootcode.bin` before loading `start.elf`: the default value is `0`.
+`bootcode_delay` 命令会在 `bootcode.bin` 中设置延迟秒数，然后再加载 `start.elf` ：默认值为 `0` 。
 
-This is particularly useful to insert a delay before reading the EDID of the monitor, for example if the Raspberry Pi and monitor are powered from the same source, but the monitor takes longer to start up than the Raspberry Pi. Try setting this value if the display detection is wrong on initial boot, but is correct if you soft-reboot the Raspberry Pi without removing power from the monitor.
+例如，如果 Raspberry Pi 和显示器的电源相同，但显示器的启动时间比 Raspberry Pi 长，那么在读取显示器的 EDID 之前插入一个延迟值就特别有用。如果在初始启动时显示器检测错误，但在软启动 Raspberry Pi 而不移除显示器电源时检测正确，请尝试设置该值。
 
-=== `boot_delay`
+[[boot_delay]]
+=== `boot_delay` 
 
-The `boot_delay` command forces a wait for a given number of seconds in `start.elf` before loading the kernel: the default value is `0`. The total delay in milliseconds is calculated as `(1000 x boot_delay) + boot_delay_ms`. This can be useful if your SD card needs a while to get ready before Linux is able to boot from it.
+`boot_delay` 命令在加载内核之前强制在start中等待给定的秒数：默认值为0。以毫秒为单位的总延迟计算为 `(1000 x boot_delay) + boot_delay_ms` 。如果您的SD卡需要一段时间才能准备好，这将非常有用Linux。
 
-=== `boot_delay_ms`
+[[boot_delay_ms]]
+=== `boot_delay_ms` 
 
-The `boot_delay_ms` command means wait for a given number of milliseconds in `start.elf`, together with `boot_delay`, before loading the kernel. The default value is `0`.
+`boot_delay_ms` 命令表示在加载内核之前，在start中等待给定的毫秒数和boot_delay。默认值为0。
 
-=== `enable_gic` (Raspberry Pi 4 Only)
+[[enable_gic-raspberry-pi-4-only]]
+=== `enable_gic` （仅限Raspberry Pi 4）
 
-On the Raspberry Pi 4B, if this value is set to `0` then the interrupts will be routed to the Arm cores using the legacy interrupt controller, rather than via the GIC-400. The default value is `1`.
+在Raspberry Pi 4B上，如果该值设置为 `0` ，则中断将使用传统中断控制器而不是通过GIC-400路由到Arm内核。默认值为 `1` 。
 
 [[sha256]]
-=== `sha256`
+=== `sha256` 
 
-If set to non-zero, enables the logging of SHA256 hashes for loaded files (the kernel, initramfs, Device Tree .dtb file, and overlays), as generated by the `sha256sum` utility. The logging output goes to the UART if enabled, and is also accessible via `sudo vclog --msg`. This option may be useful when debugging boot problems, but at the cost of potentially adding _many_ seconds to the boot time. Defaults to 0 on all platforms.
+如果设置为非零，则启用由 `sha256sum` 实用程序生成的加载文件（内核、initramfs、设备树.dtb文件和overlay）的SHA256哈希记录。如果启用，日志记录输出将转到UART，也可以通过 `sudo vclog--msg` 访问。此选项在调试启动问题时可能很有用，但代价是可能会增加_many_秒的启动时间。在所有平台上默认为0。
 
-=== `uart_2ndstage`
+[[uart_2ndstage]]
+=== `uart_2ndstage` 
 
-Setting `uart_2ndstage=1` causes the second-stage loader (`bootcode.bin` on devices prior to the Raspberry Pi 4, or the boot code in the  EEPROM for Raspberry Pi 4 devices) and the main firmware (`start*.elf`) to output diagnostic information to UART0.
+设置 `uart_2ndstage=1` 会导致第二阶段加载程序（Raspberry Pi 4之前设备上的 `bootcode.bin` ，或Raspberry Pi 4设备的EEPROM中的引导代码）和主固件（ `start*.elf` ）将诊断信息输出到UART0。
 
-Be aware that output is likely to interfere with Bluetooth operation unless it is disabled (`dtoverlay=disable-bt`) or switched to the other UART (`dtoverlay=miniuart-bt`), and if the UART is accessed simultaneously to output from Linux, then data loss can occur leading to corrupted output. This feature should only be required when trying to diagnose an early boot loading problem.
 
 [[upstream_kernel]]
-=== `upstream_kernel`
+=== `upstream_kernel` 
 
-If `upstream_kernel=1` is used, the firmware sets xref:config_txt.adoc#os_prefix[`os_prefix`] to "upstream/", unless it has been explicitly set to something else, but like other `os_prefix` values it will be ignored if the required kernel and .dtb file can't be found when using the prefix.
+如果使用了 `upstream_kernel=1` ，固件会将 xref:config_txt.adoc#os_prefix[`os_prefix`] 设置为 "upstream/"，除非已明确设置为其他值，但与其他 `os_prefix` 值一样，如果在使用前缀时无法找到所需的内核和 .dtb 文件，该值将被忽略。
 
-The firmware will also prefer upstream Linux names for DTBs (`bcm2837-rpi-3-b.dtb` instead of `bcm2710-rpi-3-b.dtb`, for example). If the upstream file isn't found the firmware will load the downstream variant instead  and automatically apply the "upstream" overlay to make some adjustments. Note that this process happens _after_ the `os_prefix` has been finalised.
+固件也会优先选择上游 Linux 的 DTB 名称（例如，"bcm2837-rpi-3-b.dtb "而不是 "bcm2710-rpi-3-b.dtb"）。如果找不到上游文件，固件将加载下游变体，并自动应用 "上游 "覆盖进行一些调整。请注意，这个过程是在 `os_prefix` 确定之后发生的。

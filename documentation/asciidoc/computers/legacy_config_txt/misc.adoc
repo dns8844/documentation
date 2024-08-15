@@ -1,9 +1,12 @@
-== Legacy Miscellaneous Options
+[[legacy-miscellaneous-options]]
+== 遗留的杂项选项
 
-=== `avoid_warnings`
+[[avoid_warnings]]
+=== `avoid_warnings` 
 
-`avoid_warnings=2` allows turbo mode even when low-voltage is present.
+`avoid_warnings=2` 允许涡轮模式，即使存在低电压。
 
-=== `logging_level`
+[[logging_level]]
+=== `logging_level` 
 
-Sets the VideoCore logging level. The value is a VideoCore-specific bitmask.
+设置VideoCore日志记录级别。该值是特定于VideoCore的位掩码。

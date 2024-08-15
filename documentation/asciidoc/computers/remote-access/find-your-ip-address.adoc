@@ -1,41 +1,45 @@
 [[ip-address]]
-== Find the IP address of your Raspberry Pi
+== 找到您的Raspberry Pi的IP地址
 
-Most methods of connecting to your Raspberry Pi from another machine require you to know the local IP address of your Raspberry Pi.
+从另一台机器连接到Raspberry Pi的大多数方法都需要您知道Raspberry Pi的本地IP地址。
 
-Any device connected to a Local Area Network is assigned an IP address. In order to connect to your Raspberry Pi from another machine using xref:remote-access.adoc#ssh[SSH] or xref:remote-access.adoc#vnc[VNC], you need to know the Raspberry Pi's IP address. This is easy if you have a display connected, and there are a number of methods for finding it remotely from another machine on the network.
+连接到局域网的任何设备都被分配了一个IP地址。为了使用 xref:remote-access.adoc#ssh[SSH]或 xref:remote-access.adoc#vnc[VNC] 从另一台机器连接到您的Raspberry Pi，您需要知道Raspberry Pi的IP地址。如果您连接了显示器，这很容易，并且有许多方法可以从网络上的另一台机器远程找到它。
 
-To find the local IP address of your Raspberry Pi, use one of the following methods.
+要查找Raspberry Pi的本地IP地址，请使用以下方法之一。
 
-=== Desktop
+[[desktop]]
+=== 桌面
 
-Hover over the network icon in the system tray, and a tooltip will appear. This tooltip displays the name of the network you're currently connected to and your IP address.
+将鼠标悬停在系统托盘中的网络图标上，将出现一个工具提示。此工具提示显示您当前连接的网络名称和您的IP地址。
 
-image::images/network-tooltip.png[the Network Manager tooltip displaying a Wi-Fi network name and IP address]
+image::images/network-tooltip.png[显示Wi-Fi网络名称和IP地址的网络管理器工具提示]
 
-=== Command line
+[[command-line]]
+=== 命令行
 
-Run the following command to output your local IP address to the command line:
+运行以下命令将本地IP地址输出到命令行：
 
 [source,console]
 ----
 $ hostname -I
 ----
 
-=== Boot output
+[[boot-output]]
+=== 引导输出
 
-If you use a display with your Raspberry Pi and you boot to the command line instead of the desktop, the boot sequence includes your IP address as one of the last few output messages before your login prompt.
+如果您在Raspberry Pi中使用显示器并且引导到命令行而不是桌面，则引导顺序会将您的IP地址作为登录提示之前的最后几条输出消息之一。
 
-=== Network Manager
+[[network-manager]]
+=== 网络管理器
 
-You can use the built-in Network Manager CLI (`nmcli`) to access details about your network. Run the following command:
+您可以使用内置的Network Manager CLI（ `nmcli` ）访问有关您的网络的详细信息。运行以下命令：
 
 [source,console]
 ----
 $ nmcli device show
 ----
 
-You should see output similar to the following:
+您应该会看到类似于以下内容的输出：
 
 ----
 GENERAL.DEVICE:                         wlan0
@@ -86,69 +90,71 @@ IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
 ----
 
-This command outputs information about the various network interfaces accessible on your Raspberry Pi. Check the `GENERAL.TYPE` row to see which kind of network interface each block describes. For example, "ethernet" is the Ethernet port on your device, and "wifi" refers to the Wi-Fi chip built into some devices. You'll look at different blocks of output to find your IP address depending on the way your device accesses the internet:
+此命令输出有关Raspberry Pi上可访问的各种网络接口的信息。检查 `GENERAL.TYPE` 行以查看每个块描述的网络接口类型。例如，"ethernet"是您设备上的以太网端口，"wifi"是指某些设备内置的Wi-Fi芯片。您将根据设备访问互联网的方式查看不同的输出块以找到您的IP地址：
 
-* if your device connects to the internet using Wi-Fi, check the "wifi" block
-* if your device connects to the internet using the Ethernet port, check the "ethernet" block
+* 如果您的设备使用Wi-Fi连接到互联网，请检查"wifi"部分
+* 如果您的设备使用以太网端口连接到互联网，请检查"ethernet"部分
 
-Once you've identified the correct network interface block, look for a field named `IP4.ADDRESS[1]` for an IPv4 address or `IP6.ADDRESS[1]` for an IPv6 address. You can ignore the trailing slash and number (e.g. `/24`) in those fields.
 
-In the example above, the Raspberry Pi uses Wi-Fi to access the internet. Check the block where the `GENERAL.TYPE` field reads "wifi" to find the IP address. In this case, you can access this device using the IPv4 address in the `IP4.ADDRESS[1]` field: `192.168.1.42`.
+在上面的示例中，Raspberry Pi使用Wi-Fi访问互联网。检查 `GENERAL.TYPE` 字段读取"wifi"的部分以查找IP地址。在这种情况下，您可以使用 `IP4.ADDRESS[1]` 字段中的IPv4地址访问此设备： `192.168.1.42` 。
 
-=== Resolve `raspberrypi.local` with mDNS
+[[resolve-raspberrypi-local-with-mdns]]
+=== 使用mDNS解析 `raspberrypi.local` 
 
-Raspberry Pi OS supports multicast DNS as part of the Avahi service.
+Raspberry Pi OS支持多播DNS作为Avahi服务的一部分。
 
-If your device supports mDNS, you can reach your Raspberry Pi by using its hostname and the `.local` suffix.
-The default hostname on a fresh Raspberry Pi OS install is `raspberrypi`, so by default any Raspberry Pi running Raspberry Pi OS responds to:
+如果您的设备支持mDNS，您可以使用其主机名和 `.local` 后缀访问您的Raspberry Pi。
+新安装的Raspberry Pi OS上的默认主机名是 `raspberrypi` ，因此默认情况下，任何运行Raspberry Pi OS的Raspberry Pi都会响应：
 
 [source,console]
 ----
 $ ping raspberrypi.local
 ----
 
-If the Raspberry Pi is reachable, `ping` will show its IP address:
+如果可以访问Raspberry Pi， `ping` 将显示其IP地址：
 
 ----
 PING raspberrypi.local (192.168.1.131): 56 data bytes
 64 bytes from 192.168.1.131: icmp_seq=0 ttl=255 time=2.618 ms
 ----
 
-TIP: If you change the system hostname of your Raspberry Pi using Raspberry Pi Configuration, `raspi-config`, or `/etc/hostname`, Avahi updates the `.local` mDNS address. If you don't remember the hostname of your Raspberry Pi, you can install Avahi on another device, then use https://linux.die.net/man/1/avahi-browse[`avahi-browse`] to browse all the hosts and services on your local network.
+TIP: 如果您使用Raspberry Pi Configuration、 `raspi-config` 或 `/etc/hostname` 更改Raspberry Pi的系统主机名，Avahi会更新 `.local` 的mDNS地址。如果您不记得Raspberry Pi的主机名，您可以在其他设备上安装Avahi，然后使用 https://linux.die.net/man/1/avahi-browse[`avahi-Browse`] 浏览本地网络上的所有主机和服务。
 
-=== Check your router's list of devices
+[[check-your-routers-list-of-devices]]
+=== 检查路由器的设备列表
 
-In a web browser, navigate to your router's IP address. Then, log in using your credentials.
+在web浏览器中，导航到路由器的IP地址。然后，使用您的凭据登录。
 
-TIP: Your router's IP address is often `http://192.168.1.1`, but not always. You may be able to find your router's address and credentials printed on a label on your router.
+TIP: 您的路由器的IP地址通常是 `http://192.168.1.1` ，但并非总是如此。您可以在路由器的标签上找到路由器的地址和凭据。
 
-This will take you to a control panel. Browse to the list of connected devices or similar (all routers are different), and you should see some devices you recognise. Some devices are detected as PCs, tablets, phones, printers, etc. so you should recognise some and rule them out to figure out which is your Raspberry Pi.
+这将带您进入控制面板。浏览到连接设备或类似设备的列表（所有路由器都不同），您应该会看到一些您认识的设备。一些设备被检测为个人电脑、平板电脑、手机、打印机等。所以你应该识别一些并排除它们，以确定哪个是你的树莓派。
 
-TIP: If you connect your Raspberry Pi to your network with a wire, try filtering for wired devices in the list. There should be fewer devices to choose from.
+TIP: 如果您使用电线将Raspberry Pi连接到网络，请尝试过滤列表中的有线设备。可供选择的设备应该更少。
 
-=== Find devices with `nmap`
+[[find-devices-with-nmap]]
+=== 使用 `nmap` 查找设备
 
-The Network Mapper command (`nmap`) is a free and open source tool for network discovery. It is available for Linux, macOS, and Windows.
+Network Mapper命令（ `nmap` ）是用于网络发现的免费开源工具。它适用于Linux、macOS和Windows。
 
-* To install on *Linux*, install the `nmap` package e.g. `apt install nmap`.
-* To install on *macOS* or *Windows*, see the http://nmap.org/download.html[nmap.org download page].
+* 要在 *Linux* 上安装，请安装 `nmap` 包，例如 `sudo apt install nmap` 。
+* 要在 *macOS* 或 *Windows* 上安装，请参阅 http://nmap.org/download.html[nmap.org下载页面]。
 
-To use `nmap` to scan the devices on your network, you need to know the subnet you are connected to. First, find the local IP address of the computer you're using:
+要使用 `nmap` 扫描网络上的设备，您需要知道您连接的子网。首先，找到您正在使用的计算机的本地IP地址：
 
-* On *Linux*, type `hostname -I` into a terminal window
-* On *macOS*, go to *System Settings* > *Network*, select your active network connection, then click the *Details...* button
-* On *Windows*, go to the Control Panel, then under *Network and Sharing Center*, click *View network connections*, select your active network connection and click *View status of this connection*
+* 在 *Linux* 上，在终端窗口中输入 `hostname -I` 
+* 在 *macOS* 上，转到 *系统设置* > *网络*，选择您的活动网络连接，然后单击 *详细信息…* 按钮
+* 在 *Windows* 上，转到控制面板，然后在 *网络和共享中心* 下，单击 *查看网络连接*，选择您的活动网络连接，然后单击 *查看此连接的状态*
 
-Next, scan the whole **subnet** for other devices. Most local networks use IPv4, which uses four numbers with values between 1 and 255 for each IP address. Devices on your subnet all use the same first three numbers. For example, if your IP address is `192.168.1.5`, other devices will use addresses like `192.168.1.2`, `192.168.1.6` and `192.168.1.200`. To scan this subnet with `nmap`, pass the string `192.168.1.0/24`, which covers the subnet range `192.168.1.0` to `192.168.1.255`. Use the `-sn` flag to run a **ping scan** on the entire subnet range:
+接下来，扫描整个 **子网** 以查找其他设备。大多数本地网络使用IPv4，它使用四个数字，每个IP地址的值在1到255之间。您子网上的设备都使用相同的前三个数字。例如，如果您的IP地址是 `192.168.1.5` ，其他设备将使用 `192.168.1.2`、 `192.168.1.6` 和 `192.168.1.200` 等地址。要使用 `nmap` 扫描此子网，请传递字符串 `192.168.1.0/24` ，该字符串涵盖子网范围 `192.168.1.0` 到 `192.168.1.255` 。使用 `-sn` 标志对整个子网范围运行**ping扫描**：
 
 [source,console]
 ----
 $ sudo nmap -sn 192.168.1.0/24
 ----
 
-TIP: This may take up to a minute depending on your local network speed.
+TIP: 这可能需要一分钟，具体取决于您的本地网络速度。
 
-A ping scan queries all IP addresses in the range for a response. For each device that responds to the ping, the output shows the hostname and IP address as follows:
+ping扫描查询范围内的所有IP地址以获取响应。对于响应ping的每个设备，输出显示主机名和IP地址，如下所示：
 
 ----
 Starting Nmap 6.40 ( http://nmap.org ) at 2014-03-10 12:46 GMT
@@ -163,13 +169,15 @@ Host is up (0.0030s latency).
 Nmap done: 256 IP addresses (4 hosts up) scanned in 2.41 seconds
 ----
 
-The output above shows a device with hostname `raspberrypi` has IP address `192.168.1.8`.
 
-=== Find devices with a smartphone app
+上面的输出显示主机名为raspberrypi的设备的IP地址为192.168.1.8。
 
-The Fing app is a free network scanner for smartphones. It is available for https://play.google.com/store/apps/details?id=com.overlook.android.fing[Android] and https://itunes.apple.com/gb/app/fing-network-scanner/id430921107?mt=8[iOS].
+[[find-devices-with-a-smartphone-app]]
+=== 使用智能手机应用程序查找设备
 
-. Connect your phone to the same network as your Raspberry Pi.
-. When you open the Fing app, touch the refresh button in the upper right-hand corner of the screen.
-. After a few seconds, you should see a list with all the devices connected to your network.
-. Scroll down to the entry with the manufacturer "Raspberry Pi". The IP address appears in the bottom left corner, and the MAC address in the bottom right corner of the entry.
+Fing 应用程序是一款免费的智能手机网络扫描仪。它适用于 https://play.google.com/store/apps/details?id=com.overlook.android.fing[Android] 和 https://itunes.apple.com/gb/app/fing-network-scanner/id430921107?mt=8[iOS]。
+
+. 将手机连接到与 Raspberry Pi 相同的网络。
+. 打开 Fing 应用程序时，轻触屏幕右上角的刷新按钮。
+. 几秒钟后，你会看到一个列表，其中列出了所有连接到网络的设备。
+. 向下滚动到制造商为 "Raspberry Pi "的条目。IP 地址显示在条目的左下角，MAC 地址显示在右下角。

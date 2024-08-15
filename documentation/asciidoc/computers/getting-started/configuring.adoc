@@ -1,87 +1,97 @@
-== Set up your Raspberry Pi
+[[set-up-your-raspberry-pi]]
+== 设置您的树莓派
 
-After installing an operating system image, connect your storage device to your Raspberry Pi.
+安装操作系统镜像后，将存储设备连接到Raspberry Pi。
 
-First, unplug your Raspberry Pi's power supply to ensure that the Raspberry Pi is powered down while you connect peripherals.
-If you installed the operating system on a microSD card, you can plug it into your Raspberry Pi's card slot now.
-If you installed the operating system on any other storage device, you can connect it to your Raspberry Pi now.
+首先，拔掉Raspberry Pi的电源，以确保在您连接外围设备时Raspberry Pi已断电。
+如果您将操作系统安装在microSD卡上，您现在可以将其插入Raspberry Pi的SD卡插槽。
+如果您在任何其他存储设备上安装了操作系统，您现在可以将其连接到您的Raspberry Pi。
 
 image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspberry Pi."]
 
-Then, plug in any other peripherals, such as your mouse, keyboard, and monitor.
+然后，插入任何其他外围设备，例如鼠标、键盘和显示器。
 
 image::images/peripherals/cable-all.png[alt="Attaching the power supply to a Raspberry Pi."]
 
-Finally, connect the power supply to your Raspberry Pi. You should see the status LED light up when your Pi powers on. If your Pi is connected to a display, you should see the boot screen within minutes.
+最后，将电源连接到您的Raspberry Pi。当您的Pi上电时，您应该会看到状态LED亮起。如果您的Pi已经连接到显示器，您应该会在几分钟内看到启动屏幕。
 
-== Configuration on first boot
+[[configuration-on-first-boot]]
+== 第一次启动时的配置
 
-If you used OS customisation in Imager to preconfigure your Raspberry Pi, **congratulations!** Your device is ready to use. Proceed to xref:getting-started.adoc#next-steps[next steps] to learn how you can put your Raspberry Pi to good use.
+如果您在Imager中使用操作系统自定义来预先配置您的Raspberry Pi，**恭喜！**您的设备已经完成初始化配置。点击 xref:getting-started.adoc#next-steps[下一步] 以学习如何使用您的Raspberry Pi。
 
-If your Raspberry Pi does not boot within 5 minutes, check the status LED. If it's flashing, see the xref:configuration.adoc#led-warning-flash-codes[LED warning flash codes for more information]. If your Pi refuses to boot, try the following mitigation steps:
+如果您的Raspberry Pi没有在5分钟内启动，请检查状态LED。如果它在闪烁，请参阅 xref:configuration.adoc#led-warning-flash-codes[LED闪烁含义以获取更多信息] 。如果您的Pi无法启动，请尝试以下步骤：
 
-* if you used a boot device other than an SD card, try booting from an SD card
-* xref:getting-started.adoc#installing-the-operating-system[re-image your SD card]; be sure to complete the entire verify step in Imager
-* xref:raspberry-pi.adoc#bootloader_update_stable[update the bootloader] on your Raspberry Pi, then xref:getting-started.adoc#installing-the-operating-system[re-image your SD card]
+* 如果您使用SD卡以外的引导设备，请尝试从SD卡引导
+* xref:getting-started.adoc#installing-the-operating-system[re-image your SD card]; 请务必在Imager中完成后续验证步骤
+* xref:raspberry-pi.adoc#bootloader_update_stable[更新bootloader程序] 在您的树莓派，然后 xref:getting-started.adoc#installing-the-operating-system[重新烧录SD卡]
 
-If you chose to skip OS customisation in Imager, your Raspberry Pi will run a configuration wizard on first boot. You need a monitor and keyboard to navigate through the wizard; a mouse is optional.
+如果您选择跳过Imager中的自定义操作系统配置，您的Raspberry Pi将在首次启动时运行配置向导。您需要一个显示器和键盘来完成配置，鼠标是可选的。
 
 image::images/initial-setup/start.png[alt="Click Next to get started with configuration."]
 
-=== Bluetooth
+[[bluetooth]]
+=== 蓝牙
 
-If you're using a Bluetooth keyboard or mouse, this step will walk you through device pairing. Your Raspberry Pi will scan for pairable devices and connect to the first device it finds for each item.
+如果您使用的是蓝牙键盘或鼠标，请根据此步骤完成设备配对。Raspberry Pi 将扫描可配对的设备，并连接到为每个项目找到的第一个设备。
 
-This process works with built-in or external USB Bluetooth adapters. If you use a USB adapter, plug it in before booting your Raspberry Pi.
+此过程适用于内置或外置 USB 蓝牙适配器。如果使用 USB 适配器，请在启动 Raspberry Pi 前将其插入。
 
-=== Locale
+[[locale]]
+=== 区域设置
 
-This page helps you configure your country, language, and time zone, and keyboard layout.
+此页面可帮助您配置您的国家、语言和时区以及键盘布局。
 
 image::images/initial-setup/locale.png[alt="Adjust country, language, time zone, and keyboard layout."]
 
-=== User
+[[user]]
+=== 用户
 
-This page helps you configure the username and password for the default user account.
+此页面可帮助您配置默认用户帐户的用户名和密码。
 
-By default, older versions of Raspberry Pi OS set the username to "pi". If you use the username "pi", avoid the old default password of "raspberry" to keep your Raspberry Pi secure.
+默认情况下，旧版本的 Raspberry Pi OS 将用户名设置为 "pi"。如果使用用户名 "pi"，请避免使用默认密码 "raspberry"，以确保 Raspberry Pi 的安全。
 
 image::images/initial-setup/user.png[alt="Create your username and password."]
 
+[[wi-fi]]
 === Wi-Fi
 
-This page helps you connect to a Wi-Fi network. Choose your preferred network from the list.
+此页面可帮助您连接到 Wi-Fi 网络。从列表中选择您的网络。
 
 image::images/initial-setup/network.png[alt="Selecting a wireless network."]
 
-If your network requires a password, you can enter it here.
+如果您的网络需要密码，您可以在此处输入。
 
 image::images/initial-setup/network_password.png[alt="Entering a password for a wireless network."]
 
-=== Browser
 
-This page lets you select Firefox or Chromium as your default internet browser. You can optionally uninstall the browser you don't set as default.
+=== 浏览器
+
+此页面允许您选择Firefox或Chromium作为默认的互联网浏览器。您可以选择是否卸载未设置为默认的浏览器。
 
 image::images/initial-setup/browser.png[alt="The Choose Browser page."]
 
 === Raspberry Pi Connect
 
-This page lets you enable xref:../services/connect.adoc[Raspberry Pi Connect], which provides the ability to access your Raspberry Pi remotely with no manual network configuration.
+此页面可让您启用 xref:../services/connect.adoc[Raspberry Pi Connect]，它提供了无需手动网络配置即可远程访问 Raspberry Pi 的功能。
 
-image::images/initial-setup/connect.png[alt="The Enable Raspberry Pi Connect page."]
+image::images/initial-setup/connect.png[alt="启用 Raspberry Pi 连接的页面."]
 
-=== Software updates
+[[software-updates]]
+=== 更新软件
 
-Once your Raspberry Pi has internet access, this page helps you update your operating system and software to the latest versions. During the software update process, the wizard will remove the non-default browser if you opted to uninstall it in the browser selection step. Downloading updates may take several minutes.
+NOTE: *国内网络更新起来速度很慢，建议跳过这一步*
+
+如果Raspberry Pi可以访问互联网，此页面可帮助您将操作系统和软件更新到最新版本。在软件更新过程中，如果您在浏览器选择步骤中选择卸载非默认浏览器，初次启动引导程序将会它删除。下载更新可能需要几分钟时间。
 
 image::images/initial-setup/update.png[alt="You can download the latest software updates during the wizard before you boot for the first time."]
 
 image::images/initial-setup/download.png[alt="You can download the latest software updates during the wizard before you boot for the first time."]
 
-When you see a popup indicating that your system is up to date, click **OK** to proceed to the next step.
+当您看到指示您的系统是最新的弹出窗口时，单击 **OK** 继续下一步。
 
-=== Finish
+=== 完成
 
-At the end of the configuration wizard, click **Restart** to reboot your Raspberry Pi. Your Raspberry Pi will apply your configuration and boot to the desktop.
+在配置向导结束时，单击**Restart**以重新启动Raspberry Pi。Raspberry Pi将应用配置并启动到桌面。
 
 image::images/initial-setup/restart.png[alt="The Setup Complete dialogue prompts to restart your Raspberry Pi."]

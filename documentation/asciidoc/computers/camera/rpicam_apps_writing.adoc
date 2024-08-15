@@ -1,14 +1,16 @@
-=== Write your own `rpicam` apps
+[[write-your-own-rpicam-apps]]
+=== 编写自己的 `rpicam` 应用程序
 
-`rpicam-apps` does not provide all of the camera-related features that anyone could ever need. Instead, these applications are small and flexible. Users who require different behaviour can implement it themselves.
+`rpicam-apps` 并未提供所有与相机相关的功能。相反，这些应用程序体积小且灵活。需要不同行为的用户可以自己实现它。
 
-All of the `rpicam-apps` use an event loop that receives messages when a new set of frames arrives from the camera system. This set of frames is called a `CompletedRequest`. The `CompletedRequest` contains:
-* all images derived from that single camera frame: often a low-resolution image and a full-size output
-* metadata from the camera and post-processing systems
+所有 `rpicam-apps` 都使用一个事件循环，当一组新帧从相机系统到达时接收消息。这组帧称为 `CompletedRequest` （完整请求）。 `CompletedRequest` 包含：
+* 从单个相机帧获得的所有图像：通常是低分辨率图像和全尺寸输出
+* 来自相机和后处理系统的元数据
 
-==== `rpicam-hello`
 
-`rpicam-hello` is the smallest application, and the best place to start understanding `rpicam-apps` design. It extracts the `CompletedRequestPtr`, a shared pointer to the `CompletedRequest`, from the message, and forwards it to the preview window:
+==== `rpicam-hello` 
+
+`rpicam-hello` 是最小的应用程序，也是开始了解 `rpicam-apps` 设计的最佳场所。它从消息中提取 `CompletedRequestPtr` ，一个指向 `CompletedRequest` 的共享指针，并将其转发到预览窗口：
 
 [cpp]
 ----
@@ -16,36 +18,39 @@ CompletedRequestPtr &completed_request = std::get<CompletedRequestPtr>(msg.paylo
 app.ShowPreview(completed_request, app.ViewfinderStream());
 ----
 
-Every `CompletedRequest` must be recycled back to the camera system so that the buffers can be reused. Otherwise, the camera runs out of buffers for new camera frames. This recycling process happens automatically when no references to the `CompletedRequest` remain using {cpp}'s _shared pointer_ and _custom deleter_ mechanisms.
+每个 `CompletedRequest` 都必须被回收到相机系统中,以便缓冲区可以重复使用。否则,相机将耗尽用于新相机帧的缓冲区。这个回收过程会在没有对 `CompletedRequest` 的引用保留时自动发生,这是通过 C++ 的 _shared pointer_ 和 _custom deleter_ 机制实现的。
 
-As a result, `rpicam-hello` must complete the following actions to recycle the buffer space:
+因此， `rpicam-hello` 必须完成以下操作才能回收缓冲区空间：
 
-* The event loop must finish a cycle so the message (`msg` in the code), which holds a reference to `CompletedRequest`, can be replaced with the next message. This discards the reference to the previous message.
+* 事件循环必须完成一个循环，以便保存对 `CompletedRequest` 的引用的消息（代码中的 `msg` ）可以替换为下一条消息。这将丢弃对上一条消息的引用。
 
-* When the event thread calls `ShowPreview`, it passes the preview thread a reference to the `CompletedRequest`. The preview thread discards the last `CompletedRequest` instance each time `ShowPreview` is called.
+* 当事件线程调用 `ShowPreview` 时，它会向预览线程传递一个对 `CompletedRequest` 的引用。每次调用 `ShowPreview` 时，预览线程都会丢弃最后一个 `CompletedRequest` 实例。
 
-==== `rpicam-vid`
 
-`rpicam-vid` is similar to `rpicam-hello` with encoding added to the event loop. Before the event loop starts, `rpicam-vid` configures the encoder with a callback. The callback handles the buffer containing the encoded image data. In the code below, we send the buffer to the `Output` object. `Output` could write it to a file or stream it, depending on the options specified.
+==== `rpicam-vid` 
+
+`rpicam-vid` 类似于 `rpicam-hello` ，在事件循环中添加了编码。在事件循环开始之前， `rpicam-vid` 使用回调配置编码器。回调处理包含编码图像数据的缓冲区。在下面的代码中，我们将缓冲区发送到 `Output` 对象。 `输出` 可以将其写入文件或流式传输，具体取决于指定的选项。
 
 [cpp]
 ----
 app.SetEncodeOutputReadyCallback(std::bind(&Output::OutputReady, output.get(), _1, _2, _3, _4));
 ----
 
-Because this code passes the encoder a reference to the `CompletedRequest`, `rpicam-vid` can't recycle buffer data until the event loop, preview window, _and_ encoder all discard their references.
+由于这段代码向编码器传递了对 `CompletedRequest` 的引用，因此 `rpicam-vid` 无法循环使用缓冲区数据，直到事件循环、预览窗口和编码器都丢弃了它们的引用。
 
-==== `rpicam-raw`
 
-`rpicam-raw` is similar to `rpicam-vid`. It also encodes during the event loop. However, `rpicam-raw` uses a dummy encoder called the `NullEncoder`. This uses the input image as the output buffer instead of encoding it with a codec. `NullEncoder` only discards its reference to the buffer once the output callback completes. This guarantees that the buffer isn't recycled before the callback processes the image.
+==== `rpicam-raw` 
 
-`rpicam-raw` doesn't forward anything to the preview window.
+`rpicam-aw` 类似于 `rpicam-vid` 。它也在事件循环期间进行编码。但是， `rpicam-aw` 使用称为 `NullEncoder` 的虚拟编码器。这使用输入图像作为输出缓冲区，而不是使用编解码器对其进行编码。 `NullEncoder` 仅在输出回调完成后丢弃其对缓冲区的引用。这保证了在回调处理图像之前不会回收缓冲区。
 
-`NullEncoder` is possibly overkill in `rpicam-raw`. We could probably send images straight to the `Output` object, instead. However, `rpicam-apps` need to limit work in the event loop. `NullEncoder` demonstrates how you can handle most processes (even holding onto a reference) in other threads.
+`rpicam-aw` 不会将任何内容转发到预览窗口。
 
-==== `rpicam-jpeg`
+`NullEncoder` 在 `rpicam-aw` 中可能是矫枉过正的。我们可能会将图像直接发送到 `Output` 对象。但是， `rpicam-apps` 需要限制事件循环中的工作。 `NullEncoder` 演示了如何处理其他线程中的大多数进程（甚至保留引用）。
 
-`rpicam-jpeg` starts the camera in preview mode in the usual way. When the timer completes, it stops the preview and switches to still capture:
+
+==== `rpicam-jpeg` 
+
+`rpicam-jpeg` 以常规方式在预览模式下启动相机。当定时器计时结束后，它将停止预览并切换到静态捕捉模式：
 
 [cpp]
 ----
@@ -55,4 +60,4 @@ app.ConfigureStill();
 app.StartCamera();
 ----
 
-The event loop grabs the first frame returned from still mode and saves this as a JPEG.
+事件循环抓取从静止模式返回的第一帧并将其保存为JPEG。

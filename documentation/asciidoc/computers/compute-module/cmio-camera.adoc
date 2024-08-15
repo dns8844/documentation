@@ -1,10 +1,12 @@
-== Attach a Camera Module
+[[attach-a-camera-module]]
+== 添加树莓派相机模块
 
-The Compute Module has two CSI-2 camera interfaces: CAM1 and CAM0. This section explains how to connect one or two Raspberry Pi Cameras to a Compute Module using the CAM1 and CAM0 interfaces with a Compute Module I/O Board.
+计算模块有两个CSI-2相机接口：CAM1和CAM0。本节介绍如何使用带有计算模块I/O板的CAM1和CAM0接口将一个或两个Raspberry Pi相机连接到计算模块。
 
-=== Update your system
+[[update-your-system]]
+=== 更新你的系统
 
-Before configuring a camera, xref:../computers/raspberry-pi.adoc#update-the-bootloader-configuration[ensure that your Raspberry Pi firmware is up-to-date].:
+在配置摄像头之前，请参阅：xref:../computers/raspberry-pi.adoc#update-the-bootloader-configuration[确保您的 Raspberry Pi 固件是最新的]：
 
 [source,console]
 ----
@@ -12,26 +14,27 @@ $ sudo apt update
 $ sudo apt full-upgrade
 ----
 
-=== Connect one camera
+[[connect-one-camera]]
+=== 连接一个摄像头
 
-To connect a single camera to a Compute Module, complete the following steps:
+要将单个相机连接到计算模块，请完成以下步骤：
 
-. Disconnect the Compute Module from power.
-. Connect the Camera Module to the CAM1 port using a RPI-CAMERA board or a Raspberry Pi Zero camera cable.
+. 断开计算模块的电源。
+. 使用RPI-CAMERA板或Raspberry Pi Zero相机电缆将相机模块连接到CAM1端口。
 +
-image::images/CMIO-Cam-Adapter.jpg[alt="Connecting the adapter board", width="60%"]
+image::images/CMIO-Cam-Adapter.jpg[连接适配器板]
 
-. _(CM1, CM3, CM3+, and CM4S only)_: Connect the following GPIO pins with jumper cables:
-  * `0` to `CD1_SDA`
-  * `1` to `CD1_SCL`
-  * `2` to `CAM1_I01`
-  * `3` to `CAM1_I00`
+. _(仅限CM1、CM3、CM3+和CM4S)_ ：用电缆连接以下GPIO引脚：
+* `0` 到 `CD1_SDA` 
+* `1` 到 `CD1_SCL` 
+* `2` 到 `CAM1_I01` 
+* `3` 到 `CAM1_I00` 
 +
-image::images/CMIO-Cam-GPIO.jpg[alt="GPIO connection for a single camera", width="60%"]
+image::images/CMIO-Cam-GPIO.jpg[alt="用于单个摄像头的 GPIO 连接", width="60%"]
 
-. Reconnect the Compute Module to power.
+. 重新连接计算模块以供电。
 
-. Remove (or comment out with the prefix `#`) the following lines, if they exist, in `/boot/firmware/config.txt`:
+. 在 `/boot/firmware/config.txt` 中删除（或用前缀 `#` 注释掉）以下行（如果存在）：
 +
 [source,ini]
 ----
@@ -43,21 +46,21 @@ camera_auto_detect=1
 dtparam=i2c_arm=on
 ----
 
-. _(CM1, CM3, CM3+, and CM4S only)_: Add the following directive to `/boot/firmware/config.txt` to accommodate the swapped GPIO pin assignment on the I/O board:
+. _（仅限CM1、CM3、CM3+和CM4S）_：将以下指令添加到 `/boot/firmware/config.txt` 以适应I/O板上交换后的GPIO引脚分配：
 +
 [source,ini]
 ----
 dtoverlay=cm-swap-i2c0
 ----
 
-. _(CM1, CM3, CM3+, and CM4S only)_: Add the following directive to `/boot/firmware/config.txt` to assign GPIO 3 as the CAM1 regulator:
+. _（仅限CM1、CM3、CM3+和CM4S）_：将以下指令添加到 `/boot/firmware/config.txt` 以将GPIO 3分配为CAM1：
 +
 [source,ini]
 ----
 dtparam=cam1_reg
 ----
 
-. Add the appropriate directive to `/boot/firmware/config.txt` to manually configure the driver for your camera model:
+. 将适当的指令添加到 `/boot/firmware/config.txt` 以手动配置相机型号的驱动程序：
 +
 [%header,cols="1,1"]
 |===
@@ -65,62 +68,64 @@ dtparam=cam1_reg
 | directive
 
 | v1 camera
-| `dtoverlay=ov5647,cam1`
+|  `dtoverlay=ov5647,cam1` 
 
 | v2 camera
-| `dtoverlay=imx219,cam1`
+|  `dtoverlay=imx219,cam1` 
 
 | v3 camera
-| `dtoverlay=imx708,cam1`
+|  `dtoverlay=imx708,cam1` 
 
 | HQ camera
-| `dtoverlay=imx477,cam1`
+|  `dtoverlay=imx477,cam1` 
 
 | GS camera
-| `dtoverlay=imx296,cam1`
+|  `dtoverlay=imx296,cam1` 
 |===
 
-. Reboot your Compute Module with `sudo reboot`.
+. 使用 `sudo reboot` 重新启动您的计算模块。
 
-. Run the following command to check the list of detected cameras:
+. 运行以下命令检查检测到的摄像机列表：
 +
 [source,console]
 ----
 $ rpicam-hello --list
 ----
-You should see your camera model, referred to by the driver directive in the table above, in the output.
+您应该在输出中看到您的相机型号，由上表中的驱动程序指令引用。
 
-=== Connect two cameras
+[[connect-two-cameras]]
+=== 连接两个摄像头
 
-To connect two cameras to a Compute Module, complete the following steps:
+要将两个摄像头连接到计算模块，请完成以下步骤：
 
-. Follow the single camera instructions above.
-. Disconnect the Compute Module from power.
-. Connect the Camera Module to the CAM0 port using a RPI-CAMERA board or a Raspberry Pi Zero camera cable.
+. 按照上面的单摄像头说明进行操作。
+. 断开计算模块的电源。
+. 使用RPI-CAMERA板或Raspberry Pi Zero相机电缆将相机模块连接到CAM0端口。
 +
-image::images/CMIO-Cam-Adapter.jpg[alt="Connect the adapter board", width="60%"]
-. _(CM1, CM3, CM3+, and CM4S only)_: Connect the following GPIO pins with jumper cables:
-  * `28` to `CD0_SDA`
-  * `29` to `CD0_SCL`
-  * `30` to `CAM0_I01`
-  * `31` to `CAM0_I00`
+image::images/CMIO-Cam-Adapter.jpg[alt="连接适配器板", width="60%"]
+. _(仅限CM1、CM3、CM3+和CM4S)_：用跨接电缆连接以下GPIO引脚：
+* `28` 至 `CD0_SDA` 
+* `29` 至 `CD0_SCL` 
+* `30` 至 `CAM0_I01` 
+* `31` 至 `CAM0_I00` 
 +
-image:images/CMIO-Cam-GPIO2.jpg[alt="GPIO connection with additional camera", width="60%"]
+image:images/CMIO-Cam-GPIO2.jpg[alt="与额外摄像头的 GPIO 连接", width="60%"]
 
-. _(CM4 only)_: Connect the J6 GPIO pins with two vertical-orientation jumpers.
+
+. _（仅限CM4）_：用两个vertical-orientation跳线连接J6 GPIO引脚。
 +
-image:images/j6_vertical.jpg[alt="Connect the J6 GPIO pins in vertical orientation", width="60%"]
+image:images/j6_vertical.jpg[alt="按垂直方向连接 J6 GPIO 引脚", width="60%"]
 
-. Reconnect the Compute Module to power.
+. 重新连接计算模块以供电。
 
-. _(CM1, CM3, CM3+, and CM4S only)_: Add the following directive to `/boot/firmware/config.txt` to assign GPIO 31 as the CAM0 regulator:
+. _（仅限CM1、CM3、CM3+和CM4S）_：将以下指令添加到 `/boot/firmware/config.txt` 以将GPIO 31分配为CAM0：
 +
 [source,ini]
 ----
 dtparam=cam0_reg
 ----
 
-. Add the appropriate directive to `/boot/firmware/config.txt` to manually configure the driver for your camera model:
+. 将适当的指令添加到 `/boot/firmware/config.txt` 以手动配置相机型号的驱动程序：
 +
 [%header,cols="1,1"]
 |===
@@ -128,61 +133,65 @@ dtparam=cam0_reg
 | directive
 
 | v1 camera
-| `dtoverlay=ov5647,cam0`
+|  `dtoverlay=ov5647,cam0` 
 
 | v2 camera
-| `dtoverlay=imx219,cam0`
+|  `dtoverlay=imx219,cam0` 
 
 | v3 camera
-| `dtoverlay=imx708,cam0`
+|  `dtoverlay=imx708,cam0` 
 
 | HQ camera
-| `dtoverlay=imx477,cam0`
+|  `dtoverlay=imx477,cam0` 
 
 | GS camera
-| `dtoverlay=imx296,cam0`
+|  `dtoverlay=imx296,cam0` 
 |===
 
-. Reboot your Compute Module with `sudo reboot`.
+. 使用 `sudo reboot` 重新启动您的计算模块。
 
-. Run the following command to check the list of detected cameras:
+. 运行以下命令检查检测到的摄像机列表：
 +
 [source,console]
 ----
-$ rpicam-hello --list
+rpicam-hello --list
 ----
 +
-You should see both camera models, referred to by the driver directives in the table above, in the output.
+您应该在输出中看到上表中驱动程序指令引用的两种相机型号。
 
-=== Software
+[[software]]
+=== 软件
 
-Raspberry Pi OS includes the `libcamera` library to help you take images with your Raspberry Pi.
+Raspberry Pi OS包含 `libcamera` 库，可帮助您使用Raspberry Pi拍摄图像。
 
-==== Take a picture
+[[take-a-picture]]
+==== 拍张照片
 
-Use the following command to immediately take a picture and save it to a file in PNG encoding using the `MMDDhhmmss` date format as a filename:
-
-[source,console]
-----
-$ rpicam-still --datetime -e png
-----
-
-Use the `-t` option to add a delay in milliseconds.
-Use the `--width` and `--height` options to specify a width and height for the image.
-
-==== Take a video
-
-Use the following command to immediately start recording a ten-second long video and save it to a file with the h264 codec named `video.h264`:
+使用以下命令立即拍照并将其保存到使用 `MMDDhhmmss` 日期格式作为文件名的PNG编码文件中：
 
 [source,console]
 ----
-$ rpicam-vid -t 10000 -o video.h264
+rpicam-still --datetime -e png
 ----
 
-==== Specify which camera to use
+使用 `-t` 选项添加以毫秒为单位的延迟。
+使用 `--width` 和 `--height` 选项指定图像的宽度和高度。
 
-By default, `libcamera` always uses the camera with index `0` in the `--list-cameras` list.
-To specify a camera option, get an index value for each camera from the following command:
+[[take-a-video]]
+==== 拍个视频
+
+使用以下命令立即开始录制10秒长的视频并将其保存到带有名为 `video.h264` 的h264编解码器的文件中：
+
+[source,console]
+----
+rpicam-vid -t 10000 -o video.h264
+----
+
+[[specify-which-camera-to-use]]
+==== 指定使用哪个相机
+
+默认情况下，"libcamera "总是使用"--list-cameras "列表中索引为 "0 "的摄像机。
+要指定摄像机选项，可通过以下命令获取每台摄像机的索引值：
 
 [source,console]
 ----
@@ -201,19 +210,19 @@ Available cameras
                              4608x2592 [14.35 fps - (0, 0)/4608x2592 crop]
 ----
 
-In the above output:
+在上述输出中：
 
-* `imx477` refers to a HQ camera with an index of `0`
-* `imx708` refers to a v3 camera with an index of `1`
+* `imx477` 是指索引为 `0` 的HQ相机
+* `imx708` 是指索引为 `1` 的v3相机
 
-To use the HQ camera, pass its index (`0`) to the `--camera` `libcamera` option:
+要使用HQ相机，请将其索引（ `0` ）传递给 `libcamera` 的 `--camera` 选项：
 
 [source,console]
 ----
-$ rpicam-hello --camera 0
+rpicam-hello --camera 0
 ----
 
-To use the v3 camera, pass its index (`1`) to the `--camera` `libcamera` option:
+要使用v3相机，请将其索引（ `1` ）传递给 `libcamera` 的 `--camera` 选项：
 
 [source,console]
 ----
@@ -221,9 +230,10 @@ $ rpicam-hello --camera 1
 ----
 
 
-=== I2C mapping of GPIO pins
+[[i2c-mapping-of-gpio-pins]]
+=== GPIO引脚的I2C映射
 
-By default, the supplied camera drivers assume that CAM1 uses `i2c-10` and CAM0 uses `i2c-0`. Compute module I/O boards map the following GPIO pins to `i2c-10` and `i2c-0`:
+默认情况下，所提供的摄像头驱动程序假定 CAM1 使用 `i2c-10` ，CAM0 使用 `i2c-0` 。计算模块 I/O 板将以下 GPIO 引脚映射到 `i2c-10` 和 `i2c-0` ：
 
 [%header,cols="1,1,1"]
 |===
@@ -240,14 +250,13 @@ By default, the supplied camera drivers assume that CAM1 uses `i2c-10` and CAM0 
 | GPIOs 28,29
 |===
 
-To connect a camera to the CM1, CM3, CM3+ and CM4S I/O Board, add the following directive to `/boot/firmware/config.txt` to accommodate the swapped pin assignment:
+要将摄像机连接到CM1、CM3、CM3+和CM4S I/O板，请将以下指令添加到 `/boot/firmware/config.txt` 以适应交换的引脚分配：
 
-[source,ini]
 ----
 dtoverlay=cm-swap-i2c0
 ----
 
-Alternative boards may use other pin assignments. Check the documentation for your board and use the following alternate overrides depending on your layout:
+其他电路板可能使用其他引脚分配。请查阅电路板的相关文档，并根据自己的布局使用以下替代重写：
 
 [%header,cols="1,1"]
 |===
@@ -255,40 +264,42 @@ Alternative boards may use other pin assignments. Check the documentation for yo
 | Override
 
 | Use GPIOs 0,1 for i2c0
-| `i2c0-gpio0`
+|  `i2c0-gpio0` 
 
 | Use GPIOs 28,29 for i2c0 (default)
-| `i2c0-gpio28`
+|  `i2c0-gpio28` 
 
 | Use GPIOs 44&45 for i2c0
-| `i2c0-gpio44`
+|  `i2c0-gpio44` 
 
 | Use GPIOs 0&1 for i2c10 (default)
-| `i2c10-gpio0`
+|  `i2c10-gpio0` 
 
 | Use GPIOs 28&29 for i2c10
-| `i2c10-gpio28`
+|  `i2c10-gpio28` 
 
 | Use GPIOs 44&45 for i2c10
-| `i2c10-gpio44`
+|  `i2c10-gpio44` 
 |===
 
-==== GPIO pins for shutdown
 
-For camera shutdown, Device Tree uses the pins assigned by the `cam1_reg` and `cam0_reg` overlays.
+[[gpio-pins-for-shutdown]]
+==== 用于关机的GPIO引脚
 
-The CM4 IO board provides a single GPIO pin for both aliases, so both cameras share the same regulator.
+对于相机关机，Device Tree 使用由 `cam1_reg` 和 `cam0_reg` 覆盖分配的引脚。
 
-The CM1, CM3, CM3+, and CM4S I/O boards provides no GPIO pin for `cam1_reg` and `cam0_reg`, so the regulators are disabled on those boards. However, you can enable them with the following directives in `/boot/firmware/config.txt`:
+CM4 IO 板为两个别名提供一个 GPIO 引脚，因此两个摄像头共享同一个调节器。
 
-* `dtparam=cam1_reg`
-* `dtparam=cam0_reg`
+CM1、CM3、CM3+ 和 CM4S I/O 板没有为 "cam1_reg "和 "cam0_reg "提供 GPIO 引脚，因此这些板上的调节器被禁用。不过，您可以在 `/boot/firmware/config.txt` 中使用以下指令启用它们：
 
-To assign `cam1_reg` and `cam0_reg` to a specific pin on a custom board, use the following directives in `/boot/firmware/config.txt`:
+*  `dtparam=cam1_reg` 
+*  `dtparam=cam0_reg` 
 
-* `dtparam=cam1_reg_gpio=<pin number>`
-* `dtparam=cam0_reg_gpio=<pin number>`
+要将 `cam1_reg` 和 `cam0_reg` 指定给定制电路板上的特定引脚，请在 `/boot/firmware/config.txt` 中使用以下指令：
 
-For example, to use pin 42 as the regulator for CAM1, add the directive `dtparam=cam1_reg_gpio=42` to `/boot/firmware/config.txt`.
+*  `dtparam=cam1_reg_gpio=<pin number>` 
+*  `dtparam=cam0_reg_gpio=<pin number>` 
 
-These directives only work for GPIO pins connected directly to the SoC, not for expander GPIO pins.
+例如，要将引脚 42 用作 CAM1 的稳压器，可在 `/boot/firmware/config.txt` 中添加指令 `dtparam=cam1_reg_gpio=42` 。
+
+这些指令仅适用于直接连接到 SoC 的 GPIO 引脚，不适用于 GPIO 扩展引脚。

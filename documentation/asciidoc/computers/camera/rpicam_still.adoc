@@ -1,45 +1,46 @@
-=== `rpicam-still`
+[[rpicam-still]]
+=== `rpicam-still` 
 
-`rpicam-still`, like `rpicam-jpeg`, helps you capture images on Raspberry Pi devices.
-Unlike `rpicam-jpeg`, `rpicam-still` supports many options provided in the legacy `raspistill` application.
+`rpicam-still` 和 `rpicam-jpeg` 一样，可以帮助你在 Raspberry Pi 设备上捕捉图像。
+与 `rpicam-jpeg` 不同， `rpicam-still` 支持传统 `raspistill` 应用程序中提供的许多选项。
 
-To capture a full resolution JPEG image and save it to a file named `test.jpg`, run the following command:
+要捕获全分辨率JPEG图像并将其保存到名为 `test.jpg` 的文件中，请运行以下命令：
 
 [source,console]
 ----
 $ rpicam-still --output test.jpg
 ----
 
-==== Encoders
+==== 编码器
 
-`rpicam-still` can save images in multiple formats, including `png`, `bmp`, and both RGB and YUV binary pixel dumps. To read these binary dumps, any application reading the files must understand the pixel arrangement.
+`rpicam-still` 可以以多种格式保存图像，包括 `png`、 `bmp` 以及RGB和YUV二进制像素转储。要读取这些二进制转储，任何读取文件的应用程序都必须了解像素排列。
 
-Use the xref:camera_software.adoc#encoding[`encoding`] option to specify an output format. The file name passed to xref:camera_software.adoc#output[`output`] has no impact on the output file type.
+使用 xref:camera_software.adoc#encoding[`encoding` ] 选项指定输出格式。传递给 xref:camera_software.adoc#output[ `output`] 的文件名对输出文件类型没有影响。
 
-To capture a full resolution PNG image and save it to a file named `test.png`, run the following command:
+要捕获全分辨率PNG图像并将其保存到名为 `test.png` 的文件中，请运行以下命令：
 
 [source,console]
 ----
 $ rpicam-still --encoding png --output test.png
 ----
 
-For more information about specifying an image format, see the xref:camera_software.adoc#encoding[`encoding` option reference].
+有关指定图像格式的更多信息，请参阅 xref:camera_software.adoc#encoding[ `encoding` 选项参考]。
 
-==== Capture raw images
+[[capture-raw-images]]
+==== 捕获原始图像
 
-Raw images are the images produced directly by the image sensor, before any processing is applied to them either by the Image Signal Processor (ISP) or CPU. Colour image sensors usually use the Bayer format. Use the xref:camera_software.adoc#raw[`raw`] option to capture raw images.
+原始图像是由图像传感器直接生成的图像，然后再由图像信号处理器（ISP）或中央处理器进行处理。彩色图像传感器通常使用 Bayer 格式。使用 xref:camera_software.adoc#raw[`raw`] 选项可捕捉原始图像。
 
-To capture an image, save it to a file named `test.jpg`, and also save a raw version of the image to a file named `test.dng`, run the following command:
+要捕获图像，请将其保存到名为 `test.jpg` 的文件中，并将图像的原始版本保存到名为 `test.dng` 的文件中，请运行以下命令：
 
 [source,console]
 ----
 $ rpicam-still --raw --output test.jpg
 ----
 
-`rpicam-still` saves raw images in the DNG (Adobe Digital Negative) format. To determine the filename of the raw images, `rpicam-still` uses the same name as the output file, with the extension changed to `.dng`. To work with DNG images, use an application like https://en.wikipedia.org/wiki/Dcraw[Dcraw] or https://en.wikipedia.org/wiki/RawTherapee[RawTherapee].
+`rpicam-still` 以DNG（Adobe Digital Negative）格式保存原始图像。要确定原始图像的文件名， `rpicam-still` 使用与输出文件相同的名称，扩展名更改为 `.dng` 。要处理DNG图像，请使用 https://en.wikipedia.org/wiki/Dcraw[Dcraw]或 https://en.wikipedia.org/wiki/RawTherapee[RawTherapee] 等应用程序。
 
-DNG files contain metadata about the image capture, including black levels, white balance information and the colour matrix used by the ISP to produce the JPEG. Use https://exiftool.org/[ExifTool] to view DNG metadata. The following output shows typical metadata stored in a raw image captured by a Raspberry Pi using the HQ camera:
-
+DNG元数据包括电平、白平衡信息以及ISP用于生成JPEG的色彩矩阵。使用 https://exiftool.org/[ExifTool] 查看 DNG 元数据。以下输出显示了存储在 Raspberry Pi 使用 HQ 摄像机拍摄的原始图像中的典型元数据：
 ----
 File Name                       : test.dng
 Directory                       : .
@@ -85,49 +86,53 @@ Megapixels                      : 12.3
 Shutter Speed                   : 1/20
 ----
 
-To find the analogue gain, divide the ISO number by 100.
-The Auto White Balance (AWB) algorithm determines a single calibrated illuminant, which is always labelled `D65`.
+要找到模拟增益，请将ISO数除以100。
+自动白平衡（AWB）算法确定一个单一的校准光源，该光源始终标为 "D65"。
 
-==== Capture long exposures
+[[capture-long-exposures]]
+==== 捕捉长时间曝光
 
-To capture very long exposure images, disable the Automatic Exposure/Gain Control (AEC/AGC) and Auto White Balance (AWB). These algorithms will otherwise force the user to wait for a number of frames while they converge.
+要拍摄长时间曝光的图像，请禁用自动曝光/增益控制 (AEC/AGC) 和自动白平衡 (AWB)。否则，这些算法将迫使用户在收敛时等待若干帧。
 
-To disable these algorithms, supply explicit values for gain and AWB. Because long exposures take plenty of time already, it often makes sense to skip the preview phase entirely with the xref:camera_software.adoc#immediate[`immediate`] option.
+要禁用这些算法，请为增益和 AWB 提供明确的值。由于长时间曝光已经耗费了大量时间，使用 xref:camera_software.adoc#immediate[`immediate`] 选项完全跳过预览阶段通常是合理的。
 
-To perform a 100 second exposure capture, run the following command:
+要执行100秒曝光捕获，请运行以下命令：
 
 [source,console]
 ----
 $ rpicam-still -o long_exposure.jpg --shutter 100000000 --gain 1 --awbgains 1,1 --immediate
 ----
 
-To find the maximum exposure times of official Raspberry Pi cameras, see xref:../accessories/camera.adoc#hardware-specification[the camera hardware specification].
+要查找 Raspberry Pi 官方摄像头的最大曝光时间，请参阅 xref:../accessories/camera.adoc#hardware-specification[摄像头硬件规格]。
 
-==== Create a time lapse video
+[[create-a-time-lapse-video]]
+==== 创建延时视频
 
-To create a time lapse video, capture a still image at a regular interval, such as once a minute, then use an application to stitch the pictures together into a video.
+要创建延时视频，请定期捕获静止图像，例如一分钟一次，然后使用应用程序将图片拼接成视频。
 
-===== via `rpicam-still` time lapse mode
+[[via-rpicam-still-time-lapse-mode]]
+===== 使用 `rpicam-still` 延时模式
 
-To use the built-in time lapse mode of `rpicam-still`, use the xref:camera_software.adoc#timelapse[`timelapse`] option. This option accepts a value representing the period of time you want your Raspberry Pi to wait between captures, in milliseconds.
+要使用内置的延时模式 `rpicam-still` ，请使用 xref:camera_software.adoc#timelapse[`timelapse`] 选项。此选项接受一个值，该值表示您希望Raspberry Pi在两次捕获之间等待的时间，以毫秒为单位。
 
-First, create a directory where you can store your time lapse photos:
+首先，创建一个目录，您可以在其中存储延时照片：
 
 [source,console]
 ----
 $ mkdir timelapse
 ----
 
-Run the following command to create a time lapse over 30 seconds, recording a photo every two seconds, saving output into `image0001.jpg` through `image0014.jpg`:
+运行以下命令创建 30 秒钟的延时，每两秒记录一张照片，将输出保存到 `image0001.jpg` 至 `image0014.jpg` 中：
 
 [source,console]
 ----
 $ rpicam-still --timeout 30000 --timelapse 2000 -o timelapse/image%04d.jpg
 ----
 
-===== via `cron`
+[[via-cron]]
+===== 通过 `cron` 
 
-You can also automate time lapses with `cron`. First, create the script, named `timelapse.sh` containing the following commands. Replace the `<username>` placeholder with the name of your user account on your Raspberry Pi:
+您还可以使用 `cron` 自动延时。首先，创建名为 `timelapse.sh` 的脚本，其中包含以下命令。将Raspberry Pi上的 `<username>` 占位符替换为您的用户帐户名称：
 
 ----
 #!/bin/bash
@@ -135,67 +140,69 @@ DATE=$(date +"%Y-%m-%d_%H%M")
 rpicam-still -o /home/<username>/timelapse/$DATE.jpg
 ----
 
-Then, make the script executable:
+然后，使脚本可执行：
 
 [source,console]
 ----
 $ chmod +x timelapse.sh
 ----
 
-Create the `timelapse` directory into which you'll save time lapse pictures:
+
+创建 `timelapse` 目录，您将在其中保存延时照片：
 
 [source,console]
 ----
 $ mkdir timelapse
 ----
 
-Open your crontab for editing:
+打开您的crontab进行编辑：
 
 [source,console]
 ----
 $ crontab -e
 ----
 
-Once you have the file open in an editor, add the following line to schedule an image capture every minute, replacing the `<username>` placeholder with the username of your primary user account:
+在编辑器中打开文件后，添加以下行以安排每分钟捕获一次图像，将 `<username>` 占位符替换为您的主要用户帐户的用户名：
 
 ----
 * * * * * /home/<username>/timelapse.sh 2>&1
 ----
 
-Save and exit, and you should see this message:
+保存并退出，您应该会看到以下消息：
 
 ----
 crontab: installing new crontab
 ----
 
-TIP: To stop recording images for the time lapse, run `crontab -e` again and remove the above line from your crontab.
+TIP: 要停止为延时拍摄图像，请再次运行 `crontab -e` 并从crontab中删除上面的行。
 
-===== Stitch images together
+[[stitch-images-together]]
+===== 将图像拼接在一起
 
-Once you have a series of time lapse photos, you probably want to combine them into a video. Use `ffmpeg` to do this on a Raspberry Pi.
+一旦你有了一系列延时照片，你可能想把它们组合成一个视频。使用 `ffmpeg` 在树莓派上执行此操作。
 
-First, install `ffmpeg`:
+首先，安装 `ffmpeg` ：
 
 [source,console]
 ----
 $ sudo apt install ffmpeg
 ----
 
-Run the following command from the directory that contains the `timelapse` directory to convert your JPEG files into an mp4 video:
+从包含 `timelapse` 目录的目录运行以下命令，将JPEG文件转换为mp4视频：
 
 [source,console]
 ----
 $ ffmpeg -r 10 -f image2 -pattern_type glob -i 'timelapse/*.jpg' -s 1280x720 -vcodec libx264 timelapse.mp4
 ----
 
-The command above uses the following parameters:
+上面的命令使用以下参数：
 
-* `-r 10`: sets the frame rate (Hz value) to ten frames per second in the output video
-* `-f image2`: sets `ffmpeg` to read from a list of image files specified by a pattern
-* `-pattern_type glob`: use wildcard patterns (globbing) to interpret filename input with `-i`
-* `-i 'timelapse/*.jpg'`: specifies input files to match JPG files in the `timelapse` directory
-* `-s 1280x720`: scales to 720p
-* `-vcodec libx264` use the software x264 encoder.
-* `timelapse.mp4` The name of the output video file.
+* `-r 10` ：将输出视频的帧率（Hz值）设置为每秒10帧
+* `-f image2` ：设置 `ffmpeg` 以从模式指定的图像文件列表中读取
+* `-pattern_type glob` ：使用通配符模式来解释文件名输入
+* `-i 'timelapse/*.jpg'` ：指定输入文件以匹配 `timelapse` 目录中的JPG文件
+* `-s 1280x720` ：缩放到720p
+* `-vcodec libx264` 使用软件x264编码器。
+* `timelapse.mp4` 输出视频文件的名称。
 
-For more information about `ffmpeg` options, run `ffmpeg --help` in a terminal.
+有关 `ffmpeg` 选项的更多信息，请在终端中运行 `ffmpeg --help` 。

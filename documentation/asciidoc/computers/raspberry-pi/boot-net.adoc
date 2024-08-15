@@ -1,59 +1,61 @@
-== Network booting
+== 网络启动
 
-This section describes how network booting works on Raspberry Pi 3B, 3B+ and 2B v1.2.
+本节介绍如何在Raspberry Pi 3B、3B+ 和 2B v1.2上启动网络。
 
-On Pi 4 and Pi 5, network booting is implemented in the second stage bootloader in the EEPROM. For more information, see xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi 4 bootloader configuration].
+在Pi 4和Pi 5上，网络引导是在EEPROM中的第二阶段引导加载程序中实现的。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi 4引导加载程序配置]。
 
-We also have a xref:remote-access.adoc#network-boot-your-raspberry-pi[tutorial about setting up a network boot system].
+我们还有一个 xref:remote-access.adoc#network-boot-your-raspberry-pi[关于设置网络引导系统的教程]。
 
-Network booting works only for the wired adapter built into the above models of Raspberry Pi. Booting over wireless LAN is not supported, nor is booting from any other wired network device.
+网络引导仅适用于上述型号的Raspberry Pi内置的有线适配器。不支持通过无线LAN引导，也不支持从任何其他有线网络设备引导。
 
-=== Network boot flow
+[[network-booting]]
+=== 网络启动流程
 
-To network boot, the boot ROM does the following:
+要进行网络引导，引导ROM执行以下操作：
 
-* Initialise on-board Ethernet device (Microchip LAN9500 or LAN7500)
-* Send DHCP request (with Vendor Class identifier DHCP option 60 set to `PXEClient:Arch:00000:UNDI:002001`)
-* Receive DHCP reply
-* (optional) Receive DHCP proxy reply
-* ARP to tftpboot server
-* ARP reply includes tftpboot server ethernet address
-* TFTP RRQ `bootcode.bin`
- ** File not found: Server replies with TFTP error response with textual error message
- ** File exists: Server will reply with the first block (512 bytes) of data for the file with a block number in the header
-  *** Raspberry Pi replies with TFTP ACK packet containing the block number, and repeats until the last block which is not 512 bytes
-* TFTP RRQ `bootsig.bin`
- ** This will normally result in an error `file not found`. This is to be expected, and TFTP boot servers should be able to handle it.
+* 初始化板载以太网设备（微芯片LAN9500或LAN7500）
+* 发送DHCP请求（供应商类别标识符DHCP选项60设置为 `PXEClient:Arch:00000:UNDI:002001` ）
+* 收到DHCP回复
+* 接收DHCP代理回复（可选）
+* ARP到tftpboot服务器
+* ARP回复包括tftpboot服务器以太网地址
+* TFTP RRQ `bootcode.bin` 
+ ** 找不到文件：服务器回复TFTP错误响应和文本错误消息
+ ** 文件存在：服务器将回复文件的第一个数据块（512字节），标题中包含块号
+  *** Raspberry Pi回复包含块号的TFTP确认字符包，并重复直到最后一个不是512字节的块
+* TFTP RRQ `bootsig.bin` 
+ ** 这通常会导致错误 `未找到文件` 。这是意料之中的，TFTP引导服务器应该能够处理它。
 
-From this point the `bootcode.bin` code continues to load the system. The first file it will try to access is `<serial_number>/start.elf`. If this does not result in an error then any other files to be read will be prepended with the `serial_number`. This is useful because it enables you to create separate directories with separate `start.elf` / kernels for your Raspberry Pis.
+从这里开始， `bootcode.bin` 代码继续加载系统。它将尝试访问的第一个文件是 `<serial_number>/start.elf` 。如果这不会导致错误，那么任何其他要读取的文件都将附加 `serial_number` 。这很有用，因为它使您能够为Raspberry Pis创建具有单独 `start.elf` / 内核的单独目录。
 
-To get the serial number for the device you can either try this boot mode and see what file is accessed using tcpdump / wireshark, or you can run a standard Raspberry Pi OS SD card and `cat /proc/cpuinfo`.
+要获取设备的序列号，你可以尝试这种启动模式，并使用 tcpdump / wireshark 查看访问了哪些文件，或者运行标准的 Raspberry Pi OS SD 卡并 `cat /proc/cpuinfo` 。
 
-If you put all your files into the root of your TFTP directory then all following files will be accessed from there.
+如果您将所有文件放入TFTP目录的根目录，则将从那里访问所有以下文件。
 
-=== Debugging network boot mode
+[[debugging-network-boot-mode]]
+=== 调试网络启动模式
 
-The first thing to check is that the OTP bit is correctly programmed. To do this, you need to add `program_usb_boot_mode=1` to `config.txt` and reboot (with a standard SD card that boots correctly into Raspberry Pi OS). Once you've done this, you should be able to do:
+首先要检查的是OTP位是否正确编程。为此，您需要将 `program_usb_boot_mode=1` 添加到 `config.txt` 并重新启动（使用可以正确启动到Raspberry Pi OS的标准SD卡）。完成此操作后，您应该能够：
 
 [source,console]
 ----
 $ vcgencmd otp_dump | grep 17:
 ----
 
-If row 17 contains `3020000a` then the OTP is correctly programmed. You should now be able to remove the SD card, plug in Ethernet, and then the Ethernet LEDs should light up around 5 seconds after the Raspberry Pi powers up.
+如果第17行包含 `3020000a` ，则OTP已正确编程。您现在应该能够取出SD卡，插入以太网，然后以太网LED应该在Raspberry Pi通电后大约5秒点亮。
 
-To capture the Ethernet packets on the server, use tcpdump on the tftpboot server (or DHCP server if they are different). You will need to capture the packets there otherwise you will not be able to see packets that get sent directly because network switches are not hubs!
+要在服务器上捕获以太网数据包，请在tftpboot服务器（或DHCP服务器，如果它们不同）上使用tcpdump。您需要在那里捕获数据包，否则您将无法看到直接发送的数据包，因为网络交换机不是集线器！
 
 [source,console]
 ----
 $ sudo tcpdump -i eth0 -w dump.pcap
 ----
 
-This will write everything from eth0 to a file named `dump.pcap`. You can then post-process or upload the packets to cloudshark for communication.
+这会将eth0中的所有内容写入名为 `dump.pcap` 的文件。然后，您可以对数据包进行后处理或将其上传到cloud dshark进行通信。
 
-==== DHCP request / reply
+==== DHCP请求/回复
 
-As a minimum you should see a DHCP request and reply which looks like the following:
+您至少应该看到如下所示的DHCP请求和回复：
 
 ----
 6:44:38.717115 IP (tos 0x0, ttl 128, id 0, offset 0, flags [none], proto UDP (17), length 348)
@@ -91,11 +93,12 @@ As a minimum you should see a DHCP request and reply which looks like the follow
 	    END Option 255, length 0
 ----
 
-`Vendor-Option Option 43` contains the important part of the reply. This must contain the string "Raspberry Pi Boot". Due to a bug in the boot ROM, you may need to add three spaces to the end of the string.
+`Vendor-Option Option 43` 包含回复的重要部分，这必须包含字符串"Raspberry Pi Boot"，由于引导ROM中的bug，您可能需要在字符串末尾添加三个空格。
 
-==== TFTP file read
+[[tftp-file-read]]
+==== TFTP 文件读取
 
-When the Vendor Option is correctly specified, you'll see a subsequent TFTP RRQ packet being sent. RRQs can be replied to by either the first block of data or an error saying file not found. In a couple of cases they even receive the first packet and then the transmission is aborted by the Raspberry Pi (this happens when checking whether a file exists). The example below is just three packets: the original read request, the first data block (which is always 516 bytes containing a header and 512 bytes of data, although the last block is always less than 512 bytes and may be zero length), and the third packet (the ACK which contains a frame number to match the frame number in the data block).
+当供应商选项被正确指定时，您将看到一个后续的TFTP RRQ数据包正在发送。RRQ可以通过第一个数据块或错误说找不到文件来回复。在一些情况下，他们甚至收到了第一个数据包，然后Raspberry Pi中止了传输（当检查文件是否存在时会发生这种情况）。下面的示例只有三个数据包：原始读取请求、第一个数据块（总是516字节，包含一个排针和512字节的数据，尽管最后一个块总是小于512字节，可能是零长度）和第三个数据包（包含帧号以匹配数据块中的帧号的确认字符）。
 
 ----
 16:44:41.224964 IP (tos 0x0, ttl 128, id 0, offset 0, flags [none], proto UDP (17), length 49)
@@ -106,44 +109,51 @@ When the Vendor Option is correctly specified, you'll see a subsequent TFTP RRQ 
     192.168.1.139.49152 > 192.168.1.1.55985: [no cksum] UDP, length 4
 ----
 
-=== Known problems
+[[known-problems]]
+=== 已知问题
 
-There are a number of known problems with the Ethernet boot mode. Since the implementation of the boot modes is in the chip itself, there are no workarounds other than to use an SD card with just the `bootcode.bin` file.
+以太网启动模式存在许多已知问题。由于启动模式的实现是在芯片本身中，除了使用仅带有 `bootcode.bin` 文件的SD卡之外，没有其他变通方法。
 
-==== DHCP requests time out after five tries
+[[dhcp-requests-time-out-after-five-tries]]
+==== DHCP请求在五次尝试后超时
 
-The Raspberry Pi will attempt a DHCP request five times with five seconds in between, for a total period of 25 seconds.  If the server is not available to respond in this time, then the Raspberry Pi will drop into a low-power state. There is no workaround for this other than bootcode.bin on an SD card.
+Raspberry Pi将尝试五次DHCP请求，其间间隔五秒，总共25秒。如果服务器在此期间无法响应，则Raspberry Pi将进入低功耗状态。除了SD卡上的bootcode.bin之外，没有其他解决方法。
 
-==== TFTP server on separate subnet not supported
+[[tftp-server-on-separate-subnet-not-supported]]
+==== 不支持单独子网上的TFTP服务器
 
-Fixed in Raspberry Pi 3 Model B+ (BCM2837B0).
+在Raspberry Pi 3 Model B+（BCM2837B0）中修复。
 
-==== DHCP relay broken
+[[dhcp-relay-broken]]
+==== DHCP中继功能发生故障
 
-The DHCP check also checked if the hops value was `1`, which it wouldn't be with DHCP relay.
+DHCP检查还检查跳数值是否为 `1` ，这不会与DHCP中继一起使用。
 
-Fixed in Raspberry Pi 3 Model B+.
+在Raspberry Pi 3 Model B+中修复。
 
-==== Raspberry Pi boot string
+[[raspberry-pi-boot-string]]
+==== 树莓派启动字符串
 
-The "Raspberry Pi Boot   " string in the DHCP reply requires the extra three spaces due to an error calculating the string length.
+由于计算字符串长度时出错，DHCP回复中的 `Raspberry Pi Boot` 字符串需要额外的三个空格。
 
-Fixed in Raspberry Pi 3 Model B+.
+在Raspberry Pi 3 Model B+中修复。
 
-==== DHCP UUID constant
+[[dhcp-uuid-constant]]
+==== DHCP UUID 不变
 
-The DHCP UUID is set to be a constant value.
+DHCP UUID 设置为常量值。
 
-Fixed in Raspberry Pi 3 Model B+; the value is set to the 32-bit serial number.
+在Raspberry Pi 3 Model B+中修复；该值设置为32位序列号。
 
-==== ARP check can fail to respond in the middle of TFTP transaction
+[[arp-check-can-fail-to-respond-in-the-middle-of-tftp-transaction]]
+=== =ARP 检查在 TFTP 事务中间可能无法响应
 
-The Raspberry Pi will only respond to ARP requests when it is in the initialisation phase; once it has begun transferring data, it'll fail to continue responding.
+Raspberry Pi仅在初始化阶段响应ARP请求；一旦它开始传输数据，它将无法继续响应。
 
-Fixed in Raspberry Pi 3 Model B+.
+在Raspberry Pi 3 Model B+中修复。
 
-==== DHCP request/reply/ack sequence not correctly implemented
+==== DHCP请求/回复/确认序列未正确实现
 
-At boot time, Raspberry Pi broadcasts a DHCPDISCOVER packet. The DHCP server replies with a DHCPOFFER packet. The Raspberry Pi then continues booting without doing a DHCPREQUEST or waiting for DHCPACK. This may result in two separate devices being offered the same IP address and using it without it being properly assigned to the client.
+在启动时,树莓派会广播一个DHCPDISCOVER数据包。DHCP服务器用一个DHCPOFFER数据包进行响应。但是树莓派接下来会继续启动,而不发送DHCPREQUEST或等待DHCPACK。这可能导致两个独立的设备被分配到同一个IP地址,并且同时使用该IP地址,而没有被正确地分配给客户端。
 
-Different DHCP servers have different behaviours in this situation. dnsmasq (depending upon settings) will hash the MAC address to determine the IP address, and ping the IP address to make sure it isn't already in use. This reduces the chances of this happening because it requires a collision in the hash.
+不同的DHCP服务器在这种情况下的行为也不尽相同。dnsmasq(取决于设置)会对MAC地址进行哈希运算来确定IP地址,并且会ping该IP地址以确保它没有被占用。这样做可以降低发生这种情况的可能性,因为它需要哈希值发生碰撞。

@@ -1,17 +1,18 @@
-== Display Parallel Interface (DPI)
+== 显示并行接口 (DPI)
 
 [.whitepaper, title="Using a DPI Display on the Raspberry Pi", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003471-WP/Using-a-DPI-display.pdf]
 ****
-Display Parallel Interface (DPI) displays can be connected to Raspberry Pi devices via the 40-pin general-purpose input/output (GPIO) connector as an alternative to using the dedicated Display Serial Interface (DSI) or High-Definition Multimedia Interface (HDMI) ports.
+显示器并行接口（DPI）显示器可以通过40-pin 通用输入/输出（GPIO）连接器连接到Raspberry Pi设备，作为使用专用显示串行接口（DSI）或高清多媒体接口（HDMI）端口的替代方案。
 ****
 
-An up-to-24-bit parallel RGB interface is available on all Raspberry Pi boards with the 40 way header and the Compute Modules. This interface allows parallel RGB displays to be attached to the Raspberry Pi GPIO either in RGB24 (8 bits for red, green and blue) or RGB666 (6 bits per colour) or RGB565 (5 bits red, 6 green, and 5 blue).
+所有带有 40 路接头的 Raspberry Pi 电路板和计算模块都有一个 24 位的并行 RGB 接口。该接口允许将并行 RGB 显示器连接到 Raspberry Pi GPIO，可以是 RGB24（8 位红、绿、蓝）或 RGB666（每种颜色 6 位）或 RGB565（5 位红、6 位绿、5 位蓝）。
 
-This interface is controlled by the GPU firmware and can be programmed by a user via special `config.txt` parameters and by enabling the correct Linux Device Tree overlay.
+该接口由 GPU 固件控制，用户可通过指定的 `config.txt` 参数和启用正确的 Linux 设备树overlay对其进行修改。
 
-=== GPIO pins
+[[gpio-pins]]
+=== GPIO引脚
 
-One of the alternate functions selectable on Bank 0 of the Raspberry Pi GPIO is DPI (Display Parallel Interface) which is a simple clocked parallel interface (up to 8 bits of R, G and B; clock, enable, hsync, and vsync). This interface is available as alternate function 2 (ALT2) on GPIO Bank 0:
+Raspberry Pi GPIO 第 0 组可选择的备用功能之一是 DPI（显示并行接口），它是一个简单的时钟并行接口（最多 8 位 R、G 和 B；时钟、使能、hsync 和 vsync）。该接口可作为 GPIO Bank 0 上的备用功能 2 (ALT2)：
 
 [cols="1m,1m"]
 |===
@@ -102,7 +103,7 @@ One of the alternate functions selectable on Bank 0 of the Raspberry Pi GPIO is 
 |DPI_D23
 |===
 
-NOTE: There are various ways that the colour values can be presented on the DPI output pins in either 565, 666, or 24-bit modes (see the following table and the `output_format` part of the `dpi_output_format` parameter below):
+NOTE:  在 565、666 或 24 位模式下，有多种方式可以在 DPI 输出引脚上显示颜色值（请参阅下表和下面 `dpi_output_format` 参数中的 `output_format` 部分）：
 
 [cols="1,1,^1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"]
 |===
@@ -331,9 +332,10 @@ h|*27* h|*26* h|*25* h|*24* h|*23* h|*22* h|*21* h|*20* h|*19* h|*18* h|*17* h|*
 |===
 {set:cellbgcolor:!}
 
-=== Disable other GPIO peripherals
+[[disable-other-gpio-peripherals]]
+=== 禁用其他GPIO外设
 
-All other peripheral overlays that use conflicting GPIO pins must be disabled. In `config.txt`, take care to comment out or invert any dtparams that enable I2C or SPI:
+必须禁用所有其他使用冲突 GPIO 引脚的 overlay。在 `config.txt` 中，请注意注释掉或关闭任何启用I2C或SPI的 dtparams ：
 
 [source,ini]
 ----
@@ -341,37 +343,40 @@ dtparam=i2c_arm=off
 dtparam=spi=off
 ----
 
-=== Configure a display
+[[configure-a-display]]
+=== 配置显示器
 
-The https://en.wikipedia.org/wiki/Direct_Rendering_Manager#Kernel_mode_setting[Kernel Mode Setting (KMS)] generic display interface enables output to arbitrary displays, as long as you have an appropriate driver.
+https://en.wikipedia.org/wiki/Direct_Rendering_Manager#Kernel_mode_setting[内核模式设置 (KMS)] 通用显示接口可向任意显示器输出，只要有适当的驱动程序即可。
 
-==== Auto detect
+[[auto-detect]]
+==== 自动检测
 
-Auto detect allows your Raspberry Pi to connect with a display without a manually configured device tree overlay.
-Auto detection is enabled by default. You can enable display auto detect by adding the following line to `config.txt`:
+自动检测允许您的Raspberry Pi与显示器连接，而无需手动配置设备树overlay。
+默认情况下启用自动检测。您可以通过在 `config.txt` 中添加以下行来启用显示自动检测：
 
 [source,ini]
 ----
 display_auto_detect=1
 ----
 
-Replace the `1` with a `0` to disable auto detect.
-When you connect the official Raspberry Pi display with auto detect enabled, KMS determines the display model automatically and configures the appropriate display settings.
+用 `0` 代替 `1` 以禁用自动检测。
+在启用自动检测的情况下连接 Raspberry Pi 官方显示屏时，KMS 会自动确定显示屏型号并配置相应的显示屏设置。
 
-==== Manually configure a display
+[[manually-configure-a-display]]
+==== 手动配置显示器
 
-NOTE: In Raspberry Pi OS _Bookworm_ or later, the `dpi_output_format` and `dpi_timings` entries in `config.txt` previously used to set up DPI have been superseded by the `vc4-kms-dpi-generic` overlay.
+NOTE: 在 Raspberry Pi OS  _Bookworm_  或更高版本中，以前用于设置 DPI 的 `config.txt` 中的 `dpi_output_format` 和 `dpi_timings` 已被 `vc4-kms-dpi-generic` overlay 取代。
 
-To use any display other than the official Raspberry Pi display, you must specify a `dtoverlay` entry in `config.txt`. The panel manufacturer should configure timings for your display in Linux kernel code and provide an overlay to enable those settings. See the https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm/boot/dts/overlays/vc4-kms-kippah-7inch-overlay.dts[Adafruit Kippah display entry] for an example. The following example demonstrates how to set a `dtoverlay` entry for the Kippah display in your xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] file:
+要使用 Raspberry Pi 官方显示屏以外的任何显示屏，必须在 `config.txt` 中指定一个 `dtoverlay` 条目。面板制造商应在 Linux 内核代码中为你的显示器配置时序，并提供一个 overlay 来启用这些设置。有关示例，请参阅 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm/boot/dts/overlays/vc4-kms-kippah-7inch-overlay.dts[Adafruit Kippah 显示器条目]。下面的示例演示了如何在 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 文件中为 Kippah 显示器设置 `dtoverlay` 条目：
 
 [source,ini]
 ----
 dtoverlay=vc4-kms-kippah-7inch-overlay
 ----
 
-Display timings are usually defined in the kernel, but you can also define them in the provided `panel-dpi` driver. If your panel lacks a defined overlay in kernel code, you can use the `panel-dpi` driver to define display timings as parameters. This enables you to manually configure a device tree entry for any display.
+显示时序通常在内核中定义，但也可以在提供的 `panel-dpi` 驱动程序中定义。如果你的面板在内核代码中没有定义覆盖，你可以使用 `panel-dpi` 驱动程序将显示时序定义为参数。这样就可以为任何显示器手动配置设备树。
 
-The following example demonstrates how you can define timings using device tree parameters:
+以下示例演示了如何使用设备树参数定义计时：
 
 [source,ini]
 ----
@@ -381,71 +386,71 @@ dtparam=vactive=640,vfp=25,vsync=10,vbp=16
 dtparam=clock-frequency=32000000,rgb666-padhi
 ----
 
-NOTE: Device tree line length must not exceed 80 characters. When a setting requires a line longer than 80 characters, split the assignment of that parameter across multiple lines.
+NOTE: 设备树行长度不得超过80个字符。当设置需要超过80个字符的行时，将该参数的分配拆分为多行。
 
-Parameter display tree definitions support the following options:
+参数显示树定义支持以下选项：
 
 [cols="1,2"]
 |===
 | Option | Description
 
-| `clock-frequency`
+|  `clock-frequency` 
 | Display clock frequency (Hz)
 
-| `hactive`
+|  `hactive` 
 | Horizontal active pixels
 
-| `hfp`
+|  `hfp` 
 | Horizontal front porch
 
-| `hsync`
+|  `hsync` 
 | Horizontal sync pulse width
 
-| `hbp`
+|  `hbp` 
 | Horizontal back porch
 
-| `vactive`
+|  `vactive` 
 | Vertical active lines
 
-| `vfp`
+|  `vfp` 
 | Vertical front porch
 
-| `vsync`
+|  `vsync` 
 | Vertical sync pulse width
 
-| `vbp`
+|  `vbp` 
 | Vertical back porch
 
-| `hsync-invert`
+|  `hsync-invert` 
 | Horizontal sync active low
 
-| `vsync-invert`
+|  `vsync-invert` 
 | Vertical sync active low
 
-| `de-invert`
+|  `de-invert` 
 | Data Enable active low
 
-| `pixclk-invert`
+|  `pixclk-invert` 
 | Negative edge pixel clock
 
-| `width-mm`
+|  `width-mm` 
 | Defines the screen width in millimetres
 
-| `height-mm`
+|  `height-mm` 
 | Defines the screen height in millimetres
 
-| `rgb565`
+|  `rgb565` 
 | Change to RGB565 output on GPIOs 0-19
 
-| `rgb666-padhi`
+|  `rgb666-padhi` 
 | Change to RGB666 output on GPIOs 0-9, 12-17, and 20-25
 
-| `rgb888`
+|  `rgb888` 
 | Change to RGB888 output on GPIOs 0-27
 
-| `bus-format`
+|  `bus-format` 
 | Override the bus format for a MEDIA_BUS_FMT_* value, also overridden by rgbXXX overrides
 
-| `backlight-gpio`
+|  `backlight-gpio` 
 | Defines a GPIO to be used for backlight control (default value: none)
 |===

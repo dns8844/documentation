@@ -1,17 +1,18 @@
-=== `rpicam-jpeg`
 
-`rpicam-jpeg` helps you capture images on Raspberry Pi devices.
+=== `rpicam-jpeg` 
 
-To capture a full resolution JPEG image and save it to a file named `test.jpg`, run the following command:
+`rpicam-jpeg` 可帮助您在Raspberry Pi设备上捕获图像。
+
+要捕获全分辨率JPEG图像并将其保存到名为 `test.jpg` 的文件中，请运行以下命令：
 
 [source,console]
 ----
 $ rpicam-jpeg --output test.jpg
 ----
 
-You should see a preview window for five seconds. Then, `rpicam-jpeg` captures a full resolution JPEG image and saves it.
+您应该会看到五秒钟的预览窗口。然后， `rpicam-jpeg` 捕获全分辨率JPEG图像并保存它。
 
-Use the xref:camera_software.adoc#timeout[`timeout`] option to alter display time of the preview window. The xref:camera_software.adoc#width-and-height[`width` and `height`] options change the resolution of the saved image. For example, the following command displays the preview window for 2 seconds, then captures and saves an image with a resolution of 640×480 pixels:
+使用 xref:camera_software.adoc#timeout[`timeout` ]选项更改预览窗口的显示时间。 xref:camera_software.adoc#width-and-height[ `width` 和 `height`] 选项更改保存图像的分辨率。例如，以下命令将预览窗口显示2秒，然后捕获并保存分辨率为640×480像素的图像：
 
 [source,console]
 ----

@@ -1,9 +1,10 @@
+[[bcm2837b0]]
 == BCM2837B0
 
-This is the Broadcom chip used in the Raspberry Pi 3 Models A+, B+, and the Raspberry Pi Compute Module 3+. The underlying architecture of the BCM2837B0 is identical to the BCM2837 chip used in other versions of the Raspberry Pi. The ARM core hardware is the same, only the frequency is rated higher.
+这是树莓派3型号A+、B+和树莓派计算模块3+中使用的博通芯片。BCM2837B0的底层架构与树莓派其他版本中使用的BCM2837芯片相同。ARM核心硬件相同，只是频率额定更高。
 
-The ARM cores are capable of running at up to 1.4GHz, making the 3B+/3A+ about 17% faster than the original Raspberry Pi 3. The VideoCore IV runs at 400MHz. The ARM core is 64-bit, while the VideoCore IV is 32-bit.
+ARM内核的运行频率高达1.4GHz，使3B+/3A+比最初的树莓派3快约17%。VideoCore IV运行频率为400MHz。ARM内核是64位的，而VideoCore IV是32位的。
 
-The BCM2837B0 chip is packaged slightly differently to the BCM2837, and most notably includes a heat spreader for better thermals. This allows higher clock frequencies, and more accurate monitoring and control of the chip's temperature.
+BCM2837B0芯片的封装与BCM2837略有不同，最值得注意的是包括一个散热器，用于更好的散热。这允许更高的时钟频率，以及更准确的芯片温度监控和控制。
 
-This https://www.raspberrypi.com/news/raspberry-pi-3-model-bplus-sale-now-35/[post on the Raspberry Pi blog] goes into further detail about the BCM2837B0 chip.
+这 https://www.raspberrypi.com/news/raspberry-pi-3-model-bplus-sale-now-35/[Raspberry Pi博客上的帖子] 进一步详细介绍了BCM2837B0芯片。

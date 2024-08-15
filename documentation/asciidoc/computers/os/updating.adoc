@@ -1,43 +1,44 @@
-== Update software
+[[update-software]]
+== 更新软件
 
-Always keep the software running on your Raspberry Pi updated to the latest version. This keeps your device secure from https://cve.mitre.org/index.html[vulnerabilities] and ensures that you get the latest bug fixes.
+始终将 Raspberry Pi 上运行的软件更新到最新版本。这将确保您的设备免受 https://cve.mitre.org/index.html[漏洞] 的威胁，并确保您获得最新的错误修复。
 
-=== Manage software packages with APT
+=== 使用 APT 管理软件包
 
-https://en.wikipedia.org/wiki/APT_(software)[Advanced Package Tool (APT)] is the recommended way to install, update, and remove software in Raspberry Pi OS. You can access APT through the `apt` CLI.
+https://en.wikipedia.org/wiki/APT_(software)[高级软件包工具(APT)]是在 Raspberry Pi 操作系统中安装、更新和删除软件的推荐方法。您可以通过 `apt` CLI 访问 APT。
 
-==== Install updates
+==== 安装更新
 
-`apt` stores a list of software sources in a file at `/etc/apt/sources.list`. Before installing software, run the following command to *update* your local list of packages using `/etc/apt/sources.list`:
+`apt`  会在文件 `/etc/apt/sources.list` 中存储软件源列表。安装软件前，请运行以下命令，使用 `/etc/apt/sources.list` *更新* 本地软件包列表：
 
 [source,console]
 ----
 $ sudo apt update
 ----
 
-Run the following command to *upgrade* all your installed packages to their latest versions:
+运行以下命令，将所有已安装的软件包升级到最新版本：
 
 [source,console]
 ----
 $ sudo apt full-upgrade
 ----
 
-TIP: Unlike Debian, Raspberry Pi OS is under continual development. As a result, package dependencies sometimes change, so you should always use `full-upgrade` instead of the standard `upgrade`.
+TIP: 与 Debian 不同，Raspberry Pi OS 正在持续开发中。因此，软件包依赖关系有时会发生变化，所以你应该始终使用 `full-upgrade` 而不是标准的 `upgrade`。
 
-Run these commands regularly to keep your software up-to-date. Using `apt` to keep Raspberry Pi OS up to date also keeps your Linux kernel and firmware up to date, since Raspberry Pi distributes them as Debian packages.
+定期运行这些命令以保持软件最新。使用 `apt` 保持 Raspberry Pi OS 的最新版本，也能保持 Linux 内核和固件的最新版本，因为 Raspberry Pi 将它们作为 Debian 软件包发布。
 
-When Raspberry Pi releases a new major version of Raspberry Pi OS, the above commands won't upgrade your operating system to that new major version. To upgrade to a new major version, follow our xref:os.adoc#upgrade-your-operating-system-to-a-new-major-version[OS upgrade instructions].
+当 Raspberry Pi 发布新的 Raspberry Pi OS 主版本时，上述命令不会将你的操作系统升级到新的主版本。要升级到新的主版本，请遵循我们的 xref:os.adoc#upgrade-your-operating-system-to-a-new-major-version[操作系统升级说明]。
 
-==== Search for software
+==== 搜索软件
 
-To search the archives for a package, pass a search keyword to `apt-cache search`:
+要搜索存档软件包，请向 `apt-cache search` 传递搜索关键字：
 
 [source,console]
 ----
 $ apt-cache search <keyword>
 ----
 
-For example, consider the following search for the keyword "raspi":
+例如，下面是对关键字 "raspi" 的搜索：
 
 [source,console]
 ----
@@ -57,16 +58,16 @@ raspi-copies-and-fills - ARM-accelerated versions of selected functions from str
 raspi-copies-and-fills-dbgsym - debug symbols for raspi-copies-and-fills
 ----
 
-The search returned multiple packages with names or descriptions that included the keyword.
+搜索会返回多个名称或描述包含关键字的软件包。
 
-Use the following command to view detailed information about a package:
+使用以下命令查看软件包的详细信息：
 
 [source,console]
 ----
 $ apt-cache show <package-name>
 ----
 
-For example, consider the following query for the "raspi-config" package:
+例如，下面是对 "raspi-config "软件包的查询：
 
 [source,console]
 ----
@@ -90,69 +91,69 @@ Description: Raspberry Pi configuration tool
 Description-md5: 19630c04463bfe7193152448b53d85a0
 ----
 
-Use this command to verify that the maintainer, version, and size match your expectations for a package.
+使用此命令可验证软件包的维护者、版本和大小是否符合您的预期。
 
-==== Install a package
+==== 安装软件包
 
-To install a package on your Raspberry Pi, pass the name of the package to the following command:
+要在 Raspberry Pi 上安装软件包，请在以下命令中输入软件包的名称：
 
 [source,console]
 ----
 $ sudo apt install <package-name>
 ----
 
-`apt` will display the amount of disk space the package will consume. Enter *Y* and press **Enter** to confirm installation of the package. You can skip this confirmation step by adding the `-y` flag to the command above.
+`apt` 将显示软件包将占用的磁盘空间。输入 *Y*，然后按 **Enter** 确认软件包的安装。在上述命令中添加 `-y` 标志可跳过这一确认步骤。
 
-==== Uninstall a package
+==== 卸载软件包
 
-To uninstall a package from your Raspberry Pi, pass the name of the package to the following command:
+要卸载 Raspberry Pi 上的软件包，请将软件包的名称输入以下命令：
 
 [source,console]
 ----
 $ sudo apt remove <package-name>
 ----
 
-TIP: To completely remove all traces of the package, including configuration files, use `purge` instead of `remove`.
+TIP: 要完全删除软件包的所有痕迹，包括配置文件，请使用 `purge` 而不是 `remove`。
 
-`apt` will display the amount of disk space removing the package will free up.
-Enter *Y* and press **Enter** to confirm removal of the package. You can skip this confirmation step by adding the `-y` flag to the command above.
+`apt` 将显示删除软件包将释放的磁盘空间。
+输入 *Y*，然后按 **Enter** 确认删除软件包。在上述命令中添加 `-y` 标志可跳过确认步骤。
 
-==== Manage `apt` disk usage
+==== 管理 `apt` 磁盘使用量
 
-Before running, `sudo apt full-upgrade` shows the amount of data you'll need to download and store on disk to complete an upgrade. To check that you have enough free disk space, run the following command:
+在运行之前，`sudo apt full-upgrade` 会显示为完成升级而需要下载并存储在磁盘上的数据大小。要检查是否有足够的可用磁盘空间，请运行以下命令：
 
 [source,console]
 ----
 $ df -h
 ----
 
-`apt` stores downloaded package (`.deb`) files in `/var/cache/apt/archives`. During installation, `apt` downloads these packages, then copies files from the packages to the correct installation locations. Depending on the software you have installed, package files can take up significant amounts of space. To delete any lingering package files, run the following command:
+`apt` 将下载的软件包 (`.deb`) 文件存储在 `/var/cache/apt/archives` 中。在安装过程中，`apt` 会下载这些软件包，然后将软件包中的文件复制到正确的安装位置。根据所安装软件的不同，软件包文件可能会占用大量空间。要删除任何残留的软件包文件，请运行以下命令：
 
 [source,console]
 ----
 $ sudo apt clean
 ----
 
-=== Upgrade your operating system to a new major version
+=== 将操作系统升级到新的主要版本
 
-WARNING: Before attempting a major version upgrade, make a backup.
+WARNING: 在尝试主要版本升级之前，请先进行备份。
 
-To update the operating system to a new major release on your Raspberry Pi, image a second SD card with the new release. Use a USB SD card reader or network storage to copy files and configuration from your current installation to the new SD card. Then, swap the new SD card into the slot on your Raspberry Pi, and boot.
+要在 Raspberry Pi 上将操作系统升级到新的主要版本，请将新版本映像到第二张 SD 卡上。使用 USB SD 读卡器或网络存储设备将当前安装的文件和配置复制到新的 SD 卡上。然后，将新的 SD 卡插入 Raspberry Pi 的插槽并启动。
 
 [[rpi-update]]
-=== Upgrade your firmware
+=== 升级固件
 
-WARNING: Before attempting a firmware upgrade, make a backup.
+WARNING: 在尝试固件升级之前，请先进行备份。
 
-WARNING: Pre-release versions of software are not guaranteed to work. Do not use `rpi-update` on any system unless recommended to do so by a Raspberry Pi engineer. It could leave your system unreliable or broken. Do not use `rpi-update` as part of any regular update process.
+WARNING: 不保证预发布版本的软件可以正常工作。除非得到 Raspberry Pi 工程师的建议，否则不要在任何系统上使用 `rpi-update`。这会导致系统不可靠或损坏。请勿将 `rpi-update` 用作任何定期更新过程的一部分。
 
-To update the firmware on your Raspberry Pi to the latest version, use https://github.com/raspberrypi/rpi-update[`rpi-update`].
+要将 Raspberry Pi 上的固件更新到最新版本，请使用 https://github.com/raspberrypi/rpi-update[`rpi-update`]。
 
-`rpi-update` downloads the latest pre-release version of the Linux kernel, its matching modules, device tree files, and the latest versions of the VideoCore firmware. It then installs these files into an existing Raspberry Pi OS install.
+`rpi-update` 会下载最新预发布版本的 Linux 内核、其匹配模块、设备树文件和最新版本的 VideoCore 固件。然后将这些文件安装到现有的 Raspberry Pi OS 安装中。
 
-All the source data used by `rpi-update` comes from the https://github.com/raspberrypi/rpi-firmware[`rpi-firmware` repository]. This repository contains a subset of the data from the https://github.com/raspberrypi/firmware[official firmware repository].
+rpi-update` 使用的所有源数据都来自 https://github.com/raspberrypi/rpi-firmware[`rpi-firmware` 资源库]。该版本库包含 https://github.com/raspberrypi/firmware[官方固件版本库]中数据的子集。
 
-Run `rpi-update` as root to initiate the update. Once the update is complete, reboot your Raspberry Pi for these changes to take effect:
+以根用户身份运行 `rpi-update` 启动更新。更新完成后，重启 Raspberry Pi 以使更改生效：
 
 [source,console]
 ----
@@ -160,14 +161,14 @@ $ sudo rpi-update
 $ sudo reboot
 ----
 
-[.whitepaper, title="Updating Raspberry Pi firmware", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003476-WP/Updating-Pi-firmware.pdf]
+[.whitepaper, title="更新 Raspberry Pi 固件", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003476-WP/Updating-Pi-firmware.pdf]
 ****
-This whitepaper documents how to update the VideoCore firmware in a Raspberry Pi OS image.
+本白皮书记录了如何更新 Raspberry Pi OS 映像中的 VideoCore 固件。
 ****
 
-=== Downgrade firmware to the last stable release
+=== 将固件降级到上一个稳定版本
 
-If you update your firmware to the latest release and experience an issue, use the following command to return to the last stable firmware release:
+如果您将固件更新到最新版本，但遇到问题，请使用以下命令返回到上一个稳定固件版本：
 
 [source,console]
 ----
@@ -177,12 +178,12 @@ $ sudo apt install --reinstall raspi-firmware
 
 [NOTE]
 ====
-If you still run Raspberry Pi OS Bullseye, you must instead reinstall `raspberrypi-kernel` using the following command:
+如果仍在运行 Raspberry Pi OS Bullseye，则必须使用以下命令重新安装 `raspberrypi-kernel`：
 
 [source,console]
 ----
 $ sudo apt install --reinstall libraspberrypi0 libraspberrypi-{bin,dev,doc} raspberrypi-{kernel,bootloader}
 ----
 
-Reboot your Raspberry Pi with `sudo reboot` to put these changes into effect.
+使用 `sudo reboot` 重启 Raspberry Pi，使这些更改生效。
 ====

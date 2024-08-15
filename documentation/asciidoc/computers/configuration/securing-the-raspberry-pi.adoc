@@ -1,176 +1,181 @@
-== Secure your Raspberry Pi
+[[secure-your-raspberry-pi]]
+== 保护您的树莓派
 
-Here, we describe some common ways to improve the security of your Raspberry Pi.
+在这里，我们描述了一些提高Raspberry Pi安全性的常用方法。
 
-=== Require a password for `sudo` commands
+[[change-user-password]]
+=== 更改用户密码
 
-Prefixing a command with `sudo` runs it as a superuser. By default, that does not need a password. However, you can make your Raspberry Pi more secure by requiring a password for all commands run with `sudo`.
+以 `sudo` 为前缀的命令以超级用户身份运行。默认情况下，超级用户不需要密码。不过，您可以要求所有以 `sudo` 运行的命令都输入密码，从而提高 Raspberry Pi 的安全性。
 
-To force `sudo` to require a password, edit the `nopasswd` sudoers file for your user account, replacing the `<username>` placeholder in the file name with your username:
+要强制 `sudo` 需要密码，请为您的用户帐户编辑 `nopasswd` sudoers文件，将文件名中的 `<username>` 占位符替换为您的用户名：
 
 [source,console]
 ----
 $ sudo visudo /etc/sudoers.d/010_<username>-nopasswd
 ----
 
-Change the `<username>` entry to the following, replacing `<username>` with your username:
+将 `<username>` 条目更改为以下内容，将 `<username>` 替换为您的用户名：
 
 [source,bash]
 ----
 <username> ALL=(ALL) PASSWD: ALL
 ----
 
-Save the file. Your new preference should take effect immediately.
+保存文件。您的新首选项应立即生效。
 
-=== Update Raspberry Pi OS
+[[update-raspberry-pi-os]]
+=== 更新树莓派操作系统
 
-Only the latest OS distribution contains all the latest security fixes. Always keep your device xref:os.adoc#update-software[updated] to the latest version of Raspberry Pi OS.
+只有最新的操作系统发行版才包含所有最新的安全修复。请始终将您的设备 xref:os.adoc#update-software[updated] 保持在 Raspberry Pi OS 的最新版本。
 
-=== Automatically update your SSH server
-
-If you use SSH to connect to your Raspberry Pi, it can be worthwhile to add a `cron` job that specifically updates the SSH server. The following command, perhaps run as a daily `cron` job, ensures you have the latest SSH security fixes promptly, independent of your normal update process.
+=== 自动更新 SSH 服务器
+如果您使用SSH连接到Raspberry Pi，则值得添加专门更新SSH服务器的 `cron` 作业。以下命令可能作为每日 `cron` 作业运行，可确保您立即获得最新的SSH安全修复，独立于正常的更新过程。
 
 [source,console]
 ----
 $ apt install openssh-server
 ----
 
-=== Improve SSH security
+=== 提高SSH安全性
 
-SSH is a common way to remotely access a Raspberry Pi. By default, SSH requires a username and password. To make SSH even more secure, use xref:remote-access.adoc#configure-ssh-without-a-password[key-based authentication].
+SSH 是远程访问 Raspberry Pi 的常用方法。默认情况下，SSH 需要用户名和密码。要使 SSH 更加安全，请使用 xref:remote-access.adoc#configure-ssh-without-a-password[基于密钥的身份验证]。
 
-==== Enable and disable SSH users
+==== 启用和禁用 SSH 用户
 
-You can also *allow* or *deny* specific users by altering the `sshd` configuration.
+通过更改 `sshd` 配置，你还可以 *允许* 或 *拒绝* 特定用户。
 
 [source,console]
 ----
 $ sudo nano /etc/ssh/sshd_config
 ----
 
-Add, edit, or append to the end of the file the following line, which contains the usernames you wish to allow to log in:
+在文件末尾添加、编辑或附加以下行，其中包含您希望允许登录的用户名：
 
 [source,bash]
 ----
 AllowUsers alice bob
 ----
 
-You can also use `DenyUsers` to specifically stop some usernames from logging in:
+您还可以使用 `DenyUsers` 来专门阻止某些用户名登录：
 
 [source,bash]
 ----
 DenyUsers jane john
 ----
 
-After the change, restart the `sshd` service with the following command to put your changes into effect:
+更改后，使用以下命令重启 `sshd` 服务，使更改生效：
 
 [source,console]
 ----
 $ sudo systemctl restart ssh
 ----
 
-=== Use a firewall
 
-There are many firewall solutions available for Linux. Most use the underlying http://www.netfilter.org/projects/iptables/index.html[iptables] project to provide packet filtering. This project sits over the Linux netfiltering system. By default, `iptables` is installed on Raspberry Pi OS, but is not set up. Setting it up can be a complicated task, and one project that offers a simpler interface than `iptables` is https://www.linux.com/learn/introduction-uncomplicated-firewall-ufw[Uncomplicated Firewall (UFW)]. This is the default firewall tool in Ubuntu, and can be installed on your Raspberry Pi:
+[[install-a-firewall]]
+=== 安装防火墙
+
+有许多防火墙解决方案可供Linux使用。大多数使用底层 http://www.netfilter.org/projects/iptables/index.html[iptables] 项目来提供数据包过滤。该项目位于Linux网络过滤系统之上。默认情况下， `iptables` 安装在树莓派操作系统上，但没有设置。设置它可能是一项复杂的任务，一个提供比 `iptables` 更简单界面的项目是 https://www.linux.com/learn/introduction-uncomplicated-firewall-ufw[防火墙（UFW）]。这是Ubuntu中的默认防火墙工具，可以安装在您的树莓派上：
 
 [source,console]
 ----
 $ sudo apt install ufw
 ----
 
-`ufw` is a command-line tool, although there are some GUIs available for it. Note that `ufw` needs to be run with superuser privileges, so all commands are preceded with `sudo`. It is also possible to use the option `--dry-run` any `ufw` commands, which indicates the results of the command without actually making any changes.
+`ufw` 是一个命令行工具，不过也有一些图形用户界面可供使用。请注意，`ufw` 需要以超级用户权限运行，因此所有命令前都要加上 `sudo`。也可以使用选项 `--dry-run` 来运行任何 `ufw` 命令，它可以显示命令的结果，而不做任何实际修改。
 
-To enable the firewall, which will also ensure it starts up on boot, use:
+要启用防火墙，这也将确保它在启动时启动，请使用：
 
 [source,console]
 ----
 $ sudo ufw enable
 ----
 
-To disable the firewall, and disable start up on boot, use:
+要禁用防火墙并在启动时禁用启动，请使用：
 
 [source,console]
 ----
 $ sudo ufw disable
 ----
 
-Allow a particular port to have access (we have used port 22 in our example):
+允许特定端口具有访问权限（我们在示例中使用了端口22）：
 
 [source,console]
 ----
 $ sudo ufw allow 22
 ----
 
-Denying access on a port is also very simple (again, we have used port 22 as an example):
+拒绝访问端口也很简单（同样，我们以端口22为例）：
 
 [source,console]
 ----
 $ sudo ufw deny 22
 ----
 
-You can also specify which service you are allowing or denying on a port. In this example, we are denying TCP on port 22:
+您还可以指定在端口上允许或拒绝哪个服务。在此示例中，我们在端口22上拒绝tcp：
 
 [source,console]
 ----
 $ sudo ufw deny 22/tcp
 ----
 
-You can specify the service even if you do not know which port it uses. This example allows the ssh service access through the firewall:
+即使您不知道它使用哪个端口，您也可以指定该服务。此示例允许ssh服务通过防火墙访问：
 
 [source,console]
 ----
 $ sudo ufw allow ssh
 ----
 
-The status command lists all current settings for the firewall:
+status命令列出了防火墙的所有当前设置：
 
 [source,console]
 ----
 $ sudo ufw status
 ----
 
-The rules can be quite complicated, allowing specific IP addresses to be blocked, specifying in which direction traffic is allowed, or limiting the number of attempts to connect (for example to help defeat a DDoS attack). You can also specify the device rules are to be applied to (e.g. eth0, wlan0). Please refer to the `ufw` man page (`man ufw`) for full details beyond the commands below.
+这些规则可能相当复杂，允许阻止特定的IP地址，指定允许哪个方向的流量，或限制尝试连接的次数（例如帮助击败DDoS攻击）。您还可以指定要应用的设备规则（例如eth0、wlan0）。请参阅 `ufw` 手册页（ `man ufw` ）以获取以下命令以外的完整详细信息。
 
-Limit login attempts on ssh port using TCP. This denies connection if an IP address has attempted to connect six or more times in the last 30 seconds:
+使用TCP限制ssh端口上的登录尝试。如果IP地址在过去30秒内尝试连接6次或更多次，这将拒绝连接：
 
 [source,console]
 ----
 $ sudo ufw limit ssh/tcp
 ----
 
-Deny access to port 30 from IP address 192.168.2.1
+拒绝从192.168.2.1地址访问端口30
 
 [source,console]
 ----
 $ sudo ufw deny from 192.168.2.1 port 30
 ----
 
-=== Block suspicious activity with `fail2ban`
+[[installing-fail2ban]]
+=== 安装  `fail2ban` 
 
-When using a Raspberry Pi as a server, you must create deliberate holes in your firewall to allow server traffic. http://www.fail2ban.org[Fail2ban] can help secure your server. Fail2ban examines log files and checks for suspicious activity, like multiple brute-force login attempts. It saves you having to manually check log files for intrusion attempts and then update the firewall (via `iptables`) to prevent them.
+当把 Raspberry Pi 用作服务器时，你必须设置防火墙以允许服务器流量。http://www.fail2ban.org[Fail2ban] 可以帮助确保服务器安全。Fail2ban 会检查日志文件并检查可疑活动，如多次暴力登录尝试。它能帮你省去手动检查日志文件，然后更新防火墙（通过 `iptables` ）来阻止入侵尝试的麻烦。
 
-To install `fail2ban`, run the following command:
+要安装 `fail2ban`，请运行以下命令：
 
 [source,console]
 ----
 $ sudo apt install fail2ban
 ----
 
-On installation, Fail2ban creates `/etc/fail2ban/jail.conf`. To enable Fail2ban, copy `jail.conf` to `jail.local`:
+安装时，Fail2ban 会创建 `/etc/fail2ban/jail.conf`。要启用 Fail2ban，请将 `jail.conf` 复制到 `jail.local`：
 
 [source,console]
 ----
 $ sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 ----
 
-Inside this configuration file are a set of default options, together with options for checking specific services for abnormalities. To examine the rules used for `ssh`, open `jail.local` in an editor:
+该配置文件包含一组默认选项，以及用于检查特定服务异常的选项。要检查用于 `ssh` 的规则，请在编辑器中打开 `jail.local`：
 
 [source,console]
 ----
 $ sudo nano /etc/fail2ban/jail.local
 ----
 
-Create the `[ssh]` section if it does not already exist and add the following lines to the section:
+如果 `[ssh]` 部分还不存在，则创建该部分，并在该部分中添加以下行：
 
 [source,ini]
 ----
@@ -182,9 +187,9 @@ backend  = systemd
 maxretry = 6
 ----
 
-This enables Fail2ban checks for suspicious `ssh` activity, including system log checks, and allows six retries before blocking activity.
+这将启用 Fail2ban 检查可疑的 `ssh` 活动，包括系统日志检查，并允许在阻止活动前重试六次。
 
-The `[default]` section in this same file defines the default banning action, `iptables-multiport`, which runs the `/etc/fail2ban/action.d/iptables-multiport.conf` file when the detection threshold is reached:
+同一文件中的 `[default]` 部分定义了默认禁止操作  `iptables-multiport`，当达到检测阈值时，该操作将运行 `/etc/fail2ban/action.d/iptables-multiport.conf` 文件：
 
 [source,ini]
 ----
@@ -195,9 +200,9 @@ The `[default]` section in this same file defines the default banning action, `i
 banaction = iptables-multiport
 ----
 
-Multiport bans all access on all ports. The `action.d` folder contains a number of alternative action configuration files you can use to customise your server's response to suspicious activity.
+多端口禁止所有端口的所有访问。`action.d` 文件夹包含许多可供选择的动作配置文件，您可以用它们来定制服务器对可疑活动的反应。
 
-For instance, to permanently ban an IP address after three failed attempts, change the `maxretry` value in the `[ssh]` section to `3` and set the `bantime` to a negative number:
+例如，要在尝试三次失败后永久禁止一个 IP 地址，可将 `[ssh]` 部分中的 `maxretry` 值改为 `3`，并将 `bantime` 设为负数：
 
 [source,ini]
 ----

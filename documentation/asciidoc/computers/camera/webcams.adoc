@@ -1,37 +1,38 @@
-== Use a USB webcam
+[[use-a-usb-webcam]]
+== 使用 USB 网络摄像头
 
-Most Raspberry Pi devices have dedicated ports for camera modules. Camera modules are high-quality, highly-configurable cameras popular with Raspberry Pi users.
+大多数 Raspberry Pi 设备都有用于相机模块的专用端口。摄像头模块是深受 Raspberry Pi 用户喜爱的高质量、可高度配置的摄像头。
 
-However, for many purposes a USB webcam has everything you need to record pictures and videos from your Raspberry Pi. This section explains how to use a USB webcam with your Raspberry Pi.
+不过，对于许多用途来说，USB 网络摄像头可以满足您从 Raspberry Pi 录制图片和视频的一切需要。本节将介绍如何在 Raspberry Pi 上使用 USB 网络摄像头。
 
-=== Install dependencies
+=== 安装依赖
 
-First, install the `fswebcam` package:
+首先，安装 `fswebcam` 软件包：
 
 [source,console]
 ----
 $ sudo apt install fswebcam
 ----
 
-Next, add your username to the `video` group, otherwise you may see 'permission denied' errors:
+然后，将用户名添加到 `video` 组，否则可能会出现 'permission denied' 的错误：
 
 [source,console]
 ----
 $ sudo usermod -a -G video <username>
 ----
 
-To check that the user has been added to the group correctly, use the `groups` command.
+要检查用户是否已正确添加到组中，请使用 `groups` 命令。
 
-=== Take a photo
+=== 拍照(Take a photo)
 
-Run the following command to take a picture using the webcam and save the image to a filename named `image.jpg`:
+运行以下命令使用网络摄像头拍照，并将图像保存到名为 `image.jpg` 的文件中：
 
 [source,console]
 ----
 $ fswebcam image.jpg
 ----
 
-You should see output similar to the following:
+您应该会看到类似下面的输出：
 
 ----
 --- Opening /dev/video0...
@@ -46,17 +47,17 @@ Captured frame in 0.00 seconds.
 Writing JPEG image to 'image.jpg'.
 ----
 
-.By default, `fswebcam` uses a low resolution and adds a banner displaying a timestamp.
-image::images/webcam-image.jpg[By default, `fswebcam` uses a low resolution and adds a banner displaying a timestamp]
+.默认情况下，`fswebcam` 使用低分辨率，并添加一个显示时间戳的横幅。
+image::images/webcam-image.jpg[默认情况下，`fswebcam` 使用低分辨率，并添加一个显示时间戳的标语]
 
-To specify a different resolution for the captured image, use the `-r` flag, passing a width and height as two numbers separated by an `x`:
+要为捕获的图像指定不同的分辨率，请使用 `-r` 标志，将宽度和高度作为两个数字传递，中间用 `x` 分隔：
 
 [source,console]
 ----
 $ fswebcam -r 1280x720 image2.jpg
 ----
 
-You should see output similar to the following:
+您应该会看到类似下面的输出：
 
 ----
 --- Opening /dev/video0...
@@ -70,19 +71,19 @@ Captured frame in 0.00 seconds.
 Writing JPEG image to 'image2.jpg'.
 ----
 
-.Specify a resolution to capture a higher quality image.
-image::images/webcam-image-high-resolution.jpg[Specify a resolution to capture a higher quality image]
+.指定分辨率以获取更高质量的图像。
+image::images/webcam-image-high-resolution.jpg[指定分辨率以获取更高质量的图像]
 
 ==== Remove the banner
 
-To remove the banner from the captured image, use the `--no-banner` flag:
+要从捕获的图像中删除横幅，请使用 `--no-banner` 标记：
 
 [source,console]
 ----
 $ fswebcam --no-banner image3.jpg
 ----
 
-You should see output similar to the following:
+您应该会看到类似下面的输出：
 
 ----
 --- Opening /dev/video0...
@@ -100,11 +101,11 @@ Writing JPEG image to 'image3.jpg'.
 .Specify `--no-banner` to save the image without the timestamp banner.
 image::images/webcam-image-no-banner.jpg[Specify `--no-banner` to save the image without the timestamp banner]
 
-=== Automate image capture
+=== 自动采集图像 (Automate image capture)
 
-Unlike xref:camera_software.adoc#rpicam-apps[`rpicam-apps`], `fswebcam` doesn't have any built-in functionality to substitute timestamps and numbers in output image names. This can be useful when capturing multiple images, since manually editing the file name every time you record an image can be tedious. Instead, use a Bash script to implement this functionality yourself.
+不同于 xref:camera_software.adoc#rpicam-apps[`rpicam-apps`]，`fswebcam` 没有在输出图像名称中替换时间戳和数字的内置功能。这在捕获多张图像时很有用，因为每次录制图像时手动编辑文件名可能会很乏味。相反，你可以使用 Bash 脚本自己实现这一功能。
 
-Create a new file named `webcam.sh` in your home folder. Add the following example code, which uses the `bash` programming language to save images to files with a file name containing the year, month, day, hour, minute, and second:
+在主文件夹中新建一个名为 `webcam.sh` 的文件。添加以下示例代码，使用 `bash` 编程语言将图像保存到文件中，文件名包含年、月、日、时、分和秒：
 
 [,bash]
 ----
@@ -115,21 +116,22 @@ DATE=$(date +"%Y-%m-%d_%H-%M-%S")
 fswebcam -r 1280x720 --no-banner $DATE.jpg
 ----
 
-Then, make the bash script executable by running the following command:
+然后，运行以下命令使 bash 脚本可执行：
 
 [source,console]
 ----
 $ chmod +x webcam.sh
 ----
 
-Run the script with the following command to capture an image and save it to a file with a timestamp for a name, similar to `2024-05-10_12-06-33.jpg`:
+使用以下命令运行脚本，捕捉图像并将其保存到文件中，文件名带有时间戳，类似于 `2024-05-10_12-06-33.jpg`：
+
 
 [source,console]
 ----
 $ ./webcam.sh
 ----
 
-You should see output similar to the following:
+您应该会看到类似下面的输出：
 
 ----
 --- Opening /dev/video0...
@@ -144,25 +146,25 @@ Disabling banner.
 Writing JPEG image to '2024-05-10_12-06-33.jpg'.
 ----
 
-=== Capture a time lapse
+=== 捕捉延时 (Capture a time lapse)
 
-Use `cron` to schedule photo capture at a given interval. With the right interval, such as once a minute, you can capture a time lapse.
+使用 `cron` 按给定的时间间隔安排照片捕捉。如果间隔时间合适，例如一分钟一次，就可以捕捉延时照片。
 
-First, open the cron table for editing:
+首先，打开 cron 表进行编辑：
 
 [source,console]
 ----
 $ crontab -e
 ----
 
-Once you have the file open in an editor, add the following line to the schedule to take a picture every minute, replacing `<username>` with your username:
+在编辑器中打开文件后，在计划表中添加以下一行，每分钟拍摄一张照片，将 `<username>` 替换为您的用户名：
 
 [,bash]
 ----
 * * * * * /home/<username>/webcam.sh 2>&1
 ----
 
-Save and exit, and you should see the following message:
+保存并退出后，你会看到如下信息：
 
 ----
 crontab: installing new crontab

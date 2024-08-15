@@ -1,72 +1,75 @@
 [[gpio]]
-== GPIO and the 40-pin header
+== GPIO 和 40 引脚接头
 
-You can find a 40-pin GPIO (general-purpose input/output) header on all current Raspberry Pi boards. The GPIO headers on all boards have a 0.1in (2.54mm) pin pitch.
+目前所有 Raspberry Pi 电路板上都有一个 40 针 GPIO（通用输入/输出）针座。所有电路板上的 GPIO 针座的针距都是 0.1 英寸（2.54 毫米）。
 
-NOTE: The header is unpopulated (has no headers) on Zero and Pico devices that lack the "H" suffix.
+NOTE: 在没有 "H" 后缀的 Zero 和 Pico 设备上，报头没有填充（没有报头）。
 
 image::images/GPIO-Pinout-Diagram-2.png[alt="GPIO pinout diagram",width="60%"]
 
-General Purpose I/O (GPIO) pins can be configured as either general-purpose input, general-purpose output, or as one of up to six special alternate settings, the functions of which are pin-dependent.
+通用 I/O (GPIO) 引脚可配置为通用输入、通用输出或多达六种特殊备用设置之一，其功能取决于引脚。
 
 image::images/GPIO.png[alt="GPIO layout",width="60%"]
 
-NOTE: The GPIO pin numbering scheme is not in numerical order. GPIO pins 0 and 1 are present on the board (physical pins 27 and 28), but are reserved for advanced use.
+NOTE: GPIO 引脚编号方案不按数字顺序排列。电路板上有 GPIO 引脚 0 和 1（物理引脚 27 和 28），但这两个引脚是为高级用途预留的。
 
 === Outputs
 
-A GPIO pin designated as an output pin can be set to high (3.3V) or low (0V).
+指定为输出引脚的 GPIO 引脚可设置为高电平（3.3V）或低电平（0V）。
 
 === Inputs
 
-A GPIO pin designated as an input pin can be read as high (3.3V) or low (0V). This is made easier with the use of internal pull-up or pull-down resistors. Pins GPIO2 and GPIO3 have fixed pull-up resistors, but for other pins this can be configured in software.
+被指定为输入引脚的 GPIO 引脚可读作高电平（3.3V）或低电平（0V）。使用内部上拉或下拉电阻可以更方便地实现这一功能。GPIO2 和 GPIO3 引脚具有固定的上拉电阻，其他引脚可通过软件进行配置。
 
-=== View a GPIO pinout for your Raspberry Pi
+=== 查看 Raspberry Pi 的 GPIO 引脚图
 
-A GPIO reference can be accessed on your Raspberry Pi by opening a terminal window and running the command `pinout`. This tool is provided by the https://gpiozero.readthedocs.io/[GPIO Zero] Python library, which is installed by default in Raspberry Pi OS.
+在 Raspberry Pi 上打开终端窗口并运行 `pinout` 命令，即可访问 GPIO 参考。该工具由 https://gpiozero.readthedocs.io/[GPIO Zero] Python 库提供，Raspberry Pi OS 默认安装了该库。
+WARNING: 将简单元件连接到 GPIO 引脚是安全的，但要注意接线方式。LED 应使用电阻器来限制通过它们的电流。不要将 5V 电压用于 3.3V 元件。不要将电机直接连接到 GPIO 引脚，而应使用 https://projects.raspberrypi.org/en/projects/physical-computing/14[H 桥电路或电机控制器板]。
 
-WARNING: While connecting simple components to GPIO pins is safe, be careful how you wire things up. LEDs should have resistors to limit the current passing through them. Do not use 5V for 3.3V components. Do not connect motors directly to the GPIO pins, instead use an https://projects.raspberrypi.org/en/projects/physical-computing/14[H-bridge circuit or a motor controller board].
+=== 权限
 
-=== Permissions
-
-In order to use the GPIO ports, your user must be a member of the `gpio` group. The default user account is a member by default, but you must add other users manually using the following command:
+要使用 GPIO 端口，用户必须是 `gpio` 组的成员。默认用户账户是该组的成员，但必须使用以下命令手动添加其他用户：
 
 [source,console]
 ----
 $ sudo usermod -a -G gpio <username>
 ----
 
-=== GPIO pads
+[[gpio-pads]]
+=== GPIO引脚
 
-The GPIO connections on the BCM2835 package are sometimes referred to in the peripherals data sheet as "pads" -- a semiconductor design term meaning "chip connection to outside world".
+BCM2835 封装上的 GPIO 连接有时在外设数据表中称为 "引脚"，这是一个半导体设计术语，意思是 "芯片与外界的连接"。
 
-The pads are configurable CMOS push-pull output drivers/input buffers. Register-based control settings are available for:
+引脚是可配置的 CMOS 推挽输出驱动器/输入缓冲器。基于寄存器的控制设置可用于
 
-* Internal pull-up / pull-down enable/disable
-* Output xref:raspberry-pi.adoc#gpio-pads-control[drive strength]
-* Input Schmitt-trigger filtering
+* 内部上拉/下拉启用/禁用
+* 输出 xref:raspberry-pi.adoc#gpio-pads-control[驱动强度]
+* 输入施密特触发滤波
 
-==== Power-on states
+[[power-on-states]]
+==== 上电状态
 
-All GPIO pins revert to general-purpose inputs on power-on reset. The default pull states are also applied, which are detailed in the alternate function table in the Arm peripherals datasheet. Most GPIOs have a default pull applied.
+上电复位时，所有 GPIO 引脚均恢复为通用输入。此外，还应用了默认上拉状态，详情见 Arm 外设数据表中的备用功能表。大多数 GPIO 都应用了默认上拉状态。
 
-=== Interrupts
+[[interrupts]]
+=== 中断
 
-Each GPIO pin, when configured as a general-purpose input, can be configured as an interrupt source to the Arm. Several interrupt generation sources are configurable:
+每个GPIO引脚在配置为通用输入时，都可以配置为Arm的中断源。几个中断生成源是可配置的：
 
-* Level-sensitive (high/low)
-* Rising/falling edge
-* Asynchronous rising/falling edge
+* 电平敏感（高/低）
+* 上升/下降沿
+* 异步上升/下降沿
 
-Level interrupts maintain the interrupt status until the level has been cleared by system software (e.g. by servicing the attached peripheral generating the interrupt).
+电平中断保持中断状态，直到系统软件清除电平（例如，通过服务附加的外围设备生成中断）。
 
-The normal rising/falling edge detection has a small amount of synchronisation built into the detection. At the system clock frequency, the pin is sampled with the criteria for generation of an interrupt being a stable transition within a three-cycle window, i.e. a record of 1 0 0 or 0 1 1. Asynchronous detection bypasses this synchronisation to enable the detection of very narrow events.
+正常的上升/下降沿检测在检测中内置了少量的同步。在系统时钟频率下，对引脚进行采样，中断产生的标准是三个周期窗口内的稳定过渡，即记录为1 0 0或0 1 1。异步检测绕过这种同步，能够检测非常狭窄的事件。
 
-=== Alternative functions
+[[alternative-functions]]
+=== 替代功能
 
-Almost all of the GPIO pins have alternative functions. Peripheral blocks internal to the SoC can be selected to appear on one or more of a set of GPIO pins, for example the I2C buses can be configured to at least three separate locations. xref:raspberry-pi.adoc#gpio-pads-control[Pad control], such as drive strength or Schmitt filtering, still applies when the pin is configured as an alternate function.
+几乎所有 GPIO 引脚都有替代功能。SoC 内部的外设块可以选择出现在一组 GPIO 引脚中的一个或多个引脚上，例如，I2C 总线可以配置到至少三个独立的位置。当引脚被配置为替代功能时，xref:raspberry-pi.adoc#gpio-pads-control[引脚控制]（如驱动强度或施密特滤波）仍然适用。
 
-Some functions are available on all pins, others on specific pins:
+有些功能适用于所有引脚，有些则适用于特定引脚：
 
 * PWM (pulse-width modulation)
  ** Software PWM available on all pins
@@ -80,11 +83,12 @@ Some functions are available on all pins, others on specific pins:
 * Serial
  ** TX (GPIO14); RX (GPIO15)
 
-=== Voltage specifications
+[[voltage-specifications]]
+=== 电压规格
 
-Two 5V pins and two 3.3V pins are present on the board, as well as a number of ground pins (GND), which can not be reconfigured. The remaining pins are all general-purpose 3.3V pins, meaning outputs are set to 3.3V and inputs are 3.3V-tolerant.
+电路板上有两个 5V 引脚和两个 3.3V 引脚，以及一些无法重新配置的接地引脚 (GND)。其余引脚均为通用 3.3V 引脚，即输出设置为 3.3V，输入为 3.3V 容差。
 
-The table below gives the various voltage specifications for the GPIO pins for BCM2835, BCM2836, BCM2837 and RP3A0-based products (e.g. Raspberry Pi Zero or Raspberry Pi 3+). For information about Compute Modules you should see the xref:compute-module.adoc#specifications[relevant datasheets].
+下表给出了 BCM2835、BCM2836、BCM2837 和基于 RP3A0 的产品（如 Raspberry Pi Zero 或 Raspberry Pi 3+）的 GPIO 引脚的各种电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关数据表]。
 
 |===
 | Symbol | Parameter | Conditions &emsp; | Min | Typical | Max | Unit
@@ -170,11 +174,11 @@ The table below gives the various voltage specifications for the GPIO pins for B
 | kΩ
 |===
 
-^a^ Hysteresis enabled +
-^b^ Default drive strength (8mA) +
-^c^ Maximum drive strength (16mA)
+^a^ 启用滞后 +
+^b^ 默认驱动强度（8mA） +
+^c^ 最大驱动强度（16mA）
 
-The table below gives the voltage specifications for the GPIO pins on BCM2711-based products (e.g. Raspberry Pi 4 and Raspberry Pi 400). For information about Compute Modules you should see the xref:compute-module.adoc#specifications[relevant datasheets].
+下表给出了基于 BCM2711 的产品（如 Raspberry Pi 4 和 Raspberry Pi 400）上 GPIO 引脚的电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关数据表]。
 
 |===
 | Symbol | Parameter | Conditions &emsp; | Min | Typical | Max | Unit
@@ -252,6 +256,6 @@ The table below gives the voltage specifications for the GPIO pins on BCM2711-ba
 | kΩ
 |===
 
-^a^ Hysteresis enabled +
-^b^ Default drive strength (4mA) +
-^c^ Maximum drive strength (8mA)
+^a^ 启用滞后 +
+^b^ 默认驱动强度 (4mA) +
+^c^ 最大驱动强度 (8mA)

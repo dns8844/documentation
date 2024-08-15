@@ -1,166 +1,178 @@
 [[ssh]]
-== Access a remote terminal with SSH
+== 使用 SSH 访问远程终端
 
-You can access the terminal of a Raspberry Pi remotely from another computer on the same network using the **S**ecure **SH**ell (SSH) protocol.
+您可以使用 SSH 协议从同一网络上的另一台计算机远程访问 Raspberry Pi 的终端。
 
-=== Enable the SSH server
+[[enable-the-ssh-server]]
+=== 启用 SSH 服务器
 
-By default, Raspberry Pi OS disables the SSH server. Enable SSH in one of the following ways:
+默认情况下，Raspberry Pi OS 禁用 SSH 服务器。通过以下方式之一启用 SSH：
 
-==== On the desktop
+[[on-the-desktop]]
+==== 在桌面上
 
-. From the *Preferences* menu, launch *Raspberry Pi Configuration*.
-. Navigate to the *Interfaces* tab.
-. Select *Enabled* next to *SSH*.
-. Click *OK*.
+. 从 *Preferences* 菜单启动 *Raspberry Pi 配置*。
+. 导航至 *Interfaces* 选项卡。
+. 选择 *SSH* 旁边的 *Enabled*。
+. 单击 *OK*。
 
-==== While flashing a fresh OS image
+[[while-flashing-a-fresh-os-image]]
+==== 烧录新的 OS 镜像时
 
-To configure SSH on a completely new installation of Raspberry Pi OS:
+要在全新安装的 Raspberry Pi OS 上配置 SSH：
 
-. Follow the instructions in the xref:../computers/getting-started.adoc#raspberry-pi-imager[Install with Imager] guide.
-. During the **OS Customisation** step, navigate to the **Services** tab.
-. Tick the checkbox to **Enable SSH**.
-. Select **password authentication** to log in using the same username and password you use while physically using your Raspberry Pi. Select **Allow public-key authentication only** to xref:remote-access.adoc#configure-ssh-without-a-password[configure an SSH key] for passwordless login.
+. 按照 xref:../computers/getting-started.adoc#raspberry-pi-imager[Install with Imager] 指南中的说明操作。
+. 在**操作系统自定义**步骤中，导航至**服务**选项卡。
+. 勾选**启用 SSH**复选框。
+. 选择**密码验证**，使用与实际使用 Raspberry Pi 时相同的用户名和密码登录。选择 **Allow public-key authentication only** 以 xref:remote-access.adoc#configure-ssh-without-a-password[配置 SSH 密钥] 进行无密码登录。
 
-==== From the terminal
+[[from-the-terminal]]
+==== 从终端使能SSH
 
-. Enter `sudo raspi-config` in a terminal window.
-. Select `Interfacing Options`.
-. Navigate to and select `SSH`.
-. Choose `Yes`.
-. Select `Ok`.
-. Choose `Finish`.
+. 在终端窗口输入 `sudo raspi-config` 。
+. 选择 `Interfacing Options` 。
+. 导航至并选择 `SSH` 。
+. 选择 `Yes` 。
+. 选择 `Ok` 。
+. 选择 `Finish``。
 
-==== Manually
+[[manually]]
+==== 手动使能SSH
 
-. Create an empty file named `ssh` in the boot partition:
+. 在启动分区中创建一个名为 `ssh` 的空文件：
 +
 [source,console]
 ----
 $ sudo touch /boot/firmware/ssh
 ----
-. Reboot the machine:
+. 重启机器：
 +
 [source,console]
 ----
 $ sudo reboot
 ----
 
-=== Connect to an SSH server
+[[connect-to-an-ssh-server]]
+=== 连接到 SSH 服务器
 
-Open a terminal window on your computer and enter the following command, replacing the `<ip address>` placeholder with the xref:remote-access.adoc#ip-address[IP address of the Raspberry Pi you're trying to connect to] and `<username>` with your username:
+在您的计算机上打开一个终端窗口并输入以下命令，将 `<ip address>` 占位符替换为 xref:remote-access.adoc#ip-address[您尝试连接的 Raspberry Pi 的 IP 地址]，并将 `<username>` 替换为您的用户名：
 
 [source,console]
 ----
 $ ssh <username>@<ip address>
 ----
 
-When the connection works, you will see a security warning. Type `yes` to continue. You will only see this warning the first time you connect.
+连接成功后，您将看到安全警告。输入 `yes` 继续。您只会在第一次连接时看到此警告。
 
-Enter your account password when prompted.
+出现提示时输入您的帐户密码。
 
-You should now see the Raspberry Pi command prompt:
+您现在应该会看到 Raspberry Pi 命令提示符：
 
 [source,console]
 ----
 <username>@<hostname> ~ $
 ----
 
-You are now connected to the Raspberry Pi remotely, and can execute commands.
+您现在已远程连接到 Raspberry Pi，并且可以执行命令。
 
-NOTE: If you receive a `connection timed out` error, you may have entered the wrong IP address for the Raspberry Pi. Check the xref:remote-access.adoc#ip-address[IP address of the Raspberry Pi].
+NOTE: 如果您收到 `connection timed out` 错误，则可能是您输入了错误的 Raspberry Pi IP 地址。请查看 xref:remote-access.adoc#ip-address[Raspberry Pi 的 IP 地址]。
 
-==== Forward X11 over SSH
+[[forward-x11-over-ssh]]
+==== 通过 SSH 转发 X11
 
-NOTE: On Raspberry Pi 4 and 5, Raspberry Pi OS Bookworm uses the Wayland window server by default. You can only forward X11 if you use the X window server. To enable window forwarding over X11, switch your desktop to the X window server in Raspberry Pi Configuration.
+NOTE: 在 Raspberry Pi 4 和 5 上，Raspberry Pi OS Bookworm 默认使用 Wayland 窗口服务器。如果您使用 X 窗口服务器，则只能转发 X11。要通过 X11 启用窗口转发，请在 Raspberry Pi 配置中将桌面切换到 X 窗口服务器。
 
-NOTE: X11 is no longer installed by default on many desktop environments. Install a third-party X server such as https://www.xquartz.org/[XQuartz] to use X11 forwarding.
+NOTE: 许多桌面环境中不再默认安装 X11。安装第三方 X 服务器（例如 https://www.xquartz.org/[XQuartz]）以使用 X11 转发。
 
-X11 enables graphical applications over SSH. Pass the `-Y` flag to forward an X session over SSH:
+X11 通过 SSH 启用图形应用程序。传递 `-Y` 标志以通过 SSH 转发 X 会话：
 
 [source,console]
 ----
 $ ssh -Y <username>@<ip address>
 ----
 
-Once authenticated, you will see the command line as usual. However, you can also open graphical windows that an X server can render for you. For example, type the following command to launch a https://www.geany.org/[Geany] window:
+通过身份验证后，您将照常看到命令行。但是，您也可以打开 X 服务器可以为您呈现的图形窗口。例如，键入以下命令以启动 https://www.geany.org/[Geany] 窗口：
 
 [source,console]
 ----
 $ geany &
 ----
 
-=== Configure SSH without a password
+[[configure-ssh-without-a-password]]
+=== 配置无密码 SSH
 
-To remotely access your Raspberry Pi without providing a password each time you connect, use an SSH keypair.
+要远程访问您的 Raspberry Pi 而无需每次连接时都提供密码，请使用 SSH 密钥对。
 
-==== Preconfigure an OS image with Raspberry Pi Imager
+[[preconfigure-an-os-image-with-raspberry-pi-imager]]
+==== 使用 Raspberry Pi Imager 预配置操作系统镜像
 
-When configuring a boot image with Raspberry Pi Imager, you can preconfigure SSH keys. You can generate a new SSH keypair or an existing SSH key.
+使用 Raspberry Pi Imager 配置启动映像时，您可以预配置 SSH 密钥。您可以生成新的 SSH 密钥对或现有的 SSH 密钥。
 
-. Follow the xref:getting-started.adoc#raspberry-pi-imager[install using Imager] guide to configure your boot image.
-. During the *OS Customisation* step, navigate to the *Services* tab and tick the *Enable SSH* checkbox.
-. Select the *Allow public-key authentication only* radio button. If you already have an SSH public key stored in `~/.ssh/id_rsa.pub`, Imager automatically uses that public key to prefill the text box. If Imager doesn't find an SSH public key, you can click the *RUN SSH-KEYGEN* button to generate a new keypair.
+. 按照 xref:getting-started.adoc#raspberry-pi-imager[使用 Imager 安装] 指南配置您的启动映像。
+. 在 *OS Customisation* 步骤中，导航到 *Services* 选项卡并勾选 *启用 SSH* 复选框。
+. 选择 *仅允许公钥身份验证* 单选按钮。如果您已经在 `~/.ssh/id_rsa.pub` 中存储了 SSH 公钥，Imager 会自动使用该公钥预填充文本框。如果 Imager 找不到 SSH 公钥，您可以单击 *RUN SSH-KEYGEN* 按钮来生成新的密钥对。
 
-==== Manually configure an SSH key
+[[manually-configure-an-ssh-key]]
+==== 手动配置 SSH 密钥
 
-If you already have an installation of Raspberry Pi OS, you can update your existing configuration to use SSH key authentication.
+如果您已经安装了 Raspberry Pi OS，则可以更新现有配置以使用 SSH 密钥身份验证。
 
-==== Check for existing SSH public keys
+[[check-for-existing-ssh-public-keys]]
+==== 检查是否存在现有的 SSH 公钥
 
-To check for an existing SSH public key on the computer you use to remotely connect to the Raspberry Pi, run the following command:
+要检查用于远程连接到 Raspberry Pi 的计算机上是否存在现有的 SSH 公钥，请运行以下命令：
 
 [source,console]
 ----
 $ ls ~/.ssh
 ----
 
-If you see files named `id_ed25519.pub`, `id_rsa.pub`, or `id_dsa.pub`, you already have an SSH key. Skip SSH keypair generation and proceed to xref:remote-access.adoc#add-ssh-key-identity[add the SSH key to your list of SSH identities].
+如果你看到名为 `id_ed25519.pub`、 `id_rsa.pub` 或 `id_dsa.pub` 的文件，说明你已经有了 SSH 密钥。跳过 SSH 密钥对生成，继续 xref:remote-access.adoc#add-ssh-key-identity[将 SSH 密钥添加到 SSH Identity 列表中]。
 
-==== Generate new SSH keypair
+[[generate-new-ssh-keypair]]
+==== 生成新的SSH密钥对
 
-TIP: This guide provides instructions to generate a new RSA key. For additional security, you can instead generate a http://ed25519.cr.yp.to/[Ed25519] key. Pass `-t ed25519` to `ssh-keygen` and replace `rsa` with `ed25519` when referencing your public and private key file names to use an Ed25519 key.
+TIP: 本指南提供了生成新RSA密钥的说明。为了提高安全性，您可以改为生成 http://ed25519.cr.yp.to/[Ed25519] 密钥。当引用您的公钥和私钥文件名以使用Ed25519密钥时，将 `-t ed25519` 传递给 `ssh-keygen` 并将 `rsa` 替换为 `ed25519` 。
 
-To generate a new SSH keypair, enter the following command:
+要生成新的SSH密钥对，请输入以下命令：
 
 [source,console]
 ----
 $ ssh-keygen
 ----
 
-When asked where to save the key, press *Enter* to use the default location, `~/.ssh/id_rsa`.
+当询问在哪里保存密钥时，按 *Enter* 使用默认位置 `~/.ssh/id_rsa` 。
 
-When asked for an optional keyphrase, press *Enter* to use no keyphrase.
+当要求输入可选关键字时，按 *Enter* 以不使用关键字。
 
-Run the following command to check the contents of the `.ssh` directory:
+运行以下命令检查 `.ssh` 目录的内容：
 
 [source,console]
 ----
 $ ls ~/.ssh
 ----
 
-You should see the files `id_rsa` and `id_rsa.pub`:
+您应该看到文件 `id_rsa` 和 `id_rsa.pub` ：
 
 ----
 authorized_keys  id_rsa  id_rsa.pub  known_hosts
 ----
 
-The `id_rsa` file contains your private key. Keep this secure on the computer you use to remotely connect to the Raspberry Pi.
+`id_rsa` 文件包含您的私钥。在您用于远程连接到Raspberry Pi的计算机上确保其安全。
 
-The `id_rsa.pub` file contains your public key. You will share this key with your Raspberry Pi. When you connect with the Raspberry Pi remotely, it will use this key to verify your identity.
+id_rsa.pub文件包含您的公钥。您将与您的Raspberry Pi共享此密钥。当您远程连接Raspberry Pi时，它将使用此密钥来验证您的身份。
 
 [[add-ssh-key-identity]]
-==== Add the SSH key to your list of SSH identities
+==== 将SSH密钥添加到SSH身份列表中
 
-Start the SSH agent:
+启动SSH代理：
 
 [source,console]
 ----
 $ eval "$(ssh-agent -s)"
 ----
 
-Next, add your key identities to `ssh-agent` with the following command:
+接下来，使用以下命令将您的密钥身份添加到 `ssh-agent` ：
 
 [source,console]
 ----
@@ -168,52 +180,53 @@ $ ssh-add ~/.ssh/id_rsa
 ----
 
 [[copy-your-public-key-to-your-raspberry-pi]]
-==== Copy a public key to your Raspberry Pi
+==== 将公钥复制到您的Raspberry Pi
 
-On the computer you use to remotely connect to the Raspberry Pi, use the following command to securely copy your public key to the Raspberry Pi:
+在您用于远程连接到Raspberry Pi的计算机上，使用以下命令将您的公钥安全地复制到Raspberry Pi：
 
 [source,console]
 ----
 $ ssh-copy-id <username>@<ip address>
 ----
 
-When prompted, enter the password for your user account on the Raspberry Pi. 
-You can now connect to your Raspberry Pi without entering a password.
+出现提示时，在Raspberry Pi上输入您的用户帐户的密码。
+您现在无需输入密码即可连接到Raspberry Pi。
 
-==== Manually copy a public key to your Raspberry Pi
+[[manually-copy-a-public-key-to-your-raspberry-pi]]
+==== 手动将公钥复制到您的Raspberry Pi
 
-If your operating system does not support `ssh-copy-id`, you can instead copy your public key with xref:remote-access.adoc#scp[`scp`].
+如果您的操作系统不支持 `ssh-cop-id` ，您可以使用 xref:remote-access.adoc#scp[`scp`] 复制您的公钥： 。
 
-First, _on your Raspberry Pi_, create the directory where Linux expects to find keys: 
+首先，_on您的RaspberryPi_，创建Linux期望查找密钥的目录：
 
 [source,console]
 ----
 $ mkdir .ssh
 ----
 
-Then, configure the proper permissions for the `.ssh` directory:
+然后，为 `.ssh` 目录配置适当的权限：
 
 [source,console]
 ----
 $ chmod 700 .ssh
 ----
 
-_On your usual computer_, use `scp` to copy your public key to a file named `.ssh/authorized_keys` on your Raspberry Pi:
+_On您通常的computer_，使用 `scp` 将您的公钥复制到Raspberry Pi上名为 `.ssh/authorized_keys` 的文件中：
 
 [source,console]
 ----
 $ scp .ssh/id_rsa.pub <username>@<ip address>:.ssh/authorized_keys
 ----
 
-TIP: The command above assumes you have never before authorized any keys to access your Raspberry Pi. If you have previously added at least one key, you should instead add a new line containing the public key to the end of the `authorized_keys` file to preserve your existing keys.
+TIP: 上面的命令假定您以前从未授权任何密钥访问您的Raspberry Pi。如果您之前至少添加了一个密钥，您应该在 `authorized_keys` 文件的末尾添加一个包含公钥的新行，以保留您现有的密钥。
 
-When prompted, enter the password for your user account on the Raspberry Pi.
+出现提示时，在Raspberry Pi上输入您的用户帐户的密码。
 
-Then, _on your Raspberry Pi_, configure permissions for the `authorized_keys` file:
+然后，_onRaspberryPi_，配置 `authorized_keys` 文件的权限：
 
 [source,console]
 ----
 $ chmod 644 .ssh/authorized_keys
 ----
 
-You can now connect to your Raspberry Pi without entering a password.
+您现在无需输入密码即可连接到Raspberry Pi。

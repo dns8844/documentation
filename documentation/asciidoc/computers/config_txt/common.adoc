@@ -1,39 +1,54 @@
-== Common options
+[[common-options]]
+== 常用选项
 
-=== Common display options
+[[common-display-options]]
+=== 常用显示选项
 
-==== `hdmi_enable_4kp60` (Raspberry Pi 4 only)
+[[hdmi_enable_4kp60-raspberry-pi-4-only]]
+==== `hdmi_enable_4kp60` （仅限树莓派4）
 
-By default, when connected to a 4K monitor, the Raspberry Pi 4B, 400 and CM4 will select a 30Hz refresh rate. Use this option to allow selection of 60Hz refresh rates. Raspberry Pi 4 does not support 4Kp60 output on both micro HDMI ports simultaneously. Setting `hdmi_enable_4kp60` increases power consumption and temperature.
+默认情况下，当连接到 4K 显示器时，Raspberry Pi 4B、400 和 CM4 将选择 30Hz 刷新率。使用该选项可选择 60Hz 刷新率。Raspberry Pi 4 不支持同时通过两个微型 HDMI 端口输出 4Kp60。设置 `hdmi_enable_4kp60`会增加功耗和温度。
 
-=== Common hardware configuration options
 
-==== `camera_auto_detect`
+IMPORTANT: 无法在Raspberry Pi 4的两个micro HDMI端口上同时输出4Kp60。
 
-With this setting enabled (in Raspberry Pi OS it is enabled by default), the firmware will automatically load overlays for CSI cameras that it recognises. Set `camera_auto_detect=0` to disable the setting.
+WARNING: 设置 `hdmi_enable_4kp60` 会增加功耗和树莓派的温度。
 
-==== `display_auto_detect`
+[[common-hardware-configuration-options]]
+=== 常用硬件配置选项
 
-With this setting enabled (it is enabled by default in Raspberry Pi OS), the firmware will automatically load overlays for DSI displays that it recognises. Set `display_auto_detect=0` to disable.
+[[camera_auto_detect]]
+==== `camera_auto_detect` 
 
-==== `dtoverlay`
+启用此设置后（在Raspberry Pi OS中默认启用），固件将自动加载它识别的CSI相机的overlays。设置 `camera_auto_detect=0` 以禁用该设置。
 
-The `dtoverlay` option requests the firmware to load a named Device Tree overlay - a configuration file that can enable kernel support for built-in and external hardware. For example, `dtoverlay=vc4-kms-v3d` loads an overlay that enables the kernel graphics driver.
+[[display_auto_detect]]
+==== `display_auto_detect` 
 
-As a special case, if called with no value - `dtoverlay=` - the option marks the end of a list of overlay parameters. If used before any other `dtoverlay` or `dtparam` setting, it prevents the loading of any HAT overlay.
+启用此设置后（在Raspberry Pi OS中默认启用），固件将自动加载它识别的DSI显示器的overlay。设置 `display_auto_detect=0` 以禁用。
 
-For more details, see xref:configuration.adoc#part3.1[DTBs, overlays and config.txt].
+[[dtoverlay]]
+==== `dtoverlay` 
 
-==== `dtparam`
+dtoverlay选项请求固件加载一个命名的设备树overlay — 一个可以启用内核对内置和外部硬件支持的配置文件。例如， `dtoverlay=vc4-kms-v3d` 加载一个启用内核图形驱动程序的设备树文件。
 
-Device Tree configuration files for Raspberry Pis support a number of parameters for such things as enabling I2C and SPI interfaces. Many DT overlays are configurable via the use of parameters. Both types of parameters can be supplied using the `dtparam` setting. In addition, overlay parameters can be appended to the `dtoverlay` option, separated by commas, but keep in mind the line length limit of 98 characters.
+作为一种特殊情况，如果不带值调用 - `dtoverlay=` - 该选项将标记覆盖参数列表的结束。如果在任何其他 `dtoverlay` 或 `dtparam` 设置之前使用，它会阻止加载任何HAT overlay。
 
-For more details, see xref:configuration.adoc#part3.1[DTBs, overlays and config.txt].
+有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays and config.txt]。
 
-==== `arm_boost` (Raspberry Pi 4 Only)
+[[dtparam]]
+==== `dtparam` 
 
-All Raspberry Pi 400s and newer revisions of the Raspberry Pi 4B are equipped with a second switch-mode power supply for the SoC voltage rail, and this allows the default turbo-mode clock to be increased from 1.5GHz to 1.8GHz. This change is enabled by default in Raspberry Pi OS. Set `arm_boost=0` to disable.
+Raspberry Pis的设备树配置文件支持许多参数，例如启用I2C和SPI接口。许多DT overlay可以通过使用参数进行配置。这两种类型的参数都可以使用 `dtparam` 设置提供。此外，overlay参数可以附加到 `dtoverlay` 选项中，用逗号分隔，但请记住行长限制为98个字符。
 
-==== `power_force_3v3_pwm` (Raspberry Pi 5 Only)
+有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays and config.txt]。
 
-Forces PWM when using a 3V3 power supply. Set `power_force_3v3_pwm=0` to disable.
+[[arm_boost-raspberry-pi-4-only]]
+==== `arm_boost` （仅限树莓派4）
+
+所有树莓派400和树莓派4B的更新版本都配备了用于SoC电压轨的第二个开关模式电源，这允许默认涡轮模式时钟从1.5GHz增加到1.8GHz。此更改在树莓派操作系统中默认启用。设置 `arm_boost=0` 以禁用。
+
+[[power_force_3v3_pwm-raspberry-pi-5-only]]
+==== `power_force_3v3_pwm` （仅限树莓派5）
+
+使用3V3电源时强制PWM。设置 `power_force_3v3_pwm=0` 以禁用。

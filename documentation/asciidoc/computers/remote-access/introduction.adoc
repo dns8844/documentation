@@ -1,24 +1,28 @@
-== Introduction to remote access
+[[introduction-to-remote-access]]
+== 远程访问简介
 
-Sometimes you need to access a Raspberry Pi without connecting it to a monitor, keyboard, and mouse. Perhaps the Raspberry Pi is embedded in a robot or mounted in an inconvenient location. Or maybe you don't have a spare monitor.
+有时您需要在不将其连接到显示器、键盘和鼠标的情况下访问Raspberry Pi。也许Raspberry Pi嵌入在机器人中或安装在不方便的位置。或者您没有备用显示器。
 
-=== Remote control over the local network
+[[remote-control-over-the-local-network]]
+=== 远程控制本地网络
 
-To remotely control your Raspberry Pi from another device on your local network, use one of the following services:
+要从本地网络上的另一台设备远程控制您的Raspberry Pi，请使用以下服务之一：
 
 * xref:remote-access.adoc#ssh[SSH]
 * xref:remote-access.adoc#vnc[VNC]
 * xref:remote-access.adoc#raspberry-pi-connect[Raspberry Pi Connect]
 
-SSH (**S**ecure **SH**ell) provides secure access to a terminal session on your Raspberry Pi. VNC (**V**irtual **N**etwork **C**omputing) provides secure access to a desktop screen share on your Raspberry Pi. All you need is another computer, a local network, and the local https://en.wikipedia.org/wiki/IP_address[IP address] of your Raspberry Pi. Raspberry Pi Connect shares your Raspberry Pi's screen securely with no need to determine your local IP address.
+SSH（**S**ecure **SH**ell）提供对Raspberry Pi上的终端会话的安全访问。VNC（**V**irtual **N**etwork **C**omputing）提供对Raspberry Pi桌面屏幕共享的安全访问。您所需要的只是另一台计算机、本地网络和Raspberry Pi的本地 https://en.wikipedia.org/wiki/IP_address[IP地址]。Raspberry Pi Connect安全地共享Raspberry Pi的屏幕，无需确定您的本地IP地址。
 
-=== Share files between devices over the local network
+[[share-files-between-devices-over-the-local-network]]
+=== 通过本地网络在设备之间共享文件
 
-Services like xref:remote-access.adoc#nfs[NFS] (Network File System), xref:remote-access.adoc#scp[SCP] (Secure Copy Protocol), xref:remote-access.adoc#samba[Samba], and xref:remote-access.adoc#rsync[`rsync`] enable you to share files between devices on the local network without directly controlling the remote device. These services can be useful when you need to access data stored on one device from another device.
+诸如 xref:remote-access.adoc#nfs[NFS]（网络文件系统）、xref:remote-access.adoc#scp[SCP]（安全复制协议）、xref:remote-access.adoc#samba[Samba]和 xref:remote-access.adoc#rsync[`rsync`] 之类的服务使您能够在本地网络上的设备之间共享文件，而无需直接控制远程设备。当您需要从另一台设备访问存储在一台设备上的数据时，这些服务非常有用。
 
-=== Remote control over the Internet
+[[remote-control-over-the-internet]]
+=== 通过互联网进行远程控制
 
-To remotely control your Raspberry Pi from any device connected to the Internet, you can:
+要从任何连接到Internet的设备远程控制您的Raspberry Pi，您可以：
 
-* Expose xref:remote-access.adoc#ssh[SSH] or xref:remote-access.adoc#vnc[VNC] on your Raspberry Pi over the open internet, within a VPN, or using an external service like RealVNC's cloud https://www.realvnc.com/download/viewer/[VNC Viewer].
-* Use xref:remote-access.adoc#raspberry-pi-connect[Raspberry Pi Connect], a free screen sharing and remote shell service provided by Raspberry Pi.
+* 通过开放互联网、VPN 或使用外部服务（如 RealVNC 的云 https://www.realvnc.com/download/viewer/[VNC Viewer]）在 Raspberry Pi 上公开 xref:remote-access.adoc#ssh[SSH] 或 xref:remote-access.adoc#vnc[VNC]。
+* 使用 xref:remote-access.adoc#raspberry-pi-connect[Raspberry Pi Connect]，这是 Raspberry Pi 提供的免费屏幕共享和远程 shell 服务。

@@ -1,101 +1,106 @@
-== EEPROM boot flow
+== EEPROM 启动流程
 
-Since Raspberry Pi 4, Raspberry Pi flagship devices use an EEPROM bootloader.
-The main difference between these and previous products is that the second-stage bootloader is loaded from SPI flash xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[EEPROM] instead of the `bootcode.bin` file used on previous products.
+自 Raspberry Pi 4 起，Raspberry Pi 旗舰设备开始使用 EEPROM 引导加载程序。
+这些产品与以前产品的主要区别在于，第二级引导加载程序是从 SPI Flash xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[EEPROM] 加载的，而不是以前产品使用的 `bootcode.bin` 文件。
 
-=== First stage bootloader
+[[first-stage-bootloader]]
+=== 第一阶段bootloader
 
-The boot flow for the ROM (first stage) is as follows:
+ROM（第一阶段）的引导流程如下：
 
-* SoC powers up
-* Read OTP to determine if the `nRPIBOOT` GPIO is configured
-* If `nRPIBOOT` GPIO is high or OTP does NOT define `nRPIBOOT` GPIO
- ** Check OTP to see if `recovery.bin` can be loaded from SD/EMMC
-  *** If SD recovery.bin is enabled then check primary SD/EMMC for `recovery.bin`
-   **** Success - run `recovery.bin` and update the SPI EEPROM
-   **** Fail - continue
- ** Check SPI EEPROM for second stage loader
-  *** Success - run second stage bootloader
-  *** Fail - continue
+* SoC通电
+* 读取OTP以确定是否配置了 `nRPIBOOT` GPIO
+* If `nRPIBOOT` GPIO为高或OTP未定义 `nRPIBOOT` GPIO
+ ** 检查OTP以查看是否可以从SD/EMMC加载 `recovery.bin` 
+  *** If 启用了SD `recovery.bin` ，则检查主SD/EMMC的`recovery.bin` 
+   **** 成功 - 运行 `recovery.bin` 并更新SPI EEPROM
+   **** 失败 - 继续
+ ** 检查第二阶段的SPI EEPROM
+  *** 成功 - 运行第二阶段bootloader
+  *** 失败 - 继续
 * While True
- ** Attempt to load `recovery.bin` from xref:compute-module.adoc#flash-compute-module-emmc[USB device boot]
-  *** Success - run `recovery.bin` and update the SPI EEPROM or switch to USB mass storage device mode
-  *** Fail - retry USB device boot
+ ** 尝试从 xref:compute-module.adoc#flash-compute-module-emmc[USB 设备] 加载 `recovery.bin`
+  *** 成功 - 运行 `recovery.bin` 并更新SPI EEPROM或切换到USB大容量存储设备模式
+  *** 失败 - 重试USB设备启动
 
-NOTE: `recovery.bin` is a minimal second stage program used to reflash the bootloader SPI EEPROM image.
+NOTE:  `recovery.bin` 是用于重新刷新bootloader SPI EEPROM映像的最小第二阶段程序。
 
-=== Second stage bootloader
+[[second-stage-bootloader]]
+=== 第二阶段bootloader
 
-This section describes the high-level flow of the second stage bootloader.
+本节介绍第二阶段bootloader的高级流程。
 
-Please see the xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader configuration] page for more information about each boot mode, and the xref:configuration.adoc#boot-folder-contents[boot folder] page for a description of the GPU firmware files loaded by this stage.
+有关每种启动模式的更多信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[引导加载器配置] 页面；有关此阶段加载的 GPU 固件文件的描述，请参阅 xref:configuration.adoc#boot-folder-contents[boot folder] 页面。
 
-* Initialise clocks and SDRAM
-* Read the EEPROM configuration file
-* Check `PM_RSTS` register to determine if HALT is requested
- ** Check `POWER_OFF_ON_HALT` and `WAKE_ON_GPIO` EEPROM configuration settings
- ** If `POWER_OFF_ON_HALT` is `1` and `WAKE_ON_GPIO` is `0` then
-  *** Use PMIC to power off system
- ** Else if `WAKE_ON_GPIO` is `1`
-  *** Enable fall-edge interrupts on GPIO3 to wake-up if GPIO3 is pulled low
- ** Sleep
+* 初始化时钟和 SDRAM
+* 读取 EEPROM 配置文件
+* 检查寄存器 `PM_RSTS` 以确定是否请求 HALT
+ ** 检查 `POWER_OFF_ON_HALT` 和 `WAKE_ON_GPIO` EEPROM 配置设置
+ ** If `POWER_OFF_ON_HALT` 为 `1` ，且 `WAKE_ON_GPIO` 为 `0` ，则
+  *** 使用 PMIC 关闭系统电源
+ ** Else ，If `WAKE_ON_GPIO` 为 `1`
+  *** If  GPIO3 被拉低，则启用 GPIO3 上的下降沿中断来唤醒系统
+ ** 睡眠
 * While True
- ** Read the next boot-mode from the BOOT_ORDER parameter in the EEPROM config file.
- ** If boot-mode == `RESTART`
-  *** Jump back to the first boot-mode in the `BOOT_ORDER` field
- ** Else if boot-mode == `STOP`
-  *** Display start.elf not found xref:configuration.adoc#led-warning-flash-codes[error pattern] and wait forever.
- ** Else if boot-mode == `SD CARD`
-  *** Attempt to load firmware from the SD card
-   **** Success - run the firmware
-   **** Failure - continue
- ** Else if boot-mode == `NETWORK` then
-  *** Use DHCP protocol to request IP address
-  *** Load firmware from the DHCP or statically defined TFTP server
-  *** If the firmware is not found or a timeout or network error occurs then continue
- ** Else if boot-mode == `USB-MSD` or boot-mode == `BCM-USB-MSD` then
-  *** While USB discover has not timed out
-   **** Check for USB mass storage devices
-   **** If a new mass storage device is found then
-    ***** For each drive (LUN)
-     ****** Attempt to load firmware
-      ******* Success - run the firmware
-      ******* Failed - advance to next LUN
- ** Else if boot-mode == `NVME` then
-  *** Scan PCIe for an NVMe device and if found
-   **** Attempt to load firmware from the NVMe device
-    ***** Success - run the firmware
-    ***** Failure - continue
- ** Else if boot-mode == `RPIBOOT` then
-  *** Attempt to load firmware using USB device mode from the USB OTG port - see https://github.com/raspberrypi/usbboot[USB boot]. There is no timeout for `RPIBOOT` mode.
+ ** 从 EEPROM 配置文件中的 BOOT_ORDER 参数读取下一个启动模式。
+ ** If 引导模式 == `RESTART`
+  *** 跳回 `BOOT_ORDER` 字段中的第一个启动模式
+ ** Else if 引导模式 == `STOP`
+  *** 显示 start.elf 未找到 xref:configuration.adoc#led-warning-flash-codes[错误模式]，并永远等待。
+ ** Else if 引导模式 == `SD CARD`
+  *** 尝试从 SD 卡加载固件
+   **** 成功 - 运行固件
+   **** 失败 - 继续
+ ** Else if 引导模式 == `NETWORK` 则
+  *** 使用 DHCP 协议请求 IP 地址
+  *** 从 DHCP 或静态定义的 TFTP 服务器加载固件
+  *** If 未找到固件或发生超时或网络错误，则继续
+ ** Else if 引导模式 == `USB-MSD` 或引导模式 == `BCM-USB-MSD` 那么
+  *** If  USB 发现未超时
+   **** 检查 USB 大容量存储设备
+   **** If 发现新的大容量存储设备，则
+    ***** 对于每个驱动器（LUN）
+     ****** 尝试加载固件
+      ******* 成功 - 运行固件
+      ******* 失败 - 进入下一个 LUN
+ ** Else if 引导模式 == `NVME` ，则
+  *** 扫描 PCIe 以查找 NVMe 设备，If 找到
+   **** 尝试从 NVMe 设备加载固件
+    ***** 成功 - 运行固件
+    ***** 失败 - 继续
+ ** Else if 引导模式 == `RPIBOOT` 则
+  *** 尝试使用 USB 设备模式从 USB OTG 端口加载固件 - 参见 https://github.com/raspberrypi/usbboot[USB启动]。RPIBOOT模式没有超时。
 
-==== Differences on Raspberry Pi 5
+[[differences-on-raspberry-pi-5]]
+==== 树莓派5的区别
 
-* The power button is used to wake up from PMIC `STANDBY` or `HALT` instead of `GPIO 3`.
-* Instead of loading `start.elf`, the firmware loads the Linux kernel. Effectively, the bootloader has an embedded version of `start.elf`.
-* USB boot is disabled by default when connected to a 3A power supply. Set `usb_max_current_enable=1` in `/boot/firmware/config.txt` to enable USB boot. Alternatively, you can press the power button a single time on a failed USB boot to temporarily enable `usb_max_current_enable` and continue booting. However, this setting will not persist after a reboot if enabled by pressing the power button.
+* 电源按钮用于从 PMIC 的 `STANDBY` 或 `HALT` 而非 `GPIO 3` 唤醒。
+* 固件不加载 `start.elf` ，而是加载 Linux 内核。实际上，引导加载器有一个嵌入版的 `start.elf` 。
+* 连接到 3A 电源时，默认禁用 USB 启动。在 `/boot/firmware/config.txt` 中设置 `usb_max_current_enable=1` 可启用 USB 启动。或者，也可以在 USB 启动失败时单次按下电源按钮，临时启用 `usb_max_current_enable` 并继续启动。但是，如果通过按下电源按钮启用该设置，重启后该设置将不会继续存在。
 
-=== Bootloader updates
+[[bootloader-updates]]
+=== Bootloader更新
 
-The bootloader may also be updated before the firmware is started if a `pieeprom.upd` file is found. See the xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[bootloader EEPROM] page for more information about bootloader updates.
+如果找到 `pieeprom.upd` 文件，bootloader也可以在固件启动前更新。有关bootloader更新的更多信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[bootloader EEPROM] 页面。
 
-=== Fail-safe OS updates (`tryboot`)
+[[fail-safe-os-updates-tryboot]]
+=== 故障安全操作系统更新（ `tryboot` ）
 
-The bootloader/firmware provide a one-shot flag which, if set, is cleared but causes `tryboot.txt` to be loaded instead of `config.txt`. This alternate config would specify the pending OS update firmware, cmdline, kernel and os_prefix parameters. Since the flag is cleared before starting the firmware, a crash or reset will cause the original `config.txt` file to be loaded on the next reboot.
+bootloader/firmware提供了一个一次性标志，如果设置了该标志，则会被清除，但会加载 `tryboot.txt` ，而不是 `config.txt` 。该备用配置将指定待更新的操作系统固件、cmdline、kernel和 os_prefix 参数。由于该标记会在启动固件前被清除，因此宕机或重置后，下次重启时将加载原始的 `config.txt` 文件。
 
-To set the `tryboot` flag, add `tryboot` after the partition number in the `reboot` command. Normally, the partition number defaults to zero but it must be specified if extra arguments are added. Always use quotes when passing arguments to `reboot`: it accepts only a single argument:
-
+要设置 `tryboot` 标志，请在 `reboot` 命令中的分区号之后添加 `tryboot` 。通常，分区号默认为零，但如果添加额外参数，则必须指定它。向 `reboot` 传递参数时一定要使用引号：它只接受一个参数：
 [source,console]
 ----
 $ sudo reboot '0 tryboot'
 ----
 
-All Raspberry Pi models support `tryboot`, however, on Raspberry Pi 4 Model B revision 1.0 and 1.1 the EEPROM must not be write protected. This is because older Raspberry Pi 4B devices have to reset the power supply (losing the tryboot state), so this is stored inside the EEPROM instead.
+所有Raspberry Pi型号都支持 `tryboot` ，但是，在Raspberry Pi 4 Model B 修订版 1.0 和 1.1 上，EEPROM不得设置写保护。这是因为较旧的Raspberry Pi 4B 设备必须断开电源（来取消tryboot状态），因此将其存储在EEPROM中。
 
-If `secure-boot` is enabled, then `tryboot` mode will cause `tryboot.img` to be loaded instead of `boot.img`.
+如果启用了 `secure-boot` ，则 `tryboot` 模式将导致加载 `tryboot.img` 而不是 `boot.img` 。
 
-=== `tryboot_a_b` mode
-If the `tryboot_a_b` property in xref:config_txt.adoc#autoboot-txt[autoboot.txt] is set to `1` then `config.txt` is loaded instead of `tryboot.txt`. This is because the `tryboot` switch has already been made at a higher level (the partition),  so it's unnecessary to have a `tryboot.txt` file within alternate partition itself.
+[[tryboot_a_b-mode]]
+=== `tryboot_a_b` 模式
+如果 xref:config_txt.adoc#autoboot-txt[autoboot.txt] 中的 `tryboot_a_b` 属性设置为 `1` ，则将加载 `config.txt` 而不是 `tryboot.txt` 。这是因为 `tryboot` 开关已在更高一级（分区）完成，因此没有必要在备用分区内设置 `tryboot.txt` 文件。
 
-The `tryboot_a_b` property is implicitly set to `1` when loading files from within a `boot.img` ramdisk.
+从 `boot.img` ramdisk 中加载文件时，`tryboot_a_b` 属性被隐式设置为 `1`。
 

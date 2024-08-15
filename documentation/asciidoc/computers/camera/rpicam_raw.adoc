@@ -1,26 +1,27 @@
-=== `rpicam-raw`
 
-`rpicam-raw` records video as raw Bayer frames directly from the sensor. It does not show a preview window. To record a two second raw clip to a file named `test.raw`, run the following command:
+=== `rpicam-raw` 
+
+`rpicam-raw` 直接从传感器将视频记录为原始Bayer帧。它不显示预览窗口。要将两秒钟的原始剪辑录制到名为 `test.raw` 的文件中，请运行以下命令：
 
 [source,console]
 ----
 $ rpicam-raw -t 2000 -o test.raw
 ----
 
-`rpicam-raw` outputs raw frames with no formatting information at all, one directly after another. The application prints the pixel format and image dimensions to the terminal window to help the user interpret the pixel data.
+`rpicam-raw` 输出完全没有格式信息的原始帧，直接一个接一个。应用程序将像素格式和图像尺寸打印到终端窗口，以帮助用户解释像素数据。
 
-By default, `rpicam-raw` outputs raw frames in a single, potentially very large, file. Use the xref:camera_software.adoc#segment[`segment`] option to direct each raw frame to a separate file, using the `%05d` xref:camera_software.adoc#output[directive] to make each frame filename unique:
+默认情况下， `rpicam-raw` 会将原始图像输出到一个可能非常大的文件中。使用 xref:camera_software.adoc#segment[`segment`] 选项将每个原始图像帧导入单独的文件，并使用 `%05d` xref:camera_software.adoc#output[directive] 使每个图像帧的文件名独一无二：
 
 [source,console]
 ----
 $ rpicam-raw -t 2000 --segment 1 -o test%05d.raw
 ----
 
-With a fast storage device, `rpicam-raw` can write 18MB 12-megapixel HQ camera frames to disk at 10fps. `rpicam-raw` has no capability to format output frames as DNG files; for that functionality, use xref:camera_software.adoc#rpicam-still[`rpicam-still`]. Use the xref:camera_software.adoc#framerate[`framerate`] option at a level beneath 10 to avoid dropping frames:
+如果使用快速存储设备， `rpicam-raw` 能以 10fps 的速度将 18MB 的 1200 万像素 HQ 相机帧写入磁盘。rpicam-raw "无法将输出帧格式化为 DNG 文件；如需该功能，请使用 xref:camera_software.adoc#rpicam-still[`rpicam-still` ]。使用 xref:camera_software.adoc#framerate[ `framerate`] 选项时，速度应低于 10，以避免丢帧：
 
 [source,console]
 ----
 $ rpicam-raw -t 5000 --width 4056 --height 3040 -o test.raw --framerate 8
 ----
 
-For more information on the raw formats, see the xref:camera_software.adoc#mode[`mode` documentation].
+有关原始格式的更多信息，请参阅 xref:camera_software.adoc#mode[ `mode` 文档]。

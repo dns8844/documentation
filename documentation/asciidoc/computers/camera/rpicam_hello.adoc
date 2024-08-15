@@ -1,41 +1,43 @@
-=== `rpicam-hello`
 
-`rpicam-hello` briefly displays a preview window containing the video feed from a connected camera. To use `rpicam-hello` to display a preview window for five seconds, run the following command in a terminal:
+=== `rpicam-hello` 
+
+`rpicam-hello` 简要显示包含来自连接相机的视频馈送的预览窗口。要使用 `rpicam-hello` 显示预览窗口五秒钟，请在终端中运行以下命令：
 
 [source,console]
 ----
 $ rpicam-hello
 ----
 
-You can pass an optional duration (in milliseconds) with the xref:camera_software.adoc#timeout[`timeout`] option. A value of `0` runs the preview indefinitely:
+您可以使用 xref:camera_software.adoc#timeout[`timeout`] 选项传递可选的持续时间（以毫秒为单位）。值 `0` 无限期运行预览：
 
 [source,console]
 ----
 $ rpicam-hello --timeout 0
 ----
 
-Use `Ctrl+C` in the terminal or the close button on the preview window to stop `rpicam-hello`.
+使用终端中的 `Ctrl+C` 或预览窗口上的关闭按钮停止 `rpicam-hello` 。
 
-==== Display an image sensor preview
+[[display-an-image-sensor-preview]]
+==== 显示图像预览
 
-Most of the `rpicam-apps` display a preview image in a window. If there is no active desktop environment, the preview draws directly to the display using the Linux Direct Rendering Manager (DRM). Otherwise, `rpicam-apps` attempt to use the desktop environment. Both paths use zero-copy GPU buffer sharing: as a result, X forwarding is _not_ supported.
+大多数 `rpicam-apps` 会在窗口中显示预览图像。如果没有活动的桌面环境，则使用Linux直接渲染管理器（DRM）将预览直接绘制到显示器上。否则， `rpicam-apps` 会尝试使用桌面环境。两条路径都使用零拷贝GPU缓冲区共享：因此，_不_支持X转发。
 
-If you run the X window server and want to use X forwarding, pass the xref:camera_software.adoc#qt-preview[`qt-preview`] flag to render the preview window in a https://en.wikipedia.org/wiki/Qt_(software)[Qt] window. The Qt preview window uses more resources than the alternatives.
+如果您运行X窗口服务器并希望使用X转发，请添加 xref:camera_software.adoc#qt-preview[`qt-preview`]标志以在 https://en.wikipedia.org/wiki/Qt_(software)[Qt] 窗口中呈现预览窗口。Qt预览窗口比替代窗口使用更多资源。
 
-NOTE: Older systems using Gtk2 may, when linked with OpenCV, produce `Glib-GObject` errors and fail to show the Qt preview window. In this case edit the file `/etc/xdg/qt5ct/qt5ct.conf` as root and replace the line containing `style=gtk2` with `style=gtk3`.
+NOTE: 使用Gtk2的旧系统在与OpenCV链接时可能会产生 `Glib-GObject` 错误并且无法显示Qt预览窗口。在这种情况下，以root身份编辑文件 `/etc/xdg/qt5ct/qt5ct.conf` 并将包含 `style=gtk2` 的行替换为 `style=gtk3` 。
 
-To suppress the preview window entirely, pass the xref:camera_software.adoc#nopreview[`nopreview`] flag:
+要完全禁止预览窗口，请传递 xref:camera_software.adoc#nopreview[`nopreview`] 标志：
 
 [source,console]
 ----
 $ rpicam-hello -n
 ----
 
-The xref:camera_software.adoc#info-text[`info-text`] option displays image information on the window title bar using `%` directives. For example, the following command displays the current red and blue gain values:
+xref:camera_software.adoc#info-text[`info-text`] 选项使用 `%` 指令在窗口标题栏上显示图像信息。例如，以下命令显示当前的红色和蓝色增益值：
 
 [source,console]
 ----
 $ rpicam-hello --info-text "red gain %rg, blue gain %bg"
 ----
 
-For a full list of directives, see the xref:camera_software.adoc#info-text[`info-text` reference].
+有关指令的完整列表，请参阅 xref:camera_software.adoc#info-text[ `info-text` 参考]。

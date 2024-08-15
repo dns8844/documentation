@@ -1,40 +1,41 @@
-=== Differences between `rpicam` and `raspicam`
+[[differences-between-rpicam-and-raspicam]]
+=== `rpicam` 和 `raspicam` 之间的差异
 
-The `rpicam-apps` emulate most features of the legacy `raspicam` applications. However, users may notice the following differences:
+`rpicam-apps` 模拟了旧版 `raspicam` 应用程序的大多数功能。但是，用户可能会注意到以下差异：
 
-* Boost `program_options` don't allow multi-character short versions of options, so where these were present they have had to be dropped. The long form options are named the same way, and any single-character short forms are preserved.
+* Boost `program_options` 不允许使用多字符短版本选项，因此必须删除这些选项。长格式选项的命名方式相同，并且保留任何单字符短格式。
 
-* `rpicam-still` and `rpicam-jpeg` do not show the captured image in the preview window.
+* `rpicam-still` 和 `rpicam-jpeg` 不会在预览窗口中显示捕获的图像。
 
-* `rpicam-apps` removed the following `raspicam` features:
+* `rpicam-apps` 删除了以下 `raspicam` 功能：
 +
-** opacity (`--opacity`)
-** image effects (`--imxfx`)
-** colour effects (`--colfx`)
-** annotation (`--annotate`, `--annotateex`)
-** dynamic range compression, or DRC (`--drc`)
-** stereo (`--stereo`, `--decimate` and `--3dswap`)
-** image stabilisation (`--vstab`)
-** demo modes (`--demo`)
+** 不透明度 ( `--opacity` )
+** 图像效果 ( `--imxfx` )
+** 色彩效果 ( `--colfx` )
+** 注释 ( `--annotate`、 `--annotateex` )
+** 动态范围压缩或 DRC ( `--drc` )
+** 立体声 ( `--stereo`、 `--decimate` 和 `--3dswap` )
+** 图像稳定 ( `--vstab` )
+** 演示模式 ( `--demo` )
 +
-xref:camera_software.adoc#post-processing-with-rpicam-apps[Post-processing] replaced many of these features.
+xref:camera_software.adoc#post-processing-with-rpicam-apps[后处理] 替换了其中许多功能。
 
-* `rpicam-apps` removed xref:camera_software.adoc#rotation[`rotation`] option support for 90° and 270° rotations.
+* `rpicam-apps` 删除了 xref:camera_software.adoc#rotation[`rotation`] 选项对 90° 和 270° 旋转的支持。
 
-* `raspicam` conflated metering and exposure; `rpicam-apps` separates these options.
-* To disable Auto White Balance (AWB) in `rpicam-apps`, set a pair of colour gains with xref:camera_software.adoc#awbgains[`awbgains`] (e.g. `1.0,1.0`).
+* `raspicam` 合并了测光和曝光； `rpicam-apps` 将这些选项分开。
+* 要在 `rpicam-apps` 中禁用自动白平衡 (AWB)，请使用 xref:camera_software.adoc#awbgains[`awbgains`] 设置一对颜色增益（例如 `1.0,1.0` ）。
 
-* `rpicam-apps` cannot set Auto White Balance (AWB) into greyworld mode for NoIR camera modules. Instead, pass the xref:camera_software.adoc#tuning-file[`tuning-file`] option a NoIR-specific tuning file like `imx219_noir.json`.
+* `rpicam-apps` 无法将 NoIR 相机模块的自动白平衡 (AWB) 设置为灰色世界模式。相反，请将 xref:camera_software.adoc#tuning-file[`tuning-file`] 选项传递给 NoIR 特定的调谐文件，如 `imx219_noir.json` 。
 
-* `rpicam-apps` does not provide explicit control of digital gain. Instead, the xref:camera_software.adoc#gain[`gain`] option sets it implicitly.
+* `rpicam-apps` 不提供对数字增益的明确控制。相反， xref:camera_software.adoc#gain[`gain`] 选项会隐式设置它。
 
-* `rpicam-apps` removed the `--ISO` option. Instead, calculate the gain corresponding to the ISO value required. Vendors can provide mappings of gain to ISO.
+* `rpicam-apps` 删除了 `--ISO` 选项。相反，计算与所需 ISO 值相对应的增益。供应商可以提供增益到 ISO 的映射。
 
-* `rpicam-apps` does not support setting a flicker period.
+* `rpicam-apps` 不支持设置闪烁周期。
 
-* `rpicam-still` does not support burst capture. Instead, consider using `rpicam-vid` in MJPEG mode with `--segment 1` to force each frame into a separate file.
+* `rpicam-still` 不支持连拍。相反，考虑在 MJPEG 模式下使用 `rpicam-vid` 和 `--segment 1` 强制将每帧放入单独的文件中。
 
-* `rpicam-apps` uses open source drivers for all image sensors, so the mechanism for enabling or disabling on-sensor Defective Pixel Correction (DPC) is different. The imx477 driver on the Raspberry Pi HQ Camera enables on-sensor DPC by default. To disable on-sensor DPC on the HQ Camera, run the following command:
+* `rpicam-apps` 对所有图像传感器都使用开源驱动程序，因此启用或禁用传感器上的缺陷像素校正 (DPC) 的机制不同。Raspberry Pi HQ 相机上的 imx477 驱动程序默认启用传感器上的 DPC。要在 HQ 相机上禁用传感器上的 DPC，请运行以下命令：
 +
 [source,console]
 ----

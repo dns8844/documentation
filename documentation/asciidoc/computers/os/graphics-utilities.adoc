@@ -1,83 +1,87 @@
-== Utilities
+[[utilities]]
+== 实用程序
 
-There are several useful command-line utilities pre-installed in Raspberry Pi OS.
+Raspberry Pi OS中预装了几个有用的命令行实用程序。
 
-=== `kmsprint`
+[[kmsprint]]
+=== kmsprint
 
-The `kmsprint` tool can be used to list the display-modes supported by the monitors attached to the Raspberry Pi. Use `kmsprint` to see details of the monitors connected to the Raspberry Pi, and `kmsprint -m` to see a list of all the display modes supported by each monitor. You can find source code for the `kmsprint` utility https://github.com/tomba/kmsxx[on Github].
-
+`kmsprint` 工具可用于列出连接到Raspberry Pi的显示器支持的显示模式。使用 `kmsprint` 查看连接到Raspberry Pi的显示器的详细信息，使用 `kmsprint-m` 查看每个显示器支持的所有显示模式的列表。您可以在 https://github.com/tomba/kmsxx[Github] 上找到 `kmsprint` 实用程序的源代码。
 === `vclog`
 
-`vclog` displays log messages from the VideoCore GPU from Linux running on the Arm. It needs to be run as root.
+`vclog` 可从 Arm 上运行的 Linux 中显示来自 VideoCore GPU 的日志信息。它需要以 root 用户身份运行。
 
-`sudo vclog --msg` prints out the message log, whilst `sudo vclog --assert` prints out the assertion log.
+`sudo vclog --msg` 会打印信息日志，而 `sudo vclog --assert` 则会打印断言日志。
 
+[[vcgencmd]]
 === `vcgencmd`
 
-The `vcgencmd` tool is used to output information from the VideoCore GPU on the Raspberry Pi. You can find source code for the `vcgencmd` utility https://github.com/raspberrypi/utils/tree/master/vcgencmd[on GitHub].
+`vcgencmd` 工具用于从Raspberry Pi上的 VideoCore GPU 输出信息。您可以在GitHub上找到 https://github.com/raspberrypi/utils/tree/master/vcgencmd[vcgencmd] 源代码。
 
-To get a list of all commands supported by `vcgencmd`, use `vcgencmd commands`. Some useful commands and their required parameters are listed below.
+要获取 `vcgencmd` 支持的所有命令的列表，请使用 `vcgencmd commands` 。下面列出了一些有用的命令及其所需参数。
 
 ==== `vcos`
 
-The `vcos` command has two useful sub-commands:
+`vcos` 命令有两个有用的子命令：
 
-* `version` displays the build date and version of the firmware on the VideoCore
-* `log status` displays the error log status of the various VideoCore firmware areas
+* `version` 显示VideoCore上固件的构建日期和版本
+* `log status` 显示各种VideoCore固件区域的错误日志状态
 
 ==== `version`
 
-Displays the build date and version of the VideoCore firmware.
+显示VideoCore固件的构建日期和版本。
 
+[[get_throttled]]
 ==== `get_throttled`
 
-Returns the throttled state of the system. This is a bit pattern. A bit being set indicates the following meanings:
+返回系统的节流状态。这是一个位模式。正在设置的位表示以下含义：
 
 [cols="^,,"]
 |===
-| Bit | Hexadecimal value | Meaning
+| 位 | 十六进制值 | 意义
 
 | 0
 | `0x1`
-| Undervoltage detected
+| 检测到欠压
 
 | 1
 | `0x2`
-| Arm frequency capped
+| ARM频率上限
 
 | 2
 | `0x4`
-| Currently throttled
+| 当前节流
 
 | 3
 | `0x8`
-| Soft temperature limit active
+| 软温度限制活动
 
 | 16
 | `0x10000`
-| Undervoltage has occurred
+| 已发生欠压
 
 | 17
 | `0x20000`
-| Arm frequency capping has occurred
+| 达到Arm频率上限
 
 | 18
 | `0x40000`
-| Throttling has occurred
+| 节流已经发生
 
 | 19
 | `0x80000`
-| Soft temperature limit has occurred
+| 已触发软温度限制
 |===
 
+[[measure_temp]]
 ==== `measure_temp`
 
-Returns the temperature of the SoC as measured by its internal temperature sensor.
-On Raspberry Pi 4, `measure_temp pmic` returns the temperature of the PMIC.
+返回 SoC 内部温度传感器测得的温度。
+在 Raspberry Pi 4 上，`measure_temp pmic` 返回 PMIC 的温度。
 
 ==== `measure_clock [clock]`
 
-This returns the current frequency of the specified clock. Accepts the following clock values:
+返回指定时钟的当前频率。接受以下时钟值：
 
 [cols="^,"]
 |===
@@ -120,11 +124,11 @@ This returns the current frequency of the specified clock. Accepts the following
 | Display Parallel Interface
 |===
 
-e.g. `vcgencmd measure_clock arm`
+例如  `vcgencmd measure_clock arm` 
 
 ==== `measure_volts [block]`
 
-Displays the current voltages used by the specific block. Accepts the following block values:
+显示特定程序块使用的当前电压。接受以下区块值：
 
 [cols="^,"]
 |===
@@ -145,12 +149,12 @@ Displays the current voltages used by the specific block. Accepts the following 
 
 ==== `otp_dump`
 
-Displays the content of the OTP (one-time programmable) memory inside the SoC. These are 32-bit values, indexed from 8 to 64. See the xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP bits page] for more details.
+显示 SoC 内部 OTP（一次性可编程）存储器的内容。这些内容为 32 位值，索引范围从 8 到 64。详情请参阅 xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP 位页面]。
 
 [[getconfig]]
 ==== `get_config [configuration item|int|str]`
 
-Displays the value of the configuration setting specified: alternatively, specify either `int` (integer) or `str` (string) to see all configuration items of the given type. For example, the following command returns the total memory on the device in megabytes:
+显示指定配置设置的值：或者，指定 `int` （整数）或 `str`（字符串）以查看给定类型的所有配置项。例如，以下命令以 MB 为单位返回设备的总内存：
 
 [source,console]
 ----
@@ -159,20 +163,20 @@ $ vcgencmd get_config total_mem
 
 ==== `get_mem type`
 
-Reports on the amount of memory addressable by the Arm and the GPU. To show the amount of Arm-addressable memory, use `vcgencmd get_mem arm`; to show the amount of GPU-addressable memory, use `vcgencmd get_mem gpu`. On devices with more than 1GB of memory, the `arm` parameter will always return 1GB minus the `gpu` memory value, since the GPU firmware is only aware of the first 1GB of memory. To get an accurate report of the total memory on the device, see the `total_mem` configuration item and the <<getconfig,`get_config`>> section above.
+报告 Arm 和 GPU 可寻址的内存量。要显示 Arm 可寻址的内存量，请使用 `vcgencmd get_mem arm`；要显示 GPU 可寻址的内存量，请使用 `vcgencmd get_mem gpu`。在内存超过 1GB 的设备上，`arm` 参数将始终返回 1GB 减去`gpu`内存值，因为 GPU 固件只知道前 1GB 内存。要获得设备总内存的准确报告，请参阅上文的 `total_mem` 配置项和 <<getconfig,`get_config`>> 部分。
 
 ===== `codec_enabled [type]`
 
-Reports whether the specified codec type is enabled. Possible options for type are AGIF, FLAC, H263, H264, MJPA, MJPB, MJPG, MPG2, MPG4, MVC0, PCM, THRA, VORB, VP6, VP8, WMV9, WVC1. Note that because the H.265 HW block on the Raspberry Pi 4 and 400 is not part of the VideoCore GPU, its status is not accessed via this command.
+报告是否启用了指定的编解码器类型。可能的类型选项有 AGIF、FLAC、H263、H264、MJPA、MJPB、MJPG、MPG2、MPG4、MVC0、PCM、THRA、VORB、VP6、VP8、WMV9 和 WVC1。请注意，由于 Raspberry Pi 4 和 400 上的 H.265 HW 块不是 VideoCore GPU 的一部分，因此不能通过此命令访问其状态。
 
 ===== `mem_oom`
 
-Displays statistics on any OOM (out of memory) events occurring in the VideoCore memory space.
+显示 VideoCore 内存空间中发生的任何 OOM（内存不足）事件的统计数据。
 
 ===== `mem_reloc_stats`
 
-Displays statistics from the relocatable memory allocator on the VideoCore.
+显示 VideoCore 上可重置内存分配器的统计数据。
 
 ===== `read_ring_osc`
 
-Returns the current speed, voltage and temperature of the ring oscillator.
+返回环形振荡器当前的速度、电压和温度。

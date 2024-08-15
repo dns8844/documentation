@@ -1,61 +1,67 @@
-== Kernel command line (`cmdline.txt`)
+[[the-kernel-command-line]]
+== 内核命令行 (`cmdline.txt`)
 
-The Linux kernel accepts a collection of command line parameters during boot. On the Raspberry Pi, this command line is defined in a file in the boot partition, called `cmdline.txt`. You can edit this text file with any text editor.
+Linux 内核在启动过程中接受一系列命令行参数。在 Raspberry Pi 上，该命令行定义在启动分区中一个名为 `cmdline.txt` 的文件中。您可以使用任何文本编辑器编辑该文本文件。
 
 [source,console]
 ----
 $ sudo nano /boot/firmware/cmdline.txt
 ----
 
-IMPORTANT: Put all parameters in `cmdline.txt` on the same line. Do _not_ use newlines.
+IMPORTANT: 将 `cmdline.txt` 中的所有参数放在同一行。不要使用换行符。
 
-To view the command line passed to the kernel at boot time, run the following command:
+要查看启动时传递给内核的命令行，请运行以下命令：
 
 [source,console]
 ----
 $ cat /proc/cmdline
 ----
 
-Because Raspberry Pi firmware makes changes to the command line before launching the kernel, the output of this command will not exactly match the contents of `cmdline.txt`.
+由于 Raspberry Pi 固件会在启动内核前更改命令行，因此该命令的输出将与 `cmdline.txt` 中的内容不完全一致。
 
-=== Command line options
+[[command-line-options]]
+=== 命令行选项
 
-There are many kernel command line parameters, some of which are defined by the kernel itself. Others are defined by code that the kernel may be using, such as the Plymouth splash screen system.
+内核命令行参数有很多，其中一些是由内核本身定义的。其他由内核可能正在使用的代码定义，例如 Plymouth splash。
 
-==== Standard entries
 
-`console`:: defines the serial console. There are usually two entries:
+==== 标准条目
+
+`console`:: 定义串行控制台。通常有两个条目：
 
 * `console=serial0,115200`
 * `console=tty1`
 
-`root`:: defines the location of the root filesystem. e.g. `root=/dev/mmcblk0p2` means multimedia card block 0 partition 2.
+`root`:: 定义根文件系统的位置，例如 `root=/dev/mmcblk0p2` 表示多媒体卡块 0 分区 2。
 
-`rootfstype`:: defines what type of filesystem the rootfs uses, e.g. `rootfstype=ext4`.
+`rootfstype`:: 定义 rootfs 使用的文件系统类型，例如 `rootfstype=ext4`。
 
-`quiet`:: sets the default kernel log level to `KERN_WARNING`, which suppresses all but very serious log messages during boot.
+`quiet`:: 将内核日志的默认级别设置为 `KERN_WARNING`，这样在启动过程中，除了非常严重的日志信息外，所有日志信息都会被抑制。
 
-==== Set the KMS display mode
+[[setting-the-kms-display-mode]]
+===== 设置KMS显示模式
 
-The legacy firmware and FKMS display modes used in earlier versions of Raspberry Pi OS are no longer supported. Instead, recent OS versions use KMS (Kernel Mode Setting).
+设置 KMS 显示模式
 
-If no `video` entry is present in `cmdline.txt`, Raspberry Pi OS uses the https://en.wikipedia.org/wiki/Extended_Display_Identification_Data[EDID] of the HDMI-connected monitor to automatically pick the best resolution supported by your display based on information in the Linux kernel. In Raspberry Pi OS Lite or console mode, you must customise the `video` entry to control resolution and rotation.
+早期版本的 Raspberry Pi OS 不再支持传统固件和 FKMS 显示模式。取而代之的是，最近的操作系统版本使用 KMS（内核模式设置）。
+
+如果 `cmdline.txt` 中没有 `video' 条目，Raspberry Pi OS 将使用 HDMI 连接的显示器的 https://en.wikipedia.org/wiki/Extended_Display_Identification_Data[EDID]，根据 Linux 内核中的信息自动选择显示器支持的最佳分辨率。在 Raspberry Pi OS Lite 或控制台模式下，您必须自定义 `video` 条目以控制分辨率和旋转。
 
 [source,bash]
 ----
 video=HDMI-A-1:1920x1080M@60
 ----
 
-In addition, it is possible to add rotation and reflect parameters as documented in the standard https://github.com/raspberrypi/linux/blob/rpi-6.1.y/Documentation/fb/modedb.rst[Linux framebuffer documentation]. The following example defines a display named `HDMI-A-` at a resolution of 1080p, a refresh rate of 60Hz, 90 degrees of rotation, and a reflection over the X axis:
+此外，还可以按照标准 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/Documentation/fb/modedb.rst[Linux 帧缓冲器文档]中的说明添加旋转和反射参数。下面的示例定义了一个名为 `HDMI-A-` 的显示器，分辨率为 1080p，刷新率为 60Hz，可旋转 90 度，沿X 轴反转：
 
 [source,bash]
 ----
 video=HDMI-A-1:1920x1080M@60,rotate=90,reflect_x
 ----
 
-You must specify the resolution explicitly when specifying rotation and reflection parameters.
+在指定旋转和反射参数时，必须明确指定分辨率。
 
-Possible options for the display type - the first part of the `video=` entry - include:
+显示类型的可能选项 - `video=` 条目的第一部分 - 包括：
 
 [cols="1m,3"]
 |===
@@ -74,21 +80,21 @@ Possible options for the display type - the first part of the `video=` entry - i
 | Composite
 |===
 
-==== Other entries
+==== 其他条目
 
-This section contains some of the other entries you can use in the kernel command line. This list is not exhaustive.
+本节包含一些可以在内核命令行中使用的其他条目。此列表并不详尽。
 
-`splash`:: tells the boot to use a splash screen via the Plymouth module.
+`splash`:: 通过Plymouth模块告诉启动使用闪屏。
 
-`plymouth.ignore-serial-consoles`:: normally if the Plymouth module is enabled it will prevent boot messages from appearing on any serial console which may be present. This flag tells Plymouth to ignore all serial consoles, making boot messages visible again, as they would be if Plymouth was not running.
+`plymouth.ignore-serial-consoles`:: 如果启用了Plymouth模块，通常会阻止启动信息出现在任何可能存在的串行控制台上。此标记会告诉Plymouth忽略所有串行控制台，使启动信息再次可见，就像Plymouth未运行时一样。
 
-`dwc_otg.lpm_enable=0`:: turns off Link Power Management (LPM) in the `dwc_otg` driver, which drives the USB controller built into the processor used on Raspberry Pi computers. On Raspberry Pi 4, this controller is disabled by default, and is only connected to the USB type C power input connector. The USB-A ports on Raspberry Pi 4 are driven by a separate USB controller which is not affected by this setting.
+`dwc_otg.lpm_enable=0`:: 关闭 "dwc_otg "驱动程序中的 "链接电源管理（LPM）"，该驱动程序用于驱动 Raspberry Pi 电脑处理器中内置的 USB 控制器。在 Raspberry Pi 4 上，该控制器默认为禁用，并且只连接到 USB C 型电源输入连接器。Raspberry Pi 4 上的 USB-A 端口由单独的 USB 控制器驱动，不受此设置影响。
 
-`dwc_otg.speed`:: sets the speed of the USB controller built into the processor on Raspberry Pi computers. `dwc_otg.speed=1` will set it to full speed (USB 1.0), which is slower than high speed (USB 2.0). This option should not be set except during troubleshooting of problems with USB devices.
+`dwc_otg.speed`::  设置 Raspberry Pi 电脑处理器内置 USB 控制器的速度。dwc_otg.speed=1` 将设置为全速（USB 1.0），比高速（USB 2.0）慢。除非在排除 USB 设备故障时，否则不应设置该选项。
 
-`smsc95xx.turbo_mode`:: enables/disables the wired networking driver turbo mode. `smsc95xx.turbo_mode=N` turns turbo mode off.
+`smsc95xx.turbo_mode`:: 启用/禁用有线网络驱动程序的涡轮模式。`smsc95xx.turbo_mode=N` 关闭涡轮模式。
 
-`usbhid.mousepoll`:: specifies the mouse polling interval. If you have problems with a slow or erratic wireless mouse, setting this to 0 with `usbhid.mousepoll=0` might help.
+`usbhid.mousepoll`:: 指定鼠标轮询间隔。如果无线鼠标速度慢或不稳定，使用 `usbhid.mousepoll=0` 将其设置为 0 可能会有帮助。
 
-`drm.edid_firmware=HDMI-A-1:edid/your_edid.bin`:: Override your monitor's built-in EDID with the contents of `/usr/lib/firmware/edid/your_edid.bin`.
+`drm.edid_firmware=HDMI-A-1:edid/your_edid.bin`:: 用 `/usr/lib/firmware/edid/your_edid.bin`中的内容覆盖显示器的内置 EDID。
 

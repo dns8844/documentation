@@ -1,9 +1,9 @@
-== Introduction
+== 简介
 
-Raspberry Pi OS is a free, Debian-based operating system optimised for the Raspberry Pi hardware. Raspberry Pi OS supports over 35,000 Debian packages. We recommend Raspberry Pi OS for most Raspberry Pi use cases.
+Raspberry Pi OS 是基于 Debian 的免费操作系统，针对 Raspberry Pi 硬件进行了优化。Raspberry Pi OS 支持超过 35,000 个 Debian 软件包。我们推荐大多数 Raspberry Pi 使用 Raspberry Pi OS。
 
-Because Raspberry Pi OS is derived from Debian, it follows a staggered version of the https://wiki.debian.org/DebianReleases[Debian release cycle]. Releases happen roughly every 2 years.
+由于 Raspberry Pi OS 源自 Debian，它遵循 https://wiki.debian.org/DebianReleases[Debian发布周期]的交错版本。大约每两年发布一次。
 
-The latest version of Raspberry Pi OS is based on https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/[Debian Bookworm]. The previous version was based on https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/[Debian Bullseye].
+最新版本的 Raspberry Pi OS 基于 https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/[Debian Bookworm]。之前的版本基于 https://www.raspberrypi.com/news/raspberry-pi-os-debian-bullseye/[Debian Bullseye]。
 
-You can find images of Raspberry Pi OS at https://www.raspberrypi.com/software/operating-systems/[raspberrypi.com/software/operating-systems/]
+您可以在 https://www.raspberrypi.com/software/operating-systems/[raspberrypi.com/software/operating-systems/] 上找到 Raspberry Pi OS 的镜像。

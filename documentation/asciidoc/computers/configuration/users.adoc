@@ -1,71 +1,71 @@
 == Users
 
 [[change-user-password]]
-=== Change a user's password
+=== 更改用户密码
 
-You can change the password for the current user account via the `raspi-config` application on from the command line:
+您可以通过 `raspi-config` 应用程序或命令行更改当前用户账户的密码：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-Select option 2, and follow the instructions to change the password.
+选择option 2，然后按照说明更改密码。
 
-Alternatively, use the `passwd` application:
+或者使用  `passwd` 应用程序：
 
 [source,console]
 ----
 $ passwd
 ----
 
-=== Add a user
+=== 添加用户
 
-To add a new user, enter the following command, replacing the `<username>` placeholder with the username for the new user:
+要添加新用户，请输入以下命令，用新用户的用户名替换 `<username>` 占位符：
 
 [source,console]
 ----
 $ sudo adduser <username>
 ----
 
-When prompted, enter a password for the new user.
+出现提示时，输入新用户的密码。
 
-You can find the home directory for the new user at `/home/<username>/`.
+新用户的主目录位于 `/home/<username>/`。
 
-To grant the new user necessary permissions, like `sudo`, run the following command to add the user to the associated user groups, replacing the `<username>` placeholder with the username for the new user:
+要授予新用户必要的权限（如 `sudo`），请运行以下命令将用户添加到相关的用户组，并用新用户的用户名替换占位符 `<username>`：
 
 [source,console]
 ----
 $ sudo usermod -a -G adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,netdev,gpio,i2c,spi <username>
 ----
 
-To check that the permissions were successfully granted, run the following command, replacing the `<username>` placeholder with the username for the new user:
+要检查权限是否已成功授予，请运行以下命令，用新用户的用户名替换 `<username>` 占位符：
 
 [source,console]
 ----
 $ sudo su - <username>
 ----
 
-If the above command runs successfully, permissions were successfully configured for the user.
+如果上述命令运行成功，则说明已成功为用户配置了权限。
 
-=== Delete a user
+=== 删除用户
 
-To delete a user, run the following command, replacing the `<username>` placeholder with the username you would like to delete:
+要删除用户，请运行以下命令，用要删除的用户名替换 `<username>` 占位符：
 
 [source,console]
 ----
 $ sudo deluser -remove-home <username>
 ----
 
-This command deletes the user as well as their home directory. If you'd like to preserve the user's home directory, run the command without the `-remove-home` option.
+该命令将删除用户及其主目录。如果想保留用户的主目录，运行该命令时不要使用 `-remove-home` 选项。
 
-=== Change the default user
+=== 更改默认用户
 
-To change the user that automatically logs into your Raspberry Pi on boot, run the following command:
+要更改启动时自动登录 Raspberry Pi 的用户，请运行以下命令：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-Select option `1`, `Boot/Auto login`. Reboot to put your changes into effect.
+选择 option `1`, `Boot/Auto login`。重新启动，使更改生效。

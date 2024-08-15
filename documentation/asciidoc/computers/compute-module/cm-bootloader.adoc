@@ -1,53 +1,54 @@
-== Compute Module EEPROM bootloader
+[[compute-moduleeeprom-bootloader]]
+== 计算模块 EEPROM 引导加载程序
 
-Since Compute Module 4, Compute Modules use an EEPROM bootloader. This bootloader lives in a small segment of on-board storage instead of the boot partition. As a result, it requires different procedures to update. Before using a Compute Module with an EEPROM bootloader in production, always follow these best practices:
+从计算模块 4 开始，计算模块使用 EEPROM 引导加载程序。该引导加载程序位于板载存储的一小部分中，而不是引导分区中。因此，更新它需要不同的程序。在生产中使用带有 EEPROM 引导加载程序的计算模块之前，请务必遵循以下最佳实践：
 
-* Select a specific bootloader release. Verify that every Compute Module you use has that release. The version in the `usbboot` repo is always a recent stable release.
-* Configure the boot device by xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[setting the `BOOT_ORDER` ].
-* Enable hardware write-protection on the bootloader EEPROM to ensure that the bootloader can't be modified on inaccessible products (such as remote or embedded devices).
+* 选择特定的引导加载程序版本。确认使用的每个计算模块都有该版本。`usbboot` repo 中的版本始终是最近的稳定版本。
+* 通过 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[设置 `BOOT_ORDER`] 配置引导设备。
+* 在引导加载器 EEPROM 上启用硬件写保护，以确保引导加载器无法在无法访问的产品（如远程或嵌入式设备）上被修改。
 
-=== Flash Compute Module bootloader EEPROM
+=== Flash计算模块引导加载程序 EEPROM
 
-To flash the bootloader EEPROM:
+Flash引导加载程序 EEPROM：
 
-. Set up the hardware as you would when xref:../computers/compute-module.adoc#flash-compute-module-emmc[flashing the eMMC], but ensure `EEPROM_nWP` is _not_ pulled low.
-. Run the following command to write `recovery/pieeprom.bin` to the bootloader EEPROM:
+. 与 xref:../computers/compute-module.adoc#flash-compute-module-emmc[flashing the eMMC] 时一样设置硬件，但要确保 `EEPROM_nWP` _不_ 被拉低。
+. 运行以下命令将 `recovery/pieeprom.bin` 写入引导加载程序 EEPROM：
 +
 [source,console]
 ----
 $ ./rpiboot -d recovery
 ----
-. Once complete, `EEPROM_nWP` may be pulled low again.
+. 完成后，`EEPROM_nWP` 可以再次被拉低。
 
-=== Flash storage devices other than SD cards
+=== SD 卡以外的闪存设备
 
-The Linux-based https://github.com/raspberrypi/usbboot/blob/master/mass-storage-gadget/README.md[`mass-storage-gadget`] supports flashing of NVMe, eMMC and USB block devices. `mass-storage-gadget` writes devices faster than the firmware-based `rpiboot` mechanism, and also provides a UART console to the device for debugging.
+基于 Linux 的 https://github.com/raspberrypi/usbboot/blob/master/mass-storage-gadget/README.md[`mass-storage-gadget`] 支持闪存 NVMe、eMMC 和 USB 块设备。与基于固件的 `rpiboot` 机制相比，`mass-storage-gadget` 写入设备的速度更快，还为设备提供了一个 UART 控制台用于调试。
 
-`usbboot` also includes a number of https://github.com/raspberrypi/usbboot/blob/master/Readme.md#compute-module-4-extensions[extensions] that enable you to interact with the EEPROM bootloader on a Compute Module.
+`usbboot` 还包括一些 https://github.com/raspberrypi/usbboot/blob/master/Readme.md#compute-module-4-extensions[扩展]，可让您与计算模块上的 EEPROM 引导加载程序进行交互。
 
-=== Update the Compute Module bootloader
+=== 更新计算模块引导加载程序
 
-On Compute Modules with an EEPROM bootloader, ROM never runs `recovery.bin` from SD/eMMC. These Compute Modules disable the `rpi-eeprom-update` service by default, because eMMC is not removable and an invalid `recovery.bin` file could prevent the system from booting.
+在使用 EEPROM 引导加载程序的计算模块上，ROM 从未从 SD/eMMC 运行过 `recovery.bin`。这些计算模块默认禁用 `rpi-eeprom-update` 服务，因为 eMMC 不可拆卸，无效的  `recovery.bin` 文件可能会阻止系统启动。
 
-You can override this behaviour with `self-update` mode. In `self-update` mode, you can update the bootloader from USB MSD or network boot.
+你可以用 "自我更新 "模式覆盖这一行为。在 "自我更新 "模式下，可以通过 USB MSD 或网络启动更新引导加载程序。
 
-WARNING: `self-update` mode does not update the bootloader atomically. If a power failure occurs during an EEPROM update, you could corrupt the EEPROM.
+WARNING: `self-update` 模式不会雾化更新引导加载程序。如果在更新 EEPROM 时发生断电，可能会损坏 EEPROM。
 
-=== Modify the bootloader configuration
+=== 修改引导加载程序配置
 
-To modify the Compute Module EEPROM bootloader configuration:
+修改计算模块 EEPROM 引导加载程序配置：
 
-. Navigate to the `usbboot/recovery` directory.
-. If you require a specific bootloader release, replace `pieeprom.original.bin` with the equivalent from your bootloader release.
-. Edit the default `boot.conf` bootloader configuration file to define a xref:../computers/raspberry-pi.adoc#BOOT_ORDER[`BOOT_ORDER`]:
- * For network boot, use `BOOT_ORDER=0xf2`.
- * For SD/eMMC boot, use `BOOT_ORDER=0xf1`.
- * For USB boot failing over to eMMC, use `BOOT_ORDER=0xf15`.
- * For NVMe boot, use `BOOT_ORDER=0xf6`.
-. Run `./update-pieeprom.sh` to generate a new EEPROM image `pieeprom.bin` image file.
-. If you require EEPROM write-protection, add `eeprom_write_protect=1` to  `/boot/firmware/config.txt`.
- * Once enabled in software, you can lock hardware write-protection by pulling the `EEPROM_nWP` pin low.
-. Run the following command to write the updated `pieeprom.bin` image to EEPROM:
+. 导航至 `usbboot/recovery` 目录。
+. 如果需要特定的引导加载程序版本，请将 `pieeprom.original.bin` 替换为引导加载程序版本中的相应内容。
+. 编辑默认的 `boot.conf` 引导加载器配置文件以定义 xref:../computers/raspberry-pi.adoc#BOOT_ORDER[`BOOT_ORDER`]：
+ * 对于网络启动，使用 `BOOT_ORDER=0xf2`。
+ * 对于 SD/eMMC 启动，使用 `BOOT_ORDER=0xf1`。
+ * 对于 USB 启动失败转到 eMMC，使用 `BOOT_ORDER=0xf15`。
+ * 对于 NVMe 启动，使用 `BOOT_ORDER=0xf6`。
+. 运行 `./update-pieeprom.sh`，生成新的 EEPROM 映像文件 `pieeprom.bin` 映像文件。
+. 如果需要 EEPROM 写保护，请在 `/boot/firmware/config.txt` 中添加 `eeprom_write_protect=1`。
+ * 软件启用后，可以通过将 `EEPROM_nWP` 引脚拉低来锁定硬件写保护。
+. 运行以下命令将更新后的 `pieeprom.bin` 映像写入 EEPROM：
 +
 [source,console]
 ----

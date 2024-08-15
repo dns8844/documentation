@@ -1,17 +1,20 @@
-== Licence key and codec options
+[[licence-key-and-codec-options]]
+== 许可证密钥和编解码器选项
 
-Hardware decoding of additional codecs on the Raspberry Pi 3 and earlier models can be enabled by https://codecs.raspberrypi.com/license-keys/[purchasing a licence] that is locked to the CPU serial number of your Raspberry Pi.
+通过锁定到 Raspberry Pi 的CPU序列号的 https://codecs.raspberrypi.com/license-keys/[购买许可证]，可以启用Raspberry Pi 3和更早型号上的附加编解码器的硬件解码。
 
-The Raspberry Pi 4 has permanently disabled hardware decoders for MPEG2 and VC1. These codecs cannot be enabled, so a hardware codec licence key is not needed. Software decoding of MPEG2 and VC1 files performs well enough for typical use cases.
+树莓派4永久禁用了MPEG2和VC1的硬件解码器。这些编解码器无法启用，因此不需要硬件编解码器许可证密钥。MPEG2和VC1文件的软件解码在典型用例中表现良好。
 
-The Raspberry Pi 5 has H.265 (HEVC) hardware decoding. This decoding is enabled by default, so a hardware codec licence key is not needed.
+Raspberry Pi 5具有H.265（HEVC）硬解。默认情况下启用此解码，因此不需要硬件编解码器许可证密钥。
 
-=== `decode_MPG2`
+[[decode_mpg2]]
+=== `decode_MPG2` 
 
-`decode_MPG2` is a licence key to allow hardware MPEG-2 decoding, e.g. `decode_MPG2=0x12345678`.
+`decode_MPG2` 是允许硬件MPEG-2解码的许可证密钥，例如 `decode_MPG2=0x12345678` 。
 
-=== `decode_WVC1`
+[[decode_wvc1]]
+=== `decode_WVC1` 
 
-`decode_WVC1` is a licence key to allow hardware VC-1 decoding, e.g. `decode_WVC1=0x12345678`.
+decode_WVC1是允许硬件VC-1解码的许可证密钥，例如decode_WVC1=0x12345678。
 
-If you have multiple Raspberry Pis and you've bought a codec licence for each of them, you can list up to eight licence keys in a single `config.txt`, for example `decode_MPG2=0x12345678,0xabcdabcd,0x87654321`. This enables you to swap the same SD card between the different Raspberry Pis without having to edit `config.txt` each time.
+如果您有多个Raspberry Pi，并且为每个Raspberry Pis都购买了编解码器许可证，您可以在单个 `config.txt` 中列出最多八个许可证密钥，例如 `decode_MPG2=0x12345678,0xabcdabcd,0x87654321` 。这使您能够在不同的Raspberry Pi之间交换相同的SD卡，而无需每次都编辑 `config.txt` 。

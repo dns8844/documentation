@@ -1,12 +1,12 @@
-== Use GPIO from Python
+== 从 Python 使用 GPIO
 
-Using the https://gpiozero.readthedocs.io/[GPIO Zero] library makes it easy to control GPIO devices with Python. The library is comprehensively documented at https://gpiozero.readthedocs.io/[gpiozero.readthedocs.io].
+使用 https://gpiozero.readthedocs.io/[GPIO Zero] 库可以轻松地用 Python 控制 GPIO 设备。该库在 https://gpiozero.readthedocs.io/[gpiozero.readthedocs.io] 上有全面的文档说明。
 
-For information about GPIO hardware, see xref:../computers/raspberry-pi.adoc#gpio[GPIO hardware].
+有关 GPIO 硬件的信息，请参阅 xref:../computers/raspberry-pi.adoc#gpio[GPIO 硬件]。
 
-=== LED control
+=== LED 控制
 
-The following example code controls an LED connected to GPIO17:
+以下示例代码可控制连接到 GPIO17 的 LED：
 
 [,python]
 ----
@@ -22,13 +22,13 @@ while True:
     sleep(1)
 ----
 
-Run this in an IDE like Thonny, and the LED will blink on and off repeatedly.
+在 Thonny 等 IDE 中运行此代码，LED 将反复闪烁。
 
-LED methods include `on()`, `off()`, `toggle()`, and `blink()`.
+LED 方法包括 `on()`、 `off()`、 `toggle()` 和 `blink()` 。
 
 === Read button state
 
-The following example code reads the state of a button connected to GPIO2:
+要读取连接到 GPIO2 的按钮的状态：
 
 [,python]
 ----
@@ -45,11 +45,11 @@ while True:
     sleep(1)
 ----
 
-Button functionality includes the properties `is_pressed` and `is_held`; callbacks `when_pressed`, `when_released`, and `when_held`; and methods `wait_for_press()` and `wait_for_release`.
+按钮功能包括属性 `is_pressed` 和 `is_held` ；回调 `when_pressed`、 `when_released` 和 `when_held` ；以及方法 `wait_for_press()` 和 `wait_for_release` 。
 
-=== Control an LED with a button
+==== 使用按钮控制LED
 
-The following example code reads the state of a button connected to GPIO2, and lights an LED connected to GPIO17 when the button is pressed:
+以下示例代码读取连接到 GPIO2 的按钮的状态，并在按下按钮时点亮连接到 GPIO17 的 LED：
 
 [source,python]
 ----
@@ -65,7 +65,7 @@ while True:
         led.off()
 ----
 
-Alternatively:
+或者：
 
 [source,python]
 ----
@@ -81,7 +81,7 @@ while True:
     led.off()
 ----
 
-or:
+或者：
 
 [source,python]
 ----
@@ -96,6 +96,6 @@ button.when_released = led.off
 
 [.booklink, booktype="free", link=https://github.com/raspberrypipress/released-pdfs/raw/main/simple-electronics-with-gpio-zero.pdf, image=image::images/simple-electronics-with-gpio-zero.jpg[]]
 
-==== Going further
+==== 更进一步
 
-You can find more information on how to program electronics connected to your Raspberry Pi with the GPIO Zero Python library in the Raspberry Pi Press book https://github.com/raspberrypipress/released-pdfs/raw/main/simple-electronics-with-gpio-zero.pdf[Simple Electronics with GPIO Zero]. The book gets you started with the GPIO Zero library, and walks you through how to use it by building a series of projects.
+关于如何使用 GPIO Zero Python 库为连接到 Raspberry Pi 的电子设备编写程序，您可以在 Raspberry Pi 出版社的书籍 https://github.com/raspberrypipress/released-pdfs/raw/main/simple-electronics-with-gpio-zero.pdf[Simple Electronics with GPIO Zero] 中找到更多信息。该书让您开始使用 GPIO Zero 库，并通过构建一系列项目指导您如何使用它。

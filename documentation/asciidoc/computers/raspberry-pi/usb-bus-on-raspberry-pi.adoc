@@ -1,10 +1,12 @@
-== Universal Serial Bus (USB)
+[[universal-serial-bus-usb]]
+== 通用串行总线（USB）
 
-In general, every device supported by Linux can be used with a Raspberry Pi, although there are some limitations for models prior to Raspberry Pi 4.
+一般来说，Linux 支持的所有设备都可以与 Raspberry Pi 一起使用，但 Raspberry Pi 4 之前的型号有一些限制。
 
-=== Maximum power output
+[[maximum-power-output]]
+=== 最大功率输出
 
-As with all computers, the USB ports on the Raspberry Pi supply a limited amount of power. Often problems with USB devices are caused by power issues. To rule out insufficient power as the cause of the problem, connect your USB devices to the Raspberry Pi using a powered hub.
+与所有电脑一样，Raspberry Pi 上的 USB 端口提供的功率是有限的。USB 设备的问题通常是由电源问题引起的。要排除电源不足的原因，请使用供电集线器将 USB 设备连接到 Raspberry Pi。
 
 |===
 | Model | Max power output of USB ports
@@ -19,52 +21,60 @@ As with all computers, the USB ports on the Raspberry Pi supply a limited amount
 | 600mA if using a 3A supply, 1600mA if using a 5A supply
 |===
 
-. For the original Raspberry Pi 1 Model B the limit is 100mA per port.
+. 对于原始 Raspberry Pi 1 Model B，每个端口的限制电流为 100mA。
 
 === Raspberry Pi 5
 
-The Raspberry Pi 5 requires a good quality USB-C power supply capable of delivering 3A at +5V (15W) in order to boot. However, using such a supply will restrict current draw to peripherals. If you are using a power supply that cannot provide 5A at +5V on first boot you will be warned by the operating system that the current draw to peripherals will be restricted to 600mA.
+Raspberry Pi 5 需要能够在 +5V 电压下提供 3A 电流（15W）的优质 USB-C 电源才能启动。不过，使用这样的电源会限制外设的电流消耗。如果您使用的电源无法在首次启动时以 +5V 电压提供 5A 电流，则操作系统会警告您外围设备的电流将限制在 600mA。
 
-For users who wish to drive high-power peripherals like hard drives and SSDs, while retaining margin for peak workloads, a USB-PD enabled power supply capable of supplying a 5A at +5V (25W) should be used. If the Raspberry Pi 5 firmware detects such a supply, it increases the USB current limit for peripherals to 1.6A, providing 5W of extra power for downstream USB devices, and 5W of extra onboard power budget.
+对于希望驱动大功率外设（如硬盘和固态硬盘），同时为峰值工作负载保留余量的用户，应使用能够在 +5V 电压下提供 5A 电流（25W）的支持 USB-PD 的电源。如果 Raspberry Pi 5 固件检测到这样的电源，就会将外围设备的 USB 电流限制增加到 1.6A，为下游 USB 设备提供 5W 的额外电源，并提供 5W 的额外板载电源余量。
 
-NOTE: The power budget is shared between the USB ports and the fan header.
+NOTE: 电源余量由 USB 端口和风扇共享。
 
 === Raspberry Pi 4
 
-Raspberry Pi 4 offers two USB 3.0 ports and two USB 2.0 ports which are connected to a VL805 USB controller. The USB 2.0 lines on all four ports are connected to a single USB 2.0 hub within the VL805. This limits the total available bandwidth for USB 1.1 and USB 2.0 devices to that of a single USB 2.0 port.
+Raspberry Pi 4 提供两个 USB 3.0 端口和两个 USB 2.0 端口，它们与 VL805 USB 控制器相连。所有四个端口的 USB 2.0 线路都连接到 VL805 中的一个 USB 2.0 集线器。这就将 USB 1.1 和 USB 2.0 设备的总可用带宽限制为单个 USB 2.0 端口的带宽。
 
-On Raspberry Pi 4, the USB controller used on previous models is located on the USB type C port and is disabled by default.
+在 Raspberry Pi 4 上，以前型号使用的 USB 控制器位于 USB Type C 端口上，默认情况下被禁用。
 
 === Raspberry Pi Zero, 1, 2 and 3
 
-Raspberry Pi 1 Model B+, Raspberry Pi 2, and Raspberry Pi 3 boards offer four USB 2.0 ports. Raspberry Pi Zero boards have one micro USB on-the-go (OTG) port.
+Raspberry Pi 1 Model B+、Raspberry Pi 2 和 Raspberry Pi 3 板提供四个 USB 2.0 端口。Raspberry Pi Zero 板有一个微型 USB on-the-go (OTG) 端口。
 
-The USB controller on models prior to Raspberry Pi 4 has only a basic level of support for certain devices, which presents a higher software processing overhead. It also supports only one root USB port: all traffic from connected devices is funnelled down this single bus, which operates at a maximum speed of 480Mbps.
+Raspberry Pi 4 之前型号的 USB 控制器对某些设备只有基本的支持，因此软件处理开销较大。它还只支持一个根 USB 端口：来自连接设备的所有流量都通过这条单一总线传输，其最高运行速度为 480Mbps。
 
-The USB 2.0 specification defines three device speeds - low, full and high. Most mice and keyboards are low speed, most USB sound devices are full speed, and most video devices (webcams or video capture) are high speed.
+USB 2.0 规范定义了三种设备速度--低速、全速和高速。大多数鼠标和键盘为低速，大多数 USB 音效设备为全速，大多数视频设备（网络摄像头或视频采集）为高速。
 
-Generally, there are no issues with connecting multiple high speed USB devices to a Raspberry Pi.
+一般来说，将多个高速 USB 设备连接到 Raspberry Pi 不会有任何问题。
 
-The software overhead incurred when talking to low- and full-speed devices means that there are limitations on the number of simultaneously active low- and full-speed devices. Small numbers of these types of devices connected to a Raspberry Pi will cause no issues.
+与低速和全速设备通信时产生的软件开销意味着同时激活低速和全速设备的数量受到限制。少量这些类型的设备连接到 Raspberry Pi 不会造成任何问题。
 
-=== Known USB issues
 
-==== Interoperability with USB 3.0 hubs
+[[known-usb-issues]]
+=== 已知的 USB 问题
 
-There is an issue with USB 3.0 hubs in conjunction with the use of full- or low-speed devices, including most mice and keyboards. A bug in most USB 3.0 hub hardware means that the models prior to Raspberry Pi 4 cannot talk to full or low speed devices connected to a USB 3.0 hub.
+[[interoperability-with-usb-3-0-hubs]]
+==== 与 USB 3.0 集线器的互操作性
 
-USB 2.0 high speed devices, including USB 2.0 hubs, operate correctly when connected via a USB 3.0 hub.
+在使用全速或低速设备（包括大多数鼠标和键盘）时，USB 3.0 集线器存在一个问题。大多数 USB 3.0 集线器硬件中的一个错误意味着 Raspberry Pi 4 之前的型号无法与连接到 USB 3.0 集线器的全速或低速设备对话。
 
-Avoid connecting low or full speed devices into a USB 3.0 hub. As a workaround, plug a USB 2.0 hub into the downstream port of the USB 3.0 hub and connect the low-speed device, or use a USB 2.0 hub between the Raspberry Pi and the USB 3.0 hub, then plug low-speed devices into the USB 2.0 hub.
+通过 USB 3.0 集线器连接 USB 2.0 高速设备（包括 USB 2.0 集线器）时可正常运行。
 
-==== USB 1.1 webcams
+避免将低速或全速设备连接到 USB 3.0 集线器。作为一种变通方法，将 USB 2.0 集线器插入 USB 3.0 集线器的下游端口并连接低速设备，或在 Raspberry Pi 和 USB 3.0 集线器之间使用 USB 2.0 集线器，然后将低速设备插入 USB 2.0 集线器。
 
-Old webcams may be full-speed devices. Because these devices transfer a lot of data and incur additional software overhead, reliable operation is not guaranteed. As a workaround, try to use the camera at a lower resolution.
+[[usb-1-1-webcams]]
+==== USB 1.1 网络摄像头
 
-==== Esoteric USB sound cards
+老式网络摄像头可能是全速设备。由于这些设备会传输大量数据并产生额外的软件开销，因此无法保证可靠运行。作为一种变通方法，可尝试使用较低分辨率的摄像头。
 
-Expensive audiophile sound cards typically use large amounts of USB bandwidth. Reliable operation with 96kHz/192kHz DACs is not guaranteed. As a workaround, forcing the output stream to be CD quality (44.1kHz/48kHz 16-bit) will reduce the stream bandwidth to reliable levels.
+[[esoteric-usb-sound-cards]]
+==== USB 声卡
 
-==== Single TT USB hubs
+昂贵的发烧级声卡通常使用大量 USB 带宽。无法保证 96kHz/192kHz DAC 的可靠运行。作为一种变通方法，强制输出流为 CD 质量（44.1kHz/48kHz 16 位）可将流带宽降至可靠水平。
 
-USB 2.0 and 3.0 hubs have a mechanism for talking to full- or low-speed devices connected to their downstream ports called a transaction translator (TT). This device buffers high speed requests from the host and transmits them at full or low speed to the downstream device. Two configurations of hub are allowed by the USB specification: Single TT (one TT for all ports) and Multi TT (one TT per port). Because of a hardware limitation, if too many full- or low-speed devices are plugged into a single TT hub, the devices may behave unreliably. It is recommended to use a Multi TT hub to interface with multiple full and low speed devices. As a workaround, spread full- and low-speed devices out between the Raspberry Pi's own USB port and the single TT hub.
+[[single-tt-usb-hubs]]
+==== 单 TT USB 集线器
+
+USB 2.0 和 3.0 集线器有一种与连接到其下游端口的全速或低速设备对话的机制，称为事务转换器 (TT)。该设备可缓冲来自主机的高速请求，并以全速或低速将其传输到下游设备。USB 规范允许两种集线器配置： 单 TT（所有端口一个 TT）和多 TT（每个端口一个 TT）。由于硬件限制，如果在单 TT 集线器上插入过多的全速或低速设备，设备可能会表现不可靠。建议使用多 TT 集线器连接多个全速和低速设备。作为一种变通方法，将全速和低速设备分散到 Raspberry Pi 自身的 USB 端口和单 TT 集线器之间。
+
+

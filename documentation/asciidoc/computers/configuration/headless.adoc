@@ -1,49 +1,52 @@
 [[setting-up-a-headless-raspberry-pi]]
-== Set up a headless Raspberry Pi
+== 设置headless树莓派
 
-A **headless** Raspberry Pi runs without a monitor, keyboard, or mouse. To run a Raspberry Pi headless, you need a way to access it from another computer. To access your Raspberry Pi remotely, you'll need to connect your Raspberry Pi to a network, and a way to access the Raspberry Pi over that network.
+**headless** Raspberry Pi在没有显示器、键盘或鼠标的情况下运行。要运行headless Raspberry Pi，您需要一种从另一台计算机访问它的方法。要远程访问您的Raspberry Pi，您需要将Raspberry Pi连接到网络，并通过该网络访问Raspberry Pi。
 
-To connect your Raspberry Pi to a network, you can either plug your device into a wired connection via Ethernet or configure wireless networking.
+要将Raspberry Pi连接到网络，您可以通过以太网将设备插入有线连接或连接无线网络。
 
-To access your Raspberry Pi over that network, use SSH. Once you've connected over SSH, you can use `raspi-config` to xref:remote-access.adoc#vnc[enable VNC] if you'd prefer a graphical desktop environment.
+要通过该网络访问您的Raspberry Pi，请使用SSH。通过SSH连接后，如果您喜欢图形桌面环境，可以使用 `raspi-config` 来使能 xref:remote-access.adoc#vnc[VNC]。
 
-If you're setting up your Raspberry Pi from scratch, set up wireless networking and SSH during the xref:getting-started.adoc#installing-the-operating-system[imaging process]. If you've already got a Raspberry Pi set up, you can configure SSH using `raspi-config`.
+如果您从头开始设置Raspberry Pi，请在 xref:getting-started.adoc#installing-the-operating-system[imaging process] 期间设置无线网络和SSH。如果您已经设置了Raspberry Pi，则可以使用 `raspi-config` 配置SSH。
 
-WARNING: Depending on the model of Raspberry Pi and type of SD card you use, your Raspberry Pi may require up to five minutes to boot and connect to your wireless network the first time it boots.
+WARNING: 根据您使用的 Raspberry Pi 型号和 SD 卡类型，您的 Raspberry Pi 首次启动和连接到无线网络可能需要长达五分钟的时间。
 
-=== Connect to a wired network
+[[connect-to-a-wired-network]]
+=== 连接到有线网络
 
-To connect to a wired network at first boot, plug your headless Raspberry Pi in via Ethernet, or use an Ethernet adapter if your Raspberry Pi model does not include an Ethernet port. Your Raspberry Pi will automatically connect to the network.
+要在首次启动时连接到有线网络，请通过以太网插入headless Raspberry Pi，如果您的Raspberry Pi型号没有网口，请使用以太网适配器。您的Raspberry Pi将自动连接到网络。
 
-=== Connect to a wireless network
+[[connect-to-a-wireless-network]]
+=== 连接到无线网络
 
-To configure wireless network access at first boot in a headless Raspberry Pi, use the advanced settings menu in Raspberry Pi Imager. Enter the SSID and password of your preferred wireless network. Your Raspberry Pi will use these credentials to connect to the network on first boot. Some wireless adapters and some Raspberry Pi boards do not support 5GHz networks; check the documentation for your wireless module to ensure compatibility with your preferred network.
+要在 headless Raspberry Pi 中首次启动时配置无线网络访问，请使用 Raspberry Pi Imager 中的高级设置菜单。输入首选无线网络的SSID和密码。您的Raspberry Pi将在首次启动时使用这些凭据连接到网络。某些无线适配器和某些Raspberry Pi板不支持5GHz网络；检查无线模块的文档，以确保与选择的网络兼容。
 
-NOTE: Previous versions of Raspberry Pi OS made use of a `wpa_supplicant.conf` file which could be placed into the boot folder to configure wireless network settings. This functionality is not available from Raspberry Pi OS Bookworm onwards.
+NOTE: 以前版本的Raspberry Pi OS使用 `wpa_supplicant.conf` 文件，该文件可以放置在引导文件夹中以配置无线网络设置。此功能从 Raspberry Pi OS Bookworm 开始不可用。
 
-=== Remote access
+[[remote-access]]
+=== 远程访问
 
-With no keyboard or monitor, you need a way to xref:remote-access.adoc[remotely control] your headless Raspberry Pi. On first boot, the only option is SSH. To enable SSH on a fresh installation of Raspberry Pi OS, choose one of the following methods:
+如果没有键盘或显示器，您需要一种方法来 xref:remote-access.adoc[远程控制] 您的headless Raspberry Pi。首次启动时，唯一可用的选项是SSH。要在新安装的Raspberry Pi OS上启用SSH，请选择以下方法之一：
 
-* enable SSH in the OS customisation menu in Raspberry Pi Imager, then enter a username and password
-* create a file named `ssh` at the root of the SD card, then configure a user manually with `userconf.txt` following the instructions in the section below
+* 在 Raspberry Pi Imager 的操作系统自定义菜单中启用SSH，然后输入用户名和密码
+* 在SD卡的根目录下创建一个名为 `ssh` 的文件，然后按照以下部分的说明使用 `userconf.txt` 手动配置用户
 
-For more information, see xref:remote-access.adoc#ssh[set up an SSH server]. Once you've connected over SSH, you can use `raspi-config` to xref:remote-access.adoc#vnc[enable VNC] if you'd prefer a graphical desktop environment.
+有关详细信息，请参阅 xref:remote-access.adoc#ssh[设置SSH服务器]。通过SSH连接后，如果您喜欢图形桌面环境，可以使用 `raspi-config` 到 xref:remote-access.adoc#vnc[启用VNC]。
 
-[[configuring-a-user]]
-==== Configure a user manually
+[[配置-一个-用户]]
+==== 手动配置用户
 
-At the root of your SD card, create a file named `userconf.txt`.
+在SD卡的根目录下，创建一个名为 `userconf.txt` 的文件。
 
-This file should contain a single line of text, consisting of `<username>:<password>`: your desired username, followed immediately by a colon, followed immediately by an *encrypted* representation of the password you want to use.
+此文件应包含一行文本，由 `<username>：<password>` 组成：您想要的用户名，后跟冒号，后跟您想要使用的密码的 *加密* 表示。
 
-NOTE: `<username>` must only contain lower-case letters, digits and hyphens, and must start with a letter. It may not be longer than 31 characters. 
+NOTE:  `<username>` 只能包含小写字母、数字和连字符，并且必须以字母开头。它不能超过31个字符。
 
-To generate the encrypted password, use https://www.openssl.org[OpenSSL] on another computer. Open a terminal and enter the following:
+要生成加密密码，请在另一台计算机上使用 https://www.openssl.org[OpenSSL]。打开终端并输入以下内容：
 
 [source,console]
 ----
 $ openssl passwd -6
 ----
 
-When prompted, enter your password and verify it. This command will then output an encrypted version of the supplied password.
+出现提示时，输入您的密码并进行验证。然后，此命令将输出提供的密码的加密版本。

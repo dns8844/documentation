@@ -1,172 +1,176 @@
-== Wire peripherals
+== 连接外设
 
-This guide helps developers wire up peripherals to the Compute Module pins. Additionally, this guide explains how to make changes to the software to enable these peripherals.
+本指南可帮助开发人员将外设连接到计算模块引脚。此外，本指南还介绍了如何更改软件以启用这些外设。
 
-Most of the pins of the SoC (GPIO, two CSI camera interfaces, two DSI display interfaces, HDMI, etc.) are available for wiring. You can can usually leave unused pins disconnected.
+SoC 的大部分引脚（GPIO、两个 CSI 摄像头接口、两个 DSI 显示器接口、HDMI 等）都可用于布线。通常可以将未使用的引脚断开。
 
-Compute Modules with the DDR2 SODIMM form factor can use any DDR2 SODIMM socket. However, the pinout is not the same as SODIMM memory modules.
+采用 DDR2 SODIMM 外形的计算模块可以使用任何 DDR2 SODIMM 插座。不过，引脚布局与 SODIMM 内存模块不同。
 
-To use a Compute Module, a user must design a motherboard that:
+要使用计算模块，用户设计的主板必须具备以下条件
 
-* provides power to the Compute Module (3.3V and 1.8V at minimum)
-* connects the pins to the required peripherals for the user's application
+* 为计算模块供电（至少 3.3V 和 1.8V）
+* 为用户应用所需的外设连接引脚
 
-Raspberry Pi's IO Boards provide the following functionality:
+Raspberry Pi 的 IO 板提供以下功能：
 
-* powers the module
-* wires the GPIO to pin headers
-* wires the camera and display interfaces to FFC connectors
-* wires HDMI to an HDMI port
-* wires USB to USB ports
-* wires activity monitoring to an 'ACT' LED
-* eMMC programming over USB
+* 为模块供电
+* 为 GPIO 引脚头接线
+* 将摄像头和显示器接口连接到 FFC 连接器上
+* 将 HDMI 连接到 HDMI 端口
+* 将 USB 连接到 USB 端口
+* 将活动监控连接到 "ACT "LED 指示灯
+* 通过 USB 对 eMMC 进行编程
 
-This guide first explains the boot process and how Device Tree describes attached hardware.
+本指南首先介绍启动过程以及设备树如何描述所连接的硬件。
 
-Then, we'll explain how to attach an I2C and an SPI peripheral to an IO Board. Finally, we'll create the Device Tree files necessary to use both peripherals with Raspberry Pi OS.
+然后，我们将介绍如何将 I2C 和 SPI 外围设备连接到 IO 板。最后，我们将创建必要的设备树文件，以便在 Raspberry Pi OS 中使用这两个外设。
 
 === BCM283x GPIOs
 
-BCM283x has three banks of general-purpose input/output (GPIO) pins: 28 pins on Bank 0, 18 pins on Bank 1, and 8 pins on Bank 2, for a total of 54 pins. These pins can be used as true GPIO pins: software can set them as inputs or outputs, read and/or set state, and use them as interrupts. They also can run alternate functions such as I2C, SPI, I2S, UART, SD card, and others.
+BCM283x 有三组通用输入/输出 (GPIO) 引脚： 0 组有 28 个引脚，1 组有 18 个引脚，2 组有 8 个引脚，共计 54 个引脚。这些引脚可用作真正的 GPIO 引脚：软件可将其设置为输入或输出、读取和/或设置状态，并将其用作中断。它们还可以运行 I2C、SPI、I2S、UART、SD 卡等其他功能。
 
-You can use Bank 0 or Bank 1 on any Compute Module. Don't use Bank 2: it controls eMMC, HDMI hot plug detect, and ACT LED/USB boot control.
+您可以在任何计算模块上使用组 0 或组 1。不要使用组 2：它控制 eMMC、HDMI 热插拔检测和 ACT LED/USB 启动控制。
 
-Use `pinctrl` to check the voltage and function of the GPIO pins to see if your Device Tree is working as expected.
+使用 `pinctrl` 检查 GPIO 引脚的电压和功能，查看设备树是否按预期工作。
 
-=== BCM283x boot process
+=== BCM283x 启动过程
 
-BCM283x devices have a VideoCore GPU and Arm CPU cores. The GPU consists of a DSP processor and hardware accelerators for imaging, video encode and decode, 3D graphics, and image compositing.
+BCM283x 设备具有 VideoCore GPU 和 Arm CPU 内核。GPU 由 DSP 处理器和用于成像、视频编解码、3D 图形和图像合成的硬件加速器组成。
 
-In BCM283x devices, the DSP core in the GPU boots first. It handles setup before booting up the main Arm processors.
+在 BCM283x 设备中，GPU 中的 DSP 内核首先启动。它在启动主 Arm 处理器之前处理设置。
 
-Raspberry Pi BCM283x devices have a three-stage boot process:
+Raspberry Pi BCM283x 设备的启动过程分为三个阶段：
 
-* The GPU DSP comes out of reset and executes code from the small internal boot ROM. This code loads a second-stage bootloader via an external interface. This code first looks for a second-stage boot loader on the boot device called `bootcode.bin` on the boot partition. If no boot device is found or `bootcode.bin` is not found, the boot ROM waits in USB boot mode for a host to provide a second-stage boot loader (`usbbootcode.bin`).
-* The second-stage boot loader is responsible for setting up the LPDDR2 SDRAM interface and other critical system functions. Once set up, the second-stage boot loader loads and executes the main GPU firmware (`start.elf`).
-* `start.elf` handles additional system setup and boots up the Arm processor subsystem. It contains the GPU firmware. The GPU firmware first reads `dt-blob.bin` to determine initial GPIO pin states and GPU-specific interfaces and clocks, then parses `config.txt`. It then loads a model-specific Arm device tree file and any Device Tree overlays specified in `config.txt` before starting the Arm subsystem and passing the Device Tree data to the booting Linux kernel.
+* GPU DSP 复位后执行小型内部启动 ROM 中的代码。该代码通过外部接口加载第二阶段启动加载程序。该代码首先在引导分区上名为 `bootcode.bin` 的引导设备上寻找第二阶段引导加载器。如果没有找到引导设备或找不到 `bootcode.bin`，引导 ROM 将在 USB 启动模式下等待主机提供第二阶段引导加载器（`usbbootcode.bin`）。
+* 第二阶段引导加载器负责设置 LPDDR2 SDRAM 接口和其他关键系统功能。设置完成后，第二阶段启动加载器将加载并执行主 GPU 固件（`start.elf`）。
+* `start.elf` 处理额外的系统设置并启动 Arm 处理器子系统。它包含 GPU 固件。GPU 固件首先会读取 `dt-blob.bin`，以确定 GPIO 引脚的初始状态以及 GPU 专用接口和时钟，然后解析 `config.txt`。然后，在启动 Arm 子系统并将设备树数据传递给启动的 Linux 内核之前，加载特定于模型的 Arm 设备树文件和 `config.txt` 中指定的任何设备树overlay。
 
-=== Device Tree
+=== 设备树
 
-xref:configuration.adoc#device-trees-overlays-and-parameters[Linux Device Tree for Raspberry Pi] encodes information about hardware attached to a system as well as the drivers used to communicate with that hardware.
+xref:configuration.adoc#device-trees-overlays-and-parameters[适用于 Raspberry Pi 的 Linux 设备树]对连接到系统的硬件信息以及用于与该硬件通信的驱动程序进行编码。
 
-The boot partition contains several binary Device Tree (`.dtb`) files. The Device Tree compiler creates these binary files using human-readable Device Tree descriptions (`.dts`).
+启动分区包含多个二进制设备树（`.dtb`）文件。设备树编译器使用人类可读的设备树描述 (`.dts`)创建这些二进制文件。
 
-The boot partition contains two different types of Device Tree files. One is used by the GPU only; the rest are standard Arm Device Tree files for each of the BCM283x-based Raspberry Pi products:
+启动分区包含两种不同类型的设备树文件。其中一个仅供 GPU 使用；其余的是标准的 Arm 设备树文件，适用于基于 BCM283x 的每种 Raspberry Pi 产品：
 
-* `dt-blob.bin` (used by the GPU)
-* `bcm2708-rpi-b.dtb` (Used for Raspberry Pi 1 Models A and B)
-* `bcm2708-rpi-b-plus.dtb` (Used for Raspberry Pi 1 Models B+ and A+)
-* `bcm2709-rpi-2-b.dtb` (Used for Raspberry Pi 2 Model B)
-* `bcm2710-rpi-3-b.dtb` (Used for Raspberry Pi 3 Model B)
-* `bcm2708-rpi-cm.dtb` (Used for Raspberry Pi Compute Module 1)
-* `bcm2710-rpi-cm3.dtb` (Used for Raspberry Pi Compute Module 3)
+* `dt-blob.bin`（GPU 使用）
+* `bcm2708-rpi-b.dtb` （用于 Raspberry Pi 1 型号 A 和 B）
+* `bcm2708-rpi-b-plus.dtb` （用于 Raspberry Pi 1 型号 B+ 和 A+）
+* `bcm2709-rpi-2-b.dtb` （用于 Raspberry Pi 2 型号 B）
+* `bcm2710-rpi-3-b.dtb` （用于 Raspberry Pi 3 Model B）
+* `bcm2708-rpi-cm.dtb` （用于 Raspberry Pi 计算模块 1）
+* `bcm2710-rpi-cm3.dtb` （用于 Raspberry Pi 计算模块 3）
 
-During boot, the user can specify a specific Arm Device Tree to use via the `device_tree` parameter in `config.txt`. For example, the line `device_tree=mydt.dtb` in `config.txt` specifies an Arm Device Tree in a file named `mydt.dtb`.
+在启动过程中，用户可以通过 `config.txt` 中的 `device_tree` 参数指定要使用的特定 Arm 设备树。例如，`config.txt` 中的 `device_tree=mydt.dtb` 行指定了名为 `mydt.dtb` 文件中的Arm设备树。
 
-You can create a full Device Tree for a Compute Module product, but we recommend using **overlays** instead. Overlays add descriptions of non-board-specific hardware to the base Device Tree. This includes GPIO pins used and their function, as well as the devices attached, so that the correct drivers can be loaded. The bootloader merges overlays with the base Device Tree before passing the Device Tree to the Linux kernel. Occasionally the base Device Tree changes, usually in a way that will not break overlays.
+您可以为计算模块产品创建完整的 `设备树`，但我们建议您使用 **overlay**。覆盖层将非特定于板卡的硬件描述添加到基本设备树中。这包括使用的 GPIO 引脚及其功能，以及所连接的设备，以便加载正确的驱动程序。在将设备树传递给 Linux 内核之前，引导加载程序会将覆盖与基本设备树合并。基础设备树偶尔会发生变化，但通常不会破坏覆盖层。
 
-Use the `dtoverlay` parameter in `config.txt` to load Device Tree overlays. Raspberry Pi OS assumes that all overlays are located in the `/overlays` directory and use the suffix `-overlay.dtb`. For example, the line `dtoverlay=myoverlay` loads the overlay `/overlays/myoverlay-overlay.dtb`.
+使用 `config.txt` 中的 `dtoverlay` 参数加载设备树覆盖。Raspberry Pi OS 假定所有覆盖都位于 `/overlays` 目录中，并使用后缀 `-overlay.dtb`。例如，"dtoverlay=myoverlay "一行将加载覆盖图"/overlays/myoverlay-overlay.dtb"。
 
-To wire peripherals to a Compute Module, describe all hardware attached to the Bank 0 and Bank 1 GPIOs in an overlay. This allows you to use standard Raspberry Pi OS images, since the overlay is merged into the standard base Device Tree. Alternatively, you can define a custom Device Tree for your application, but you won't be able to use standard Raspberry Pi OS images. Instead, you must create a modified Raspberry Pi OS image that includes your custom device tree for every OS update you wish to distribute. If the base overlay changes, you might need to update your customised Device Tree.
+要将外设连接到计算模块，请在覆盖层中描述连接到 Bank 0 和 Bank 1 GPIO 的所有硬件。这样，您就可以使用标准的 Raspberry Pi OS 映像，因为覆盖层已被合并到标准的基本设备树中。或者，您也可以为自己的应用程序定义一个自定义的 "设备树"（Device Tree），但这样就无法使用标准的 Raspberry Pi OS 映像。取而代之的是，您必须创建一个修改过的 Raspberry Pi OS 镜像，其中包含您希望发布的每个操作系统更新的自定义设备树。如果基础覆盖层发生变化，你可能需要更新你定制的设备树。
 
 === `dt-blob.bin`
 
-When `start.elf` runs, it first reads `dt-blob.bin`. This is a special form of Device Tree blob which tells the GPU how to set up the GPIO pin states.
+当 `start.elf` 运行时，它会首先读取 `dt-blob.bin`。这是一种特殊形式的设备树 blob，它告诉 GPU 如何设置 GPIO 引脚状态。
 
-`dt-blob.bin` contains information about GPIOs and peripherals controlled by the GPU, instead of the SoC. For example, the GPU manages Camera Modules. The GPU needs exclusive access to an I2C interface and a couple of pins to talk to a Camera Module.
+`dt-blob.bin` 包含 GPU（而非 SoC）控制的 GPIO 和外设信息。例如，GPU 管理摄像头模块。GPU 需要独占一个 I2C 接口和几个引脚，才能与摄像头模块通信。
 
-On most Raspberry Pi models, I2C0 is reserved for exclusive GPU use. `dt-blob.bin` defines the GPIO pins used for I2C0.
+在大多数 Raspberry Pi 型号上，I2C0 被保留给 GPU 专用。`dt-blob.bin` 定义了用于 I2C0 的 GPIO 引脚。
 
-By default, `dt-blob.bin` does not exist. Instead, `start.elf` includes a built-in version of the file. Many Compute Module projects provide a custom `dt-blob.bin` which overrides the default built-in file.
+默认情况下，`dt-blob.bin` 不存在。相反，`start.elf` 包含了该文件的内置版本。许多计算模块项目会提供一个自定义的 `dt-blob.bin`，该文件会覆盖默认的内置文件。
 
-`dt-blob.bin` specifies:
+`dt-blob.bin` 指定：
 
-* the pin used for HDMI hot plug detect
-* GPIO pins used as a GPCLK output
-* an ACT LED that the GPU can use while booting
+* 用于 HDMI 热插拔检测的引脚
+* 用作 GPCLK 输出的 GPIO 引脚
+* 启动时 GPU 可以使用的 ACT LED
 
-https://datasheets.raspberrypi.com/cm/minimal-cm-dt-blob.dts[`minimal-cm-dt-blob.dts`] is an example `.dts` device tree file. It sets up HDMI hot plug detection, an ACT LED, and sets all other GPIOs as inputs with default pulls.
+https://datasheets.raspberrypi.com/cm/minimal-cm-dt-blob.dts[`minimal-cm-dt-blob.dts`]是一个`.dts`设备树文件示例。它设置了 HDMI 热插拔检测和 ACT LED，并将所有其他 GPIO 设置为默认输入。
 
-To compile `minimal-cm-dt-blob.dts` to `dt-blob.bin`, use the xref:configuration.adoc#device-trees-overlays-and-parameters[Device Tree compiler] `dtc`.
-To install `dtc` on a Raspberry Pi, run the following command:
+要将 `minimal-cm-dt-blob.dts` 编译为 `dt-blob.bin`，请使用 xref:configuration.adoc#device-trees-overlays-and-parameters[设备树编译器] `dtc`。
+要在 Raspberry Pi 上安装 `dtc`，请运行以下命令：
 
 [source,console]
 ----
 $ sudo apt install device-tree-compiler
 ----
 
-Then, run the follow command to compile `minimal-cm-dt-blob.dts` into `dt-blob.bin`:
+然后，运行以下命令将 `minimal-cm-dt-blob.dts` 编译成 `dt-blob.bin`：
 
 [source,console]
 ----
 $ dtc -I dts -O dtb -o dt-blob.bin minimal-cm-dt-blob.dts
 ----
 
-For more information, see our xref:configuration.adoc#change-the-default-pin-configuration[guide to creating `dt-blob.bin`].
+有关详细信息，请参阅我们的 xref:configuration.adoc#change-the-default-pin-configuration[创建 `dt-blob.bin` 指南]。
 
-=== Arm Linux Device Tree
+=== Arm Linux 设备树
 
-After `start.elf` reads `dt-blob.bin` and sets up the initial pin states and clocks, it reads xref:config_txt.adoc[`config.txt`], which contains many other options for system setup.
+在`start.elf`读取`dt-blob.bin`并设置初始引脚状态和时钟后，它会读取 xref:config_txt.adoc[`config.txt`]，其中包含许多其他系统设置选项。
 
-After reading `config.txt`, `start.elf` reads a model-specific Device Tree file. For instance, Compute Module 3 uses `bcm2710-rpi-cm.dtb`. This file is a standard Arm Linux Device Tree file that details hardware attached to the processor. It enumerates:
+读取 `config.txt` 之后，`start.elf` 会读取特定型号的设备树文件。例如，计算模块 3 使用 `bcm2710-rpi-cm.dtb`。该文件是一个标准的 Arm Linux 设备树文件，详细说明了处理器上连接的硬件。它列举了
 
-* what and where peripheral devices exist
-* which GPIOs are used
-* what functions those GPIOs have
-* what physical devices are connected
+* 有哪些外围设备以及存在于何处
+* 使用了哪些 GPIO
+* 这些 GPIO 具有哪些功能
+* 连接了哪些物理设备
 
-This file sets up the GPIOs by overwriting the pin state in `dt-blob.bin` if it is different. It will also try to load drivers for the specific devices.
+如果 GPIO 的引脚状态与 `dt-blob.bin` 中的不同，该文件会通过覆盖引脚状态来设置 GPIO。它还会尝试加载特定设备的驱动程序。
 
-The model-specific Device Tree file contains disabled entries for peripherals. It contains no GPIO pin definitions other than the eMMC/SD Card peripheral which has GPIO defs and always uses the same pins.
+特定型号的设备树文件包含禁用的外设条目。它不包含 GPIO 引脚定义，但 eMMC/SD 卡外设具有 GPIO 定义并始终使用相同的引脚。
 
-=== Device Tree source and compilation
+=== 设备树源代码和编译
 
-The Raspberry Pi OS image provides compiled `dtb` files, but the source `dts` files live in the https://github.com/raspberrypi/linux/tree/rpi-6.6.y/arch/arm/boot/dts/broadcom[Raspberry Pi Linux kernel branch]. Look for `rpi` in the file names.
+当您构建自己的内核时,构建主机需要在 `scripts/dtc` 中使用设备树编译器。为了自动构建您的设备树重叠层,请将它们添加到 `arch/arm/boot/dts/overlays/Makefile` 中的 `dtbs` make 目标中。
 
-Default overlay `dts` files live at https://github.com/raspberrypi/linux/tree/rpi-6.6.y/arch/arm/boot/dts/overlays[`arch/arm/boot/dts/overlays`]. These overlay files are a good starting point for creating your own overlays. To compile these `dts` files to `dtb` files, use the xref:configuration.adoc#device-trees-overlays-and-parameters[Device Tree compiler] `dtc`.
+Raspberry Pi OS 映像提供编译后的 `dtb` 文件，但源代码 `dts` 文件位于 https://github.com/raspberrypi/linux/tree/rpi-6.6.y/arch/arm/boot/dts/broadcom[Raspberry Pi Linux 内核分支]。在文件名中查找 `rpi`。
 
-When building your own kernel, the build host requires the Device Tree compiler in `scripts/dtc`. To build your overlays automatically, add them to the `dtbs` make target in `arch/arm/boot/dts/overlays/Makefile`.
+默认的覆盖`dts`文件位于 https://github.com/raspberrypi/linux/tree/rpi-6.6.y/arch/arm/boot/dts/overlays[`arch/arm/boot/dts/overlays`]。这些覆盖文件是创建自己的覆盖文件的良好起点。要将这些 `dts` 文件编译成 `dtb` 文件，请使用 xref:configuration.adoc#device-trees-overlays-and-parameters[设备树编译器] `dtc`。
 
-=== Device Tree debugging
+构建自己的内核时，构建主机需要使用 `scripts/dtc` 中的设备树编译器。要自动编译覆盖层，请将其添加到 `arch/arm/boot/dts/overlays/Makefile` 中的 `dtbs` 。
 
-When booting the Linux kernel, the GPU provides a fully assembled Device Tree created using the base `dts` and any overlays. This full tree is available via the Linux `proc` interface in `/proc/device-tree`. Nodes become directories and properties become files.
 
-You can use `dtc` to write this out as a human readable `dts` file for debugging. To see the fully assembled device tree, run the following command:
+
+=== 设备树调试
+
+启动 Linux 内核时，GPU 会提供使用基本 `dts` 和任何覆盖创建的完整组装设备树。这个完整的设备树可以通过 Linux `proc` 界面的 `/proc/device-tree`获得。节点变成目录，属性变成文件。
+
+你可以使用 `dtc` 将其写成人类可读的 `dts` 文件，以便调试。要查看完整的设备树，请运行以下命令：
 
 [source,console]
 ----
 $ dtc -I fs -O dts -o proc-dt.dts /proc/device-tree
 ----
 
-`pinctrl` provides the status of the GPIO pins. If something seems to be going awry, try dumping the GPU log messages:
+`pinctrl` 提供 GPIO 引脚的状态。如果似乎出了什么问题，请尝试转储 GPU 日志信息：
 
 [source,console]
 ----
 $ sudo vclog --msg
 ----
 
-TIP: To include even more diagnostics in the output, add `dtdebug=1` to `config.txt`.
+TIP: 要在输出中包含更多诊断信息，请在 `config.txt` 中添加 `dtdebug=1`。
 
-Use the https://forums.raspberrypi.com/viewforum.php?f=107[Device Tree Raspberry Pi forum] to ask Device Tree-related questions or report an issue.
+使用 https://forums.raspberrypi.com/viewforum.php?f=107[Device Tree Raspberry Pi 论坛] 询问与 Device Tree 相关的问题或报告问题。
 
-=== Examples
+=== 示例
 
-The following examples use an IO Board with peripherals attached via jumper wires. We assume a CM1+CMIO or CM3+CMIO3, running a clean install of Raspberry Pi OS Lite. The examples here require internet connectivity, so we recommend a USB hub, keyboard, and wireless LAN or Ethernet dongle plugged into the IO Board USB port.
+以下示例使用的是通过跳线连接外设的 IO 板。我们假定使用 CM1+CMIO 或 CM3+CMIO3，运行已安装的 Raspberry Pi OS Lite。这里的示例需要互联网连接，因此我们建议将 USB 集线器、键盘和无线局域网或以太网加密狗插入 IO 板 USB 端口。
 
-==== Attach an I2C RTC to Bank 1 pins
+==== 将 I2C RTC 连接到第 1 组引脚
 
-In this example, we wire an NXP PCF8523 real time clock (RTC) to the IO Board Bank 1 GPIO pins: 3V3, GND, I2C1_SDA on GPIO44 and I2C1_SCL on GPIO45.
+在本例中，我们将把 NXP PCF8523 实时时钟 (RTC) 连接到 IO 板第 1 组 GPIO 引脚： 3V3、GND、GPIO44 上的 I2C1_SDA 和 GPIO45 上的 I2C1_SCL。
 
-Download https://datasheets.raspberrypi.com/cm/minimal-cm-dt-blob.dts[`minimal-cm-dt-blob.dts`] and copy it to the boot partition in `/boot/firmware/`.
+下载 https://datasheets.raspberrypi.com/cm/minimal-cm-dt-blob.dts[`minimal-cm-dt-blob.dts`]，并将其复制到 `/boot/firmware/` 中的启动分区。
 
-Edit `minimal-cm-dt-blob.dts` and change the pin states of GPIO44 and 45 to be I2C1 with pull-ups:
+编辑 `minimal-cm-dt-blob.dts`，将 GPIO44 和 45 的引脚状态改为带上拉的 I2C1：
 
 [source,console]
 ----
 $ sudo nano /boot/firmware/minimal-cm-dt-blob.dts
 ----
 
-Replace the following lines:
+替换以下几行：
 
 [source,kotlin]
 ----
@@ -174,7 +178,7 @@ pin@p44 { function = "input"; termination = "pull_down"; }; // DEFAULT STATE WAS
 pin@p45 { function = "input"; termination = "pull_down"; }; // DEFAULT STATE WAS INPUT NO PULL
 ----
 
-With the following pull-up definitions:
+上拉定义如下
 
 [source,kotlin]
 ----
@@ -182,68 +186,68 @@ pin@p44 { function = "i2c1"; termination = "pull_up"; }; // SDA1
 pin@p45 { function = "i2c1"; termination = "pull_up"; }; // SCL1
 ----
 
-We could use this `dt-blob.dts` with no changes, because the Linux Device Tree re-configures these pins during Linux kernel boot when the specific drivers load. However, if you configure `dt-blob.dts`, the GPIOs reach their final state as soon as possible during the GPU boot stage. In some cases, pins must be configured at GPU boot time so they are in a specific state when Linux drivers are loaded. For example, a reset line may need to be held in the correct orientation.
+我们可以使用 `dt-blob.dts` 而不做任何更改，因为 Linux 设备树会在 Linux 内核启动期间加载特定驱动程序时重新配置这些引脚。但是，如果配置了 `dt-blob.dts`，GPIO 就会在 GPU 启动阶段尽快达到最终状态。在某些情况下，必须在 GPU 启动时配置引脚，以便它们在 Linux 驱动程序加载时处于特定状态。例如，复位线可能需要保持正确的方向。
 
-Run the following command to compile `dt-blob.bin`:
+运行以下命令编译 `dt-blob.bin`：
 
 [source,console]
 ----
 $ sudo dtc -I dts -O dtb -o /boot/firmware/dt-blob.bin /boot/firmware/minimal-cm-dt-blob.dts
 ----
 
-Download https://datasheets.raspberrypi.com/cm/example1-overlay.dts[`example1-overlay.dts`], copy it to the boot partition in `/boot/firmware/`, then compile it with the following command:
+下载 https://datasheets.raspberrypi.com/cm/example1-overlay.dts[`example1-overlay.dts`]，将其复制到 `/boot/firmware/` 中的启动分区，然后用以下命令编译：
 
 [source,console]
 ----
 $ sudo dtc -@ -I dts -O dtb -o /boot/firmware/overlays/example1.dtbo /boot/firmware/example1-overlay.dts
 ----
 
-The `-@` flag compiles `dts` files with external references. It is usually necessary.
+`-@` 标记用于编译带有外部引用的 `dts` 文件。这通常是必要的。
 
-Add the following line to xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`]:
+在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中添加以下一行：
 
 [source,ini]
 ----
 dtoverlay=example1
 ----
 
-Finally, reboot with `sudo reboot`.
+最后，使用 `sudo reboot` 重启。
 
-Once rebooted, you should see an `rtc0` entry in `/dev`. Run the following command to view the hardware clock time:
+重启后，你应该会在 `/dev`中看到一个 `rtc0` 条目。运行以下命令查看硬件时钟时间：
 
 [source,console]
 ----
 $ sudo hwclock
 ----
 
-==== Attach an ENC28J60 SPI Ethernet controller on Bank 0
+==== 在组 0 上添加 ENC28J60 SPI 以太网控制器
 
-In this example, we use an overlay already defined in `/boot/firmware/overlays` to add an ENC28J60 SPI Ethernet controller to Bank 0. The Ethernet controller uses SPI pins CE0, MISO, MOSI and SCLK (GPIO8-11 respectively), GPIO25 for a falling edge interrupt, in addition to GND and 3.3V.
+在本示例中，我们使用已在 `/boot/firmware/overlays`中定义的覆盖层，将ENC28J60 SPI 以太网控制器添加到第 0 行。以太网控制器使用 SPI 引脚 CE0、MISO、MOSI 和 SCLK（分别为 GPIO8-11），GPIO25 用于下降沿中断，此外还有 GND 和 3.3V。
 
-In this example, we won't change `dt-blob.bin`. Instead, add the following line to `/boot/firmware/config.txt`:
+在本例中，我们不会更改 `dt-blob.bin`。相反，在 `/boot/firmware/config.txt`中添加以下一行：
 
 [source,ini]
 ----
 dtoverlay=enc28j60
 ----
 
-Reboot with `sudo reboot`.
+使用 `sudo reboot` 重新启动。
 
-You should now see an `rtc0` entry in `/dev`. Run the following command to view the hardware clock time:
+现在你应该能在 `/dev`中看到一个 `rtc0` 条目。运行以下命令查看硬件时钟时间：
 
 [source,console]
 ----
 $ sudo hwclock
 ----
 
-You should also have Ethernet connectivity. Run the following command to test your connectivity:
+您还应该有以太网连接。运行以下命令测试连接性：
 
 [source,console]
 ----
 $ ping 8.8.8.8
 ----
 
-Run the following command to show GPIO functions; GPIO8-11 should now provide ALT0 (SPI) functions:
+运行以下命令显示 GPIO 功能；GPIO8-11 现在应提供 ALT0（SPI）功能：
 
 [source,console]
 ----

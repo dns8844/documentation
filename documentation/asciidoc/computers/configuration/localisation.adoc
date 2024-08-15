@@ -1,5 +1,5 @@
-== Localise your Raspberry Pi
+[[localising-your-raspberry-pi]]
+== 本地化您的 Raspberry Pi
 
-You can configure the UI language, keyboard layout, and time zone of Raspberry Pi OS with the xref:configuration.adoc#raspi-config[`raspi-config`] tool.
-
+您可以使用 xref:configuration.adoc#raspi-config[`raspi-config`] 工具配置 Raspberry Pi 操作系统的用户界面语言、键盘布局和时区。
 

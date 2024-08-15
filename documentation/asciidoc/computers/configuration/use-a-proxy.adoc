@@ -1,60 +1,62 @@
-== Use a proxy server
+[[use-a-proxy-server]]
+== 使用代理服务器
 
-A **proxy server** acts as an intermediary between a client device and the Internet.
-To configure your Raspberry Pi as a proxy server client, follow the instructions in this section.
+**proxy server** 是客户端设备和互联网之间的中介。
+要将 Raspberry Pi 配置为代理服务器客户端，请按照本节的说明操作。
 
-You will need:
+您将需要：
 
-* the IP address or hostname and port of your proxy server
-* a username and password for your proxy (if required)
+* 您的代理服务器的IP地址或主机名和端口
+* 您的代理的用户名和密码（如果需要）
 
-=== Configure your Raspberry Pi
+[[configure-your-raspberry-pi]]
+=== 配置您的Raspberry Pi
 
-You will need to set up three environment variables (`http_proxy`, `https_proxy`, and `no_proxy`) so your Raspberry Pi knows how to access the proxy server.
+您需要设置三个环境变量（http_proxy、https_proxy 和 no_proxy），以便您的Raspberry Pi知道如何访问代理服务器。
 
-Open a terminal window, and open the file `/etc/environment` using nano:
+打开一个终端窗口，并使用 nano 打开文件 `/etc/environment` ：
 
 [source,console]
 ----
 $ sudo nano /etc/environment
 ----
 
-Add the following to the `/etc/environment` file to create the `http_proxy` variable:
+将以下内容添加到 `/etc/environment` 文件以创建 `http_proxy` 变量：
 
 [source,bash]
 ----
 export http_proxy="http://<proxy_ip_address>:<proxy_port>"
 ----
 
-Replace the `<proxy_ip_address>` and `<proxy_port>` placeholders with the IP address and port of your proxy.
+将 `<proxy_ip_address>` 和 `<proxy_port>` 占位符替换为代理的 IP 地址和端口。
 
 [NOTE]
 ====
-If your proxy requires a username and password, add them using the following format:
+如果代理需要用户名和密码，请使用以下格式添加：
 
 [source,bash]
 ----
 export http_proxy="http://<username>:<password>@proxyipaddress:proxyport"
 ----
 
-Replace the `<username>` and `<password>` placeholders with the username and password you use to authenticate with your proxy.
+将 `<username>` 和 `<password>` 占位符替换为您用来与代理进行身份验证的用户名和密码。
 ====
 
-Enter the same information for the environment variable `https_proxy`:
+为环境变量 https_proxy输入相同的信息：
 
 [source,bash]
 ----
 export https_proxy="http://username:password@proxyipaddress:proxyport"
 ----
 
-Create the `no_proxy` environment variable, which is a comma-separated list of addresses your Raspberry Pi should not use the proxy for:
+创建no_proxy环境变量，这是一个逗号分隔的地址列表，您的Raspberry Pi不应将代理用于：
 
 [source,bash]
 ----
 export no_proxy="localhost, 127.0.0.1"
 ----
 
-Your `/etc/environment` file should now look like the following:
+现在您的 `/etc/environment` 文件应该如下所示：
 
 [source,bash]
 ----
@@ -63,28 +65,28 @@ export https_proxy="http://username:password@proxyipaddress:proxyport"
 export no_proxy="localhost, 127.0.0.1"
 ----
 
-Press **Ctrl + X** to save and exit.
+按 **Ctrl + X** 保存并退出。
 
-=== Update the `sudoers` file
+=== 更新 `sudoers` 文件
 
-To use the proxy environment variables with operations that run as `sudo`, such as downloading and installing software, update `sudoers`.
+要在下载和安装软件等以 `sudo` 运行的操作中使用代理环境变量，请更新 `sudoers`。
 
-Use the following command to open `sudoers`:
+使用以下命令打开 `sudoers` ：
 
 [source,console]
 ----
 $ sudo visudo
 ----
 
-Add the following line to the file so `sudo` will use the environment variables you just created:
+将以下行添加到文件中，以便 `sudo` 将使用您刚刚创建的环境变量：
 
 [source,bash]
 ----
 Defaults	env_keep+="http_proxy https_proxy no_proxy"
 ----
 
-Press **Ctrl + X** to save and exit.
+按 **Ctrl + X** 保存并退出。
 
-=== Reboot your Raspberry Pi
+=== 重启你的树莓派
 
-Reboot your Raspberry Pi for the changes to take effect. You should now be able to access the internet via your proxy server.
+重新启动您的Raspberry Pi以使更改生效。您现在应该能够通过代理服务器访问Internet。

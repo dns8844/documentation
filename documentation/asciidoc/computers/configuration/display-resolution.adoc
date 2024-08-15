@@ -1,50 +1,50 @@
-== Displays
+== 显示
 
-To configure your Raspberry Pi to use a non-default display mode, set the resolution or rotation manually.
+要配置 Raspberry Pi 使用非默认显示模式，请手动设置分辨率或旋转。
 
-=== Support for HDMI monitors
+=== 支持 HDMI 显示器
 
-With most HDMI monitors, Raspberry Pi OS uses the highest resolution and refresh rate supported by the monitor.
+对于大多数 HDMI 显示器，Raspberry Pi OS 使用显示器支持的最高分辨率和刷新率。
 
-The Raspberry Pi Zero, Zero W and Zero 2 W have a mini HDMI port, so you need a mini-HDMI-to-full-size-HDMI lead or adapter.
+Raspberry Pi Zero、Zero W 和 Zero 2 W 有一个迷你 HDMI 端口，因此您需要迷你 HDMI 转全尺寸 HDMI 的导线或适配器。
 
-Raspberry Pi 4, Raspberry Pi 5 and Raspberry Pi 400 have two micro HDMI ports, so you need a micro-HDMI-to-full-size-HDMI lead or adapter for each display you wish to attach. Connect the cables before turning on the Raspberry Pi.
+Raspberry Pi 4、Raspberry Pi 5 和 Raspberry Pi 400 有两个微型 HDMI 端口，因此您需要为每个要连接的显示器准备一个微型 HDMI 转全尺寸 HDMI 连接线或适配器。在打开 Raspberry Pi 之前连接电缆。
 
-Raspberry Pi 4 and 400 can drive up to two displays, with a resolution up to 1080p at a 60Hz refresh rate. These devices support two 4K displays at a 30Hz refresh rate. You can also drive a single display at 4K with a 60Hz refresh rate if you connect the display to the `HDMI0` port and set the `hdmi_enable_4kp60=1` flag in xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`].
+Raspberry Pi 4 和 400 最多可驱动两台显示器，分辨率可达 1080p，刷新率为 60Hz。这些设备支持两台刷新率为 30Hz 的 4K 显示器。如果将显示器连接到 "HDMI0 "端口，并在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中设置 "hdmi_enable_4kp60=1 "标志，还可以以 60Hz 的刷新率驱动一台 4K 显示器。
 
-Raspberry Pi 5 can drive up to two displays at 4K resolution at a 60hz refresh rate with no additional configuration.
+Raspberry Pi 5 最多可驱动两台分辨率为 4K、刷新率为 60hz 的显示器，无需额外配置。
 
-=== Set resolution and rotation
+=== 设置分辨率和旋转
 
-==== via the desktop
+==== 桌面
 
-On the Raspberry Pi Desktop, open the *Preferences* menu and select the **Screen Configuration** utility. You should see a graphical representation of the displays connected to the Raspberry Pi. Right click on the display you wish to modify, and select an option. Click **Apply** to and close **Screen Configuration** to save your changes.
+在 Raspberry Pi 桌面上，打开 *Preferences* 菜单，选择 **Screen Configuration** 实用程序。你会看到连接到 Raspberry Pi 的显示器的图形显示。右键单击要修改的显示屏，然后选择一个选项。单击 **Apply** 并关闭 **Screen Configuration** 以保存更改。
 
-==== via CLI
+==== CLI
 
-Use the following command to open the **Screen Configuration** utility:
+使用以下命令打开 **Screen Configuration** 实用程序：
 
 [source,console]
 ----
 $ arandr
 ----
 
-You should see a graphical representation of the displays connected to the Raspberry Pi. Right click on the display you wish to modify, and select an option. Click **Apply** to and close **Screen Configuration** to save your changes.
+你会看到连接到 Raspberry Pi 的显示器的图形显示。右键单击要修改的显示屏，选择一个选项。点击 **Apply** 并关闭 **Screen Configuration** 以保存更改。
 
-=== Manually set resolution and rotation
+=== 手动设置分辨率和旋转
 
-==== Determine display device name
+==== 确定显示设备名称
 
-To manually configure resolution and rotation, you'll need to know the names of your display devices. To determine the device names, run the following command to display information about attached devices:
+要手动配置分辨率和旋转，需要知道显示设备的名称。要确定设备名称，请运行以下命令显示连接设备的信息：
 
 [source,console]
 ----
 $ kmsprint | grep Connector
 ----
 
-==== Set a custom resolution
+==== 设置自定义分辨率
 
-If you run the Wayland desktop compositor, you can set a custom display resolution by editing the `.config/wayfire.ini` file in your home directory. Edit the existing `[output:<device>]` section, or add a new `[output:<device>]` section for your xref:configuration.adoc#determine-display-device-name[display device] if one doesn't exist. To change your display resolution, add a `mode` line. For example, the following example shows a configuration for the device named `HDMI-A-1` with a resolution of 1080p at 60Hz:
+如果运行 Wayland 桌面合成器，可以通过编辑主目录下的 `.config/wayfire.ini` 文件来设置自定义显示分辨率。编辑现有的 `[output:<device>]` 部分，或为你的 xref:configuration.adoc#determine-display-device-name[display device] 添加一个新的 `[output:<device>]` 部分（如果不存在）。要更改显示分辨率，请添加 `mode` 行。例如，以下示例显示了名为 `HDMI-A-1` 的设备的配置，其分辨率为 1080p，频率为 60Hz：
 
 [source,ini]
 ----
@@ -52,13 +52,13 @@ If you run the Wayland desktop compositor, you can set a custom display resoluti
 mode = 1920x1080@60
 ----
 
-For information about supported modes and the `mode` syntax, see the https://github.com/WayfireWM/wayfire-wiki/blob/master/Configuration.md#output-configuration[Wayfire documentation].
+有关支持的模式和 `mode` 语法，请参阅 https://github.com/WayfireWM/wayfire-wiki/blob/master/Configuration.md#output-configuration[Wayfire文档]。
 
-Add the same configuration block to `/usr/share/greeter.ini` to configure the login screen resolution.
+在 `/usr/share/greeter.ini` 中添加相同的配置块，以配置登录屏幕的分辨率。
 
-==== Set a custom rotation
+==== 设置自定义旋转
 
-If you run the Wayland desktop compositor, you can set a custom display rotation with `wlr-randr`. The following commands rotate the display by 0°, 90°, 180°, and 270°:
+如果运行 Wayland 桌面合成器，可以使用 `wlr-randr` 设置自定义的显示旋转。以下命令可将显示屏旋转 0°、90°、180° 和 270°：
 
 [source,console]
 ----
@@ -68,13 +68,13 @@ $ wlr-randr --output HDMI-A-1 --transform 180
 $ wlr-randr --output HDMI-A-1 --transform 270
 ----
 
-The `--output` option specifies the device to be rotated.
+`--output` 选项指定要旋转的设备。
 
-NOTE: To run this command over SSH, add the following prefix: `WAYLAND_DISPLAY=wayland-1`, e.g. `WAYLAND_DISPLAY=wayland-1 wlr-randr --output HDMI-A-1 --transform 90`.
+NOTE: 要通过 SSH 运行该命令，请添加以下前缀: `WAYLAND_DISPLAY=wayland-1`，例如 `WAYLAND_DISPLAY=wayland-1 wlr-randr --output HDMI-A-1 --transform 90`.
 
-You can also use one of the following `--transform` options to mirror the display at the same time as rotating it: `flipped`, `flipped-90`, `flipped-180`, `flipped-270`
+您还可以使用以下 `-transform` 选项之一，在旋转显示屏的同时镜像显示屏： `flipped`, `flipped-90`, `flipped-180`, `flipped-270`
 
-Alternatively, you can rotate the display using by editing the `.config/wayfire.ini` file in your home directory. Edit the existing `[output:<device>]` section, or add a new `[output:<device>]` section for your xref:configuration.adoc#determine-display-device-name[display device] if one doesn't exist. To rotate your display, add a `transform` line. For example, the following example shows a configuration for the device named `HDMI-A-1` with a resolution of 1080p at 60Hz and a 270° transform:
+另外，你也可以通过编辑主目录下的 `.config/wayfire.ini` 文件来旋转显示屏。编辑现有的 `[output:<device>]` 部分，如果 xref:configuration.adoc#determine-display-device-name[display device] 部分不存在，则为其添加新的 `[output:<device>]`  部分。要旋转显示屏，请添加 `transform` 行。例如，以下示例显示了名为 `HDMI-A-1` 的设备的配置，其分辨率为 1080p，频率为 60Hz，变换角度为 270°：
 
 [source,ini]
 ----
@@ -83,17 +83,16 @@ mode = 1920x1080@60
 transform = 270
 ----
 
-Wayland supports the following `transform` options:
+Wayland 支持以下 `transform` 选项：
 
 * `normal`
 * `90`
 * `180`
 * `270`
 
-Add the same configuration block to `/usr/share/greeter.ini` to configure the login screen rotation.
+在 `/usr/share/greeter.ini` 中添加相同的配置块，以配置登录屏幕的旋转。
 
-=== Console resolution and rotation
+=== 控制台分辨率和旋转
 
-To change the resolution and rotation of your Raspberry Pi in console mode, use the KMS settings. For more information, see <<kernel-command-line-cmdline-txt,configuring the kernel command line>>.
-
-NOTE: When using console mode with multiple displays, all connected displays share the same rotation settings.
+要更改 Raspberry Pi 在控制台模式下的分辨率和旋转，请使用 KMS 设置。更多信息，请参阅 <<kernel-command-line-cmdline-txt,configuring the kernel command line>>.
+NOTE: 当使用多台显示器的控制台模式时，所有连接的显示器共享相同的旋转设置。

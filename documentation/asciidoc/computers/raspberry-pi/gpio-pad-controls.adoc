@@ -1,55 +1,61 @@
-== GPIO pads control
+[[gpio-pads-control]]
+== GPIO引脚控制
 
-GPIO drive strengths do not indicate a maximum current, but a maximum current under which the pad will still meet the specification. You should set the GPIO drive strengths to match the device being attached in order for the device to work correctly.
+GPIO驱动强度并不表示最大电流，而是引脚仍然符合规格的最大电流。您应该设置GPIO驱动强度以匹配所连接的设备，以便设备正常工作。
 
-=== Control drive strength
+=== 驱动强度如何控制
 
-Inside the pad are a number of drivers in parallel. If the drive strength is set low (`0b000`), most of these are tri-stated so they do not add anything to the output current. If the drive strength is increased, more and more drivers are put in parallel. The diagram shows that behaviour.
+焊盘内部并联了许多驱动器。如果驱动强度设置为低 (`0b000`)，这些驱动器大多为三态，因此不会增加输出电流。如果驱动强度增加，并联的驱动器就会越来越多。下图显示了这种行为。
 
-WARNING: For Raspberry Pi 4, Raspberry Pi 400 and Compute Module 4 the current level is half the value shown in the diagram.
+WARNING: 对于Raspberry Pi 4、Raspberry Pi 400和Compute Module 4，当前级别为图表中所示值的一半。
 
-image::images/pi_gpio_drive_strength_diagram.png[GPIO drive strength diagram]
+image::images/pi_gpio_drive_strength_diagram.png[GPIO驱动强度图]
 
-=== Current value
+=== 当前值
 
-The current value specifies the maximum current under which the pad will still meet the specification.
+电流值规定了焊盘仍能满足规格要求的最大电流。
 
-Current value is _not_ the current that the pad will deliver, and is _not_ a current limit.
+电流值不是引脚将输出的电流，也不是电流限制。
 
-The pad output is a voltage source:
+引脚输出为电压源：
 
-* If set high, the pad will try to drive the output to the rail voltage (3.3V)
-* If set low, the pad will try to drive the output to ground (0V)
+* 如果设置为高电平，引脚将尝试将输出驱动到轨电压（3.3V）
+* 如果设置低，引脚将尝试将输出驱动到地（0V）
 
-The pad will try to drive the output high or low. Success will depend on the requirements of what is connected. If the pad is shorted to ground, it will not be able to drive high. It will try to deliver as much current as it can, and the current is only limited by the internal resistance.
+引脚将尝试驱动输出高或低。成功将取决于连接的要求。如果引脚短路接地，它将无法驱动高。它将尝试提供尽可能多的电流，电流仅受内阻的限制。
 
-If the pad is driven high and it is shorted to ground, in due time it will fail. The same holds true if you connect it to 3.3V and drive it low.
+如果引脚被驱动到高电平并短路到地面，在适当的时候它会失效。如果您将其连接到3.3V并将其驱动到低电平，情况也是如此。
 
-Meeting the specification is determined by the guaranteed voltage levels. Because the pads are digital, there are two voltage levels, high and low. The I/O ports have two parameters which deal with the output level:
+满足规格取决于保证的电压电平。因为引脚是数字的，所以有两个电压电平，高电平和低电平。I/O端口有两个处理输出电平的参数：
 
-* V~OL~, the maximum low-level voltage (0.14V at 3.3V VDD IO)
-* V~OH~, the minimum high-level voltage (3.0V at 3.3V VDD IO)
+* V~OL~，最大低电平电压（3.3V VDD IO 时为 0.14V）
+* V~OH~，最低高电平电压（3.3V VDD IO 时为 3.0V）
 
-V~OL~=0.14V means that if the output is Low, it will be \<= 0.14V.
-V~OH~=3.0V means that if the output is High, it will be >= 3.0V.
+V~OL~=0.14V 表示如果输出为低电平，则电压将\<= 0.14V。
+V~OH~=3.0V 表示如果输出为高电平，则电压将 >= 3.0V。
 
-As an example, a drive strength of 16mA means that if you set the pad high, you can draw up to 16mA, and the output voltage is guaranteed to be >=V~OH~. This also means that if you set a drive strength of 2mA and you draw 16mA, the voltage will *not* be V~OH~ but lower. In fact, it may not be high enough to be seen as high by an external device.
+举例来说，驱动强度为 16mA 意味着，如果将引脚设置为高电平，则可以消耗高达 16mA 的电流，而输出电压保证 >=V~OH~。这也意味着，如果您设置的驱动强度为 2mA，而电流为 16mA，电压将**不是 V~OH~，而是更低。事实上，它可能还不够高，以至于外部设备无法将其视为高电平。
 
-There is more information on the xref:raspberry-pi.adoc#gpio[physical characteristics] of the GPIO pins. 
+有更多关于GPIO引脚的 xref:raspberry-pi.adoc#gpio[物理特性] 的信息。
 
-NOTE: On the Compute Module devices, it is possible to change the VDD IO from the standard 3.3V. In this case, V~OL~ and V~OH~ will change according to the table in the xref:raspberry-pi.adoc#gpio[GPIO] section.
+NOTE: 在计算模块设备上，可以将 VDD IO 从标准的 3.3V 改为 3.3V。在这种情况下，V~OL~ 和 V~OH~ 将根据 xref:raspberry-pi.adoc#gpio[GPIO] 部分中的表格进行更改。
 
-The Raspberry Pi 3.3V supply was designed with a maximum current of ~3mA per GPIO pin. If you load each pin with 16mA, the total current is 272mA. The 3.3V supply will collapse under that level of load. Big current spikes will happen, especially if you have a capacitive load. Spikes will bounce around all the other pins near them. This is likely to cause interference with the SD card, or even the SDRAM behaviour.
+[discrete]
+=== 为什么我不能将所有引脚设置为最大电流？
 
-=== Safe current
+Raspberry Pi 3.3V 电源的设计最大电流为每个 GPIO 引脚约 3mA。如果为每个引脚加载 16mA 电流，则总电流为 272mA。在这种负载水平下，3.3V 电源将崩溃。会出现大电流尖峰，尤其是在有电容负载的情况下。尖峰电流会在其附近的所有其他引脚上反弹。这很可能会对 SD 卡甚至 SDRAM 行为造成干扰。
 
-All the electronics of the pads are designed for 16mA. This is a safe value under which you will not damage the device. Even if you set the drive strength to 2mA and then load it so 16mA comes out, this will not damage the device. Other than that, there is no guaranteed maximum safe current.
+=== 什么是安全电流？
 
-=== GPIO addresses
+所有焊盘电子元件的设计电流均为 16mA。这是一个不会损坏设备的安全值。即使将驱动强度设置为 2mA，然后加载到 16mA 输出，也不会损坏器件。除此之外，没有保证的最大安全电流。
 
-* 0x 7e10 002c PADS (GPIO 0-27)
-* 0x 7e10 0030 PADS (GPIO 28-45)
-* 0x 7e10 0034 PADS (GPIO 46-53)
+[discrete]
+[[gpio-addresses]]
+=== GPIO地址
+
+* 0x 7e10 002c PADS（GPIO 0-27）
+* 0x 7e10 0030 PADS（GPIO 28-45）
+* 0x 7e10 0034 PADS（GPIO 46-53）
 
 |===
 | Bits | Field name | Description | Type | Reset
@@ -85,9 +91,9 @@ All the electronics of the pads are designed for 16mA. This is a safe value unde
 | 0x3
 |===
 
-Beware of Simultaneous Switching Outputs (SSO) limitations which are device-dependent as well as dependent on the quality and layout of the PCB, the amount and quality of the decoupling capacitors, the type of load on the pads (resistance, capacitance), and other factors beyond the control of Raspberry Pi.
+请注意同时开关输出（SSO）的限制，它不仅取决于设备，还取决于印刷电路板的质量和布局、去耦电容器的数量和质量、引脚上的负载类型（电阻、电容）以及 Raspberry Pi 无法控制的其他因素。
 
-=== Drive strength list
+=== 驱动强度列表
 
 * 0 = 2mA
 * 1 = 4mA

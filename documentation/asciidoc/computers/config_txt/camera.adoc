@@ -1,9 +1,12 @@
-== Camera settings
+[[camera-settings]]
+== 相机设置
 
-=== `disable_camera_led`
+[[disable_camera_led]]
+=== `disable_camera_led` 
 
-Setting `disable_camera_led` to `1` prevents the red camera LED from turning on when recording video or taking a still picture. This is useful for preventing reflections, for example when the camera is facing a window.
+将 `disable_camera_led` 设置为 `1` 可防止红色相机LED在录制视频或拍摄静态照片时打开。这对于防止反射很有用，例如当相机面对窗口时。
 
-=== `awb_auto_is_greyworld`
+[[awb_auto_is_greyworld]]
+=== `awb_auto_is_greyworld` 
 
-Setting `awb_auto_is_greyworld` to `1` allows libraries or applications that do not support the greyworld option internally to capture valid images and videos with NoIR cameras. It switches auto awb mode to use the greyworld algorithm. This should only be needed for NoIR cameras, or when the High Quality camera has had its xref:../accessories/camera.adoc#filter-removal[IR filter removed].
+将 `awb_auto_is_greyworld` 设置为 `1` 允许内部不支持greyworld选项的库或应用程序使用NoIR相机捕获有效的图像和视频。它会切换自动awb模式以使用greyworld算法。这应该只适用于NoIR相机，或者当高质量相机具有其 xref:../accessories/camera.adoc#filter-removal[IR过滤器已删除] 时才需要。

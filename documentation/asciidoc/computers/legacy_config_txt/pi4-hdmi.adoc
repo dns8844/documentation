@@ -1,8 +1,9 @@
-== Legacy Raspberry Pi 4 HDMI pipeline
+[[legacy-raspberry-pi-4-hdmi-pipeline]]
+== 传统 Raspberry Pi 4 HDMI 管线
 
-IMPORTANT: When using the VC4 KMS graphics driver, the complete display pipeline is managed by Linux - this includes the HDMI outputs. These settings only apply to the legacy FKMS and firmware-based graphics driver.
+IMPORTANT: 使用VC4 KMS图形驱动程序时，完整的显示管道由Linux管理 - 这包括HDMI输出。这些设置仅适用于传统的FKMS和基于固件的图形驱动程序。
 
-Raspberry Pi 4 is unable to output over HDMI at 1366×768 @ 60Hz. On some monitors it is possible to configure them to use 1360×768 @ 60Hz. They do not typically advertise this mode via their EDID, so the selection can't be made automatically, but it can be selected manually by adding:
+Raspberry Pi 4 无法通过 HDMI 以 1366×768 @ 60Hz 的频率输出。某些显示器可以配置为 1360×768 @ 60Hz。它们通常不会通过 EDID 公布这种模式，因此无法自动选择，但可以通过添加手动选择：
 
 [source]
 ----
@@ -11,8 +12,8 @@ hdmi_mode=87
 hdmi_cvt=1360 768 60
 ----
 
-...to xref:legacy_config_txt.adoc#legacy-video-options[config.txt].
+…到 xref:legacy_config_txt.adoc#legacy-video-options[config.txt]。
 
-Timings specified manually via a `hdmi_timings=` line in `config.txt` will also need to comply with the restriction of all horizontal timing parameters being divisible by two.
+通过 `config.txt` 中的 `hdmi_timings=` 行手动指定的时序也需要遵守所有水平时序参数均可被 2 整除的限制。
 
-`dpi_timings=` are not restricted in the same way, as that pipeline still only runs at a single pixel per clock cycle.
+而 `dpi_timings=` 则不受此限制，因为该流水线每个时钟周期仍只能运行一个像素。

@@ -1,56 +1,56 @@
-== Configure the kernel
+== 配置内核
 
 The Linux kernel is highly configurable. Advanced users may wish to modify the default configuration to customise it to their needs, such as enabling a new or experimental network protocol, or enabling support for new hardware.
 
-Configuration is most commonly done through the `make menuconfig` interface. Alternatively, you can modify your `.config` file manually, but this can be more difficult.
+配置通常通过 `make menuconfig` 界面完成。另外，您也可以手动修改 `.config` 文件，但这可能比较困难。
 
-=== Prepare to configure
+=== 准备配置
 
-The `menuconfig` tool requires the `ncurses` development headers to compile properly. To install these headers, run the following command:
+ `menuconfig` 工具需要 `ncurses` 开发环境头文件才能正常编译。要安装这些头文件，请运行以下命令：
 
 [source,console]
 ----
 $ sudo apt install libncurses5-dev
 ----
 
-Next, xref:linux_kernel.adoc#download-kernel-source[download your kernel sources]. In particular, ensure you have installed the xref:linux_kernel.adoc#native-build-configuration[default native configuration] or xref:linux_kernel.adoc#cross-compiled-build-configuration[default cross-compilation configuration].
+接下来，xref:linux_kernel.adoc#download-kernel-source[下载内核源代码]。尤其要确保已安装 xref:linux_kernel.adoc#native-build-configuration[默认本地配置] 或 xref:linux_kernel.adoc#cross-compiled-build-configuration[默认交叉编译配置]。
 
 === `menuconfig`
 
-Once you've got everything set up, you can compile and run the `menuconfig` utility as follows:
+设置好一切后，就可以编译并运行 `menuconfig` 实用程序，具体操作如下：
 
 [source,console]
 ----
 $ make menuconfig
 ----
 
-To cross-compile a 64-bit kernel:
+交叉编译 64 位内核：
 
 [source,console]
 ----
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 ----
 
-To cross-compile a 32-bit kernel:
+交叉编译 32 位内核：
 
 [source,console]
 ----
 $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 ----
 
-To navigate the `menuconfig` utility, use your keyboard:
+要浏览 `menuconfig` 实用程序，请使用键盘：
 
-* to navigate directionally, use the *arrow keys*
-* to enter a submenu (indicated by `+--->+`), press the *Enter* key
-* to go up a level or exit, press *Escape* twice
-* to toggle the state of a binary option, press the *space bar*
-* to select the state of a multiple choice option, press *Enter* to open a submenu, the *arrow keys* to navigate the submenu, and press *Enter* again to select a state
-* to get help with an option or menu, press the *H* key
+* 要按方向导航，请使用 *方向键*。
+* 要进入子菜单（用 `+--->+` 表示），请按 *Enter* 键
+* 要上一级或退出，按两次 *Escape* 键
+* 要切换二进制选项的状态，按 *空格键*。
+* 选择多选选项的状态，按 *Enter* 键打开子菜单，按 *方向键* 浏览子菜单，再按 *Enter* 键选择状态
+* 要获得选项或菜单的帮助，请按 *H* 键
 
-After a brief compilation, `menuconfig` presents a list of submenus containing all the options you can configure. There are many options, so take your time to read through them. Resist the temptation to enable or disable a lot of things on your first attempt; it's relatively easy to break your configuration, so start small and get comfortable with the configuration and build process.
+简短编译后，`menuconfig` 会显示一个子菜单列表，其中包含所有可以配置的选项。选项很多，请慢慢阅读。第一次尝试时，不要轻易启用或禁用大量选项；这样很容易破坏配置，所以要从小处着手，熟悉配置和编译过程。
 
-=== Save your changes
+=== 保存更改
 
-Once you're done making changes, press *Escape* until you're prompted to save your new configuration. By default, this saves to the `.config` file. You can save and load configurations by copying this file.
+完成更改后，按 *Escape* 直至提示保存新配置。默认情况下，会保存到 `.config` 文件中。您可以通过复制该文件来保存和加载配置。
 
-After customising, you should now be ready to xref:linux_kernel.adoc#building[build the kernel].
+自定义配置后，你就可以 xref:linux_kernel.adoc#building[构建内核] 了。

@@ -1,61 +1,67 @@
-== Attach the official 7-inch display
+[[attaching-the-official-7-inch-display]]
+== 连接官方 7 英寸显示屏
 
-Update your system software and firmware to the latest version before starting.
-Compute Modules mostly use the same process, but sometimes physical differences force changes for a particular model.
 
-=== Connect a display to DISP1
+在开始之前，请将系统软件和固件更新到最新版本。
+计算模块大多使用相同的流程，但有时物理差异会迫使特定型号发生变化。
 
-NOTE: The Raspberry Pi Zero camera cable cannot be used as an alternative to the RPI-DISPLAY adapter. The two cables have distinct wiring.
+[[connect-a-display-to-disp1]]
+=== 将显示器连接到 DISP1
 
-To connect a display to DISP1:
+NOTE: Raspberry Pi Zero 摄像头电缆不能用作 RPI-DISPLAY 适配器的替代品。这两根电缆有不同的接线。
 
-. Disconnect the Compute Module from power.
-. Connect the display to the DISP1 port on the Compute Module IO board through the 22W to 15W display adapter.
-. _(CM1, CM3, CM3+, and CM4S only)_: Connect the following GPIO pins with jumper cables:
-  * `0` to `CD1_SDA`
-  * `1` to `CD1_SCL`
+要将显示器连接到 DISP1：
 
-. Reconnect the Compute Module to power.
-. Add the following line to xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`]:
+. 断开计算模块的电源。
+. 通过 22W 至 15W 显示适配器将显示器连接到计算模块 IO 板上的 DISP1 端口。
+. _（仅限 CM1、CM3、CM3+ 和 CM4S）_：使用跳线连接以下 GPIO 引脚：
+  * `0` 到 `CD1_SDA` 
+  * `1` 到 `CD1_SCL` 
+
+. 将计算模块重新上电。
+. 将以下行添加到 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`]:
 +
 [source,ini]
 ----
 dtoverlay=vc4-kms-dsi-7inch
 ----
-. Reboot your Compute Module with `sudo reboot`. Your device should detect and begin displaying output to your display.
+. 使用 `sudo reboot` 重新启动计算模块。您的设备应检测到并开始将输出显示到您的显示器。
 
-=== Connect a display to DISP0
+[[connect-a-display-to-disp0]]
+=== 将显示器连接到 DISP0
 
-To connect a display to DISP0:
+要将显示器连接到 DISP0：
 
-. Connect the display to the DISP0 port on the Compute Module IO board through the 22W to 15W display adapter.
-. _(CM1, CM3, CM3+, and CM4S only)_: Connect the following GPIO pins with jumper cables:
-  * `28` to `CD0_SDA`
-  * `29` to `CD0_SCL`
+. 通过 22W 至 15W 显示适配器将显示器连接到计算模块 IO 板上的 DISP0 端口。
+. _（仅限 CM1、CM3、CM3+ 和 CM4S）_：使用跳线连接以下 GPIO 引脚：
+  * `28` 连接到 `CD0_SDA` 
+  * `29` 连接到 `CD0_SCL` 
 
-. Reconnect the Compute Module to power.
-. Add the following line to `/boot/firmware/config.txt`:
+. 将计算模块重新上电。
+. 将以下行添加到 `/boot/firmware/config.txt` ：
 +
 [source,ini]
 ----
 dtoverlay=vc4-kms-dsi-7inch
 ----
-. Reboot your Compute Module with `sudo reboot`. Your device should detect and begin displaying output to your display.
+. 使用 `sudo reboot` 重新启动计算模块。您的设备应检测并开始将输出显示到您的显示器。
 
-=== Disable touchscreen
+[[disable-touchscreen]]
+=== 禁用触摸屏
 
-The touchscreen requires no additional configuration. Connect it to your Compute Module, and both the touchscreen element and display should work once successfully detected.
+触摸屏不需要其他配置。将其连接到您的计算模块，一旦成功检测到，触摸屏元素和显示器都应该可以工作。
 
-To disable the touchscreen element, but still use the display, add the following line to `/boot/firmware/config.txt`:
+要禁用触摸屏元素但仍使用显示屏，请将以下行添加到 `/boot/firmware/config.txt` :
 
 [source,ini]
 ----
 disable_touchscreen=1
 ----
 
-=== Disable display
+[[disable-display]]
+=== 禁用显示屏
 
-To entirely ignore the display when connected, add the following line to `/boot/firmware/config.txt`:
+要在连接时完全忽略显示屏，请将以下行添加到 `/boot/firmware/config.txt` :
 
 [source,ini]
 ----

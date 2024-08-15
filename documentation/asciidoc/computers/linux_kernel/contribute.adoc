@@ -1,23 +1,23 @@
-== Contribute
+== 贡献
 
-There are many reasons you may want to put something into the kernel:
+您可能出于多种原因希望向内核中添加内容：
 
-* You've written some Raspberry Pi-specific code that you want everyone to benefit from
-* You've written a generic Linux kernel driver for a device and want everyone to use it
-* You've fixed a generic kernel bug
-* You've fixed a Raspberry Pi-specific kernel bug
+* 您编写了一些树莓派专用代码，希望所有人都能从中受益
+* 你为某个设备编写了通用的 Linux 内核驱动程序，并希望每个人都能使用它
+* 你修复了一个通用内核错误
+* 你修复了一个树莓派特有的内核错误
 
-For Raspberry Pi-specific changes or bug fixes, submit a pull request to the Raspberry Pi kernel.
-For general Linux kernel changes (i.e. a new driver), submit a pull request to the upstream Linux kernel first. Once the Linux kernel accepts your change, we'll receive it.
+如果是针对 Raspberry Pi 的更改或错误修复，请向 Raspberry Pi 内核提交拉取请求。
+对于一般的 Linux 内核更改（如新驱动程序），请先向上游 Linux 内核提交拉取请求。一旦 Linux 内核接受了您的更改，我们就会收到。
 
-=== Contribute to the Raspberry Pi Kernel
+=== 为 Raspberry Pi 内核做贡献
 
-First, fork the https://github.com/raspberrypi/linux[Raspberry Pi kernel repository] and clone it to your development device. You can then make your changes, test them, and commit them into your fork.
+首先，fork https://github.com/raspberrypi/linux[Raspberry Pi 内核资源库]并克隆到你的开发设备上。然后，您可以进行修改、测试并提交到您的 fork 中。
 
-Then, submit a pull request containing your changes to the https://github.com/raspberrypi/linux[Raspberry Pi kernel repository]. Raspberry Pi engineers will review your contribution and suggest improvements. Once approved, we'll merge in your changes, and they'll eventually make their way to the stable release of the Raspberry Pi kernel.
+然后，向 https://github.com/raspberrypi/linux[Raspberry Pi 内核资源库]提交包含你的修改的拉取请求。Raspberry Pi 工程师将审核您的贡献并提出改进建议。一旦获得批准，我们就会合并您的修改，最终将它们添加到 Raspberry Pi 内核的稳定版本中。
 
-=== Contribute to the Linux kernel
+=== 为 Linux 内核做贡献
 
-First, fork the https://github.com/torvalds/linux[Linux kernel repository] and clone it to your development device. You can then make your changes, test them, and commit them into your fork.
+首先，fork https://github.com/torvalds/linux[Linux内核资源库] 并克隆到你的开发设备上。然后，你可以进行修改、测试，并将它们提交到你的 fork 中。
 
-Then, submit a pull request containing your changes to the https://github.com/torvalds/linux[Linux kernel repository]. Linux kernel contributors will review your contribution and suggest improvements. Once approved, they'll merge in your changes. Eventually, they'll make their way into a long-term release of the Linux kernel. Once we've tested that long-term release for compatibility with the Raspberry Pi kernel, your changes will make their way into a stable release of the Raspberry Pi kernel.
+然后，向 https://github.com/torvalds/linux[Linux内核资源库] 提交包含你的修改的拉取请求。Linux 内核贡献者会审查你的贡献并提出改进建议。一旦获得批准，他们就会合并你的修改。最终，这些改动将进入 Linux 内核的长期版本。一旦我们测试了长期版本与 Raspberry Pi 内核的兼容性，您的修改就会进入 Raspberry Pi 内核的稳定版本。

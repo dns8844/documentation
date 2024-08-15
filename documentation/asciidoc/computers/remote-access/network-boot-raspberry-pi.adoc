@@ -1,27 +1,30 @@
-== Network boot your Raspberry Pi
+[[network-boot-your-raspberry-pi]]
+== 网络启动您的 Raspberry Pi
 
-You can set up a DHCP/TFTP server which will allow you to boot a Raspberry Pi 3 or 4 from the network. 
+您可以设置一个 DHCP/TFTP 服务器，以便从网络启动 Raspberry Pi 3 或 4。
 
-The instructions assume that you have an existing home network, and that you want to use a Raspberry Pi for the *server*. You will also need an additional Raspberry Pi 3 or 4 as a *client* to be booted. Only one SD Card is needed because the client will be booted from the server after the initial client configuration.
+说明假设您有一个现有的家庭网络，并且您想使用 Raspberry Pi 作为 *服务器*。您还需要一个额外的 Raspberry Pi 3 或 4 作为要启动的 *客户端*。只需要一个 SD 卡，因为客户端将在初始客户端配置后从服务器启动。
 
-NOTE: Due to the huge range of networking devices and routers available, we can't guarantee that network booting will work with any device. We have had reports that, if you cannot get network booting to work, disabling STP frames on your network may help.
+NOTE: 由于可用的网络设备和路由器种类繁多，我们无法保证网络启动适用于任何设备。我们收到报告称，如果您无法使网络启动正常工作，禁用网络上的 STP 帧可能会有所帮助。
 
-=== Configure a network boot client
+[[configure-a-network-boot-client]]
+=== 配置网络启动客户端
+
 
 ==== Raspberry Pi 3 Model B
 
-NOTE: This section only applies to the Raspberry Pi 3 Model B, as network boot is enabled on the Raspberry Pi 3 Model B+ at the factory.
+NOTE: 本节仅适用于 Raspberry Pi 3 Model B，因为 Raspberry Pi 3 Model B+ 在出厂时已启用网络启动。
 
-Before the Raspberry Pi 3 Model B will network boot it needs to be booted from an SD Card with a config option to enable USB boot mode. This will set a bit in the OTP (One Time Programmable) memory in the Raspberry Pi SoC that enables network booting. Once this is done, the Raspberry Pi 3B will attempt to boot from USB, and from the network, if it cannot boot from the SD card.
+在 Raspberry Pi 3 Model B 进行网络启动之前，需要从 SD 卡启动，并使用配置选项启用 USB 启动模式。这将在 Raspberry Pi SoC 中的 OTP（一次性可编程）内存中设置一个位，以启用网络启动。完成此操作后，如果无法从 SD 卡启动，Raspberry Pi 3B 将尝试从 USB 启动，并从网络启动。
 
-Install Raspberry Pi OS Lite, or Raspberry Pi OS with desktop, on the SD card in the usual fashion. Next, enable USB boot mode with the following command:
+以通常的方式在 SD 卡上安装 Raspberry Pi OS Lite 或带桌面的 Raspberry Pi OS。接下来，使用以下命令启用 USB 启动模式：
 
 [source,console]
 ----
 $ echo program_usb_boot_mode=1 | sudo tee -a /boot/firmware/config.txt
 ----
 
-This adds `program_usb_boot_mode=1` to the end of xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`]. Reboot the Raspberry Pi with `sudo reboot`. Once the client Raspberry Pi has rebooted, check that the OTP has been programmed with:
+这会将 `program_usb_boot_mode=1` 添加到 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 的末尾。使用 `sudo reboot` 重新启动 Raspberry Pi。客户端 Raspberry Pi 重新启动后，使用以下命令检查 OTP 是否已编程：
 
 [source,console]
 ----
@@ -29,58 +32,61 @@ $ vcgencmd otp_dump | grep 17:
 17:3020000a
 ----
 
-Ensure the output `0x3020000a` is correct.
+确保输出 `0x3020000a` 正确。
 
-The client configuration is almost done. As a final step, disable USB booting. Run the following command:
+客户端配置几乎完成。最后一步，禁用 USB 启动。运行以下命令：
 
 [source,console]
 ----
 $ sudo nano /boot/firmware/config.txt
 ----
 
-Remove the line that contains the text `program_usb_boot_mode=1`. Finally, shut the client Raspberry Pi down with `sudo poweroff`.
+删除包含文本 `program_usb_boot_mode=1` 的行。最后，使用 `sudo poweroff` 关闭客户端 Raspberry Pi。
 
+[[raspberry-pi-4-model-b]]
 ==== Raspberry Pi 4 Model B
 
-Network boot can be enabled on the Raspberry Pi 4 using the `raspi-config` tool. First, run `raspi-config` as follows:
+可以使用 `raspi-config` 工具在 Raspberry Pi 4 上启用网络启动。首先，按如下方式运行 `raspi-config` ：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-Within `raspi-config`, choose `Advanced Options`, then `Boot Order`, then `Network Boot`. You must then reboot the device for the change to the boot order to be programmed into the bootloader EEPROM. Once the Raspberry Pi has rebooted, check that the boot order is now `0xf21`:
+在 `raspi-config` 中，选择 `Advanced Options` ，然后选择 `Boot Order` ，再选择 `Network Boot` 。然后，您必须重新启动设备，以便将启动顺序的更改编程到引导加载程序 EEPROM 中。Raspberry Pi 重新启动后，请检查启动顺序现在是否为 `0xf21` ：
 
 [source,console]
 ----
 $ vcgencmd bootloader_config
 ----
 
-For further details of configuring the Raspberry Pi 4 bootloader, see xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi Bootloader Configuration].
+有关配置 Raspberry Pi 4 引导加载程序的更多详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi 引导加载程序配置]。
 
-=== Ethernet MAC address
+[[ethernet-mac-address]]
+=== 以太网 MAC 地址
 
-Before configuring network boot, make a note of the serial number and mac address so that the board can be identified by the TFTP/DHCP server.
+在配置网络启动之前，请记下序列号和 MAC 地址，以便 TFTP/DHCP 服务器可以识别该板。
 
-On Raspberry Pi 4 the MAC address is programmed at manufacture and there is no link between the MAC address and serial number. Both the MAC address and serial numbers are displayed on the bootloader xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[HDMI diagnostics] screen.
+在 Raspberry Pi 4 上，MAC 地址是在制造时编程的，MAC 地址和序列号之间没有任何联系。MAC 地址和序列号都显示在引导加载程序 xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[HDMI 诊断] 屏幕上。
 
-To find the Ethernet MAC address:
+要查找以太网 MAC 地址：
 
 [source,console]
 ----
 $ ethtool -P eth0
 ----
 
-To find the serial number:
+要查找序列号：
 
 [source,console]
 ----
 $ grep Serial /proc/cpuinfo | cut -d ' ' -f 2 | cut -c 9-16
 ----
 
-=== Configure a network boot server
+[[configure-a-network-boot-server]]
+=== 配置网络启动服务器
 
-Plug the SD card into the server Raspberry Pi, and then boot the server. The client Raspberry Pi will need a root file system to boot from: we will use a copy of the server's root filesystem and place it in  `/nfs/client1`:
+将 SD 卡插入服务器 Raspberry Pi，然后启动服务器。客户端 Raspberry Pi 需要一个根文件系统来启动：我们将使用服务器根文件系统的副本并将其放在 `/nfs/client1` 中：
 
 [source,console]
 ----
@@ -89,7 +95,7 @@ $ sudo apt install rsync
 $ sudo rsync -xa --progress --exclude /nfs / /nfs/client1
 ----
 
-Regenerate SSH host keys on the client filesystem by chrooting into it:
+通过 chrooting 到客户端文件系统中重新生成 SSH 主机密钥：
 
 [source,console]
 ----
@@ -104,45 +110,44 @@ $ exit
 $ sudo umount dev sys proc
 ----
 
-Find the settings of your local network. You need to find the address of your router (or gateway), which can be done with:
+查找本地网络的设置。您需要找到路由器（或网关）的地址，可以使用以下命令完成：
 
 [source,console]
 ----
 $ ip route | awk '/default/ {print $3}'
 ----
 
-Then run:
+然后运行：
 
 [source,console]
 ----
 $ ip -4 addr show dev eth0 | grep inet
 ----
 
-You should see output similar to the following:
-
+您应该看到类似下面的输出：
 ----
 inet 10.42.0.211/24 brd 10.42.0.255 scope global eth0
 ----
 
-The first address is the IP address of your server Raspberry Pi on the network, and the part after the slash is the network size. It is highly likely that yours will be a `/24`. Also note the `brd` (broadcast) address of the network. Note down the output of the previous command, which will contain the IP address of the Raspberry Pi and the broadcast address of the network.
+第一个地址是您的服务器 Raspberry Pi 在网络上的 IP 地址，斜线后的部分是网络大小。您的 IP 地址很可能是 `/24` 。还请注意网络的 `brd` （广播）地址。记下上一个命令的输出，其中将包含 Raspberry Pi 的 IP 地址和网络的广播地址。
 
-Finally, note down the address of your DNS server, which is the same address as your gateway. You can find this with:
+最后，记下您的 DNS 服务器的地址，该地址与您的网关相同。您可以使用以下命令找到它：
 
 [source,console]
 ----
 $ cat /etc/resolv.conf
 ----
 
-Configure a static network address on your server Raspberry Pi via the `systemd` networking, which works as the network handler and DHCP server.
+通过 `systemd` 网络在您的服务器 Raspberry Pi 上配置静态网络地址，它充当网络处理程序和 DHCP 服务器。
 
-To do that, you'll need to create a `10-eth0.netdev` and a `11-eth0.network` like so:
+为此，您需要创建一个 `10-eth0.netdev` 和一个 `11-eth0.network` ，如下所示：
 
 [source,console]
 ----
 $ sudo nano /etc/systemd/network/10-eth0.netdev
 ----
 
-Add the following lines:
+添加以下行：
 
 ----
 [Match]
@@ -152,14 +157,14 @@ Name=eth0
 DHCP=no
 ----
 
-Then create a network file:
+然后创建一个网络文件：
 
 [source,console]
 ----
 $ sudo nano /etc/systemd/network/11-eth0.network
 ----
 
-Add the following contents:
+添加以下内容：
 
 ----
 [Match]
@@ -173,14 +178,14 @@ DNS=10.42.0.1
 Gateway=10.42.0.1
 ----
 
-At this point, you will not have working DNS, so you will need to add the server you noted down before to `systemd/resolved.conf`. In this example, the gateway address is 10.42.0.1.
+此时，您还没有可用的 DNS，因此您需要将之前记下的服务器添加到 `systemd/resolved.conf` 。在此示例中，网关地址为 10.42.0.1。
 
 [source,console]
 ----
 $ sudo nano /etc/systemd/resolved.conf
 ----
 
-Uncomment the DNS line and add the DNS IP address there. Additionally, if you have a fallback DNS server, add it there as well.
+取消注释 DNS 行并在那里添加 DNS IP 地址。此外，如果您有后备 DNS 服务器，也请在那里添加。
 
 ----
 [Resolve]
@@ -188,7 +193,7 @@ DNS=10.42.0.1
 #FallbackDNS=
 ----
 
-Enable `systemd-networkd` and then reboot for the changes to take effect:
+启用 `systemd-networkd` ，然后重新启动以使更改生效：
 
 [source,console]
 ----
@@ -196,7 +201,7 @@ $ sudo systemctl enable systemd-networkd
 $ sudo reboot
 ----
 
-Now start `tcpdump` so you can search for DHCP packets from the client Raspberry Pi:
+现在启动 `tcpdump` ，以便您可以从客户端 Raspberry Pi 搜索 DHCP 数据包：
 
 [source,console]
 ----
@@ -205,13 +210,13 @@ $ sudo systemctl enable dnsmasq
 $ sudo tcpdump -i eth0 port bootpc
 ----
 
-Connect the client Raspberry Pi to your network and power it on. Check that the LEDs illuminate on the client after around 10 seconds, then you should get a packet from the client "DHCP/BOOTP, Request from ..."
+将客户端 Raspberry Pi 连接到您的网络并打开电源。检查客户端上的 LED 是否在大约 10 秒后亮起，然后您应该从客户端获得一个数据包'DHCP/BOOTP，请求来自...'
 
 ----
-IP 0.0.0.0.bootpc > 255.255.255.255.bootps: BOOTP/DHCP, Request from b8:27:eb...
+IP 0.0.0.0.bootpc > 255.255.255.255.bootps：BOOTP/DHCP，请求来自 b8:27:eb...
 ----
 
-Now you need to modify the `dnsmasq` configuration to enable DHCP to reply to the device. Press +++<kbd>+++CTRL + C+++</kbd>+++ to exit the `tcpdump` program, then type the following:
+现在您需要修改 `dnsmasq` 配置以启用 DHCP 回复设备。按 +++<kbd>+++CTRL + C+++</kbd>+++  退出 `tcpdump` 程序，然后输入以下内容：
 
 [source,console]
 ----
@@ -219,10 +224,10 @@ $ echo | sudo tee /etc/dnsmasq.conf
 $ sudo nano /etc/dnsmasq.conf
 ----
 
-Then replace the contents of `dnsmasq.conf` with:
+然后将 `dnsmasq.conf` 的内容替换为：
 
 ----
-# Note: comment out port if you want DNS services for systems on the network.
+# NOTE: 如果您希望网络上的系统使用 DNS 服务，请注释掉端口。
 port=0
 dhcp-range=10.42.0.255,proxy
 log-dhcp
@@ -231,9 +236,9 @@ tftp-root=/tftpboot
 pxe-service=0,"Raspberry Pi Boot"
 ----
 
-Where the first address of the `dhcp-range` line is, use the broadcast address you noted down earlier.
+`dhcp-range` 行的第一个地址，使用您之前记下的广播地址。
 
-Now create a `/tftpboot` directory:
+现在创建一个 `/tftpboot` 目录：
 
 [source,console]
 ----
@@ -243,40 +248,41 @@ $ sudo systemctl enable dnsmasq.service
 $ sudo systemctl restart dnsmasq.service
 ----
 
-Now monitor the `dnsmasq` log:
+现在监控 `dnsmasq` 日志：
 
 [source,console]
 ----
 $ journalctl -f
 ----
 
-You should see something like this:
+您应该看到类似以下内容：
 
 ----
 raspberrypi dnsmasq-tftp[1903]: file /tftpboot/bootcode.bin not found
 ----
 
-Next, you will need to copy the contents of the boot folder into the `/tftpboot` directory.
+接下来，您需要将 boot 文件夹的内容复制到 `/tftpboot` 目录中。
 
-First, press *CTRL + C* to exit the monitoring state. Then type the following:
+首先，按 *CTRL + C* 退出监控状态。然后输入以下内容：
 
 [source,console]
 ----
 $ cp -r /boot/firmware/* /tftpboot
 ----
 
-Since the tftp location has changed, restart `dnsmasq`:
+由于 tftp 位置已更改，请重新启动 `dnsmasq` ：
 
 [source,console]
 ----
 $ sudo systemctl restart dnsmasq
 ----
 
-==== Set up NFS root
+[[set-up-nfs-root]]
+==== 设置 NFS 根目录
 
-This should now allow your Raspberry Pi client to attempt to boot through until it tries to load a root file system (which it doesn't have).
+这现在应该允许您的 Raspberry Pi 客户端尝试启动，直到它尝试加载根文件系统（它没有）。
 
-At this point, export the `/nfs/client1` file system created earlier, and the TFTP boot folder.
+此时，导出先前创建的 `/nfs/client1` 文件系统和 TFTP 启动文件夹。
 
 [source,console]
 ----
@@ -285,7 +291,7 @@ $ echo "/nfs/client1 *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /
 $ echo "/tftpboot *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
 ----
 
-Restart RPC-Bind and the NFS server in order to have them detect the new files.
+重新启动 RPC-Bind 和 NFS 服务器，以便让它们检测新文件。
 
 [source,console]
 ----
@@ -295,19 +301,19 @@ $ sudo systemctl enable nfs-kernel-server
 $ sudo systemctl restart nfs-kernel-server
 ----
 
-Edit `/tftpboot/cmdline.txt` and from `root=` onwards, and replace it with:
+编辑 `/tftpboot/cmdline.txt` ，从 `root=` 开始，并将其替换为：
 
 ----
 root=/dev/nfs nfsroot=10.42.0.211:/nfs/client1,vers=3 rw ip=dhcp rootwait
 ----
 
-You should substitute the IP address here with the IP address you have noted down. Also remove any part of the command line starting with `init=`.
+您应该将此处的IP地址替换为您记下的IP地址。还要删除以 `init=` 开头的命令行的任何部分。
 
-Finally, edit `/nfs/client1/etc/fstab` and remove the `/dev/mmcblk0p1` and `p2` lines (only `proc` should be left). Then, add the boot partition back in:
+最后，编辑 `/nfs/client1/etc/fstab` 并删除 `/dev/mmcblk0p1` 和 `p2` 行（应该只留下 `proc` ）。然后，将引导分区添加回：
 
 [source,console]
 ----
 $ echo "10.42.0.211:/tftpboot /boot/firmware/ nfs defaults,vers=3 0 0" | sudo tee -a /nfs/client1/etc/fstab
 ----
 
-If it doesn't boot on the first attempt, keep trying. It can take a minute or so for the Raspberry Pi to boot, so be patient.
+如果第一次尝试时没有启动，请继续尝试。树莓派可能需要一分钟左右的时间才能启动，所以要有耐心。

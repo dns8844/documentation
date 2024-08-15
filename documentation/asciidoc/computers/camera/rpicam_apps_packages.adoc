@@ -1,15 +1,18 @@
-=== Install `libcamera` and `rpicam-apps`
+[[install-libcamera-and-rpicam-apps]]
+=== 安装 `libcam` 和 `rpicam-apps` 
 
-Raspberry Pi provides two `rpicam-apps` packages:
+Raspberry Pi提供了两个 `rpicam-apps` 包：
 
-* `rpicam-apps` contains full applications with support for previews using a desktop environment. This package is pre-installed in Raspberry Pi OS.
+* `rpicam-apps` 包含支持使用桌面环境进行预览的完整应用程序。此软件包预装在Raspberry Pi OS中。
 
-* `rpicam-apps-lite` omits desktop environment support, and only makes the DRM preview available. This package is pre-installed in Raspberry Pi OS Lite.
+* `rpicam-apps-lite` 省略了桌面环境支持，仅提供DRM预览版。此软件包预装在Raspberry Pi OS Lite中。
 
-==== Dependencies
+[[dependencies]]
+==== 依赖关系
 
-`rpicam-apps` depends on library packages named `library-name<n>`, where `<n>` is the ABI version. Your package manager should install these automatically.
+`rpicam-apps` 依赖于名为 `library-name<n>` 的包，其中 `<n>` 是ABI版本。您的包管理器应该会自动安装这些。
 
-==== Dev packages
+[[dev-packages]]
+==== 开发包
 
-You can rebuild `rpicam-apps` without building `libcamera` and `libepoxy` from scratch. For more information, see xref:camera_software.adoc#building-rpicam-apps-without-building-libcamera[Building `rpicam-apps` without rebuilding `libcamera`].
+您可以重建 `rpicam-apps` ，而无需从头开始构建 `libcamera` 和 `libepoxy` 。有关详细信息，请参阅 xref:camera_software.adoc#building-rpicam-apps-without-building-libcamera[构建rpicam-apps而无需重建libcam]。

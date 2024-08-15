@@ -1,51 +1,55 @@
-=== Write your own post-processing stages
+[[write-your-own-post-processing-stages]]
+=== 编写自己的后处理阶段
 
-With the `rpicam-apps` post-processing framework, users can create their own custom post-processing stages. You can even include algorithms and routines from OpenCV and TensorFlow Lite.
+使用 `rpicam-apps` 后处理框架，用户可以创建自己的自定义后处理阶段。您甚至可以包含来自OpenCV和TensorFlow Lite的算法和例程。
 
-==== Basic post-processing stages
+[[basic-post-processing-stages]]
+==== 基本后处理阶段
 
-To create your own post-processing stage, derive a new class from the `PostProcessingStage` class.
-All post-processing stages must implement the following member functions:
+要创建自己的后处理阶段，请从 `PostProcessingStage` 类派生一个新类。
+所有后处理阶段必须实现以下成员功能：
 
-`char const *Name() const`:: Returns the name of the stage. Matched against stages listed in the JSON post-processing configuration file.
-`void Read(boost::property_tree::ptree const &params)`:: Reads the stage's configuration parameters from a provided JSON file.
-`void AdjustConfig(std::string const &use_case, StreamConfiguration *config)`:: Gives stages a chance to influence the configuration of the camera. Frequently empty for stages with no need to configure the camera.
-`void Configure()`:: Called just after the camera has been configured to allocate resources and check that the stage has access to necessary streams.
-`void Start()`:: Called when the camera starts. Frequently empty for stages with no need to configure the camera.
-`bool Process(CompletedRequest &completed_request)`:: Presents completed camera requests for post-processing. This is where you'll implement pixel manipulations and image analysis. Returns `true` if the post-processing framework should **not** deliver this request to the application.
-`void Stop()`:: Called when the camera stops. Used to shut down any active processing on asynchronous threads.
-`void Teardown()`:: Called when the camera configuration is destroyed. Use this as a deconstructor where you can de-allocate resources set up in the `Configure` method.
+`char const *Name() const`:: 返回阶段名称。与 JSON 后处理配置文件中列出的阶段匹配。
+`void Read(boost::property_tree::ptree const &params)`:: 从提供的 JSON 文件中读取舞台的配置参数。
+`void AdjustConfig(std::string const &use_case, StreamConfiguration *config)`:: 为舞台提供影响摄像机配置的机会。对于不需要配置摄像机的舞台，通常为空。
+`void Configure()`:: 在摄像机配置完成后调用，以分配资源并检查舞台是否能访问必要的数据流。
+`void Start()`:: 摄像机启动时调用。对于不需要配置摄像机的舞台，通常为空。
+`bool Process(CompletedRequest &completed_request)`:: 显示已完成的摄像机请求，以便进行后处理。这是您执行像素处理和图像分析的地方。如果后处理框架不应***将此请求传送给应用程序，则返回 `true` 。
+`void Stop()`:: 摄像机停止时调用。用于关闭异步线程上的任何活动处理。
+`void Teardown()`:: 摄像机配置销毁时调用。将其用作解构器，在此可以取消分配在 `Configure` 方法中设置的资源。
 
-In any stage implementation, call `RegisterStage` to register your stage with the system.
+在任何阶段实现中，调用 `RegisterStage` 向系统注册您的阶段。
 
-Don't forget to add your stage to `meson.build` in the post-processing folder.
-When writing your own stages, keep these tips in mind:
+不要忘记将您的stage添加到后处理文件夹中的 `meson.build` 中。
 
-* The `Process` method blocks the imaging pipeline. If it takes too long, the pipeline will stutter. **Always delegate time-consuming algorithms to an asynchronous thread.**
+在编写自己的阶段时，请记住以下TIP: 
 
-* When delegating work to another thread, you must copy the image buffers. For applications like image analysis that don't require full resolution, try using a low-resolution image stream.
+* `Process` 方法阻塞成像管道。如果时间太长，管道会卡顿。**始终将耗时的算法委托给异步线程。**
 
-* The post-processing framework _uses parallelism to process every frame_. This improves throughput. However, some OpenCV and TensorFlow Lite functions introduce another layer of parallelism _within_ each frame. Consider serialising calls within each frame since post-processing already takes advantage of multiple threads.
+* 将工作委托给另一个线程时，您必须复制图像缓冲区。对于不需要全分辨率的图像分析等应用程序，请尝试使用低分辨率图像流。
 
-* Most streams, including the low resolution stream, use the YUV420 format. You may need to convert this to another format for certain OpenCV or TFLite functions.
+* 后处理框架_使用并行方式处理每个帧_。这提高了吞吐量。然而，一些 OpenCV 和 TensorFlow Lite 函数在每个帧内引入了另一层并行性。考虑在每一帧内序列化调用，因为后处理已经利用了多个线程。
 
-* For the best performance, always alter images in-place.
+* 大多数流，包括低分辨率流，使用YUV420格式。对于某些OpenCV或TFLite功能，您可能需要将其转换为另一种格式。
 
-For a basic example, see https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/negate_stage.cpp[`negate_stage.cpp`]. This stage negates an image by turning light pixels dark and dark pixels light. This stage is mostly derived class boiler-plate, achieving the negation logic in barely half a dozen lines of code.
+* 为获得最佳性能，请务必就地修改图像。
 
-For another example, see https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/sobel_cv_stage.cpp[`sobel_cv_stage.cpp`], which implements a Sobel filter in just a few lines of OpenCV functions.
+关于一个基本的例子，请参见 https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/negate_stage.cpp[`negate_stage.cpp`]。这个阶段通过将亮像素变暗和暗像素变亮来反相图像。这个阶段主要是派生类样板，只用六行代码就实现了反相逻辑。
 
-==== TensorFlow Lite stages
+另一个例子，请参见 https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/sobel_cv_stage.cpp[`sobel_cv_stage.cpp`]，它仅在几行OpenCV函数中实现了Sobel过滤器。
 
-For stages that use TensorFlow Lite (TFLite), derive a new class from the `TfStage` class.
-This class delegates model execution to a separate thread to prevent camera stuttering.
+[[tensorflow-lite-stages]]
+==== TensorFlow Lite阶段
 
-The `TfStage` class implements all the `PostProcessingStage` member functions post-processing stages must normally implement, _except for_ ``Name``.
-All `TfStage`-derived stages must implement the ``Name`` function, and should implement some or all of the following virtual member functions:
+对于使用TensorFlow Lite（TFLite）的阶段，从 `TfStage` 类派生一个新类。
+此类将模型执行委托给单独的线程以防止相机卡顿。
 
-`void readExtras()`:: The base class reads the named model and certain other parameters like the `refresh_rate`. Use this function this to read extra parameters for the derived stage and check that the loaded model is correct (e.g. has right input and output dimensions).
-`void checkConfiguration()`:: The base class fetches the low resolution stream that TFLite operates on and the full resolution stream in case the derived stage needs it. Use this function to check for the streams required by your stage. If your stage can't access one of the required streams, you might skip processing or throw an error.
-`void interpretOutputs()`:: Use this function to read and interpret the model output. _Runs in the same thread as the model when the model completes_.
-`void applyResults()`::  Use this function to apply results of the model (could be several frames old) to the current frame. Typically involves attaching metadata or drawing. _Runs in the main thread, before frames are delivered_.
+`TfStage` 类实现了后处理阶段通常必须实现的所有 `PostProcessingStage` 成员函数，_除了_ `` Name `` 。"
+所有 `TfStage` 派生的阶段都必须实现 `` Name `` 函数，并且应该实现以下部分或全部虚拟成员函数：
 
-For an example implementation, see the https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/object_classify_tf_stage.cpp[`object_classify_tf_stage.cpp`] and https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/pose_estimation_tf_stage.cpp[`pose_estimation_tf_stage.cpp`].
+`void readExtras（）`::基类读取命名模型和某些其他参数，如 `refresh_rate` 。使用此函数this读取派生阶段的额外参数并检查加载的模型是否正确（例如具有正确的输入和输出尺寸）。
+`void checkConfiguration()`:: 基类获取 TFLite 运行所需的低分辨率数据流和全分辨率数据流，以备派生阶段之需。使用此函数检查舞台所需的流。如果您的舞台无法访问所需的流之一，您可能会跳过处理或抛出错误。
+`void interpretOutputs()`::  使用此函数读取并解释模型输出。当模型完成时，在与模型相同的线程中运行。
+`void applyResults()`::  使用此函数将模型结果（可能是几帧前的结果）应用到当前帧。通常涉及附加元数据或绘图。在主线程中运行，在帧传送之前。
+
+有关示例实现，请参见 https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/object_classify_tf_stage.cpp[`object_classify_tf_stage.cpp` ] 和 https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/pose_estimation_tf_stage.cpp[ `pose_estimation_tf_stage.cpp`]。

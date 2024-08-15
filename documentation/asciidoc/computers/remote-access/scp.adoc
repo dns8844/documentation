@@ -1,59 +1,62 @@
 [[scp]]
-== Share files with SCP
+== 使用 SCP 共享文件
 
-Secure Copy Protocol (`scp`) sends files over SSH. You can use `scp` to copy files between your Raspberry Pi and another computer.
+安全复制协议 ( `scp` ) 通过 SSH 发送文件。您可以使用 `scp` 在 Raspberry Pi 和另一台计算机之间复制文件。
 
-To use `scp`, xref:remote-access.adoc#ip-address[find your Raspberry Pi's IP address].
+要使用 `scp` ，请查找 Raspberry Pi 的 IP 地址。
 
-=== Copy files to your Raspberry Pi
+[[copy-files-to-your-raspberry-pi]]
+=== 将文件复制到您的 Raspberry Pi
 
-To copy a file named `myfile.txt` from your personal computer to a user's home folder on your Raspberry Pi, run the following command from the directory containing `myfile.txt`, replacing the `<username>` placeholder with the username you use to log in to your Raspberry Pi and the `<pi_ip_address>` placeholder with your Raspberry Pi's IP address:
+要将名为 `myfile.txt` 的文件从您的个人计算机复制到 Raspberry Pi 上的用户主文件夹，请从包含 `myfile.txt` 的目录中运行以下命令，将 `<username>` 占位符替换为您用于登录 Raspberry Pi 的用户名，将 `<pi_ip_address>` 占位符替换为您 Raspberry Pi 的 IP 地址：
 
 [source,console]
 ----
 $ scp myfile.txt <username>@<pi_ip_address>:
 ----
 
-To copy a file to a specific directory, append the directory path after the `:` in the `scp` command. Create the folder before you run `scp`, since `scp` won't create folders automatically. For instance, the following command copies a file named `myfile.txt` into the `project/` directory within a user's home folder:
+要将文件复制到特定目录，请在 `scp` 命令中的 `:` 后附加目录路径。在运行 `scp` 之前创建文件夹，因为 `scp` 不会自动创建文件夹。例如，以下命令将名为 `myfile.txt` 的文件复制到用户主文件夹中的 `project/` 目录中：
 
 [source,console]
 ----
 $ scp myfile.txt <username>@<pi_ip_address>:project/
 ----
 
-=== Copy files from your Raspberry Pi
+[[copy-files-from-your-raspberry-pi]]
+=== 从 Raspberry Pi 复制文件
 
-To copy a file named `myfile.txt` from a user's home directory on a Raspberry Pi to the current directory on another computer, run the following command:
+要将名为 `myfile.txt` 的文件从 Raspberry Pi 上的用户主目录复制到另一台计算机上的当前目录，请运行以下命令：
 
 [source,console]
 ----
 $ scp <username>@<pi_ip_address>:myfile.txt .
 ----
 
-=== Copy multiple files with one command
+[[copy-multiple-files-with-one-command]]
+=== 使用一个命令复制多个文件
 
-To copy multiple files, list the file names in a single command, separated by spaces:
+要复制多个文件，请在单个命令中列出文件名，并用空格分隔：
 
 [source,console]
 ----
 $ scp myfile.txt myfile2.txt <username>@<pi_ip_address>:
 ----
 
-Alternatively, use a wildcard to copy all files matching a particular filter. The following command copies all files that end with `.txt`:
+或者，使用通配符复制与特定过滤器匹配的所有文件。以下命令复制所有以 `.txt` 结尾的文件：
 
 [source,console]
 ----
 $ scp *.txt <username>@<pi_ip_address>:
 ----
 
-The following command copies all files that start with `m`:
+以下命令复制所有以 `m` 开头的文件：
 
 [source,console]
 ----
 $ scp m* <username>@<pi_ip_address>:
 ----
 
-The following command copies all files that start with `m` and end with `.txt`:
+以下命令复制所有以 `m` 开头并以 `.txt` 结尾的文件：
 
 [source,console]
 ----
@@ -62,7 +65,7 @@ $ scp m*.txt <username>@<pi_ip_address>:
 
 [NOTE]
 ====
-To copy files with names that contain spaces, enclose the file name in quotes:
+要复制名称包含空格的文件，请将文件名括在引号中：
 
 [source,console]
 ----
@@ -71,9 +74,10 @@ $ scp "my file.txt" <username>@<pi_ip_address>:
 
 ====
 
-=== Copy a folder
+[[copy-a-folder]]
+=== 复制文件夹
 
-To copy a folder and all of its contents, pass the folder name with the `-r` (recursive) flag:
+要复制文件夹及其所有内容，请使用以下参数传递文件夹名称： `-r` （递归）标志：
 
 [source,console]
 ----

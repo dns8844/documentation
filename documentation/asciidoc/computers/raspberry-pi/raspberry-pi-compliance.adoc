@@ -1,23 +1,28 @@
-== Product compliance and safety
+[[product-compliance-and-safety]]
+== 产品合规性和安全性
 
-All Raspberry Pi products have undergone extensive compliance testing. For more information see the https://pip.raspberrypi.com[Product Information Portal].
+所有Raspberry Pi产品都经过了广泛的合规性测试。有关详细信息，请参阅 https://pip.raspberrypi.com[产品信息门户]。
 
-=== Flammability rating
+[[flammability-rating]]
+=== 易燃等级
 
-The PCBs used in Raspberry Pi devices adhere to UL94-V0. 
+Raspberry Pi设备中使用的PCB符合UL94-V0。
 
-NOTE: This applies to the PCBs only.
+NOTE: 这仅适用于多氯联苯。
 
-=== Raspberry Pi Compliance Support
+[[raspberry-pi-compliance-support]]
+=== 树莓派合规支持
 
-The Compliance Support programme is designed to eliminate the burden of navigating compliance issues and make it easier for companies to bring new products to consumers. It provides access to the same test engineers who worked on our Raspberry Pis during their compliance testing, connecting the user to a dedicated team at https://www.ul-certification.com/[UL] who assess and test the user's product, facilitated by their in-depth knowledge of Raspberry Pi.
+合规性支持计划旨在消除浏览合规性问题的负担，并使公司更容易将新产品带给消费者。它提供了在合规性测试期间为我们的树莓派工作的相同测试工程师的访问权限，将用户与 https://www.ul-certification.com/[UL] 的一个专门团队联系起来，该团队通过他们对树莓派的深入了解来评估和测试用户的产品。
 
-Find out more about the https://www.raspberrypi.com/for-industry/integrator-programme/[Raspberry Pi Compliance Support Programme].
+了解有关 https://www.raspberrypi.com/for-industry/integrator-programme/[Raspberry Pi合规支持计划] 的更多信息。
 
-=== Powered by Raspberry Pi
+[[powered-by-raspberry-pi]]
+=== 由树莓派提供支持
 
-The Powered by Raspberry Pi program provides a process for companies wanting to use a form of the Raspberry Pi logo, and covers products with Raspberry Pi computers or silicon inside, and services provided by a Raspberry Pi. If you wish to start the process to apply you can do so https://www.raspberrypi.com/trademark-rules/powered-raspberry-pi/[online].
+树莓派计划为希望使用树莓派标志的公司提供了一个流程，涵盖了内部有树莓派电脑或silicon的产品，以及树莓派提供的服务。如果你想开始申请，你可以 https://www.raspberrypi.com/trademark-rules/powered-raspberry-pi/[在线] 申请。
 
-=== Approved Design Partners
+[[approved-design-partners]]
+=== 认可的设计合作伙伴
 
-Our list of https://www.raspberrypi.com/for-industry/design-partners/[Approved Design Partners] provides a set of consultancies which we work closely with and support so they can provide paid-for design services across hardware, software, and mechanical fields.
+我们的 https://www.raspberrypi.com/for-industry/design-partners/[认可设计合作伙伴] 名单提供了一系列我们密切合作和支持的咨询公司，因此他们可以在硬件、软件和机械领域提供付费设计服务。

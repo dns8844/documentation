@@ -1,38 +1,38 @@
-== Use Python on a Raspberry Pi
+== 在 Raspberry Pi 上使用 Python
 
-Raspberry Pi OS comes with Python 3 pre-installed. Interfering with the system Python installation can cause problems for your operating system. When you install third-party Python libraries, always use the correct package-management tools.
+Raspberry Pi 操作系统预装了 Python 3。干扰系统 Python 安装会给操作系统带来问题。安装第三方 Python 库时，请务必使用正确的软件包管理工具。
 
-On Linux, you can install `python` dependencies in two ways:
+在 Linux 上，您可以通过两种方式安装 `python` 依赖项：
 
-* use `apt` to install pre-configured system packages
-* use `pip` to install libraries using Python's dependency manager _in a virtual environment_
+* 使用 `apt` 安装预配置的系统包
+* 使用 `pip` 在虚拟环境中使用 Python 的依赖关系管理器安装库。
 +
-IMPORTANT: Starting in Raspberry Pi OS _Bookworm_, you can only use `pip` to install into a Python Virtual Environment (`venv`). This change was introduced by the Python community, not by Raspberry Pi: for more information, see https://peps.python.org/pep-0668/[PEP 668].
+IMPORTANT: 从 Raspberry Pi OS _Bookworm_ 开始，您只能使用 `pip` 安装到 Python 虚拟环境 (`venv`)。这一更改是由 Python 社区引入的，而不是由 Raspberry Pi 引入的：欲了解更多信息，请参阅 https://peps.python.org/pep-0668/[PEP668]。
 
-=== Install Python packages using `apt`
+=== 使用 `apt` 安装 Python 软件包
 
-Packages installed via `apt` are packaged specifically for Raspberry Pi OS. These packages usually come pre-compiled, so they install faster. Because `apt` manages dependencies for all packages, installing with this method includes all of the sub-dependencies needed to run the package. And `apt` ensures that you don't break other packages if you uninstall.
+通过 `apt` 安装的软件包是专为 Raspberry Pi 操作系统打包的。这些软件包通常经过预编译，因此安装速度更快。由于 `apt` 会管理所有软件包的依赖关系，因此使用此方法安装时会包含运行软件包所需的所有子依赖关系。而且 apt` 还能确保在卸载时不会破坏其他软件包。
 
-For instance, to install the Python 3 library that supports the Raspberry Pi xref:../accessories/build-hat.adoc[Build HAT], run the following command:
+例如，要安装支持 Raspberry Pi 的 Python 3 库 xref:../accessories/build-hat.adoc[Build HAT]，请运行以下命令：
 
 [source,console]
 ----
 $ sudo apt install python3-build-hat
 ----
 
-To find Python packages distributed with `apt`, xref:os.adoc#search-for-software[use `apt search`]. In most cases, Python packages use the prefix `python-` or `python3-`: for instance, you can find the `numpy` package under the name `python3-numpy`.
+要查找使用 `apt` 发布的 Python 软件包，请使用 xref:os.adoc#search-for-software[`apt search`]。在大多数情况下，Python 软件包使用前缀 `python-` 或 `python3-`：例如，你可以用 `python3-numpy` 这个名字找到 `numpy` 软件包。
 
-=== Install Python libraries using `pip`
+=== 使用 `pip` 安装 Python 库
 
 [[python-on-raspberry-pi]]
 
-==== Bookworm changes to `pip` installation
+==== Bookworm 对 `pip` 安装的更改
 
-In older versions of Raspberry Pi OS, you could install libraries directly into the system version of Python using `pip`. Since Raspberry Pi OS _Bookworm_, users cannot install libraries directly into the system version of Python.
+在旧版本的 Raspberry Pi OS 中，可以使用 `pip` 将库直接安装到 Python 的系统版本中。从 Raspberry Pi OS _Bookworm_ 开始，用户不能直接将库安装到 Python 的系统版本中。
 
-Instead, xref:os.adoc#use-pip-with-virtual-environments[install libraries into a virtual environment (`venv`)]. To install a library at the system level for all users, xref:os.adoc#install-python-packages-using-apt[install it with `apt`].
+取而代之的是 xref:os.adoc#use-pip-with-virtual-environments[将库安装到虚拟环境 (`venv`)]。要在系统级别为所有用户安装库，请使用 xref:os.adoc#install-python-packages-using-apt[使用 `apt` 安装]。
 
-Attempting to install a Python package system-wide outputs an error similar to the following:
+尝试在全系统安装 Python 包时，会输出类似下面的错误：
 
 [source,console]
 ----
@@ -51,44 +51,44 @@ error: externally-managed-environment
 
   For more information visit http://rptl.io/venv
 
-note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
-hint: See PEP 668 for the detailed specification.
+note: 如果您认为这是一个错误，请联系您的 Python 安装或操作系统发行提供商。您可以通过 --break-system-packages 来覆盖此选项，但这有可能破坏您的 Python 安装或操作系统。
+提示：详细规范请参见 PEP 668。
 ----
 
-Python users have long dealt with conflicts between OS package managers like `apt` and Python-specific package management tools like `pip`. These conflicts include both Python-level API incompatibilities and conflicts over file ownership.
+长期以来，Python 用户一直在处理操作系统软件包管理器（如 `apt`）与 Python 特定的软件包管理工具（如 `pip`）之间的冲突。这些冲突包括 Python级 API 的不兼容性和文件所有权的冲突。
 
-Starting in Raspberry Pi OS _Bookworm_, packages installed via `pip` _must be installed into a Python virtual environment_ (``venv``). A virtual environment is a container where you can safely install third-party modules so they won't interfere with your system Python.
+从 Raspberry Pi OS _Bookworm_ 开始，通过 `pip` 安装的软件包 _必须安装到 Python 虚拟环境_ (``venv``)。虚拟环境是一个容器，您可以在其中安全地安装第三方模块，这样它们就不会干扰您的系统 Python。
 
-==== Use pip with virtual environments
+==== 在虚拟环境中使用 pip
 
-To use a virtual environment, create a container to store the environment. There are several ways you can do this depending on how you want to work with Python.
+要使用虚拟环境，需要创建一个容器来存储环境。根据你使用 Python 的方式，有几种方法可以做到这一点。
 
-Run the following command to create a virtual environment configuration folder, replacing `<env-name>` with the name you would like to use for the virtual environment (e.g. `env`):
+运行以下命令创建虚拟环境配置文件夹，将 `<env-name>` 替换为您想用于虚拟环境的名称（例如 `env`）：
 
 [source,console]
 ----
 $ python -m venv <env-name>
 ----
 
-TIP: Pass the `--system-site-packages` flag before the folder name to preload all of the currently installed packages in your system Python installation into the virtual environment.
+TIP: 在文件夹名称前加上 `-system-site-packages` 标志，将系统中当前安装的所有 Python 软件包预加载到虚拟环境中。
 
-Then, execute the `bin/activate` script in the virtual environment configuration folder to enter the virtual environment:
+然后，执行虚拟环境配置文件夹中的 `bin/activate` 脚本，进入虚拟环境：
 
 [source,console]
 ----
 $ source <env-name>/bin/activate
 ----
 
-You should then see a prompt similar to the following:
+然后您会看到类似下面的提示：
 
 [source,console?prompt=(<env-name>) $]
 ----
 (<env-name>) $
 ----
 
-The `(<env-name>)` command prompt prefix indicates that the current terminal session is in a virtual environment named `<env-name>`.
+命令提示符前缀 `(<env-name>)` 表示当前终端会话处于名为 `<env-name>`.的虚拟环境中。
 
-To check that you're in a virtual environment, use `pip list` to view the list of installed packages:
+要检查是否处于虚拟环境中，可使用 `pip list` 查看已安装软件包的列表：
 
 [source,console?prompt=(<env-name>) $]
 ----
@@ -99,83 +99,83 @@ pip        23.0.1
 setuptools 66.1.1
 ----
 
-The list should be much shorter than the list of packages installed in your system Python. You can now safely install packages with `pip`. Any packages you install with `pip` while in a virtual environment only install to that virtual environment. In a virtual environment, the `python` or `python3` commands automatically use the virtual environment's version of Python and installed packages instead of the system Python.
+该列表应该比系统 Python 中安装的软件包列表短得多。现在可以安全地使用 `pip` 安装软件包了。在虚拟环境中使用 `pip` 安装的软件包只能安装到该虚拟环境。在虚拟环境中，`python` 或 `python3` 命令会自动使用虚拟环境的 Python 版本和已安装的软件包，而不是系统 Python。
 
-To leave a virtual environment, run the following command:
+要离开虚拟环境，请运行以下命令：
 
 [source,console?prompt=(<env-name>) $]
 ----
 (<env-name>) $ deactivate
 ----
 
-==== Use a separate environment for each project
+==== 为每个项目使用单独的环境
 
-Many users create separate virtual environments for each Python project. Locate the virtual environment in the root folder of each project, typically with a shared name like `env`. Run the following command from the root folder of each project to create a virtual environment configuration folder:
+许多用户会为每个 Python 项目创建单独的虚拟环境。在每个项目的根文件夹中找到虚拟环境，通常使用共享名称，如 `env`。在每个项目的根文件夹中运行以下命令，以创建虚拟环境配置文件夹：
 
 [source,console]
 ----
 $ python -m venv env
 ----
 
-Before you work on a project, run the following command from the root of the project to start using the virtual environment:
+在项目上工作之前，从项目根目录运行以下命令开始使用虚拟环境：
 
 [source,console]
 ----
 $ source env/bin/activate
 ----
 
-You should then see a prompt similar to the following:
+然后您会看到类似下面的提示：
 
 [source,console?prompt=(env) $]
 ----
 (env) $
 ----
 
-When you finish working on a project, run the following command from any directory to leave the virtual environment:
+完成项目工作后，从任意目录运行以下命令离开虚拟环境：
 
 [source,console?prompt=(env) $]
 ----
 (env) $ deactivate
 ----
 
-==== Use a separate environment for each user
+==== 为每个用户使用单独的环境
 
-Instead of creating a virtual environment for each of your Python projects, you can create a single virtual environment for your user account. **Activate that virtual environment before running any of your Python code.** This approach can be more convenient for workflows that share many libraries across projects.
+与其为每个 Python 项目创建一个虚拟环境，不如为用户账户创建一个单独的虚拟环境。**在运行任何 Python 代码之前激活该虚拟环境。** 这种方法对于在项目间共享许多库的工作流来说可能更方便。
 
-When creating a virtual environment for multiple projects across an entire user account, consider locating the virtual environment configuration files in your home directory. Store your configuration in a https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments[folder whose name begins with a period] to hide the folder by default, preventing it from cluttering your home folder.
+为整个用户账户的多个项目创建虚拟环境时，请考虑将虚拟环境配置文件放在主目录下。将配置文件存储在 https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments[名称以点开头的文件夹]中，默认情况下隐藏该文件夹，以防止主文件夹杂乱无章。
 
-Use the following command to create a virtual environment in a hidden folder in the current user's home directory:
+使用以下命令在当前用户主目录的隐藏文件夹中创建虚拟环境：
 
 [source,console]
 ----
 $ python -m venv ~/.env
 ----
 
-Run the following command from any directory to start using the virtual environment:
+从任意目录运行以下命令，开始使用虚拟环境：
 
 [source,console]
 ----
 $ source ~/.env/bin/activate
 ----
 
-You should then see a prompt similar to the following:
+然后您会看到类似下面的提示：
 
 [source,console?prompt=(.env) $]
 ----
 (.env) $
 ----
 
-To leave the virtual environment, run the following command from any directory:
+要离开虚拟环境，请从任意目录运行以下命令：
 
 [source,console?prompt=(.env) $]
 ----
 (.env) $ deactivate
 ----
 
-=== Use the Thonny editor
+=== 使用 Thonny 编辑器
 
-We recommend https://thonny.org/[Thonny] for editing Python code on the Raspberry Pi.
+我们推荐使用 https://thonny.org/[Thonny] 在 Raspberry Pi 上编辑 Python 代码。
 
-By default, Thonny uses the system Python. However, you can switch to using a Python virtual environment by clicking on the **interpreter menu** in the bottom right of the Thonny window. Select a configured environment or configure a new virtual environment with `Configure interpreter...`.
+默认情况下，Thonny 使用系统 Python。不过，您可以点击 Thonny 窗口右下角的 **interpreter menu**，切换到使用 Python 虚拟环境。选择已配置的环境，或使用 `Configure interpreter...` 配置新的虚拟环境。
 
 image::images/thonny-venv.png[width="100%"]

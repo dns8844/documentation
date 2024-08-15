@@ -1,80 +1,84 @@
-== Raspberry Pi boot EEPROM
+[[raspberry-pi-boot-eeprom]]
+== 树莓派启动EEPROM
 
-Raspberry Pi 5, Raspberry Pi 4, 400, Compute Module 4, and Compute Module 4S computers use an EEPROM to boot the system. All other models of Raspberry Pi computer use the `bootcode.bin` file located in the boot filesystem.
+Raspberry Pi 5、Raspberry Pi 4、400、Compute Module 4和 Compute Module 4S 使用EEPROM来启动系统。所有其他型号的Raspberry Pi计算机都使用位于引导文件系统中的 `bootcode.bin` 文件。
 
-NOTE: You can find the scripts and pre-compiled binaries used to create `rpi-eeprom`  in the https://github.com/raspberrypi/rpi-eeprom/[rpi-eeprom GitHub repository].
+NOTE: 您可以在 https://github.com/raspberrypi/rpi-eeprom/[rpi-eeprom GitHub存储库] 中找到用于创建 `rpi-eeprom` 的脚本和预编译二进制文件。
 
-=== Boot diagnostics
+[[boot-diagnostics]]
+=== 启动诊断
 
-If an error occurs during boot, then an xref:configuration.adoc#led-warning-flash-codes[error code] will be displayed via the green LED. Newer versions of the bootloader will display a xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[diagnostic message] which will be shown on both HDMI displays.
+如果在引导过程中发生错误，则将通过绿色LED显示 xref:configuration.adoc#led-warning-flash-codes[错误代码]。较新版本的引导加载程序将显示 xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[诊断消息]，该消息将显示在两个HDMI显示器上。
 
 [[bootloader_update_stable]]
-=== Update the bootloader
+=== 更新引导加载程序
 
-There are multiple ways to update the bootloader of your Raspberry Pi.
+有多种方法可以更新Raspberry Pi的引导加载程序。
 
-==== Raspberry Pi 5, Raspberry Pi 4 and Raspberry Pi 400
+[[raspberry-pi-5-raspberry-pi-4-and-raspberry-pi-400]]
+==== Raspberry Pi 5, Raspberry Pi 4 和 Raspberry Pi 400
 
-Raspberry Pi OS automatically updates the bootloader for important bug fixes. To manually update the bootloader or change the boot order, use xref:configuration.adoc#raspi-config[raspi-config].
+Raspberry Pi OS 会自动更新引导加载程序以修复重要错误。要手动更新引导加载器或更改启动顺序，请使用 xref:configuration.adoc#raspi-config[raspi-config]。
 
 [[imager]]
-==== Use Raspberry Pi Imager to update the bootloader
+==== 使用 Raspberry Pi Imager 更新引导加载程序
 
-Raspberry Pi Imager provides a GUI for updating the bootloader and selecting the boot mode.
+Raspberry Pi Imager提供了一个用于更新引导加载程序和选择引导模式的GUI。
 
-. Download https://www.raspberrypi.com/software/[Raspberry Pi Imager]
-. Select a spare SD card (bootloader images overwrite the entire card)
-. Launch Raspberry Pi Imager
-. Select `Choose OS`
-. Select `Misc utility images`
+. 下载 https://www.raspberrypi.com/software/[Raspberry Pi Imager]
+. 选择一张备用 SD 卡（引导加载程序映像会格式化整张卡）
+. 启动 Raspberry Pi Imager
+. 选择 `Choose OS`
+. 选择 `Misc utility images`
 + 
 image::images/misc-utility-images.png[alt="Select Misc utility images",width="60%"]
-. Select `Bootloader` for your version of Raspberry Pi (Pi 400 is part of the 4 family)
+. 为您的 Raspberry Pi 版本选择 `Bootloader`（Pi 400 属于 4 系列）。
 + 
 image::images/bootloader-family-select.png[alt="Choose a family for your bootloader",width="60%"]
-. Select a boot mode: `SD` (recommended), `USB` or `Network`
+. 选择启动模式： `SD` (推荐), `USB` 或 `Network`
 + 
 image::images/bootloader-storage-select.png[alt="Choose the storage from which you'd like to boot",width="60%"]
-. Select `SD card` and then `Write`
-. Click `Yes` to continue
-. Boot the Raspberry Pi with the new image and wait for at least ten seconds
-. When the green activity LED blinks with a steady pattern and the HDMI display shows a green screen, you have successfully written the bootloader
-. Power off the Raspberry Pi and remove the SD card
+. 选择 `SD card`，然后选择 `Write`
+. 单击 `Yes` 继续
+. 使用新映像启动树莓派，等待至少十秒钟
+. 当绿色活动 LED 以稳定模式闪烁且 HDMI 显示屏显示绿色屏幕时，您已成功写入引导加载程序。
+. 关闭 Raspberry Pi 电源并取出 SD 卡
 
 [[raspi-config]]
-==== Use `raspi-config` to update the bootloader
+==== 使用 `raspi-config` 更新引导加载程序
 
-To change the boot-mode or bootloader version from within Raspberry Pi OS, run xref:configuration.adoc#raspi-config[raspi-config].
+要从Raspberry Pi OS中更改引导模式或引导加载程序版本，请运行 xref:configuration.adoc#raspi-config[raspi-config]。
 
-. xref:os.adoc#update-software[Update] Raspberry Pi OS to get the latest version of the `rpi-eeprom` package.
-. Run `sudo raspi-config`.
-. Select `Advanced Options`.
-. Select `Bootloader Version`.
-. Select `Default` for factory default settings or `Latest` for the latest bootloader release.
-. Reboot with `sudo reboot`.
+. xref:os.adoc#update-software[Update] Raspberry Pi OS 获取最新版本的 `rpi-eeprom` 软件包。
+. 运行 `sudo raspi-config`。
+. 选择 `Advanced Options`。
+. 选择 `Bootloader Version`.
+. 选择 `Default`（出厂默认设置）或 `Latest` （最新的引导加载程序版本）。
+. 使用 `sudo reboot` 重新启动。
 
-=== Update the bootloader configuration
+[[update-the-bootloader-configuration]]
+=== 更新引导加载程序配置
 
-The `default` version of the bootloader represents the latest factory default firmware image. It updates to provide critical bug fixes, hardware support and periodically after features have been tested in the `latest` release.
-The `latest` bootloader updates more often to include the latest fixes and improvements.
+引导加载程序的 `default` 版本代表最新的出厂默认固件镜像。它更新以提供关键bug修复、硬件支持，并在 `latest` 版本中测试功能后定期更新。
+`latest` 引导加载程序更频繁地更新以包含最新的修复和改进。
 
-Advanced users can switch to the `latest` bootloader to get the latest functionality.
+高级用户可以切换到 `latest` 引导加载程序以获取最新功能。
 
-Run the following command to start `raspi-config`.
+运行以下命令启动 `raspi-config`。
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-Navigate to `Advanced Options` and then `Bootloader Version`. Select `Latest` and choose `Yes` to confirm. Select `Finish` and confirm you want to reboot. After the reboot, open a command prompt again and update your system:
+导航到 `Advanced Options` ，然后导航到 `Bootloader Version` 。选择 `Latest` 并选择 `Yes` 以确认。选择 `Finish` 并确认您要重新启动。重新启动后，再次打开命令提示符并更新您的系统：
 
 [source,console]
 ----
 $ sudo apt update
 ----
 
-If you run `sudo rpi-eeprom-update`, you should see that a more recent version of the bootloader is available and it's the `latest` release.
+如果您运行 `sudo rpi-eeprom-update` ，您应该会看到引导加载程序的最新版本可用，并且是最新版本。
 
 ----
 *** UPDATE AVAILABLE ***
@@ -90,7 +94,7 @@ BOOTLOADER: update available
     LATEST: 000138c0
 ----
 
-Now you can update your bootloader.
+现在您可以更新您的引导加载程序。
 
 [source,console]
 ----
@@ -98,7 +102,7 @@ $ sudo rpi-eeprom-update -a
 $ sudo reboot
 ----
 
-Reboot, then run `sudo rpi-eeprom-update`. You should now see that the `CURRENT` date has updated to the latest version of the bootloader:
+重新启动，然后运行 `sudo rpi-eeprom-update` 。您现在应该看到 `CURRENT` 日期已更新到引导加载程序的最新版本：
 
 ----
 BOOTLOADER: up to date
@@ -113,27 +117,28 @@ BOOTLOADER: up to date
     LATEST: 000138c0
 ----
 
-==== Read the current bootloader configuration
+==== 读取当前引导程序配置
 
-To view the configuration used by the current running bootloader, run the following command:
+要查看当前运行的引导加载程序所使用的配置，请运行以下命令：
 
 [source,console]
 ----
 $ rpi-eeprom-config
 ----
 
-==== Read the configuration from an bootloader image
+==== 从引导加载程序映像读取配置
 
-To read the configuration from a bootloader image:
+要从引导加载程序镜像中读取配置：
 
 [source,console]
 ----
 $ rpi-eeprom-config pieeprom.bin
 ----
 
-==== Editing the current bootloader configuration
+[[editing-the-current-bootloader-configuration]]
+==== 编辑当前引导加载程序配置
 
-The following command loads the current bootloader configuration into a text editor. When the editor is closed, `rpi-eeprom-config` applies the updated configuration to latest available bootloader release and uses `rpi-eeprom-update` to schedule an update when the system is rebooted:
+以下命令将当前引导加载程序配置加载到文本编辑器中。当编辑器关闭时， `rpi-eeprom-config` 将更新后的配置应用于最新可用的引导加载程序版本，并使用 `rpi-eeprom-update` 在系统重新启动时安排更新：
 
 [source,console]
 ----
@@ -141,13 +146,14 @@ $ sudo -E rpi-eeprom-config --edit
 $ sudo reboot
 ----
 
-If the updated configuration is identical or empty, then no changes are made.
+如果更新的配置相同或为空，则不进行任何更改。
 
-The editor is selected by the `EDITOR` environment variable.
+编辑器由 `EDITOR` 环境变量选择。
 
-==== Applying a saved configuration
+[[applying-a-saved-configuration]]
+==== 应用保存的配置
 
-The following command applies `boot.conf` to the latest available bootloader image and uses `rpi-eeprom-update` to schedule an update when the system is rebooted.
+以下命令将 `boot.conf` 应用于最新可用的引导加载程序镜像，并使用 `rpi-eeprom-update` 在系统重新启动时安排更新。
 
 [source,console]
 ----
@@ -156,45 +162,46 @@ $ sudo reboot
 ----
 
 [[automaticupdates]]
-=== Automatic updates
+=== 自动更新
 
-The `rpi-eeprom-update` `systemd` service runs at startup and applies an update if a new image is available, automatically migrating the current bootloader configuration.
+`rpi-eeprom-update` `systemd` 服务在启动时运行，并在有新镜像可用时应用更新，自动迁移当前引导加载程序配置。
 
-To disable automatic updates:
+要禁用自动更新：
 
 [source,console]
 ----
 $ sudo systemctl mask rpi-eeprom-update
 ----
 
-To re-enable automatic updates:
+要重新启用自动更新：
 
 [source,console]
 ----
 $ sudo systemctl unmask rpi-eeprom-update
 ----
 
-NOTE: If the xref:raspberry-pi.adoc#FREEZE_VERSION[FREEZE_VERSION] bootloader config is set then the update service will skip any automatic updates. This removes the need to individually disable the update service if there are multiple operating systems installed, or when swapping SD cards.
+NOTE: 如果设置了 xref:raspberry-pi.adoc#FREEZE_VERSION[FREEZE_VERSION] bootloader配置，则更新服务将跳过任何自动更新。如果安装了多个操作系统或交换SD卡，则无需单独禁用更新服务。
 
-==== `rpi-eeprom-update`
+[[rpi-eeprom-update]]
+==== `rpi-eeprom-update` 
 
-Raspberry Pi OS uses the `rpi-eeprom-update` script to implement an <<automaticupdates,automatic update>> service. The script can also be run interactively or wrapped to create a custom bootloader update service.
+Raspberry Pi OS使用 `rpi-EEPROM-update` 脚本来实现 <<automaticupdates，automatic update>> 服务。该脚本还可交互运行或封装，以创建自定义引导程序更新服务。
 
-Reading the current bootloader version:
+阅读当前引导加载程序版本：
 
 [source,console]
 ----
 $ vcgencmd bootloader_version
 ----
 
-Check if an update is available:
+检查是否有可用的更新：
 
 [source,console]
 ----
 $ sudo rpi-eeprom-update
 ----
 
-Install the update:
+安装更新：
 
 [source,console]
 ----
@@ -202,23 +209,23 @@ $ sudo rpi-eeprom-update -a
 $ sudo reboot
 ----
 
-Cancel the pending update:
+取消待处理的更新：
 
 [source,console]
 ----
 $ sudo rpi-eeprom-update -r
 ----
 
-Installing a specific bootloader image:
+安装特定的引导加载程序镜像：
 
 [source,console]
 ----
 $ sudo rpi-eeprom-update -d -f pieeprom.bin
 ----
 
-The `-d` flag instructs `rpi-eeprom-update` to use the configuration in the specified image file instead of automatically migrating the current configuration.
+`-d` 标志指示 `rpi-eeprom-update` 使用指定镜像文件中的配置，而不是自动迁移当前配置。
 
-Display the built-in documentation:
+显示内置的文档：
 
 [source,console]
 ----
@@ -226,22 +233,24 @@ $ rpi-eeprom-update -h
 ----
 
 [[bootloader-release]]
-=== Bootloader release status
+=== 引导加载程序发布状态
 
-The firmware release status corresponds to a particular subdirectory of bootloader firmware images (`+/lib/firmware/raspberrypi/bootloader/...+`), and can be changed to select a different release stream.
+固件发布状态对应于引导加载程序固件镜像的特定子目录( `+/lib/firmware/raspberrypi/bootloader/...+` )，并且可以更改以选择不同的发布流。
 
-* `default` - Updated for new hardware support, critical bug fixes and periodic update for new features that have been tested via the `latest` release
-* `latest` - Updated when new features are available
+* `default` - 更新了新的硬件支持，关键bug修复和定期更新的新功能，已通过最新版本测试
+* `latest` - 新功能可用时更新
 
-Since the release status string is just a subdirectory name, it is possible to create your own release streams e.g. a pinned release or custom network boot configuration.
+由于发布状态字符串只是一个子目录名称，因此可以创建您自己的发布流，例如固定版本或自定义网络启动配置。
 
-==== Changing the bootloader release
+[[changing-the-bootloader-release]]
+==== 更改引导加载程序版本
 
-NOTE: You can change which release stream is to be used during an update by editing the `/etc/default/rpi-eeprom-update` file and changing the `FIRMWARE_RELEASE_STATUS` entry to the appropriate stream.
+NOTE: 您可以通过编辑 `/etc/default/rpi-eeprom-update` 文件并将 `FIRMWARE_RELEASE_STATUS` 条目更改为适当的流来更改更新期间要使用的发布流。
 
-==== Updating the bootloader configuration in an bootloader image file
+[[updating-the-bootloader-configuration-in-an-bootloader-image-file]]
+==== 更新引导加载程序镜像文件中的引导加载程序配置
 
-The following command replaces the bootloader configuration in `pieeprom.bin` with `boot.conf` and writes the new image to `new.bin`:
+以下命令将 `pieeprom.bin` 中的引导加载程序配置替换为 `boot.conf` 并将新镜像写入 `new.bin` ：
 
 [source,console]
 ----
@@ -250,43 +259,46 @@ $ rpi-eeprom-config --config boot.conf --out new.bin pieeprom.bin
 
 ==== `recovery.bin`
 
-At power on, the ROM found on BCM2711 and BCM2712 looks for a file called `recovery.bin` in the root directory of the boot partition on the SD card. If a valid `recovery.bin` is found then the ROM executes this instead of the contents of the EEPROM. This mechanism ensures that the bootloader flash image can always be reset to a valid image with factory default settings.
+开机时，BCM2711 和 BCM2712 上的 ROM 会在 SD 卡启动分区的根目录下查找名为 `recovery.bin` 的文件。如果找到有效的 `recovery.bin` 文件，ROM 将执行该文件而不是 EEPROM 的内容。这种机制可确保引导加载器flash镜像始终可以重置为具有出厂默认设置的有效镜像。
 
-For more information, see xref:raspberry-pi.adoc#eeprom-boot-flow[EEPROM bootflow].
+另见 xref:raspberry-pi.adoc#eeprom-boot-flow[EEPROM bootflow]
 
-==== Bootloader update files
+[[bootloader-update-files]]
+==== 引导加载程序更新文件
 
 [cols="1,1"]
 |===
-| Filename | Purpose
+| 文件名
+| 目的
 
-| `recovery.bin`
-| Bootloader recovery executable
+|  `recovery.bin` 
+| 引导加载程序恢复可执行文件
 
-| `pieeprom.upd`
-| Bootloader EEPROM image
+|  `pieeprom.upd` 
+| 引导加载程序EEPROM镜像
 
-| `pieeprom.bin`
-| Bootloader EEPROM image - same as pieeprom.upd but changes recovery.bin behaviour
+|  `pieeprom.bin` 
+| 引导加载程序EEPROM镜像 - 与pieeprom.upd相同，但会更改recovery.bin行为
 
-| `pieeprom.sig`
-| The sha256 checksum of bootloader image (pieeprom.upd/pieeprom.bin)
+|  `pieeprom.sig` 
+| 引导加载程序镜像的sha256校验和 (pieeprom.upd/pieeprom.bin)
 
 | `vl805.bin`
-| The VLI805 USB firmware EEPROM image - Raspberry Pi 4B revision 1.3 and earlier only.
+| VLI805 USB固件EEPROM镜像 - 树莓派4B修订版1.3及更早版本。
 
-| `vl805.sig`
-| The sha256 checksum of vl805.bin
+| `vl805.sig` 
+| vl805.bin的sha256校验和
 |===
 
-* If the bootloader update image is called `pieeprom.upd` then `recovery.bin` is renamed to `recovery.000` once the update has completed, then the system is rebooted. Since `recovery.bin` is no longer present the ROM loads the newly updated bootloader from SPI flash and the OS is booted as normal.
-* If the bootloader update image is called `pieeprom.bin` then `recovery.bin` will stop after the update has completed. On success the HDMI output will be green and the green activity LED is flashed rapidly. If the update fails, the HDMI output will be red and an xref:configuration.adoc#led-warning-flash-codes[error code] will be displayed via the activity LED.
-* The `.sig` files contain the hexadecimal sha256 checksum of the corresponding image file; additional fields may be added in the future.
-* The ROM found on BCM2711 and BCM2712 does not support loading `recovery.bin` from USB mass storage or TFTP. Instead, newer versions of the bootloader support a self-update mechanism where the bootloader is able to reflash the SPI flash itself. See `ENABLE_SELF_UPDATE` on the xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader configuration] page.
-* The temporary EEPROM update files are automatically deleted by the `rpi-eeprom-update` service at startup.
+* 如果引导加载程序更新映像名为 `pieeprom.upd` ，那么更新完成后， `recovery.bin` 将更名为 `recovery.000` ，然后系统重新启动。由于 `recovery.bin` 已不存在，ROM 将从 SPI 闪存加载新更新的引导加载程序，操作系统将正常启动。 
+* 如果引导加载程序更新映像名为 `pieeprom.bin` ，则 `recovery.bin` 将在更新完成后停止。更新成功时，HDMI 输出为绿色，绿色活动 LED 快速闪烁。如果更新失败，HDMI 输出将变为红色，活动 LED 将显示 xref:configuration.adoc#led-warning-flash-codes[错误代码]。
+* `.sig` 文件包含相应映像文件的十六进制 sha256 校验和；将来可能会添加其他字段。 
+* BCM2711 和 BCM2712 上的 ROM 不支持从 USB 大容量存储器或 TFTP 加载 `recovery.bin` 。相反，较新版本的引导加载程序支持自更新机制，引导加载程序能够自行重新刷新 SPI 闪存。请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader 配置] 页面上的 `ENABLE_SELF_UPDATE` 。 
+* 启动时，临时 EEPROM 更新文件会被 `rpi-eeprom-update` 服务自动删除。
 
-For more information about the `rpi-eeprom-update` configuration file see `rpi-eeprom-update -h`.
+有关 `rpi-eeprom-update` 配置文件的更多信息，请参阅 `rpi-eeprom-update -h` 。
 
-==== EEPROM write protect
+[[eeprom-write-protect]]
+==== EEPROM写保护
 
-Both the bootloader and VLI EEPROMs support hardware write protection.  See the xref:config_txt.adoc#eeprom_write_protect[`eeprom_write_protect`] option for more information about how to enable this when flashing the EEPROMs.
+引导加载程序和 VLI EEPROM 都支持硬件写保护。 请参阅 xref:config_txt.adoc#eeprom_write_protect[`eeprom_write_protect`] 选项，了解如何在烧录 EEPROM 时启用硬件写保护。

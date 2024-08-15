@@ -1,32 +1,38 @@
-== Onboard analogue audio (3.5mm jack)
+[[onboard-analogue-audio-3-5mm-jack]]
+== 板载模拟音频（3.5mm插孔）
 
-The onboard audio output uses config options to change the way the analogue audio is driven, and whether some firmware features are enabled or not.
+板载音频输出使用配置选项来更改模拟音频的驱动方式，以及是否启用某些固件功能。
 
-=== `audio_pwm_mode`
+[[audio_pwm_mode]]
+=== `audio_pwm_mode` 
 
-`audio_pwm_mode=1` selects legacy low-quality analogue audio from the 3.5mm AV jack.
+`audio_pwm_mode=1` 从3.5毫米音频插孔中选择传统的低质量模拟音频。
 
-`audio_pwm_mode=2` (the default) selects high quality analogue audio using an advanced modulation scheme. 
+`audio_pwm_mode=2` （默认值）使用高级调制方案选择高质量模拟音频。
 
-NOTE: This option uses more GPU compute resources and can interfere with some use cases on some models.
+NOTE: 此选项使用更多GPU计算资源，并且可能会干扰某些模型上的某些用例。
 
-=== `disable_audio_dither`
+[[disable_audio_dither]]
+=== `disable_audio_dither` 
 
-By default, a 1.0LSB dither is applied to the audio stream if it is routed to the analogue audio output. This can create audible background hiss in some situations, for example when the ALSA volume is set to a low level. Set `disable_audio_dither` to `1` to disable dither application.
+默认情况下，如果音频流被路由到模拟音频输出，则会对音频流应用1.0LSB抖动。这可能会在某些情况下产生可听的背景嘶嘶声，例如当ALSA音量设置为低电平时。将 `disable_audio_dither` 设置为 `1` 以禁用抖动应用。
 
-=== `enable_audio_dither`
+[[enable_audio_dither]]
+=== `enable_audio_dither` 
 
-Audio dither (see disable_audio_dither above) is normally disabled when the audio samples are larger than 16 bits. Set this option to `1` to force the use of dithering for all bit depths.
+当音频样本大于16位时，音频抖动（见上disable_audio_dither）通常被禁用。将此选项设置为 `1` 以强制对所有位深度使用抖动。
 
-=== `pwm_sample_bits`
+[[pwm_sample_bits]]
+=== `pwm_sample_bits` 
 
-The `pwm_sample_bits` command adjusts the bit depth of the analogue audio output. The default bit depth is `11`. Selecting bit depths below `8` will result in nonfunctional audio, as settings below `8` result in a PLL frequency too low to support. This is generally only useful as a demonstration of how bit depth affects quantisation noise.
+`pwm_sample_bits` 命令调整模拟音频输出的位深。默认位深为 `11` 。选择低于 `8` 的位深将导致音频不起作用，因为低于 `8` 的设置会导致PLL频率过低而无法支持。这通常仅用于演示位深如何影响量化噪声。
 
-== HDMI audio
+[[hdmi-audio]]
+== HDMI音频
 
-By default, HDMI audio output is enabled on all Raspberry Pi models with HDMI output. 
+默认情况下，所有具有HDMI输出的Raspberry Pi型号都启用HDMI音频输出。
 
-To disable HDMI audio output, append `,noaudio` to the end of the `dtoverlay=vc4-kms-v3d` line in xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`]:
+要禁用 HDMI 音频输出，请在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中的 `dtoverlay=vc4-kms-v3d` 行末尾添加 `,noaudio` ：
 
 [source,ini]
 ----

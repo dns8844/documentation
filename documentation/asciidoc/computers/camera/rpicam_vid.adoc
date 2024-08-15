@@ -1,33 +1,34 @@
-=== `rpicam-vid`
 
-`rpicam-vid` helps you capture video on Raspberry Pi devices. `rpicam-vid` displays a preview window and writes an encoded bitstream to the specified output. This produces an unpackaged video bitstream that is not wrapped in any kind of container (such as an mp4 file) format.
+=== `rpicam-vid` 
 
-NOTE: When available, `rpicam-vid` uses hardware H.264 encoding.
+`rpicam-vid` 可帮助您在 Raspberry Pi 设备上捕获视频。 `rpicam-vid` 显示预览窗口并将编码的比特流写入指定的输出。这会生成未打包的视频比特流，该比特流未包装在任何类型的容器（例如 mp4 文件）格式中。
 
-For example, the following command writes a ten-second video to a file named `test.h264`:
+NOTE: 如果可用， `rpicam-vid` 使用硬件 H.264 编码。
+
+例如，以下命令将十秒的视频写入名为'test.h264'的文件：
 
 [source,console]
 ----
 $ rpicam-vid -t 10s -o test.h264
 ----
 
-You can play the resulting file with VLC and other video players:
+您可以使用 VLC 和其他视频播放器播放生成的文件：
 
 [source,console]
 ----
 $ vlc test.h264
 ----
 
-On Raspberry Pi 5, you can output to the MP4 container format directly by specifying the `mp4` file extension for your output file:
+在 Raspberry Pi 5 上，您可以通过为输出文件指定'mp4'文件扩展名直接输出为 MP4 容器格式：
 
 [source,console]
 ----
-$ rpicam-vid  -t 10s -o test.mp4
+$ rpicam-vid -t 10s -o test.mp4
 ----
 
-==== Encoders
+==== 编码器
 
-`rpicam-vid` supports motion JPEG as well as both uncompressed and unformatted YUV420:
+'rpicam-vid' 支持运动 JPEG 以及未压缩和未格式化的 YUV420：
 
 [source,console]
 ----
@@ -39,38 +40,40 @@ $ rpicam-vid -t 10000 --codec mjpeg -o test.mjpeg
 $ rpicam-vid -t 10000 --codec yuv420 -o test.data
 ----
 
-The xref:camera_software.adoc#codec[`codec`] option determines the output format, not the extension of the output file.
+xref:camera_software.adoc#codec[`codec`] 选项决定输出格式，而不是输出文件的扩展名。
 
-The xref:camera_software.adoc#segment[`segment`] option breaks output files up into chunks of the segment size (given in milliseconds). This is handy for breaking a motion JPEG stream up into individual JPEG files by specifying very short (1 millisecond) segments. For example, the following command combines segments of 1 millisecond with a counter in the output file name to generate a new filename for each segment:
+xref:camera_software.adoc#segment[`segment`] 选项将输出文件分解为片段大小的块（以毫秒为单位）。通过指定非常短（1 毫秒）的片段，这可以方便地将运动 JPEG 流分解为单个 JPEG 文件。例如，以下命令将 1 毫秒的片段与输出文件名中的计数器组合起来，为每个片段生成一个新文件名：
 
 [source,console]
 ----
 $ rpicam-vid -t 10000 --codec mjpeg --segment 1 -o test%05d.jpeg
 ----
 
-==== Capture high framerate video
+[[capture-high-framerate-video]]
+==== 捕获高帧率视频
 
-To minimise frame drops for high framerate (> 60fps) video, try the following configuration tweaks:
+要最大限度地减少高帧率 (> 60fps) 视频的丢帧，请尝试以下配置调整：
 
-* Set the https://en.wikipedia.org/wiki/Advanced_Video_Coding#Levels[H.264 target level] to 4.2 with `--level 4.2`.
-* Disable software colour denoise processing by setting the xref:camera_software.adoc#denoise[`denoise`] option to `cdn_off`.
-* Disable the display window with xref:camera_software.adoc#nopreview[`nopreview`] to free up some additional CPU cycles.
-* Set `force_turbo=1` in xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] to ensure that the CPU clock does not throttle during video capture. For more information, see xref:config_txt.adoc#force_turbo[the `force_turbo` documentation].
-* Adjust the ISP output resolution with `--width 1280 --height 720` or something even lower to achieve your framerate target.
-* On Raspberry Pi 4, you can overclock the GPU to improve performance by adding `gpu_freq=550` or higher in `/boot/firmware/config.txt`.  See xref:config_txt.adoc#overclocking[the overclocking documentation] for further details.
+* 使用 `--level 4.2` 将 https://en.wikipedia.org/wiki/Advanced_Video_Coding#Levels[H.264 目标级别] 设置为 4.2。
+* 通过将 xref:camera_software.adoc#denoise[`denoise`] 选项设置为 `cdn_off` 来禁用软件色彩降噪处理。
+* 使用 xref:camera_software.adoc#nopreview[`nopreview`] 禁用显示窗口以释放一些额外的 CPU 周期。
+* 在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中设置 `force_turbo=1` 以确保在视频捕获期间 CPU 时钟不会节流。有关更多信息，请参阅 xref:config_txt.adoc#force_turbo[ `force_turbo` 文档]。
+* 使用 `--width 1280 --height 720` 或更低的值调整 ISP 输出分辨率以实现您的帧速率目标。
+* 在 Raspberry Pi 4 上，您可以通过在 `/boot/firmware/config.txt` 中添加 `gpu_freq=550` 或更高来超频 GPU 以提高性能。有关更多详细信息，请参阅 xref:config_txt.adoc#overclocking[超频文档]。
 
-The following command demonstrates how you might achieve 1280×720 120fps video:
+以下命令演示了如何实现 1280×720 120fps 视频：
 
 [source,console]
 ----
 $ rpicam-vid --level 4.2 --framerate 120 --width 1280 --height 720 --save-pts timestamp.pts -o video.264 -t 10000 --denoise cdn_off -n
 ----
 
-==== `libav` integration with `rpicam-vid`
+[[libav-integration-with-rpicam-vid]]
+==== `libav` 与 `rpicam-vid` 集成
 
-`rpicam-vid` can use the `ffmpeg`/`libav` codec backend to encode audio and video streams. You can either save these streams to a file or stream them over the network. `libav` uses hardware H.264 video encoding when present.
+`rpicam-vid` 可以使用 `ffmpeg` / `libav` 编解码器后端来编码音频和视频流。您可以将这些流保存到文件中，也可以通过网络传输它们。 `libav` 使用硬件 H.264 视频编码（如果存在）。
 
-To enable the `libav` backend, pass `libav` to the xref:camera_software.adoc#codec[`codec`] option:
+要启用 `libav` 后端，请将 `libav` 传递给 xref:camera_software.adoc#codec[`codec`] 选项：
 
 [source,console]
 ----

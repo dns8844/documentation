@@ -1,42 +1,44 @@
-== Frequency management and thermal control
+[[frequency-management-and-thermal-control]]
+== 频率管理和热控制
 
-All Raspberry Pi models perform a degree of thermal management to avoid overheating under heavy load. The SoCs have an internal temperature sensor, which software on the GPU polls to ensure that temperatures do not exceed a limit which we define as 85°C on all models. It is possible to set this to a lower value, but not to a higher one. As the device approaches the limit, various frequencies and sometimes voltages used on the chip (Arm, GPU) are reduced. This reduces the amount of heat generated, keeping the temperature under control.
+所有Raspberry Pi型号都执行一定程度的热管理，以避免在重载下过热。SoC有一个内部温度传感器，GPU上的软件会轮询该传感器以确保温度不超过我们定义的所有型号的85°C限制。可以将其设置为较低的值，但不能设置为较高的值。随着设备接近极限，芯片（Arm、GPU）上使用的各种频率有时甚至电压都会降低。这减少了产生的热量，保持了温度可控。
 
-When the core temperature is between 80°C and 85°C, the Arm cores will be progressively throttled back. If the temperature reaches 85°C, both the Arm cores and the GPU will be throttled back.
+当内核温度在80°C到85°C之间时，Arm内核将逐步节流。如果温度达到85°C，Arm内核和GPU都将被节流。
 
-For Raspberry Pi 3 Model B+, the PCB technology has been changed to provide better heat dissipation and increased thermal mass. In addition, a soft temperature limit has been introduced, with the goal of maximising the time for which a device can "sprint" before reaching the hard limit at 85°C. When the soft limit is reached, the clock speed is reduced from 1.4GHz to 1.2GHz, and the operating voltage is reduced slightly. This reduces the rate of temperature increase: we trade a short period at 1.4GHz for a longer period at 1.2GHz. By default, the soft limit is 60°C, and this can be changed via the `temp_soft_limit` setting in xref:config_txt.adoc#overclocking-options[config.txt].
+对于Raspberry Pi 3 Model B+，PCB技术进行了更改，以提供更好的散热和增加的热质量。此外，还引入了软温度限制，目标是最大限度地延长设备在达到85°C的硬限制之前可以 `冲刺` 的时间。当达到软限制时，时钟速度从1.4GHz降低到1.2GHz，工作电压略有降低。这降低了温度上升的速度：我们将1.4GHz的短周期换成1.2GHz的较长周期。默认情况下，软限制为60°C，这可以通过 xref:config_txt.adoc#overclocking-options[config.txt] 中的 `temp_soft_limit` 设置进行更改。
 
-The Raspberry Pi 4 Model B continues with the same PCB technology as the Raspberry Pi 3 Model B+, to help dissipate excess heat. There is currently no soft limit defined.
+Raspberry Pi 4 Model B继续采用与Raspberry Pi 3 Model B+相同的PCB技术，以帮助散发多余的热量。目前没有定义软限制。
 
-=== Use DVFS
+[[use-dvfs]]
+=== 使用DVFS
 
-NOTE: Discussion of DVFS applies to Raspberry Pi 4 Model B, Raspberry Pi 400, and Compute Module 4 only.
+NOTE: DVFS的讨论仅适用于Raspberry Pi 4 Model B、Raspberry Pi 400和计算模块4。
 
-Raspberry Pi 4 devices implement dynamic voltage and frequency scaling (DVFS). This technique allows Raspberry Pi 4 devices to run at lower temperatures whilst still providing the same performance.
+Raspberry Pi 4设备实现动态电压和频率缩放（DVFS）。这种技术允许Raspberry Pi 4设备在较低温度下运行，同时仍能提供相同的性能。
 
-Various clocks (e.g. Arm, Core, V3D, ISP, H264, HEVC) inside the SoC are monitored by the firmware, and whenever they are not running at full speed, the voltage supplied to the particular part of the chip driven by the clock is reduced relative to the reduction from full speed. In effect, only enough voltage is supplied to keep the block running correctly at the specific speed at which it is running. This can result in significant reductions in power used by the SoC, and therefore in the overall heat being produced.
+SoC 内部的各种时钟（如 Arm、Core、V3D、ISP、H264、HEVC）都受到固件的监控，只要它们不是以全速运行，提供给由时钟驱动的芯片特定部分的电压就会相对于全速降低。实际上，只需提供足够的电压，就能保证模块以特定的速度正常运行。这可以显著降低 SoC 的功耗，从而减少产生的总热量。
 
-Due to possible system stability problems involved with running an undervoltage, especially when using undervoltaged fixed clock peripherals (eg. PCIe), three DVFS modes are available and can be configured in xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] with the below properties. Most systems should use `dvfs=3`, headless systems may benefit from a small power reduction with `dvfs=1` at the risk of PCIe stability issues.
+由于低电压运行可能涉及系统稳定性问题，尤其是在使用低电压固定时钟外设（如 PCIe）时，因此有三种 DVFS 模式可用，可在 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中使用以下属性进行配置。大多数系统应使用 `dvfs=3` ，无头系统可能会因使用 `dvfs=1` 而略微降低功耗，但有可能出现 PCIe 稳定性问题。
 
 [cols="1m,3"]
 |===
-| property=value | Description
+| 属性=值 | 描述
 
 | dvfs=1
-| allow undervoltage
+| 允许欠压
 
 | dvfs=2
-| fixed voltage for default operating frequencies
+| 默认工作频率的固定电压
 
 | dvfs=3
-| scale voltage up on demand for over clocking (default). If `over_voltage` is specified in `config.txt` then dynamic voltage scaling is disabled causing the system to revert to `dvfs=2`.
+| 如果在 `config.txt` 中指定了 `over_voltage` ，则禁用动态电压缩放，导致系统恢复为 `dvfs=2` 。
 |===
 
-NOTE: This setting has been removed on Raspberry Pi 5 and is effectively always mode 3.
+NOTE: 此设置已在Raspberry Pi 5上删除，并且实际上始终处于模式3。
 
-In addition, a more stepped CPU governor is also used to produce finer-grained control of ARM core frequencies, which means the DVFS is more effective. The steps are now 1500MHz, 1000MHz, 750MHz, and 600MHz. These steps can also help when the SoC is being throttled, and mean that throttling all the way back to 600MHz is much less likely, giving an overall increase in fully loaded performance.
+此外，更步进的中央处理器调速器也用于对ARM核心频率进行更细粒度的控制，这意味着DVFS更有效。这些步骤现在是1500MHz、1000MHz、750MHz和600MHz。当SoC被节流时，这些步骤也会有所帮助，这意味着一路节流回600MHz的可能性要小得多，从而全面提高满载性能。
 
-The default CPU governor is `ondemand`. The governor can be manually changed with the `cpufreq-set` command (from the `cpufrequtils` package) to reduce idle power consumption:
+默认 CPU 调速器为 `ondemand` 。可以使用 `cpufreq-set` 命令（来自 `cpufrequtils` 软件包）手动更改调速器，以减少空闲功耗：
 
 [source,console]
 ----
@@ -44,52 +46,54 @@ $ sudo apt install cpufrequtils
 $ sudo cpufreq-set -g powersave
 ----
 
-=== Measure temperatures
+=== 测量温度
 
-Due to the architecture of the SoCs used on Raspberry Pi devices, and the use of the upstream temperature monitoring code in the Raspberry Pi OS distribution, Linux-based temperature measurements can be inaccurate. However, the `vcgencmd` command provides an accurate and instantaneous reading of the current SoC temperature, as it communicates with the GPU directly:
+
+由于树莓派设备上使用的SoC的架构，以及树莓派操作系统发行版中上游温度监控代码的使用，基于Linux的温度测量可能不准确。然而， `vcgencmd` 命令提供当前SoC温度的准确瞬时读数，因为它直接与GPU通信：
 
 [source,console]
 ----
 $ vcgencmd measure_temp
 ----
 
-=== Add heat sinks
+=== 添加散热器
 
-Thanks to built-in throttling, heatsinks are not necessary to prevent overheating damage to the SoC. However, a heatsink or small fan can reduce thermal throttling and improve performance. Mount the Raspberry Pi vertically for the best airflow and thus slightly improved heat dissipation.
+由于内置节流功能，因此不需要散热片来防止 SoC 过热损坏。不过，散热片或小型风扇可以减少热节流并提高性能。垂直安装 Raspberry Pi 可获得最佳气流，从而略微改善散热。
 
-=== Fan cases
+[[fan-cases]]
+=== 风扇外壳
 
-Raspberry Pi 5 has two official fan options to assist with cooling:
+Raspberry Pi 5有两个官方风扇选项来帮助冷却：
 
-* https://www.raspberrypi.com/products/active-cooler/[Active Cooler]
-* https://www.raspberrypi.com/products/raspberry-pi-5-case/[Case for Raspberry Pi 5]
+* https://www.raspberrypi.com/products/active-cooler/[主动冷却器]
+* https://www.raspberrypi.com/products/raspberry-pi-5-case/[树莓派5的情况下]
 
-Both of these plug into the four-pin JST-SH PWM fan connector located in the upper right of the board between the 40-pin GPIO header and the USB 2 ports. The fan connector pulls from the same current limit as USB peripherals. We recommend the Active Cooler case for overclockers, since it provides better cooling performance.
+这两个都插入位于40-pin GPIO接头和USB 2端口之间的电路板右上角的四针JST-SH PWM风扇连接器。风扇连接器来自与USB外围设备相同的电流限制。我们推荐用于超频器的Active Cooler外壳，因为它提供了更好的冷却性能。
 
-Both of the available official accessories are actively managed by Raspberry Pi firmware. As the temperature of the Raspberry Pi increases, the fan reacts in the following way:
+这两个可用的官方配件都由Raspberry Pi固件主动管理。随着Raspberry Pi温度的升高，风扇的速度如下：
 
-* below 50°C, the fan does not spin at all (0% speed)
-* at 50°C, the fan turns on at a low speed (30% speed)
-* at 60°C, the fan speed increases to a medium speed (50% speed)
-* at 67.5°C, the fan speed increases to a high speed (70% speed)
-* at 75°C the fan increases to full speed (100% speed)
+* 50°C以下，风扇停止（0%转速）
+* 50°C，风扇低速开启（30%转速）
+* 在60°C时，风扇转速增加到中速（50%转速）
+* 在67.5°C时，风扇转速提升至高速（70%转速）
+* 在75°C风扇增加到全速（100%速度）
 
-Temperature decreases use the same mapping with a 5°C **hysteresis**; fan speed decreases when the temperature drops to 5°C below each of the above thresholds.
+温度降低使用具有5°C**滞后**的相同映射；当温度下降到低于上述每个阈值的5°C时，风扇速度会降低。
 
-At boot the fan is turned on, and the tachometer input is checked to see if the fan is spinning. If it is, then the `cooling_fan` device tree overlay is enabled. This overlay is in `bcm2712-rpi-5-b.dtb` by default, but with `status=disabled`.
+启动时风扇打开，转速表输入检查风扇是否在旋转。如果是，则启用 `cooling_fan` 设备树overlay。默认情况下，此overlay位于 `bcm2712-rpi-5-b.dtb` 中，但带有 `status=disabled` 。
 
-==== Fan connector pinout
+[[fan-connector-pinout]]
+==== 风扇连接器引脚
 
-The fan connector is a 1mm pitch JST-SH socket containing the following four pins:
+风扇连接器是一个1mm间距的JST-SH插座，包含以下四个引脚：
 
 [cols="1,2,2",width="50"%"]
 |===
-| Pin | Function | Wire colour
-
-| 1 | +5V | Red
-| 2 | PWM | Blue
-| 3 | GND | Black
-| 4 | Tach | Yellow
+| 引脚 | 功能 | 线材颜色
+| 1 | +5V | 红色
+| 2 | PWM | 蓝色
+| 3 | GND | 黑色
+| 4 | Tach | 黄色
 |===
 
 

@@ -1,16 +1,17 @@
-== Boot diagnostics on the Raspberry Pi 4
+[[boot-diagnostics-on-the-raspberry-pi-4]]
+== 树莓派4上的启动诊断
 
-Starting with version 2020-04-16 of the Raspberry Pi 4 bootloader, diagnostic information can be displayed at boot time on an HDMI display. To see this diagnostic information, power down the Raspberry Pi 4, remove the SD card, then power back up. A diagnostic display similar to below should appear on the attached display.
+从Raspberry Pi 4引导加载程序的版本2020-04-16开始，可以在启动时在HDMI显示器上显示诊断信息。要查看此诊断信息，请关闭Raspberry Pi 4电源，取出SD卡，然后重新启动。显示器上应显示类似于以下的诊断显示。
 
-image::images/bootloader-diagnostics.png[Boot diagnostics screen]
+image::images/bootloader-diagnostics.png[启动诊断屏幕]
 
-This diagnostics page will also appear if the bootloader is unable to boot from an inserted SD card, or is unable to network boot; for example, if there is no bootable image on the card, or if it is defective, or if the network boot parameters are incorrect.
+如果引导加载程序无法从插入的SD卡引导，或无法进行网络引导；例如，如果卡上没有可引导映像，或者它有缺陷，或者网络引导参数不正确，也会出现此诊断页面。
 
-Once the diagnostics page is displayed, a reboot is only possible by power cycling the device (i.e. unplug then re-plug the power supply).
+显示诊断页面后，只有通过拔掉设备电源然后重新插入电源才能重新启动。
 
-The top line describes the model of Raspberry Pi and its memory capacity. The QR code is a link to the https://www.raspberrypi.com/software/[downloads page].
+顶部一行描述Raspberry Pi的型号及其内存容量。二维码是指向 https://www.raspberrypi.com/software/[downloads page] 的链接。
 
-The diagnostic information is as follows:
+诊断信息如下：
 
 [cols="1m,4"]
 |===
@@ -50,6 +51,6 @@ The diagnostic information is as follows:
 | Indicates whether hotplug was detected (`HPD=1`) and if so whether the EDID was read successfully (`EDID=ok`) for each HDMI output.
 |===
 
-This display can be disabled using the `DISABLE_HDMI` option, see xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Bootloader configuration].
+可以使用 `DISABLE_HDMI` 选项禁用此显示，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Bootloader配置]。
 
-NOTE: This is purely for diagnosing boot failures; it is not an interactive bootloader. If you require an interactive bootloader, consider using a tool such as U-Boot.
+NOTE: 这纯粹是为了诊断引导失败；它不是交互式引导加载程序。如果您需要交互式引导加载程序，请考虑使用U-Boot等工具。

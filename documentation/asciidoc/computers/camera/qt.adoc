@@ -1,14 +1,15 @@
-=== Use `libcamera` with Qt
+[[use-libcamera-with-qt]]
+=== 在Qt中使用 `libcamera` 
 
-Qt is a popular application framework and GUI toolkit. `rpicam-apps` includes an option to use Qt for a camera preview window.
+Qt是一个流行的应用程序框架和GUI工具包。 `rpicam-apps` 包括一个将Qt用于相机预览窗口的选项。
 
-Unfortunately, Qt defines certain symbols (such as `slot` and `emit`) as macros in the global namespace. This causes errors when including `libcamera` files. The problem is common to all platforms that use both Qt and `libcamera`. Try the following workarounds to avoid these errors:
+不幸的是，Qt将某些符号（例如 `slot` 和 `emit` ）定义为全局命名空间中的宏。这会在包含 `libcamera` 文件时导致错误。这个问题在所有同时使用Qt和 `libcamera` 的平台上都很常见。尝试以下变通方法来避免这些错误：
 
-* List `libcamera` include files, or files that include `libcamera` files (such as `rpicam-apps` files), _before_ any Qt header files whenever possible.
+* 尽可能在任何 Qt 头文件之前列出 `libcamera` 包含文件或包含 `libcamera` 文件的文件（如 `rpicam-apps` 文件）。
 
-* If you do need to mix your Qt application files with `libcamera` includes, replace `signals:` with `Q_SIGNALS:`, `slots:` with `Q_SLOTS:`, `emit` with `Q_EMIT` and `foreach` with `Q_FOREACH`.
+* 如果需要将 Qt 应用程序文件与 `libcamera` 包含文件混合，请将 `signals:` 替换为 `Q_SIGNALS:` ，将 `slots:` 替换为 `Q_SLOTS:` ，将 `emit` 替换为 `Q_EMIT` ，将 `foreach` 替换为 `Q_FOREACH` 。
 
-* Add the following at the top of any `libcamera` include files:
+* 在任何 `libcamera` 包含文件的顶部添加以下内容：
 +
 [source,cpp]
 ----
@@ -18,5 +19,5 @@ Unfortunately, Qt defines certain symbols (such as `slot` and `emit`) as macros 
 #undef foreach
 ----
 
-* If your project uses `qmake`, add `CONFIG += no_keywords` to the project file.
-* If your project uses `cmake`, add `SET(QT_NO_KEYWORDS ON)`.
+* 如果您的项目使用 `qmake` ，请在项目文件中添加 `CONFIG += no_keywords` 。
+* 如果您的项目使用 `cmake` ，请添加 `SET(QT_NO_KEYWORDS ON)` 。

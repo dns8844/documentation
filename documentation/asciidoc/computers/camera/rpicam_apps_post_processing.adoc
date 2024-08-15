@@ -1,8 +1,9 @@
-== Post-processing with `rpicam-apps`
+[[post-processing-with-rpicam-apps]]
+== 使用 `rpicam-apps` 进行后处理
 
-`rpicam-apps` share a common post-processing framework. This allows them to pass the images received from the camera system through a number of custom image-processing and image-analysis routines. Each such routine is known as a _stage_. To run post-processing stages, supply a JSON file instructing the application which stages and options to apply. You can find example JSON files that use the built-in post-processing stages in the https://github.com/raspberrypi/rpicam-apps/tree/main/assets[`assets` folder of the `rpicam-apps` repository].
+`rpicam-apps` 共享一个通用的后处理框架。这允许它们通过许多自定义图像处理和图像分析例程传递从相机系统接收的图像。每个这样的例程都称为_stage_。要运行后处理阶段，请提供一个JSON文件，指示应用程序应用哪些阶段和选项。您可以在 `rpicam-apps` 存储库的 https://github.com/raspberrypi/rpicam-apps/tree/main/assets[ `assets` 文件夹中找到使用内置后处理阶段的示例JSON文件]。
 
-For example, the **negate** stage turns light pixels dark and dark pixels light. Because the negate stage is basic, requiring no configuration, `negate.json` just names the stage:
+例如，**negate** 阶段会将亮像素变暗，将暗像素变亮。由于negate阶段是基本阶段，不需要任何配置，因此 `negate.json` 只是为该阶段命名：
 
 [source,json]
 ----
@@ -11,14 +12,14 @@ For example, the **negate** stage turns light pixels dark and dark pixels light.
 }
 ----
 
-To apply the negate stage to an image, pass `negate.json` to the `post-process-file` option:
+要将negate阶段应用于图像，请将 `negate.json` 传递给 `post-process-file` 选项：
 
 [source,console]
 ----
 $ rpicam-hello --post-process-file negate.json
 ----
 
-To run multiple post-processing stages, create a JSON file that contains multiple stages as top-level keys. For example, to the following configuration runs the Sobel stage, then the negate stage:
+要运行多个后处理阶段，请创建一个 JSON 文件，将多个阶段作为顶层键。例如，以下配置先运行 Sobel 阶段，然后运行 negate 阶段：
 
 [source,json]
 ----
@@ -31,26 +32,28 @@ To run multiple post-processing stages, create a JSON file that contains multipl
 }
 ----
 
-The xref:camera_software.adoc#sobel_cv-stage[Sobel stage] uses OpenCV, hence the `cv` suffix. It has a user-configurable parameter, `ksize`, that specifies the kernel size of the filter to be used. In this case, the Sobel filter produces bright edges on a black background, and the negate stage turns this into dark edges on a white background.
+xref:camera_software.adoc#sobel_cv-stage[Sobel stage] 使用OpenCV，因此有 `cv` 后缀。它有一个用户可配置的参数 `ksize` ，指定要使用的过滤器的内核大小。在这种情况下，Sobel过滤器在黑色背景上产生明亮的边缘，negate 阶段将其变成白色背景上的黑暗边缘。
 
 .A negated Sobel filter.
 image::images/sobel_negate.jpg[A negated Sobel filter]
 
-Some stages, such as `negate`, alter the image in some way. Other stages analyse the image to generate metadata. Post-processing stages can pass this metadata to other stages and even the application.
+一些阶段，如 `negate` ，以某种方式改变图像。其他阶段分析图像以生成元数据。后处理阶段可以将此元数据传递给其他阶段甚至应用程序。
 
-To improve performance, image analysis often uses reduced resolution. `rpicam-apps` provide a dedicated low-resolution feed directly from the ISP.
+为了提高性能，图像分析通常使用降低分辨率。 `rpicam-apps` 直接从ISP提供专用的低分辨率提要。
 
-NOTE: The `rpicam-apps` supplied with Raspberry Pi OS do not include OpenCV and TensorFlow Lite. As a result, certain post-processing stages that rely on them are disabled. To use these stages, xref:camera_software.adoc#build-libcamera-and-rpicam-apps[re-compile `rpicam-apps`]. On a Raspberry Pi 3 or 4 running a 32-bit kernel, compile with the `-DENABLE_COMPILE_FLAGS_FOR_TARGET=armv8-neon` flag to speed up certain stages.
+NOTE: 随Raspberry Pi OS提供的 `rpicam-apps` 不包括OpenCV和TensorFlow Lite。因此，某些依赖它们的后处理阶段被禁用。要使用这些阶段，xref:camera_software.adoc#build-libcamera-and-rpicam-apps[重新编译 `rpicam-apps` ]。在运行32位内核的Raspberry Pi 3或4上，使用 `-DENABLE_COMPILE_FLAGS_FOR_TARGET=armv8-neon` 标志进行编译以加快某些阶段的速度。
 
-=== Built-in stages
+[[built-in-stages]]
+=== 内置阶段
 
-==== `negate` stage
+[[negate-stage]]
+==== `negate` 阶段
 
-This stage turns light pixels dark and dark pixels light.
+此阶段将亮像素变为暗像素，将暗像素变为亮像素。
 
-The `negate` stage has no user-configurable parameters.
+`negate` 阶段没有用户可配置的参数。
 
-Default `negate.json` file:
+默认的 `negate.json` 文件：
 
 [source,json]
 ----
@@ -59,59 +62,60 @@ Default `negate.json` file:
 }
 ----
 
-Run the following command to use this stage file with `rpicam-hello`:
+运行以下命令以将此阶段文件与 `rpicam-hello` 一起使用：
 
 [source,console]
 ----
 $ rpicam-hello --post-process-file negate.json
 ----
 
-Example output:
+示例输出：
 
 .A negated image.
 image::images/negate.jpg[A negated image]
 
-==== `hdr` stage
+[[hdr-stage]]
+==== `hdr` 阶段
 
-This stage emphasises details in images using High Dynamic Range (HDR) and Dynamic Range Compression (DRC). DRC uses a single image, while HDR combines multiple images for a similar result.
+此阶段强调使用高动态范围（HDR）和动态范围压缩（DRC）的图像中的细节。DRC使用单个图像，而HDR组合多个图像以获得类似的结果。
 
-Parameters fall into three groups: the LP filter, global tonemapping, and local contrast.
+参数分为三组：LP过滤器(LP filter)、全局色调映射(global tonemapping)和局部对比度(local contrast)。
 
-This stage applies a smoothing filter to the fully-processed input images to generate a low pass (LP) image. It then generates the high pass (HP) image from the diff of the original and LP images. Then, it applies a global tonemap to the LP image and adds it back to the HP image. This process helps preserve local contrast.
+此阶段将平滑滤波器(smoothing filter)应用于完全处理的输入图像以生成低通（LP）图像。然后，它根据原始图像和LP图像的差异生成高通（HP）图像。然后，它将全局色调映射应用于LP图像并将其添加回HP图像。此过程有助于保持局部对比度。
 
-You can configure this stage with the following parameters:
+您可以使用以下参数配置此阶段：
 
 [cols="1,3a"]
 |===
-| `num_frames`
-| The number of frames to accumulate; for DRC, use 1; for HDR, try 8
-| `lp_filter_strength`
-| The coefficient of the low pass IIR filter.
-| `lp_filter_threshold`
-| A piecewise linear function that relates pixel level to the threshold of meaningful detail
-| `global_tonemap_points`
-| Points in the input image histogram mapped to targets in the output range where we wish to move them. Uses the following sub-configuration:
+|  `num_frames` 
+| 要累积的帧数；对于DRC，使用1；对于HDR，尝试使用8
+|  `lp_filter_strength` 
+| 低通IIR滤波器的系数。
+|  `lp_filter_threshold` 
+| 一个分段线性函数，将像素级别与有意义的细节阈值联系起来
+|  `global_tonemap_points` 
+| 输入图像直方图中的点映射到我们希望移动它们的输出范围内的目标。使用以下子配置：
 
-* an inter-quantile mean (`q` and `width`)
-* a target as a proportion of the full output range (`target`)
-* maximum (`max_up`) and minimum (`max_down`) gains to move the measured inter-quantile mean, to prevents the image from changing image too drastically
-| `global_tonemap_strength`
-| Strength of application of the global tonemap
-| `local_pos_strength`
-| A piecewise linear function that defines the gain applied to local contrast when added back to the tonemapped LP image, for positive (bright) detail
-| `local_neg_strength`
-| A piecewise linear function that defines the gain applied to local contrast when added back to the tonemapped LP image, for negative (dark) detail
-| `local_tonemap_strength`
-| An overall gain applied to all local contrast that is added back
-| `local_colour_scale`
-| A factor that allows the output colours to be affected more or less strongly
+* 分位数间平均值（ `q` 和 `width` ）
+* 目标占全部产出范围的比例（ `target` ）
+* 最大（ `max_up` ）和最小（ `max_down` ）增益来移动测量的分位数均值，以防止图像变化太大
+|  `global_tonemap_strength` 
+| 全局应用的强度
+|  `local_pos_strength` 
+| 一个分段线性函数，定义当添加回色调映射LP图像时应用于局部对比度的增益，用于正（明亮）细节
+|  `local_neg_strength` 
+| 一个分段线性函数，定义当添加回色调映射LP图像时应用于局部对比度的增益，用于负（暗）细节
+|  `local_tonemap_strength` 
+| 应用于所有局部对比度的总增益
+|  `local_colour_scale` 
+| 一个允许输出颜色或多或少受到强烈影响的因素
 |===
 
-To control processing strength, changing the `global_tonemap_strength` and `local_tonemap_strength` parameters.
+要控制处理强度，可更改 `global_tonemap_strength` 和 `local_tonemap_strength` 参数。
 
-Processing a single image takes between two and three seconds for a 12MP image on a Raspberry Pi 4. When accumulating multiple frames, this stage sends only the processed image to the application.
+在 Raspberry Pi 4 上处理一张 1200 万像素的图像需要两到三秒钟。在累积多帧图像时，该阶段只向应用程序发送处理后的图像。
 
-Default `drc.json` file for DRC:
+DRC的默认 `drc.json` 文件：
 
 [source,json]
 ----
@@ -135,22 +139,22 @@ Default `drc.json` file for DRC:
 }
 ----
 
-Example:
+示例：
 
-.Image without DRC processing
-image::images/nodrc.jpg[Image without DRC processing]
+.未经DRC处理的图像
+image::images/nodrc.jpg[没有DRC处理的图像]
 
-Run the following command to use this stage file with `rpicam-still`:
+运行以下命令以将此阶段文件与 `rpicam-still` 一起使用：
 
 [source,console]
 ----
 $ rpicam-still -o test.jpg --post-process-file drc.json
 ----
 
-.Image with DRC processing
-image::images/drc.jpg[Image with DRC processing]
+.经过DRC处理的图像
+image::images/drc.jpg[图像与DRC处理]
 
-Default `hdr.json` file for HDR:
+HDR的默认 `hdr.json` 文件：
 
 [source,json]
 ----
@@ -174,45 +178,46 @@ Default `hdr.json` file for HDR:
 }
 ----
 
-Example:
+示例：
 
-.Image without HDR processing
-image::images/nohdr.jpg[Image without HDR processing]
+.未经HDR处理的图像
+image::images/nohdr.jpg[未经HDR处理的图像]
 
-Run the following command to use this stage file with `rpicam-still`:
+运行以下命令以将此阶段文件与 `rpicam-still` 一起使用：
 
 [source,console]
 ----
 $ rpicam-still -o test.jpg --ev -2 --denoise cdn_off --post-process-file hdr.json
 ----
 
-.Image with HDR processing
-image::images/hdr.jpg[Image with DRC processing]
+.经过HDR处理的图像
+image::images/hdr.jpg[图像与DRC处理]
 
-==== `motion_detect` stage
+[[motion_detect-stage]]
+==== `motion_detect` 阶段
 
-The `motion_detect` stage analyses frames from the low-resolution image stream. You must configure the low-resolution stream to use this stage. The stage detects motion by comparing a region of interest (ROI) in the frame to the corresponding part of a previous frame. If enough pixels change between frames, this stage indicates the motion in metadata under the `motion_detect.result` key.
+`motion_detect` 阶段分析来自低分辨率图像流的帧。您必须配置低分辨率流以使用该阶段。该阶段通过将帧中的感兴趣区域（ROI）与前一帧的相应部分进行比较来检测运动。如果帧之间有足够的像素变化，则该阶段在 `motion_detect` 键下指示元数据中的运动。
 
-This stage has no dependencies on third-party libraries.
+此阶段不依赖于第三方库。
 
-You can configure this stage with the following parameters, passing dimensions as a proportion of the low-resolution image size between 0 and 1:
+您可以使用以下参数配置此阶段，将尺寸作为0到1之间的低分辨率图像大小的比例传递：
 
 [cols="1,3"]
 |===
-| `roi_x` | x-offset of the region of interest for the comparison (proportion between 0 and 1)
-| `roi_y` | y-offset of the region of interest for the comparison (proportion between 0 and 1)
-| `roi_width` | Width of the region of interest for the comparison (proportion between 0 and 1)
-| `roi_height` | Height of the region of interest for the comparison (proportion between 0 and 1)
-| `difference_m` | Linear coefficient used to construct the threshold for pixels being different
-| `difference_c` | Constant coefficient used to construct the threshold for pixels being different according to `threshold = difference_m * pixel_value + difference_c`
-| `frame_period` | The motion detector will run only this many frames
-| `hskip` | The pixel subsampled by this amount horizontally
-| `vksip` | The pixel subsampled by this amount vertically
-| `region_threshold` | The proportion of pixels (regions) which must be categorised as different for them to count as motion
-| `verbose` | Print messages to the console, including when the motion status changes
+| `roi_x` | 用于比较的感兴趣区域的x偏移量（0和1之间的比例）
+| `roi_y` | 用于比较的感兴趣区域的y偏移（0和1之间的比例）
+| `roi_width` | 用于比较的感兴趣区域的宽度（0和1之间的比例）
+| `roi_height` | 用于比较的感兴趣区域的高度（0和1之间的比例）
+| `difference_m` | 用于构造不同像素阈值的线性系数
+| `difference_c` | 常数系数，用于根据 `threshold = difference_m * pixel_value + difference_c` 构造不同的像素阈值
+| `frame_period` | 运动检测器只能运行这么多帧
+| `hskip` | 水平下采样这个量的像素
+| `vksip` | 这个量垂直下采样的像素
+| `region_threshold` | 必须分类为不同的像素（区域）的比例才能算作运动
+| `verbose` | 将消息打印到控制台，包括运动状态更改时
 |===
 
-Default `motion_detect.json` configuration file:
+默认 `motion_detect.json` 配置文件：
 
 [source,json]
 ----
@@ -233,9 +238,9 @@ Default `motion_detect.json` configuration file:
 }
 ----
 
-Adjust the differences and the threshold to make the algorithm more or less sensitive. To improve performance, use the `hskip` and `vskip` parameters.
+调整差异和阈值以使算法或多或少敏感。要提高性能，请使用 `hskip` 和 `vskip` 参数。
 
-Run the following command to use this stage file with `rpicam-hello`:
+运行以下命令以将此阶段文件与 `rpicam-hello` 一起使用：
 
 [source,console]
 ----

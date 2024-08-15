@@ -1,22 +1,24 @@
-== Advanced `rpicam-apps`
+[[advanced-rpicam-apps]]
+== 高级  `rpicam-apps` 
 
-=== Build `libcamera` and `rpicam-apps`
+[[build-libcamera-and-rpicam-apps]]
+=== 构建 `libcamera` 和 `rpicam-apps` 
 
-Build `libcamera` and `rpicam-apps` for yourself for the following benefits:
+为自己构建 `libcamera` 和 `rpicam-apps` 有以下优点：
 
-* You can pick up the latest enhancements and features.
+* 您可以获得最新的增强功能和特性。
 
-* `rpicam-apps` can be compiled with extra optimisation for Raspberry Pi 3 and Raspberry Pi 4 devices running a 32-bit OS.
+* `rpicam-apps` 可以针对运行 32 位操作系统的 Raspberry Pi 3 和 Raspberry Pi 4 设备进行额外优化编译。
 
-* You can include optional OpenCV and/or TFLite post-processing stages, or add your own.
+* 您可以包含可选的 OpenCV 和/或 TFLite 后处理阶段，也可以添加您自己的阶段。
 
-* You can customise or add your own applications derived from `rpicam-apps`
+* 您可以自定义或添加您自己的源自 `rpicam-apps` 的应用程序
 
-==== Remove pre-installed `rpicam-apps`
+==== 删除预装的 `rpicam-apps`
 
-Raspberry Pi OS includes a pre-installed copy of `rpicam-apps`. Before building and installing your own version of `rpicam-apps`, you must first remove the pre-installed version. Run the following command to remove the `rpicam-apps` package from your Raspberry Pi:
+Raspberry Pi OS 包含预安装的 `rpicam-apps` 副本。在构建和安装自己的 `rpicam-apps` 版本之前，必须先移除预安装版本。运行以下命令从 Raspberry Pi 上删除 `rpicam-apps` 软件包：
 
-[source,console]
+[源码,控制台］
 ----
 $ sudo apt remove --purge rpicam-apps
 ----
@@ -30,38 +32,39 @@ To build `rpicam-apps` without first rebuilding `libcamera` and `libepoxy`, inst
 $ sudo apt install -y libcamera-dev libepoxy-dev libjpeg-dev libtiff5-dev libpng-dev
 ----
 
-TIP: If you do not need support for the GLES/EGL preview window, omit `libepoxy-dev`.
+TIP: 如果您不需要支持 GLES/EGL 预览窗口，请省略 `libepoxy-dev` 。
 
-To use the Qt preview window, install the following additional dependencies:
+要使用 Qt 预览窗口，请安装以下附加依赖项：
 
 [source,console]
 ----
 $ sudo apt install -y qtbase5-dev libqt5core5a libqt5gui5 libqt5widgets5
 ----
 
-For xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`] support in `rpicam-vid`, install the following additional dependencies:
+要获得 `rpicam-vid` 中的 xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`] 支持，请安装以下附加依赖项：
 
 [source,console]
 ----
 $ sudo apt install libavcodec-dev libavdevice-dev libavformat-dev libswresample-dev
 ----
 
-If you run Raspberry Pi OS Lite, install `git`:
+如果您运行的是 Raspberry Pi OS Lite，请安装 `git` ：
 
 [source,console]
 ----
 $ sudo apt install -y git
 ----
 
-Next, xref:camera_software.adoc#building-rpicam-apps[build `rpicam-apps`].
+接下来，xref:camera_software.adoc#building-rpicam-apps[build `rpicam-apps` ]。
 
-==== Building `libcamera`
+[[building-libcamera]]
+==== 构建  `libcamera` 
 
-NOTE: Only build `libcamera` from scratch if you need custom behaviour or the latest features that have not yet reached `apt` repositories.
+NOTE: 如果您需要自定义行为或 `apt` 源内的包还未支持的最新功能，请仅从头构建 `libcamera` 。
 
 [NOTE]
 ======
-If you run Raspberry Pi OS Lite, begin by installing the following packages:
+如果您运行 Raspberry Pi OS Lite，请先安装以下软件包：
 
 [source,console]
 ----
@@ -69,7 +72,7 @@ $ sudo apt install -y python3-pip git python3-jinja2
 ----
 ======
 
-First, install the following `libcamera` dependencies:
+首先，安装以下 `libcamera` 依赖项：
 
 [source,console]
 ----
@@ -81,52 +84,53 @@ $ sudo apt install -y python3-yaml python3-ply
 $ sudo apt install -y libglib2.0-dev libgstreamer-plugins-base1.0-dev
 ----
 
-Now we're ready to build `libcamera` itself.
+现在我们准备构建 `libcamera` 本身。
 
-Download a local copy of Raspberry Pi's fork of `libcamera` from GitHub:
+从 GitHub 下载 Raspberry Pi 的 `libcamera` 分支的本地副本：
 
 [source,console]
 ----
 $ git clone https://github.com/raspberrypi/libcamera.git
 ----
 
-Navigate into the root directory of the repository:
+导航到存储库的根目录：
 
 [source,console]
 ----
 $ cd libcamera
 ----
 
-Next, run `meson` to configure the build environment:
+接下来，运行 `meson` 来配置构建环境：
 
 [source,console]
 ----
 $ meson setup build --buildtype=release -Dpipelines=rpi/vc4,rpi/pisp -Dipas=rpi/vc4,rpi/pisp -Dv4l2=true -Dgstreamer=enabled -Dtest=false -Dlc-compliance=disabled -Dcam=disabled -Dqcam=disabled -Ddocumentation=disabled -Dpycamera=enabled
 ----
 
-NOTE: You can disable the `gstreamer` plugin by replacing `-Dgstreamer=enabled` with `-Dgstreamer=disabled` during the `meson` build configuration. If you disable `gstreamer`, there is no need to install the `libglib2.0-dev` and `libgstreamer-plugins-base1.0-dev` dependencies.
+NOTE: 您可以通过替换 `-Dgstreamer=enabled` 来禁用 `gstreamer` 插件在 `meson` 构建配置期间使用 `-Dgstreamer=disabled` 。如果禁用 `gstreamer` ，则无需安装 `libglib2.0-dev` 和 `libgstreamer-plugins-base1.0-dev` 依赖项。
 
-Now, you can build `libcamera` with `ninja`:
+现在，您可以使用 `ninja` 构建 `libcamera` ：
 
 [source,console]
 ----
 $ ninja -C build
 ----
 
-Finally, run the following command to install your freshly-built `libcamera` binary:
+最后，运行以下命令安装您刚刚构建的 `libcamera` 二进制文件：
 
 [source,console]
 ----
 $ sudo ninja -C build install
 ----
 
-TIP: On devices with 1GB of memory or less, the build may exceed available memory. Append the `-j 1` flag to `ninja` commands to limit the build to a single process. This should prevent the build from exceeding available memory on devices like the Raspberry Pi Zero and the Raspberry Pi 3.
+TIP: 在内存为 1GB 或更少的设备上，构建可能会超出可用内存。将 `-j 1` 标志附加到 `ninja` 命令以将构建限制为单个进程。这应该可以防止构建超出 Raspberry Pi Zero 和 Raspberry Pi 3 等设备上的可用内存。
 
-`libcamera` does not yet have a stable binary interface. Always build `rpicam-apps` after you build `libcamera`.
+`libcamera` 尚未具有稳定的二进制接口。始终在构建 `libcamera` 之后构建 `rpicam-apps` 。
 
-==== Building `rpicam-apps`
+[[building-rpicam-apps]]
+==== 构建 `rpicam-apps` 
 
-First fetch the necessary dependencies for `rpicam-apps`.
+首先获取 `rpicam-apps` 所需的依赖项。
 
 [source,console]
 ----
@@ -134,28 +138,28 @@ $ sudo apt install -y cmake libboost-program-options-dev libdrm-dev libexif-dev
 $ sudo apt install -y meson ninja-build
 ----
 
-Download a local copy of Raspberry Pi's `rpicam-apps` GitHub repository:
+下载 Raspberry Pi 的 `rpicam-apps` GitHub 存储库的本地副本：
 
 [source,console]
 ----
 $ git clone https://github.com/raspberrypi/rpicam-apps.git
 ----
 
-Navigate into the root directory of the repository:
+导航到存储库的根目录：
 
 [source,console]
 ----
 $ cd rpicam-apps
 ----
 
-For desktop-based operating systems like Raspberry Pi OS, configure the `rpicam-apps` build with the following `meson` command:
+对于基于桌面的操作系统（如 Raspberry Pi OS），使用以下 `meson` 命令配置 `rpicam-apps` 构建：
 
 [source,console]
 ----
 $ meson setup build -Denable_libav=enabled -Denable_drm=enabled -Denable_egl=enabled -Denable_qt=enabled -Denable_opencv=disabled -Denable_tflite=disabled
 ----
 
-For headless operating systems like Raspberry Pi OS Lite, configure the `rpicam-apps` build with the following `meson` command:
+对于 Raspberry Pi OS Lite 等无人机交互操作系统，请使用以下 `meson` 命令配置 `rpicam-apps` 构建：
 
 [source,console]
 ----
@@ -165,31 +169,35 @@ $ meson setup build -Denable_libav=disabled -Denable_drm=enabled -Denable_egl=di
 [TIP]
 ======
 
-* Use `-Dneon_flags=armv8-neon` to enable optimisations for 32-bit OSes on Raspberry Pi 3 or Raspberry Pi 4.
-* Use `-Denable_opencv=enabled` if you have installed OpenCV and wish to use OpenCV-based post-processing stages.
-* Use `-Denable_tflite=enabled` if you have installed TensorFlow Lite and wish to use it in post-processing stages.
+* 使用 `-Dneon_flags=armv8-neon` 为 Raspberry Pi 3 或 Raspberry Pi 4 上的 32 位操作系统启用优化。
+* 如果您已安装 OpenCV 并希望使用基于 OpenCV 的后处理阶段，请使用 `-Denable_opencv=enabled` 。
+* 如果您已安装 TensorFlow Lite 并希望在后处理阶段使用它，请使用 `-Denable_tflite=enabled` 。
 
 ======
 
-You can now build `rpicam-apps` with the following command:
+您现在可以使用以下命令构建 `rpicam-apps` ：
 
 [source,console]
 ----
 $ meson compile -C build
 ----
 
-TIP: On devices with 1GB of memory or less, the build may exceed available memory. Append the `-j 1` flag to `meson` commands to limit the build to a single process. This should prevent the build from exceeding available memory on devices like the Raspberry Pi Zero and the Raspberry Pi 3.
+TIP: 在内存为 1GB 或更少的设备上，构建可能会超出可用内存。将 `-j 1` 标志加在 `meson` 命令后面将构建限制为单个进程。这应该可以防止构建超出 Raspberry Pi Zero 和 Raspberry Pi 3 等设备上的可用内存。
 
-Finally, run the following command to install your freshly-built `rpicam-apps` binary:
+最后，运行以下命令安装您新构建的 `rpicam-apps` 二进制文件：
 
 [source,console]
 ----
 $ sudo meson install -C build
 ----
 
+安装后打开一个新的终端窗口，以确保您使用新的二进制文件。
+
+最后，按照 xref:camera_software.adoc#configuration[配置部分] 中的 `dtoverlay` 和显示驱动程序说明进行操作。
+
 [TIP]
 ====
-The command above should automatically update the `ldconfig` cache. If you have trouble accessing your new `rpicam-apps` build, run the following command to update the cache:
+上述命令会自动更新 `ldconfig` 缓存。如果在访问新的 `rpicam-apps` 版本时遇到问题，请运行以下命令更新缓存：
 
 [source,console]
 ----
@@ -197,67 +205,68 @@ $ sudo ldconfig
 ----
 ====
 
-Run the following command to check that your device uses the new binary:
+运行以下命令检查设备是否使用了新的二进制文件：
 
 [source,console]
 ----
 $ rpicam-still --version
 ----
 
-The output should include the date and time of your local `rpicam-apps` build.
+输出结果应包括本地 `rpicam-apps` 生成的日期和时间。
 
-Finally, follow the `dtoverlay` and display driver instructions in the  xref:camera_software.adoc#configuration[Configuration section].
+[[rpicam-apps-meson-flag-reference]]
+==== `rpicam-apps` meson标志参考
 
-==== `rpicam-apps` meson flag reference
 
-The `meson` build configuration for `rpicam-apps` supports the following flags:
+`rpicam-apps` 的 `meson` 构建配置支持以下标志：
 
-`-Dneon_flags=armv8-neon`:: Speeds up certain post-processing features on Raspberry Pi 3 or Raspberry Pi 4 devices running a 32-bit OS.
+`-Dneon_flags=armv8-neon`:: 加快运行 32 位操作系统的 Raspberry Pi 3 或 Raspberry Pi 4 设备上的某些后处理功能。
 
-`-Denable_libav=enabled`:: Enables or disables `libav` encoder integration.
+`-Denable_libav=enabled`:: 启用或禁用 `libav` 编码器集成。
 
-`-Denable_drm=enabled`:: Enables or disables **DRM/KMS preview rendering**, a preview window used in the absence of a desktop environment.
+`-Denable_drm=enabled`:: 启用或禁用 **DRM/KMS 预览渲染**，即在没有桌面环境的情况下使用的预览窗口。
 
-`-Denable_egl=enabled`:: Enables or disables the non-Qt desktop environment-based preview. Disable if your system lacks a desktop environment.
+`-Denable_egl=enabled`:: 启用或禁用非基于 Qt 桌面环境的预览。如果您的系统缺少桌面环境，请禁用。
 
-`-Denable_qt=enabled`:: Enables or disables support for the Qt-based implementation of the preview window. Disable if you do not have a desktop environment installed or if you have no intention of using the Qt-based preview window. The Qt-based preview is normally not recommended because it is computationally very expensive, however it does work with X display forwarding.
+`-Denable_qt=enabled`:: 启用或禁用对基于 Qt 的预览窗口实现的支持。如果您未安装桌面环境或不打算使用基于 Qt 的预览窗口，请禁用。通常不推荐使用基于 Qt 的预览，因为它的计算成本非常高，但它可以与 X 显示转发配合使用。
 
-`-Denable_opencv=enabled`:: Forces OpenCV-based post-processing stages to link or not link. Requires OpenCV to enable. Defaults to `disabled`.
+`-Denable_opencv=enabled`:: 强制基于 OpenCV 的后处理阶段链接或不链接。需要 OpenCV 才能启用。默认为 `disabled` 。
 
-`-Denable_tflite=enabled`:: Enables or disables TensorFlow Lite post-processing stages. Disabled by default. Requires Tensorflow Lite to enable. Depending on how you have built and/or installed TFLite, you may need to tweak the `meson.build` file in the `post_processing_stages` directory.
+`-Denable_tflite=enabled`:: 启用或禁用 TensorFlow Lite 后处理阶段。默认情况下禁用。需要 Tensorflow Lite 才能启用。根据您构建和/或安装 TFLite 的方式，您可能需要调整 `post_processing_stages` 目录中的 `meson.build` 文件。
 
-Each of the above options (except for `neon_flags`) supports the following values:
+上述每个选项（除 `neon_flags` 外）都支持以下值：
 
-* `enabled`: enables the option, fails the build if dependencies are not available
-* `disabled`: disables the option
-* `auto`: enables the option if dependencies are available
+* `enabled` ：启用该选项，如果依赖项不可用，则构建失败
+* `disabled` ：禁用该选项
+* `auto` ：如果依赖项可用，则启用该选项
 
-==== Building `libepoxy`
+[[building-libepoxy]]
+==== 构建 `libepoxy` 
 
-Rebuilding `libepoxy` should not normally be necessary as this library changes only very rarely. If you do want to build it from scratch, however, please follow the instructions below.
+通常不需要重建 `libepoxy` ，因为这个库很少更改。但是，如果您确实想从头开始构建它，请按照以下说明操作。
 
-Start by installing the necessary dependencies.
+首先安装必要的依赖项。
 
 [source,console]
 ----
 $ sudo apt install -y libegl1-mesa-dev
 ----
 
-Next, download a local copy of the `libepoxy` repository from GitHub:
+接下来，从 GitHub 下载 `libepoxy` 存储库的本地副本：
 
 [source,console]
 ----
 $ git clone https://github.com/anholt/libepoxy.git
 ----
 
-Navigate into the root directory of the repository:
+导航到存储库的根目录：
 
 [source,console]
 ----
 $ cd libepoxy
 ----
 
-Create a build directory at the root level of the repository, then navigate into that directory:
+在存储库的根级别创建一个构建目录，然后导航到该目录：
 
 [source,console]
 ----
@@ -265,21 +274,21 @@ $ mkdir _build
 $ cd _build
 ----
 
-Next, run `meson` to configure the build environment:
+接下来，运行 `meson` 来配置构建环境：
 
 [source,console]
 ----
 $ meson
 ----
 
-Now, you can build `libexpoxy` with `ninja`:
+现在，您可以使用 `ninja` 构建 `libexpoxy` ：
 
 [source,console]
 ----
 $ ninja
 ----
 
-Finally, run the following command to install your freshly-built `libepoxy` binary:
+最后，运行以下命令来安装您刚刚构建的 `libepoxy` 二进制文件：
 
 [source,console]
 ----

@@ -1,55 +1,56 @@
-=== Configuration
+[[configuration]]
+=== 配置
 
-Most use cases work automatically with no need to alter the camera configuration. However, some common use cases do require configuration tweaks, including:
+大多数用例自动工作，无需更改相机配置。但是，一些常见用例确实需要配置调整，包括：
 
-* Third-party cameras (the manufacturer's instructions should explain necessary configuration changes, if any)
+* 第三方摄像机（制造商的说明应解释必要的配置更改，如果有）
 
-* Using a non-standard driver or overlay with an official Raspberry Pi camera
+*  Raspberry Pi 官方摄像头使用非标准驱动程序或overlay
 
-Raspberry Pi OS recognises the following overlays in `/boot/firmware/config.txt`.
+Raspberry Pi OS识别 `/boot/firmware/config.txt` 中的以下overlay。
 
 |===
-| Camera Module | In `/boot/firmware/config.txt`
+| 相机模块 | 在 `/boot/firmware/config.txt` 中的配置
 
-| V1 camera (OV5647)
-| `dtoverlay=ov5647`
+| V1相机（OV5647）
+|  `dtoverlay=ov5647` 
 
-| V2 camera (IMX219)
-| `dtoverlay=imx219`
+| V2相机（IMX219）
+|  `dtoverlay=imx219` 
 
-| HQ camera (IMX477)
-| `dtoverlay=imx477`
+| HQ相机（IMX477）
+|  `dtoverlay=imx477` 
 
-| GS camera (IMX296)
+| GS相机（IMX296）
 | `dtoverlay=imx296`
 
-| Camera Module 3 (IMX708)
-| `dtoverlay=imx708`
+| 相机模块3（IMX708）
+|  `dtoverlay=imx708` 
 
-| IMX290 and IMX327
-| `dtoverlay=imx290,clock-frequency=74250000` or `dtoverlay=imx290,clock-frequency=37125000` (both modules share the imx290 kernel driver; refer to instructions from the module vendor for the correct frequency)
+| IMX290和IMX327
+| `dtoverlay=imx290，clock-frequency=74250000` 或 `dtoverlay=imx290，clock-frequency=37125000` （两个模块共享imx290内核驱动程序；有关正确的频率，请参阅模块供应商的说明）
 
 | IMX378
-| `dtoverlay=imx378`
+|  `dtoverlay=imx378` 
 
 | OV9281
-| `dtoverlay=ov9281`
+|  `dtoverlay=ov9281` 
 |===
 
-To use one of these overlays, you must disable automatic camera detection. To disable automatic detection, set `camera_auto_detect=0` in `/boot/firmware/config.txt`. If `config.txt` already contains a line assigning an `camera_auto_detect` value, change the value to `0`. Reboot your Raspberry Pi with `sudo reboot` to load your changes.
+要使用这些overlay之一，您必须禁用自动相机检测。要禁用自动检测，请在 `/boot/firmware/config.txt` 中设置 `camera_auto_detect=0` 。如果 `config.txt` 已包含分配 `camera_auto_detect` 值的行，请将值更改为 `0` 。使用 `sudo reboot` 重新启动Raspberry Pi以加载更改。
 
 [[tuning-files]]
-==== Tweak camera behaviour with tuning files
+==== 通过调谐文件来调整相机行为
 
-Raspberry Pi's `libcamera` implementation includes a **tuning file** for each camera. This file controls algorithms and hardware to produce the best image quality. `libcamera` can only determine the sensor in use, not the module. As a result, some modules require a tuning file override. Use the xref:camera_software.adoc#tuning-file[`tuning-file`] option to specify an override. You can also copy and alter existing tuning files to customise camera behaviour.
+Raspberry Pi的 `libcam` 实现包括每个相机的**调谐文件**。该文件控制算法和硬件以产生最佳画质。 `libcamera` 只能确定正在使用的传感器，而不能确定模块。因此，某些模块需要调谐文件覆盖。使用 xref:camera_software.adoc#tuning-file[`tuning-file`] 选项来指定overlay。您还可以复制和更改现有的调谐文件以自定义相机行为。
 
-For example, the no-IR-filter (NoIR) versions of sensors use Auto White Balance (AWB) settings different from the standard versions. On a Raspberry Pi 5 or later, you can specify the the NoIR tuning file for the IMX219 sensor with the following command:
+例如，无红外过滤器（NoIR）版本的传感器使用与标准版本不同的自动白平衡（AWB）设置。在Raspberry Pi 5或更高版本上，您可以使用以下命令指定IMX219传感器的NoIR调谐文件：
 
 [source,console]
 ----
 $ rpicam-hello --tuning-file /usr/share/libcamera/ipa/rpi/pisp/imx219_noir.json
 ----
 
-NOTE: Raspberry Pi models prior to Raspberry Pi 5 use different tuning files. On those devices, use the files stored in `/usr/share/libcamera/ipa/rpi/vc4/` instead.
+NOTE: Raspberry Pi 5之前的Raspberry Pi型号使用不同的调谐文件。在这些设备上，请改用存储在 `/usr/share/libcam/ipa/rpi/vc4/` 中的文件。
 
-`libcamera` maintains tuning files for a number of cameras, including third-party models. For instance, you can find the tuning file for the Soho Enterprises SE327M12 in `se327m12.json`.
+`libcamera` 维护许多相机的调谐文件，包括第三方型号。例如，您可以在 `se327m12.json` 中找到Soho Enterprises SE327M12的调谐文件。

@@ -1,57 +1,64 @@
-=== `libav` options
+[[libav-options]]
+=== `libav` 选项
 
-The command line options specified in this section apply only to `libav` video backend.
+本节中指定的命令行选项仅适用于 `libav` 视频后端。
 
-To enable the `libav` backend, pass the xref:camera_software.adoc#codec[`codec`] option the value `libav`.
+要启用 `libav` 后端，请在 xref:camera_software.adoc#codec[`codec`] 选项中加入 `libav` 值。
 
-To pass one of the following options to an application, prefix the option name with `--`. If the option requires a value, pass the value immediately after the option name, separated by a single space. If the value contains a space, surround the value in quotes.
+要将以下选项之一传递给应用程序，请在选项名称前加上 `--` .如果选项需要值，请在选项名称后立即传递该值，并用单个空格分隔。如果值包含空格，请将值用引号括起来。
 
-Some options have shorthand aliases, for example `-h` instead of `--help`. Use these shorthand aliases instead of the full option name to save space and time at the expense of readability.
+一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会牺牲易读性。
 
-==== `libav-format`
+[[libav-format]]
+==== `libav-format` 
 
-Sets the `libav` output format. Accepts the following values:
+设置 `libav` 输出格式。接受以下值：
 
-* `mkv` encoding
-* `mp4` encoding
-* `avi` encoding
-* `h264` streaming
-* `mpegts` streaming
+* `mkv` 编码
+* `mp4` 编码
+* `avi` 编码
+* `h264` 流媒体
+* `mpegts` 流
 
-If you do not provide this option, the file extension passed to the xref:camera_software.adoc#output[`output`] option determines the file format.
+如果不提供此选项，则传递给 xref:camera_software.adoc#output[`output`] 选项的文件扩展名将确定文件格式。
 
-==== `libav-audio`
+[[libav-audio]]
+==== `libav-audio` 
 
-Enables audio recording. When enabled, you must also specify an xref:camera_software.adoc#audio-codec[`audio-codec`]. Does not accept a value.
+启用录音。启用后，您还必须指定 xref:camera_software.adoc#audio-codec[`audio-codec`]。不接受值。
 
-==== `audio-codec`
+[[audio-codec]]
+==== `audio-codec` 
 
-Default value: `aac`
+默认值： `aac` 
 
-Selects an audio codec for output. For a list of available codecs, run `ffmpeg -codec`.
+选择用于输出的音频编解码器。有关可用编解码器的列表，请运行 `ffmpeg-codec` 。
 
-==== `audio-bitrate`
+[[audio-bitrate]]
+==== `audio-bitrate` 
 
-Sets the bitrate for audio encoding in bits per second. Accepts numeric input.
+以每秒比特数为单位设置音频编码的比特率。接受数字输入。
 
-Example: `rpicam-vid --codec libav -o test.mp4 --audio_codec mp2 --audio-bitrate 16384` (Records audio at 16 kilobits/sec with the mp2 codec)
+示例： `rpicam-vid --codec libav -o test.mp4 --audio_codec mp2 --audio-bitrate 16384` （使用mp2编解码器以16千比特/秒的速度录制音频）
 
-==== `audio-samplerate`
+[[audio-samplerate]]
+==== `audio-samplerate` `音频采样` 
 
-Default value: `0`
+默认值： `0` 
 
-Sets the audio sampling rate in Hz. Accepts numeric input. `0` uses the input sample rate.
+以Hz为单位设置音频采样率。接受数字输入。 `0` 使用输入采样率。
 
-==== `audio-device`
+[[audio-device]]
+==== `audio-device` `音频设备` 
 
-Select an ALSO input device for audio recording. For a list of available devices, run the following command:
+选择用于录音的ALSO输入设备。有关可用设备的列表，请运行以下命令：
 
 [source,console]
 ----
 $ pactl list | grep -A2 'Source #' | grep 'Name: '
 ----
 
-You should see output similar to the following:
+您应该会看到类似于以下内容的输出：
 
 ----
 Name: alsa_output.platform-bcm2835_audio.analog-stereo.monitor
@@ -60,6 +67,7 @@ Name: alsa_output.usb-GN_Netcom_A_S_Jabra_EVOLVE_LINK_000736B1214E0A-00.analog-s
 Name: alsa_input.usb-GN_Netcom_A_S_Jabra_EVOLVE_LINK_000736B1214E0A-00.mono-fallback
 ----
 
-==== `av-sync`
+[[av-sync]]
+==== `av-sync` 
 
-Shifts the audio sample timestamp by a value in microseconds. Accepts positive and negative numeric values.
+将音频样本时间戳移动一个以微秒为单位的值。接受正数值和负数值。
