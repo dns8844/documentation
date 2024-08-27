@@ -24,7 +24,6 @@ $ sudo visudo /etc/sudoers.d/010_<username>-nopasswd
 
 保存文件。您的新首选项应立即生效。
 
-[[update-raspberry-pi-os]]
 === 更新树莓派操作系统
 
 只有最新的操作系统发行版才包含所有最新的安全修复。请始终将您的设备 xref:os.adoc#update-software[updated] 保持在 Raspberry Pi OS 的最新版本。

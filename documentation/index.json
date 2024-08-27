@@ -7,7 +7,7 @@
             "subitems": [
                 {
                     "title": "开始",
-                    "description": "c如何开始使用 Raspberry Pi",
+                    "description": "如何开始使用 Raspberry Pi",
                     "image": "full-sized/Getting-Started.png",
                     "subpath": "getting-started.adoc"
                 },

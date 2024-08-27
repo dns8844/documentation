@@ -165,7 +165,7 @@ image::images/raspi-perf.png[raspi-config performance options]
 ==== Overclock
 
 
-WARNING: *超频可能会缩短Raspberry Pi的使用寿命。*如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。在启动期间按住*Shift*键以暂时禁用超频。
+WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。在启动期间按住 *Shift* 键以暂时禁用超频。
 
 [[memory-split]]
 ==== GPU memory
