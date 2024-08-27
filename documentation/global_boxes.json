@@ -1,25 +1,25 @@
 [
     {
-        "title": "Product Information Portal",
-        "description": "Raspberry Pi compliance documents",
+        "title": "产品信息门户网站",
+        "description": "Raspberry Pi 合规性文件",
         "imagepath": "/images/full-sized/PIP.png",
         "url": "https://pip.raspberrypi.com/"
     },
     {
         "title": "Datasheets",
-        "description": "PDF-based documentation",
+        "description": "PDF 文档",
         "imagepath": "/images/full-sized/Datasheets.png",
         "url": "https://datasheets.raspberrypi.com"
     },
     {
-        "title": "Tutorials",
-        "description": "Hands-on hardware and software tutorials",
+        "title": "教程",
+        "description": "硬件和软件实践教程",
         "imagepath": "/images/full-sized/Tutorials.png",
         "url": "https://www.raspberrypi.com/tutorials/"
     },
     {
-        "title": "Forums",
-        "description": "User and product support forums",
+        "title": "论坛",
+        "description": "用户和产品支持论坛",
         "imagepath": "/images/full-sized/Forums.png",
         "url": "https://forums.raspberrypi.com"
     }

@@ -15,7 +15,7 @@
 
 <script>
   function hasher(text, element) {
-    return text.toLowerCase().replace(/ /g, "-").replace(/\./g, "-").replace(/[^-\w]/g, "").replace(/-+/g, "-");
+    return text.toLowerCase().replace(/ /g, "-").replace(/\./g, "-").replace(/[^-[\u4e00-\u9fff\w]]/g, "").replace(/-+/g, "-");
   }
 
   function waitForElementToDisplay(selector, checkFrequencyInMs, timeoutInMs) {
