@@ -180,7 +180,10 @@ $ vcmailbox 0x00038082 6 6 0x44332211 0x6655
 
 有关开源磁盘加密的更多信息，请参阅 https://gitlab.com/cryptsetup/cryptsetup[Cryptsetup]。
 
-====  使用 `rpi-otp-private-key` 烧录密钥 
+====  使用 `rpi-otp-private-key` 烧录密钥
+
+NOTE: `rpi-otp-private-key` 脚本仅适用于使用 Broadcom xref:processors.adoc#bcm2711[BCM2711] 或 xref:processors.adoc#bcm2712[BCM2712] 处理器的设备。
+
 https://github.com/raspberrypi/rpi-eeprom/blob/master/tools/rpi-otp-private-key[`rpi-otp-private-key`] 脚本包装了设备私钥 `vcmailbox` API，以便更轻松地以 OpenSSL 格式读取和写入密钥。
 
 NOTE: https://github.com/raspberrypi/usbboot[`usbboot`] 存储库包含您需要的所有工具，包括 https://github.com/raspberrypi/rpi-eeprom[`rpi-eeprom`] 作为 Git 子模块。

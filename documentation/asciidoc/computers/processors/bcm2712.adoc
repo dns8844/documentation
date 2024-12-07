@@ -1,7 +1,7 @@
 [[bcm2712]]
 == BCM2712
 
-Broadcom BCM2712是Raspberry Pi 5核心的16纳米应用处理器。它是Raspberry Pi 4中使用的BCM2711器件的继任者，并与早期Raspberry Pi产品中使用的BCM27xx系列中的其他器件共享许多共同的架构特征。
+Broadcom BCM2712是Raspberry Pi 5核心的16纳米应用处理器。它是Raspberry Pi 4中使用的BCM2711器件的继任者，并与早期Raspberry Pi产品中使用的BCM27xx系列中的其他器件共享许多共同的架构特征。4GB 和 8GB Raspberry Pi 5 型号使用 BCM2712**C1** 版本。
 
 它围绕四核 Arm Cortex-A76 CPU 集群构建，主频高达 2.4GHz，每个内核有 512KB 二级缓存和 2MB 共享三级缓存，集成了改进的 12 核 VideoCore VII GPU、能够驱动双 4Kp60 显示器的硬件视频缩放器和 HDMI 控制器，以及 Raspberry Pi 开发的 HEVC 解码器和图像信号处理器。32 位 LPDDR4X 内存接口可提供高达 17GB/s 的内存带宽，而 x1 和 x4 PCI Express 接口可支持高带宽外部外设；在 Raspberry Pi 5 上，后者用于连接 Raspberry Pi RP1 南桥，该南桥提供了平台上大部分面向外部的 I/O 功能。
 
@@ -25,3 +25,7 @@ Broadcom BCM2712是Raspberry Pi 5核心的16纳米应用处理器。它是Raspbe
 ** H264 1080p30 编码（来自 ISP）~30-40% CPU
 
 总的来说，对于常见的CPU或I/O密集型用例，BCM2712中的新功能比Raspberry Pi 4提供了2-3倍的性能提升。
+
+=== BCM2712D0
+
+BCM2712 的**D0**版本删除了 BCM2712C1 中未使用的功能。C1 和 D0 版本在功能上没有区别。在物理上，这两个封装使用相同的空间。

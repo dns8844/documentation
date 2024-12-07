@@ -2,7 +2,7 @@
 
 本节介绍如何在Raspberry Pi 3B、3B+ 和 2B v1.2上启动网络。
 
-在Pi 4和Pi 5上，网络引导是在EEPROM中的第二阶段引导加载程序中实现的。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi 4引导加载程序配置]。
+在 Pi 4 和 Pi 5 上，网络启动是通过 EEPROM 中的第二阶段引导加载器实现的。更多信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi 引导加载器配置]。
 
 我们还有一个 xref:remote-access.adoc#network-boot-your-raspberry-pi[关于设置网络引导系统的教程]。
 

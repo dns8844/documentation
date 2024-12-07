@@ -18,6 +18,7 @@
 
 === 为 Linux 内核做贡献
 
-首先，fork https://github.com/torvalds/linux[Linux内核资源库] 并克隆到你的开发设备上。然后，你可以进行修改、测试，并将它们提交到你的 fork 中。
+首先，将 https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git[Linux 内核树]克隆到你的开发设备上。然后，你就可以进行修改、测试并提交到本地树中。
 
-然后，向 https://github.com/torvalds/linux[Linux内核资源库] 提交包含你的修改的拉取请求。Linux 内核贡献者会审查你的贡献并提出改进建议。一旦获得批准，他们就会合并你的修改。最终，这些改动将进入 Linux 内核的长期版本。一旦我们测试了长期版本与 Raspberry Pi 内核的兼容性，您的修改就会进入 Raspberry Pi 内核的稳定版本。
+修改完成后，你就可以提交给 Linux 内核社区了。Linux 内核开发是在邮件列表而非 GitHub 上进行的。为了让你的修改成为 Linux 的一部分，请将其作为补丁通过电子邮件发送给社区。请遵循 Linux 内核文档中的 https://www.kernel.org/doc/html/latest/process/submitting-patches.html[提交补丁：将代码加入内核的基本指南] 和 https://www.kernel.org/doc/html/latest/process/coding-style.html[Linux 内核编码风格]。
+Linux 内核贡献者会审查你的贡献并提出改进建议。一旦获得批准，他们就会合并你的修改。最终，这些改动将被纳入 Linux 内核的长期版本中。一旦我们测试了该长期版本与 Raspberry Pi 内核的兼容性，您的修改就会进入 Raspberry Pi 内核的稳定版本。

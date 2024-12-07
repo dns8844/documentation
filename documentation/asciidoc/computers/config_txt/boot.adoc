@@ -36,7 +36,28 @@ Raspberry Pi 5固件默认加载 `kernel_2712.img` ，因为此映像包含特�
 
 在Pi 4系列（Pi4B、Pi 400、CM4和CM4S）上默认为1，在所有其他平台上默认为0。但是，如果显式 `kernel` 选项中给出的名称与已知内核之一匹配，则将相应地设置 `arm_64bit` 。
 
-NOTE: 64 位内核可能是未压缩的镜像文件或镜像的 gzip 压缩包（仍可称为 kernel8.img；引导加载程序将从开头的签名字节识别压缩包）。64 位内核仅适用于 Raspberry Pi 3、3+、4、400、Zero 2 W 和 2B rev 1.2，以及 Raspberry Pi Compute Modules 3、3+ 和 4。Raspberry Pi 5 仅支持 64 位内核，因此该设备已移除此参数。
+64 位内核有以下几种形式：
+
+* 未压缩的映像文件
+* 映像的 gzip 压缩包
+
+这两种形式都可以使用 `img` 文件扩展名；引导加载程序使用文件开头的签名字节识别存档。
+
+以下 Raspberry Pi 型号支持此标记：
+
+* 2B rev 1.2
+* 3
+* 3+
+* 4
+* 400
+* 2 W
+* 计算模块 3
+* 计算模块 3+
+* 计算模块 4
+* 计算模块 4S
+
+以后的型号，如 Raspberry Pi 5，_仅_ 支持 64 位内核。这些型号不支持此标记。
+
 
 [[ramfsfile]]
 === `ramfsfile` 
@@ -75,7 +96,7 @@ NOTE: 此选项使用与所有其他选项不同的语法，您不应在此处�
 [[enable_uart]]
 === `enable_uart` 
 
-`enable_uart=1` （与 `cmdline.txt` 中的 `console=serial0` 结合使用）要求内核创建一个串行控制台，可通过 GPIO 14 和 15（40 针接头的针脚 8 和 10）访问。编辑 `cmdline.txt` ，删除 `quiet` 行后，内核的启动信息也会出现在该行。另请参阅 `uart_2ndstage` 。
+`enable_uart=1` （与 `cmdline.txt` 中的 `console=serial0,115200` 结合使用）要求内核创建一个串行控制台，可通过 GPIO 14 和 15（40 针接头的针脚 8 和 10）访问。编辑 `cmdline.txt` ，删除 `quiet` 行后，内核的启动信息也会出现在该行。另请参阅 `uart_2ndstage` 。
 
 [[force_eeprom_read]]
 === `force_eeprom_read` 
@@ -147,6 +168,14 @@ Default: `0`
 
 Default: `0x0`
 
+[[enable_rp1_uart]]
+==== `enable_rp1_uart`
+
+设置为 `1` 时，固件会将 RP1 UART0 初始化为 115200bps，并且在启动操作系统前不会复位 RP1（可使用 `pciex4_reset=1` 单独配置）。
+这使得在早期启动代码（例如在裸机调试期间）中更容易在 40 针针座上获得 UART 输出。
+
+Default: `0x0`
+
 [[pciex4_reset]]
 ==== `pciex4_reset`
 
@@ -179,7 +208,7 @@ Default: `0`
 
 该选项必须与控制 EEPROM `写状态寄存器` 更新的 EEPROM `/WP` 引脚结合使用。 除非同时配置了 `写入状态寄存器`，否则将 `/WP` 拉低（CM4 的 `EEPROM_nWP` 或 Raspberry Pi 4 的 `TP5`）不会对 EEPROM 进行写保护。
 
-详情请参见 https://www.winbond.com/resource-files/w25x40cl_f%2020140325.pdf[Winbond W25x40cl] 或 https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q16JV[Winbond W25Q16JV] 数据表。
+详情请参见 https://www.winbond.com/resource-files/w25x40cl_f%2020140325.pdf[Winbond W25x40cl] 或 https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q16JV[Winbond W25Q16JV] datasheet。
 
 `recovery.bin` 的 `config.txt` 中的 `eeprom_write_protect` 设置。
 

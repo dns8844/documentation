@@ -21,25 +21,25 @@ image::images/bootloader-diagnostics.png[启动诊断屏幕]
 | Bootloader git version - RO (if EEPROM is write protected) - software build date
 
 | update-ts
-| The timestamp corresponding to when the EEPROM configuration was updated.  This timestamp is checked in xref:raspberry-pi.adoc#ENABLE_SELF_UPDATE[self-update] mode to avoid updating to an old configuration.
+| the timestamp corresponding to when the EEPROM configuration was updated; this timestamp is checked in xref:raspberry-pi.adoc#ENABLE_SELF_UPDATE[self-update] mode to avoid updating to an old configuration
 
 | secure-boot
-| If xref:raspberry-pi.adoc#secure-boot[secure-boot] is enabled, then the processor revision (B0/C0) and xref:configuration.adoc#part4[signed-boot status flags] are displayed. Otherwise, this line is blank.
+| If xref:raspberry-pi.adoc#secure-boot[secure-boot] is enabled, displays the processor revision (B0/C0) and xref:configuration.adoc#part4[signed-boot status flags]; otherwise, this line is blank
 
 | board
 | xref:raspberry-pi.adoc#raspberry-pi-revision-codes[Board revision] - serial number - Ethernet MAC address
 
 | boot
-| *mode* (current boot mode name and number) *order* (the xref:raspberry-pi.adoc#BOOT_ORDER[BOOT ORDER] configuration) *retry* (retry count in the current boot mode) *restart* (number of cycles through the list of boot modes).
+| *mode* (current boot mode name and number) *order* (the xref:raspberry-pi.adoc#BOOT_ORDER[BOOT ORDER] configuration) *retry* (retry count in the current boot mode) *restart* (number of cycles through the list of boot modes)
 
 | SD
 | The SD card detect status (detected/not detected).
 
 | part
-| Master Boot Record primary partitions type:LBA.
+| Master Boot Record primary partitions type:LBA
 
 | fw
-| Filename for `start.elf` and `fixup.dat` if present (e.g. `start4x.elf`, `fixup4x.dat`).
+| Filename for `start.elf` and `fixup.dat` if present (e.g. `start4x.elf`, `fixup4x.dat`)
 
 | net
 | Network boot: link status (up/down), client IP address (ip), subnet (sn), default gateway (gw)
@@ -48,9 +48,7 @@ image::images/bootloader-diagnostics.png[启动诊断屏幕]
 | Network boot: TFTP server IP address
 
 | display
-| Indicates whether hotplug was detected (`HPD=1`) and if so whether the EDID was read successfully (`EDID=ok`) for each HDMI output.
+| Indicates whether hotplug was detected (`HPD=1`) and if so whether the EDID was read successfully (`EDID=ok`) for each HDMI output
 |===
 
-可以使用 `DISABLE_HDMI` 选项禁用此显示，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Bootloader配置]。
-
-NOTE: 这纯粹是为了诊断引导失败；它不是交互式引导加载程序。如果您需要交互式引导加载程序，请考虑使用U-Boot等工具。
+要禁用诊断显示，请使用 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader 配置]中的 `DISABLE_HDMI` 选项。

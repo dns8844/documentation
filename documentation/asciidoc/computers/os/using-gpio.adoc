@@ -89,13 +89,3 @@ from gpiozero import LED, Button
 
 led = LED(17)
 button = Button(2)
-
-button.when_pressed = led.on
-button.when_released = led.off
-----
-
-[.booklink, booktype="free", link=https://github.com/raspberrypipress/released-pdfs/raw/main/simple-electronics-with-gpio-zero.pdf, image=image::images/simple-electronics-with-gpio-zero.jpg[]]
-
-==== 更进一步
-
-关于如何使用 GPIO Zero Python 库为连接到 Raspberry Pi 的电子设备编写程序，您可以在 Raspberry Pi 出版社的书籍 https://github.com/raspberrypipress/released-pdfs/raw/main/simple-electronics-with-gpio-zero.pdf[Simple Electronics with GPIO Zero] 中找到更多信息。该书让您开始使用 GPIO Zero 库，并通过构建一系列项目指导您如何使用它。

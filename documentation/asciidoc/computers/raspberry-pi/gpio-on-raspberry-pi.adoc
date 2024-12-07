@@ -38,7 +38,7 @@ $ sudo usermod -a -G gpio <username>
 [[gpio-pads]]
 === GPIO引脚
 
-BCM2835 封装上的 GPIO 连接有时在外设数据表中称为 "引脚"，这是一个半导体设计术语，意思是 "芯片与外界的连接"。
+BCM2835 封装上的 GPIO 连接有时在外设datasheet中称为 "引脚"，这是一个半导体设计术语，意思是 "芯片与外界的连接"。
 
 引脚是可配置的 CMOS 推挽输出驱动器/输入缓冲器。基于寄存器的控制设置可用于
 
@@ -49,7 +49,7 @@ BCM2835 封装上的 GPIO 连接有时在外设数据表中称为 "引脚"，这
 [[power-on-states]]
 ==== 上电状态
 
-上电复位时，所有 GPIO 引脚均恢复为通用输入。此外，还应用了默认上拉状态，详情见 Arm 外设数据表中的备用功能表。大多数 GPIO 都应用了默认上拉状态。
+上电复位时，所有 GPIO 引脚均恢复为通用输入。此外，还应用了默认上拉状态，详情见 Arm 外设datasheet中的备用功能表。大多数 GPIO 都应用了默认上拉状态。
 
 [[interrupts]]
 === 中断
@@ -88,7 +88,7 @@ BCM2835 封装上的 GPIO 连接有时在外设数据表中称为 "引脚"，这
 
 电路板上有两个 5V 引脚和两个 3.3V 引脚，以及一些无法重新配置的接地引脚 (GND)。其余引脚均为通用 3.3V 引脚，即输出设置为 3.3V，输入为 3.3V 容差。
 
-下表给出了 BCM2835、BCM2836、BCM2837 和基于 RP3A0 的产品（如 Raspberry Pi Zero 或 Raspberry Pi 3+）的 GPIO 引脚的各种电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关数据表]。
+下表给出了 BCM2835、BCM2836、BCM2837 和基于 RP3A0 的产品（如 Raspberry Pi Zero 或 Raspberry Pi 3+）的 GPIO 引脚的各种电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关datasheet]。
 
 |===
 | Symbol | Parameter | Conditions &emsp; | Min | Typical | Max | Unit
@@ -178,7 +178,7 @@ BCM2835 封装上的 GPIO 连接有时在外设数据表中称为 "引脚"，这
 ^b^ 默认驱动强度（8mA） +
 ^c^ 最大驱动强度（16mA）
 
-下表给出了基于 BCM2711 的产品（如 Raspberry Pi 4 和 Raspberry Pi 400）上 GPIO 引脚的电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关数据表]。
+下表给出了基于 BCM2711 的产品（如 Raspberry Pi 4 和 Raspberry Pi 400）上 GPIO 引脚的电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关datasheet]。
 
 |===
 | Symbol | Parameter | Conditions &emsp; | Min | Typical | Max | Unit

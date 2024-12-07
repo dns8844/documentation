@@ -29,14 +29,14 @@ NOTE: 以前版本的Raspberry Pi OS使用 `wpa_supplicant.conf` 文件，该文
 如果没有键盘或显示器，您需要一种方法来 xref:remote-access.adoc[远程控制] 您的headless Raspberry Pi。首次启动时，唯一可用的选项是SSH。要在新安装的Raspberry Pi OS上启用SSH，请选择以下方法之一：
 
 * 在 Raspberry Pi Imager 的操作系统自定义菜单中启用SSH，然后输入用户名和密码
-* 在SD卡的根目录下创建一个名为 `ssh` 的文件，然后按照以下部分的说明使用 `userconf.txt` 手动配置用户
+* 在 SD 卡第一个分区（标为 `bootfs`）的根目录下创建名为 `ssh` 的文件，然后按照下面部分的说明使用 `userconf.txt` 手动配置用户
 
 有关详细信息，请参阅 xref:remote-access.adoc#ssh[设置SSH服务器]。通过SSH连接后，如果您喜欢图形桌面环境，可以使用 `raspi-config` 到 xref:remote-access.adoc#vnc[启用VNC]。
 
-[[配置-一个-用户]]
+[[configuring-a-user]]
 ==== 手动配置用户
 
-在SD卡的根目录下，创建一个名为 `userconf.txt` 的文件。
+在 SD 卡第一部分的根目录下（文件系统标记为 `bootfs`），创建一个名为 `userconf.txt` 的文件。
 
 此文件应包含一行文本，由 `<username>：<password>` 组成：您想要的用户名，后跟冒号，后跟您想要使用的密码的 *加密* 表示。
 

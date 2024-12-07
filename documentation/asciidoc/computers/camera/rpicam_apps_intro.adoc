@@ -35,8 +35,10 @@ Raspberry Pi的 `libcamera` 实现支持以下相机：
 * 官方相机：
 ** OV5647 (V1)
 ** IMX219 (V2)
+** IMX708 (V3)
 ** IMX477 (HQ)
 ** IMX296 (GS)
+** IMX500 (AI)
 ** IMX708 (V3)
 * 第三方传感器：
 ** IMX290

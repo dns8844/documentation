@@ -122,7 +122,7 @@ $ rpicam-still -o long_exposure.jpg --shutter 100000000 --gain 1 --awbgains 1,1 
 $ mkdir timelapse
 ----
 
-运行以下命令创建 30 秒钟的延时，每两秒记录一张照片，将输出保存到 `image0001.jpg` 至 `image0014.jpg` 中：
+运行以下命令创建 30 秒钟的延时，每两秒记录一张照片，将输出保存到 `image0001.jpg` 至 `image0013.jpg` 中：
 
 [source,console]
 ----

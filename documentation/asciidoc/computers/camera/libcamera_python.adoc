@@ -1,4 +1,4 @@
-[[use-libcamera-from-python-with-picamera2]]
+[[picamera2]]
 === 在Picamera2中使用Python中的 `libcamera` 
 
 https://github.com/raspberrypi/picamera2[Picamera2库] 是基于 `rpicam` 的Picamera替代品，Picamera是Raspberry Pi传统相机堆栈的Python接口。Picamera2提供了一个易于使用的Python API。

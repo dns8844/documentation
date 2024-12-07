@@ -1,7 +1,21 @@
 [[specifications]]
 == 规格
 
-=== 计算模块 4 数据表
+=== 计算模块 5 datasheet
+
+要了解有关计算模块 5 (CM5) 及其相应 IO 板的更多信息，请参阅以下文档：
+
+* https://datasheets.raspberrypi.com/cm5/cm5-datasheet.pdf[CM5 datasheet]
+* https://rpltd.co/cm5-design-files[CM5 design files]
+
+=== 计算模块 5 IO Board datasheet
+
+计算模块 5 IO 板 (CM5IO) 的设计数据可在其datasheet中找到：
+
+* https://datasheets.raspberrypi.com/cm5/cm5io-datasheet.pdf[CM5IO datasheet]
+* https://rpltd.co/cm5io-design-files[CM5IO design files]
+
+=== 计算模块 4 datasheet
 
 要了解有关计算模块 4 (CM4) 及其相应 IO 板的更多信息，请参阅以下文档：
 
@@ -14,9 +28,9 @@
 本文档介绍了如何禁用各种硬件和软件接口。
 ****
 
-=== 计算模块 4 IO 板数据表
+=== 计算模块 4 IO 板datasheet
 
-计算模块 4 IO 板 (CM4IO) 的设计数据可在其数据表中找到：
+计算模块 4 IO 板 (CM4IO) 的设计数据可在其datasheet中找到：
 
 * https://datasheets.raspberrypi.com/cm4io/cm4io-datasheet.pdf[CM4IO datasheet]
 
@@ -24,19 +38,19 @@
 
 * https://datasheets.raspberrypi.com/cm4io/CM4IO-KiCAD.zip[CM4IO KiCad files]
 
-=== 计算模块 4S 数据表
+=== 计算模块 4S datasheet
 
 计算模块 4S (CM4S) 以 CM1、CM3 和 CM3+ 的 DDR2-SODIMM 外形提供 CM4 的内部结构。要了解有关 CM4S 的更多信息，请参阅以下文档：
 
 * https://datasheets.raspberrypi.com/cm4s/cm4s-datasheet.pdf[CM4S datasheet]
 
-=== 计算模块 3+ 数据表
+=== 计算模块 3+ datasheet
 
 Compute Module 3+ (CM3+) 是受支持的产品，其生命周期（EOL）终止日期不早于 2028 年 1 月。要了解有关 CM3+ 及其相应 IO 板的更多信息，请参阅以下文档：
 
 * https://datasheets.raspberrypi.com/cm/cm3-plus-datasheet.pdf[CM3+ datasheet]
 
-=== 计算模块 1 和计算模块 3 数据表
+=== 计算模块 1 和计算模块 3 datasheet
 
 Raspberry Pi 计算模块 1（CM1）和计算模块 3（CM3）是受支持的产品，其生命周期（EOL）终止日期不早于 2026 年 1 月。要了解有关 CM1 和 CM3 的更多信息，请参阅以下文档：
 
@@ -51,7 +65,7 @@ Raspberry Pi 计算模块 1（CM1）和计算模块 3（CM3）是受支持的产
 
 === 计算模块 IO 板原理图
 
-计算模块 IO 板 (CMIO) 为 CM1、CM3、CM3L 和 CM3+ 提供各种接口。计算模块 IO 板有两个版本： 版本 1 和版本 3。版本 1 仅与 CM1 兼容。版本 3 与 CM1、CM3、CM3+ 和 CM4S 兼容。计算模块 IO 板版本 3 有时简称为 CMIO3。要了解有关 CMIO1 和 CMIO3 的更多信息，请参阅以下文档：
+计算模块 IO 板 (CMIO) 为 CM1、CM3、CM3+ 和 CM4S 提供各种接口。计算模块 IO 板有两个版本： 版本 1 和版本 3。版本 1 仅与 CM1 兼容。版本 3 与 CM1、CM3、CM3+ 和 CM4S 兼容。计算模块 IO 板版本 3 有时简称为 CMIO3。要了解有关 CMIO1 和 CMIO3 的更多信息，请参阅以下文档：
 
 * https://datasheets.raspberrypi.com/cmio/cmio-schematics.pdf[Schematics for CMIO]
 * https://datasheets.raspberrypi.com/cmio/RPi-CMIO-R1P2.zip[Design documents for CMIO Version 1.2 (CMIO/CMIO1)]

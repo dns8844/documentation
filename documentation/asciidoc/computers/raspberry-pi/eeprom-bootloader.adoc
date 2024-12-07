@@ -50,7 +50,7 @@ $ sudo -E rpi-eeprom-config --edit
 
 如果 `1` ，则 `sudo halt` 将在低功耗模式下运行，直到GPIO3或GLOBAL_EN短路接地。
 
-此设置与Raspberry Pi 5无关，因为 xref:raspberry-pi.adoc#power-button[电源按钮] 可始终用于从 `HALT` 或 `STANDBY` 唤醒。
+此设置与Raspberry Pi 5之后的旗舰机型、CM5 之后的计算模块以及 Pi 500 之后的键盘机型无关无关，因为 xref:raspberry-pi.adoc#power-button[电源按钮] 总是可以用于从 `HALT` 或 `STANDBY` 唤醒。
 
 默认值： `1` 
 

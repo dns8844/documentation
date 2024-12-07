@@ -156,14 +156,14 @@ $ cd rpicam-apps
 
 [source,console]
 ----
-$ meson setup build -Denable_libav=enabled -Denable_drm=enabled -Denable_egl=enabled -Denable_qt=enabled -Denable_opencv=disabled -Denable_tflite=disabled
+$ meson setup build -Denable_libav=enabled -Denable_drm=enabled -Denable_egl=enabled -Denable_qt=enabled -Denable_opencv=disabled -Denable_tflite=disabled -Denable_hailo=disabled
 ----
 
 对于 Raspberry Pi OS Lite 等无人机交互操作系统，请使用以下 `meson` 命令配置 `rpicam-apps` 构建：
 
 [source,console]
 ----
-$ meson setup build -Denable_libav=disabled -Denable_drm=enabled -Denable_egl=disabled -Denable_qt=disabled -Denable_opencv=disabled -Denable_tflite=disabled
+$ meson setup build -Denable_libav=disabled -Denable_drm=enabled -Denable_egl=disabled -Denable_qt=disabled -Denable_opencv=disabled -Denable_tflite=disabled -Denable_hailo=disabled
 ----
 
 [TIP]
@@ -172,6 +172,7 @@ $ meson setup build -Denable_libav=disabled -Denable_drm=enabled -Denable_egl=di
 * 使用 `-Dneon_flags=armv8-neon` 为 Raspberry Pi 3 或 Raspberry Pi 4 上的 32 位操作系统启用优化。
 * 如果您已安装 OpenCV 并希望使用基于 OpenCV 的后处理阶段，请使用 `-Denable_opencv=enabled` 。
 * 如果您已安装 TensorFlow Lite 并希望在后处理阶段使用它，请使用 `-Denable_tflite=enabled` 。
+* 如果安装了 HailoRT 并希望在后处理阶段使用它，请使用 `-Denable_hailo=enabled` 。
 
 ======
 
@@ -233,6 +234,11 @@ $ rpicam-still --version
 `-Denable_opencv=enabled`:: 强制基于 OpenCV 的后处理阶段链接或不链接。需要 OpenCV 才能启用。默认为 `disabled` 。
 
 `-Denable_tflite=enabled`:: 启用或禁用 TensorFlow Lite 后处理阶段。默认情况下禁用。需要 Tensorflow Lite 才能启用。根据您构建和/或安装 TFLite 的方式，您可能需要调整 `post_processing_stages` 目录中的 `meson.build` 文件。
+
+`Denable_hailo=enabled`:: 启用或禁用基于 HailoRT 的后处理阶段。需要 HailoRT 才能启用。默认为 `auto`。
+
+`Ddownload_hailo_models=true`:: 为 HailoRT 后处理阶段下载并安装模型。需要安装 `wget`。默认为 `true`。
+
 
 上述每个选项（除 `neon_flags` 外）都支持以下值：
 

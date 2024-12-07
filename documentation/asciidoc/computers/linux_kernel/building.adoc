@@ -40,7 +40,7 @@ $ git clone --depth=1 --branch <branch> https://github.com/raspberrypi/linux
 有关可用分支的完整列表，请参阅 https://github.com/raspberrypi/linux [the Raspberry Pi kernel repository]。
 ====
 
-现在你有了内核源代码，请通过 xref:linux_kernel.adoc#natively-build-a-kernel[本机] 或 xref:linux_kernel.adoc#cross-compiled-build[交叉编译] 构建一个新内核。
+现在你有了内核源代码，请通过 xref:linux_kernel.adoc#natively-build-a-kernel[本机] 或 xref:linux_kernel.adoc#cross-compile-the-kernel[交叉编译] 构建一个新内核。
 
 [[natively-build-a-kernel]]
 === 本地构建内核

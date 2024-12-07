@@ -92,4 +92,4 @@ NOTE: 按照GPIO线的数字顺序尝试各种引导模式，即SD0、SD1、NAND
 
 SD0 是 Broadcom SD 卡/MMC 接口。SoC 内的启动 ROM 运行时，总是将 SD0 连接到内置 microSD 卡插槽。在带有 eMMC 设备的 Compute Modules 上，SD0 与 eMMC 设备相连；在 Compute Modules Lite 上，SD0 位于边缘连接器上，与 CMIO 载板上的 microSD 卡插槽相连。SD1 是 Arasan SD 卡/MMC 接口，也能使用 SDIO。所有内置无线局域网的 Raspberry Pi 型号都使用 SD1 通过 SDIO 连接到无线芯片。
 
-GPIO 线路的默认上拉电阻为 50KΩ，如 https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[BCM2835 ARM 外围设备数据表] 第 102 页所述。建议将 GPIO 线路的上拉电阻设为 5KΩ：这将让 GPIO 正常工作，也不会消耗过多的功率。
+GPIO 线路的默认上拉电阻为 50KΩ，如 https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[BCM2835 ARM 外围设备datasheet] 第 102 页所述。建议将 GPIO 线路的上拉电阻设为 5KΩ：这将让 GPIO 正常工作，也不会消耗过多的功率。

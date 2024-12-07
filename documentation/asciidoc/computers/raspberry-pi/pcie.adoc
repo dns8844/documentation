@@ -10,7 +10,7 @@ Raspberry Pi 5在电路板的右侧有一个FPC连接器。该连接器为快速
 
 有关PCIe FPC连接器引脚和创建第三方设备、附件和HAT所需的其他详细信息，请参阅 https://datasheets.raspberrypi.com/pcie/pcie-connector-standard.pdf[Raspberry Pi Connector for PCIe]标准文档。它应与 https://datasheets.raspberrypi.com/hat/hat-plus-specification.pdf[Raspberry Pi HAT+规范] 一起阅读。
 
-NOTE: 枚举交换机后面的 PCIe 设备是 https://github.com/raspberrypi/firmware/issues/1833[当前不支持]。
+NOTE: 只有某些设备 https://github.com/raspberrypi/firmware/issues/1833[支持] 枚举 Switch 后面的 PCIe 设备。
 
 [[enable-pcie]]
 === 启用PCIe
@@ -57,32 +57,36 @@ PCIE_PROBE=1
 
 WARNING: Raspberry Pi 5未通过Gen 3.0速度认证。PCIe Gen 3.0连接可能不稳定。
 
-==== 通过 `config.txt`
+默认情况下，Raspberry Pi 5 使用 Gen 2.0 速度（5 GT/s）。使用以下方法之一来强制使用 Gen 3.0（8 GT/s）：
 
+[tabs%sync]
+======
+via `config.txt`::
++
 连接已通过Gen 2.0速度（5 GT/sec）认证，但您可以强制执行Gen 3.0（10 GT/sec）速度。要启用PCIe Gen 3.0速度，请将以下行添加到 `/boot/firmware/config.txt` ：
-
++
 [source,ini]
 ----
 dtparam=pciex1_gen=3
 ----
-
++
 使用 `sudo reboot` 重新启动您的Raspberry Pi以使这些设置生效。
 
-==== 通过 `config.txt`
-
+通过 `config.txt`
++
 运行以下命令打开 Raspberry Pi 配置 CLI：
-
++
 [source,console]
 ----
 $ sudo raspi-config
 ----
-
++
 完成以下步骤，启用 PCIe Gen 3.0 速度：
-
++
 . 选择 `Advanced Options`.
 . 选择 `PCIe Speed`.
 . 选择 `Yes` 以启用 PCIe Gen 3 模式.
 . 选择 `Finish` 退出.
+. 使用 `sudo reboot` 重启 Raspberry Pi，使这些设置生效。
 
-使用 `sudo reboot` 重启 Raspberry Pi，使这些设置生效。
-
+======

@@ -69,7 +69,9 @@ image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspb
 
 [[recommended-capacity]]
 
-对于Raspberry Pi OS安装，我们建议使用至少具有32GB存储空间的SD卡。对于Raspberry Pi OS Lite，我们建议至少使用16GB。您可以使用任何容量小于2TB的SD卡。由于 https://en.wikipedia.org/wiki/Master_boot_record[MBR] 的限制，目前不支持2TB以上的容量。与任何其他引导介质一样，你会发现 SD 卡的性能有所提高，读写速度更快。。
+对于Raspberry Pi OS安装，我们建议使用至少具有32GB存储空间的SD卡。对于Raspberry Pi OS Lite，我们建议至少使用16GB。您可以使用任何容量小于2TB的SD卡。由于 https://en.wikipedia.org/wiki/Master_boot_record[MBR] 的限制，目前不支持2TB以上的容量。与任何其他引导介质一样，你会发现 SD 卡的性能有所提高，读写速度更快。
+
+如果不确定购买哪种 SD 卡，请参考 xref：.../accessories/sd-cards.adoc[Raspberry Pi 的官方 SD 卡]。
 
 由于硬件限制，以下设备只能从256GB或更小的引导分区引导：
 

@@ -1,106 +1,147 @@
-== Compute Modules
+== 计算模块
 
-Raspberry Pi Compute Modules are **system-on-module** variants of the flagship Raspberry Pi models. Compute Modules are especially popular for industrial and commercial applications, including digital signage, thin clients, and process automation. Some of these applications use the flagship Raspberry Pi design, but many users want a more compact design or on-board eMMC storage.
+Raspberry Pi 计算模块是旗舰 Raspberry Pi 型号的 **系统模块** 变体。计算模块在工业和商业应用中特别受欢迎，包括数字标牌、瘦客户机和过程自动化。其中一些应用使用旗舰 Raspberry Pi 设计，但许多用户需要更紧凑的设计或板载 eMMC 存储。
 
-Compute Modules come in multiple variants, varying both in memory and embedded Multi-Media Card (eMMC) flash storage capacity. The eMMC is similar to an SD card, but soldered onto the board. Unlike SD cards, eMMC is specifically designed to be used as a disk and includes extra features to improve reliability. **Lite** models have no on-board storage, and are sometimes referred to with the shorthand suffix **L**, e.g. "CM3L".
+计算模块有多种变体，内存和嵌入式多媒体卡（eMMC）闪存容量各不相同。eMMC 类似于 SD 卡，但焊接在电路板上。与 SD 卡不同，eMMC 专门设计用作磁盘，并具有提高可靠性的额外功能。**Lite** 型号没有板载存储，有时会以 **L** 作为后缀，如 “CM3L”。
 
-Compute Modules use the following Raspberry Pi SoCs:
+计算模块使用以下 Raspberry Pi SoC：
+* BCM2835 用于 CM1
+* BCM2837 用于 CM3, CM3+
+* BCM2711 用于 CM4, CM4S
+* BCM2712 用于 CM5
 
-* BCM2835 for CM1
-* BCM2837 for CM3, CM3+
-* BCM2711 for CM4, CM4S
+=== 计算模块 5
 
-=== Compute Module 4
+.Compute Module 5
+image::images/cm5.png[alt="Compute Module 5", width="60%"]
 
-The latest version of the Compute Module is the Compute Module 4 (CM4). We recommend CM4 for all future development.
+计算模块 5（CM5）将 Raspberry Pi 5 的内部结构（BCM2712 处理器和 2GB、4GB 或 8GB 内存）与可选的 0GB（Lite）、16GB、32GB 或 64GB eMMC 闪存结合在一起。
+
+CM5 采用与 CM4 相同的外形尺寸，具有两个 100 针高密度连接器。
+
+=== 计算模块 4
 
 .Compute Module 4
 image::images/cm4.jpg[alt="Compute Module 4", width="60%"]
 
-The Compute Module 4 (CM4) contains the internals of a Raspberry Pi 4 (the BCM2711 processor and 1GB, 2GB, 4GB, or 8GB of RAM) as well as an optional 0GB (Lite), 8GB, 16GB or 32GB of eMMC flash storage.
+计算模块 4（CM4）包含 Raspberry Pi 4 的内部元件（BCM2711 处理器和 1GB、2GB、4GB 或 8GB 内存），以及可选的 0GB（Lite）、8GB、16GB 或 32GB eMMC 闪存。
 
-Unlike CM1, CM3, and CM3+, CM4 does not use the DDR2 SO-DIMM form factor. Instead, CM4 uses two 100-pin high density connectors in a smaller physical footprint.
-This change helped add the following interfaces:
+与 CM1、CM3 和 CM3+ 不同，CM4 不使用 DDR2 SO-DIMM 外形。相反，CM4 使用两个 100 针高密度连接器，物理尺寸更小。
+这一变化有助于增加以下接口：
 
-* an additional second HDMI port
+
+* 额外的第二个 HDMI 端口
 * PCIe
-* Ethernet
+* 以太网
 
-The previous form factor could not have supported these interfaces.
+以前的外形无法支持这些接口。
 
-=== Compute Module 4S
+=== 计算模块 4S
 
 .Compute Module 4S
 image::images/cm4s.jpg[alt="Compute Module 4S", width="60%"]
 
-The Compute Module 4S (CM4S) contains the internals of a Raspberry Pi 4 (the BCM2711 processor and 1GB, 2GB, 4GB, or 8GB of RAM) as well as an optional 0GB (Lite), 8GB, 16GB or 32GB of eMMC flash storage. Unlike CM4, CM4S comes in same the DDR2 SO-DIMM form factor as CM1, CM3, and CM3+.
+计算模块 4S（CM4S）包含 Raspberry Pi 4 的内部元件（BCM2711 处理器和 1GB、2GB、4GB 或 8GB 内存），以及可选的 0GB（Lite）、8GB、16GB 或 32GB eMMC 闪存。与 CM4 不同，CM4S 采用与 CM1、CM3 和 CM3+ 相同的 DDR2 SO-DIMM 外形。
 
 [[compute-module-3-plus]]
-=== Compute Module 3+
+=== 计算模块 3+
 
 .Compute Module 3+
 image::images/cm3-plus.jpg[alt="Compute Module 3+", width="60%"]
 
-The Compute Module 3+ (CM3+) contains the internals of a Raspberry Pi 3 Model B+ (the BCM2837 processor and 1GB of RAM) as well as an optional 0GB (Lite), 8GB, 16GB or 32GB of eMMC flash storage.
+计算模块 3+ (CM3+) 包含 Raspberry Pi 3 Model B+ 的内部组件（BCM2837 处理器和 1GB 内存），以及可选的 0GB（Lite）、8GB、16GB 或 32GB eMMC 闪存。
 
-=== Compute Module 3
+=== 计算模块 3
 
 .Compute Module 3
 image::images/cm3.jpg[alt="Compute Module 3", width="60%"]
 
-The Compute Module 3 (CM3) contains the internals of a Raspberry Pi 3 (the BCM2837 processor and 1GB of RAM) as well as an optional 4GB of eMMC flash storage.
+计算模块 3（CM3）包含 Raspberry Pi 3 的内部元件（BCM2837 处理器和 1GB 内存），以及可选的 4GB eMMC 闪存。
 
-=== Compute Module 1
+=== 计算模块 1
 
 .Compute Module 1
 image::images/cm1.jpg[alt="Compute Module 1", width="60%"]
 
-The Compute Module 1 (CM1) contains the internals of a Raspberry Pi (the BCM2835 processor and 512MB of RAM) as well as an optional 4GB of eMMC flash storage.
+计算模块 1（CM1）包含 Raspberry Pi 的内部元件（BCM2835 处理器和 512MB 内存）以及可选的 4GB eMMC 闪存。
 
 == IO Boards
 
-Raspberry Pi IO Boards provide a way to connect a single Compute Module to a variety of I/O (input/output) interfaces. Compute Modules are, by nature, small. As a result, they lack ports and connectors. IO Boards provide a way to connect Compute Modules to a variety of peripherals.
+Raspberry Pi IO 板提供了一种将单个计算模块连接到各种 I/O（输入/输出）接口的方法。从本质上讲，计算模块很小。因此，它们缺少端口和连接器。IO 板提供了一种将计算模块连接到各种外设的方法。
 
-IO Boards are breakout boards intended for development; in production, you should use a smaller, potentially custom board that provides only the ports and peripherals required for your use-case.
+IO 板是用于开发的评估板；在生产中，您应该使用更小的、可能是定制的板，只提供您的使用情况所需的端口和外设。
+
+Raspberry Pi IO 板提供以下功能：
+
+* 为模块供电
+* 将 GPIO 连接到引脚接头
+* 将摄像头和显示器接口连接至 FFC 连接器
+* 将 HDMI 连接到 HDMI 端口
+* 将 USB 连接到 USB 端口
+* 将活动监控连接到 LED
+* 通过 USB 对 eMMC 进行编程
+* 将 PCIe 连接到用于物理连接存储设备或外设的连接器
+
+IO 板是用于开发或个人使用的突破板；在生产中，您应该使用更小的、可能是定制的板，只提供使用情况所需的端口和外设。
+
+=== Compute Module 5 IO Board
+
+.Compute Module 5 IO Board
+image::images/cm5io.png[alt="Compute Module 5 IO Board", width="60%"]
+
+计算模块 5 IO 板提供以下接口：
+
+* 带 40 引脚 GPIO 连接器的 HAT 基底面
+* PoE 接口
+* 2× HDMI 端口
+* 2× USB 3.0 端口
+* 千兆以太网 RJ45，支持 PoE
+* M.2 M key PCIe 插槽，与 2230、2242、2260 和 2280 外形兼容
+* microSD 卡插槽（仅用于无 eMMC 的 Lite 机型；其他机型忽略该插槽）
+* 2× MIPI DSI/CSI-2 显示器/摄像头组合 FPC 连接器（22 针 0.5 毫米间距电缆）
+* 带电池插座的实时时钟
+* 四针 JST-SH PWM 风扇连接器
+* USB-C 电源采用与 Raspberry Pi 5 相同的标准（5V、5A (25W) 或 5V、3A (15W)，外设限制为 600mA）
+* 跳线可禁用 eMMC 启动、EEPROM 写入和 USB OTG 连接等功能
 
 === Compute Module 4 IO Board
 
 .Compute Module 4 IO Board
 image::images/cm4io.jpg[alt="Compute Module 4 IO Board", width="60%"]
 
-Compute Module 4 IO Board provides the following interfaces:
+计算模块 4 IO 板提供以下接口：
 
-* HAT footprint with 40-pin GPIO connector and PoE header
-* Two HDMI ports
-* Two USB 2.0 ports
-* Gigabit Ethernet RJ45 with PoE support
-* MicroSD card slot (only for use with Lite variants with no eMMC)
-* PCIe Gen 2 socket
-* 12V input via barrel jack (supports up to 26V if PCIe unused)
-* 2 x MIPI DSI display FPC connectors (22-pin 0.5 mm pitch cable)
-* 2 x MIPI CSI-2 camera FPC connectors (22-pin 0.5 mm pitch cable)
-* Real-time clock with battery socket
+* 2× HDMI 端口
+* 2 个 USB 2.0 端口
+* 千兆以太网 RJ45，支持 PoE
+* microSD 卡插槽（仅用于不带 eMMC 的 Lite 机型；其他机型忽略该插槽）
+* PCIe Gen 2 接口
+* 微型 USB 上游端口
+* 2× MIPI DSI 显示器 FPC 连接器（22 针 0.5 毫米间距电缆）
+* 2× MIPI CSI-2 摄像头 FPC 连接器（22 针 0.5 毫米间距电缆）
+* 带电池插座的实时时钟
+* 通过圆形插孔输入 12V（如果未使用 PCIe，则最高支持 26V） * 2× MIPI CSI-2 摄像头 FPC 连接器(22 针 0.5 毫米间距电缆)
 
 === Compute Module IO Board
 
 .Compute Module IO Board
 image::images/cmio.jpg[alt="Compute Module IO Board", width="60%"]
 
-Compute Module IO Board provides the following interfaces:
+计算模块 IO 板提供以下接口：
 
-* 120 GPIO pins
-* an HDMI port
-* a USB-A port
-* 2 x MIPI DSI display FPC connectors (22-pin 0.5 mm pitch cable)
-* 2 x MIPI CSI-2 camera FPC connectors (22-pin 0.5 mm pitch cable)
+* 120 个 GPIO 引脚
+* 1x HDMI 端口
+* 1x USB-A 端口
+* 2× MIPI DSI 显示器 FPC 连接器（22 针 0.5 毫米间距电缆）
+* 2× MIPI CSI-2 摄像头 FPC 连接器（22 针 0.5 毫米间距电缆）
 
-The Compute Module IO Board comes in two variants: Version 1 and Version 3. Version 1 is only compatible with CM1. Version 3 is compatible with CM1, CM3, CM3+, and CM4S. Compute Module IO Board Version 3 is sometimes written as the shorthand CMIO3.
+计算模块 IO 板有两个版本： 版本 1 和版本 3。版本 1 仅与 CM1 兼容。版本 3 与 CM1、CM3、CM3+ 和 CM4S 兼容。计算模块 IO 板第 3 版有时简称为 CMIO3。
 
-Compute Module IO Board Version 3 added a microSD card slot that did not exist in Compute Module IO Board Version 1.
+计算模块 IO 板版本 3 增加了一个 microSD 卡插槽，这在计算模块 IO 板版本 1 中是没有的。
 
 === IO Board compatibility
 
-Not all Compute Module IO Boards work with all Compute Module models. The following table shows which Compute Modules work with each IO Board:
+并非所有计算模块 IO 板都能与所有计算模块型号配合使用。下表显示了哪些计算模块可与哪个 IO 板配合使用：
 
 [cols="1,1"]
 |===
@@ -118,4 +159,76 @@ a|
 | Compute Module 4 IO Board (CM4IO)
 a|
 * CM4
+* CM5 (with reduced functionality)
+| Compute Module 5 IO Board (CM5IO)
+a|
+* CM5
+* CM4 (with reduced functionality)
 |===
+
+== CM5 配件
+
+=== IO Case
+
+Compute Module 5 IO Case可为 CM5IO 板提供物理保护。
+
+.Compute Module 5 IO Board Case
+image::images/cm5io-case.png[alt="Compute Module 5 IO Board Case", width="60%"]
+
+外壳为 CM5IO 板上所有面向外部的端口和 LED 提供了开口，并为 Raspberry Pi 天线套件提供了一个连接点。
+
+.Compute Module 5 IO Board Case ports
+image::images/cm5io-case-front.png[alt="the port selection on the Compute Module 5 IO Board Case", width="60%"]
+
+要在机箱内安装 CM5IO 电路板，请将电路板放置在机箱底部，对齐电路板两角略微内嵌的四个安装点。将四颗螺丝拧入安装点。注意不要过度拧紧螺丝。
+
+要使用机箱风扇，请将风扇电缆连接至主板上的风扇 (J14) 端口。
+
+关闭机箱时，将机箱上部放在机箱下部的顶部。面对机箱正面（有端口通过孔），仔细对齐机箱左右两侧的螺丝孔和机箱背面的电源按钮。将四颗螺丝拧紧到螺丝孔中。注意不要过度拧紧螺丝。
+
+TIP: 机箱已预装风扇。要在计算模块上安装被动散热器后关闭机箱，请卸下风扇。要卸下风扇，请从机箱顶部底部卸下位于风扇四角的四颗螺丝。
+
+.CM5 Case physical specification
+image::images/cm5-case-physical.png[alt="CM5 Case physical specification", width="80%"]
+
+=== 天线
+
+Raspberry Pi 天线套件提供经过认证的外置天线，可增强 CM4 或 CM5 的无线接收能力。
+
+.CM4 and CM5 Antenna
+image::images/cm4-cm5-antenna.jpg[alt="The Antenna, connected to CM4", width="60%"]
+
+要将天线安装到计算模块和机箱上，请完成以下步骤：
+
+. 将电缆上的 https://en.wikipedia.org/wiki/Hirose_U.FL [U.FL 连接器] 连接到计算模块上的 U.FL 兼容连接器。
+. 将齿形垫圈固定在电缆末端的公 SMA 连接器上，然后将 SMA 连接器朝外插入机壳的孔中。
+. 用固定六角螺母和垫圈将 SMA 连接器固定到位。
+. 将天线上的母 SMA 连接器拧紧到公 SMA 连接器上。
+. 将天线旋转 90°，调整到最终位置。
+
+.CM4 and CM5 Antenna assembly diagram
+image::images/cm4-cm5-antenna-assembly.svg[alt="CM4 and CM5 antenna assembly diagram", width="60%"]
+
+要将天线与计算模块一起使用，请在 xref:../computers/config_txt.adoc[`/boot/firmware/config.txt`] 中添加 “dtoverlay” 配置。在 `config.txt` 末尾添加以下一行：
+
+[source,ini]
+----
+dtparam=ant2
+----
+
+.CM4 and CM5 Antenna physical specification
+image::images/cm4-cm5-antenna-physical.png[alt="CM4 and CM5 antenna physical specification", width="80%"]
+
+=== 散热器
+
+CM5 散热器可帮助 CM5 散热，提高 CPU 性能、寿命和耐用性。
+
+.CM5 Cooler
+image::images/cm5-cooler.jpg[alt="CM5 Cooler", width="60%"]
+
+要将冷却器安装到 CM5 上，请将冷却器底部的导热硅胶粘贴到 CM5 顶部。将散热器上的切口与天线 https://en.wikipedia.org/wiki/Hirose_U.FL [U.FL 连接器] 对准。可选择在每个角落的安装点拧上螺丝，以固定冷却器。如果省略螺丝，散热器与计算模块之间的粘合度将会随着时间、使用而提高。
+
+.CM5 Cooler physical specification
+image::images/cm5-cooler-physical.png[alt="CM5 Cooler physical specification", width="80%"]
+
+NOTE: 需要将风扇从 CM5IO 机箱上取下，才能在 CM5IO 机箱安装CM5 散热器。

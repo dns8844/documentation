@@ -495,7 +495,7 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 此选项仅适用于某些相机模块。
 
-==== `autofocus-range` `自动对焦范围` 
+==== `autofocus-window`
 
 默认值： `normal` 
 

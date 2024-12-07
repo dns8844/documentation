@@ -8,27 +8,27 @@
 
 默认情况下，Raspberry Pi OS 禁用 SSH 服务器。通过以下方式之一启用 SSH：
 
-[[on-the-desktop]]
-==== 在桌面上
-
+[tabs]
+======
+通过桌面::
++
 . 从 *Preferences* 菜单启动 *Raspberry Pi 配置*。
 . 导航至 *Interfaces* 选项卡。
 . 选择 *SSH* 旁边的 *Enabled*。
 . 单击 *OK*。
 
-[[while-flashing-a-fresh-os-image]]
-==== 烧录新的 OS 镜像时
-
+烧录新的 OS 镜像时::
++
 要在全新安装的 Raspberry Pi OS 上配置 SSH：
-
++
 . 按照 xref:../computers/getting-started.adoc#raspberry-pi-imager[Install with Imager] 指南中的说明操作。
 . 在**操作系统自定义**步骤中，导航至**服务**选项卡。
 . 勾选**启用 SSH**复选框。
 . 选择**密码验证**，使用与实际使用 Raspberry Pi 时相同的用户名和密码登录。选择 **Allow public-key authentication only** 以 xref:remote-access.adoc#configure-ssh-without-a-password[配置 SSH 密钥] 进行无密码登录。
 
-[[from-the-terminal]]
-==== 从终端使能SSH
 
+从终端使能SSH::
++
 . 在终端窗口输入 `sudo raspi-config` 。
 . 选择 `Interfacing Options` 。
 . 导航至并选择 `SSH` 。
@@ -36,9 +36,8 @@
 . 选择 `Ok` 。
 . 选择 `Finish``。
 
-[[manually]]
-==== 手动使能SSH
-
+手动使能SSH::
++
 . 在启动分区中创建一个名为 `ssh` 的空文件：
 +
 [source,console]
@@ -51,6 +50,7 @@ $ sudo touch /boot/firmware/ssh
 ----
 $ sudo reboot
 ----
+======
 
 [[connect-to-an-ssh-server]]
 === 连接到 SSH 服务器
@@ -68,7 +68,7 @@ $ ssh <username>@<ip address>
 
 您现在应该会看到 Raspberry Pi 命令提示符：
 
-[source,console]
+[source,console?prompt=<username>@<hostname> ~ $]
 ----
 <username>@<hostname> ~ $
 ----

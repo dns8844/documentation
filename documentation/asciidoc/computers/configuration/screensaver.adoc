@@ -30,16 +30,6 @@ $ sudo raspi-config
 
 使用箭头键导航并使用 *Enter* 键进行选择。选择 `显示选项` > `自动息屏` 。使用箭头键选择 `是` 以启用自动息屏，或选择 `否` 以禁用自动息屏。
 
-或者，您可以将以下行添加或编辑到 `~/.config/wayfire.ini` ：
-
-[source,ini]
-----
-[idle]
-dpms_timeout=600
-----
-
-`dpms_timeout` 变量控制 Raspberry Pi OS 自动息屏前所需的不活动秒数。例如，值为 `600` 会在 600 秒或 10 分钟后自动息屏。将值设置为 `0` 以永不自动息屏。
-
 [[console]]
 === 控制台
 

@@ -46,19 +46,11 @@ $ kmsprint | grep Connector
 
 ==== 设置自定义分辨率
 
-如果运行 Wayland 桌面合成器，可以通过编辑主目录下的 `.config/wayfire.ini` 文件来设置自定义显示分辨率。编辑现有的 `[output:<device>]` 部分，或为你的 xref:configuration.adoc#determine-display-device-name[display device] 添加一个新的 `[output:<device>]` 部分（如果不存在）。要更改显示分辨率，请添加 `mode` 行。例如，以下示例显示了名为 `HDMI-A-1` 的设备的配置，其分辨率为 1080p，频率为 60Hz：
-
-[source,ini]
-----
-[output:HDMI-A-1]
-mode = 1920x1080@60
-----
-
-有关支持的模式和 `mode` 语法，请参阅 https://github.com/WayfireWM/wayfire-wiki/blob/master/Configuration.md#output-configuration[Wayfire文档]。
-
-在 `/usr/share/greeter.ini` 中添加相同的配置块，以配置登录屏幕的分辨率。
+要设置自定义分辨率，请使用我们的屏幕配置工具 `raindrop`。如果您的Raspberry Pi OS安装尚未包含 `raindrop`（例如，如果您仍在使用以前的屏幕配置工具 `arandr`），您可以从 `apt` 或推荐软件GUI下载 `raindrop`。
 
 ==== 设置自定义旋转
+
+要设置自定义分辨率，请使用我们的屏幕配置工具 `raindrop`。如果您的Raspberry Pi OS安装尚未包含 `raindrop`（例如，如果您仍在使用以前的屏幕配置工具 `arandr`），您可以从 `apt` 或推荐软件GUI下载 `raindrop`。
 
 如果运行 Wayland 桌面合成器，可以使用 `wlr-randr` 设置自定义的显示旋转。以下命令可将显示屏旋转 0°、90°、180° 和 270°：
 
@@ -75,24 +67,6 @@ $ wlr-randr --output HDMI-A-1 --transform 270
 NOTE: 要通过 SSH 运行该命令，请添加以下前缀: `WAYLAND_DISPLAY=wayland-1`，例如 `WAYLAND_DISPLAY=wayland-1 wlr-randr --output HDMI-A-1 --transform 90`.
 
 您还可以使用以下 `-transform` 选项之一，在旋转显示屏的同时镜像显示屏： `flipped`, `flipped-90`, `flipped-180`, `flipped-270`
-
-另外，你也可以通过编辑主目录下的 `.config/wayfire.ini` 文件来旋转显示屏。编辑现有的 `[output:<device>]` 部分，如果 xref:configuration.adoc#determine-display-device-name[display device] 部分不存在，则为其添加新的 `[output:<device>]`  部分。要旋转显示屏，请添加 `transform` 行。例如，以下示例显示了名为 `HDMI-A-1` 的设备的配置，其分辨率为 1080p，频率为 60Hz，变换角度为 270°：
-
-[source,ini]
-----
-[output:HDMI-A-1]
-mode = 1920x1080@60
-transform = 270
-----
-
-Wayland 支持以下 `transform` 选项：
-
-* `normal`
-* `90`
-* `180`
-* `270`
-
-在 `/usr/share/greeter.ini` 中添加相同的配置块，以配置登录屏幕的旋转。
 
 === 控制台分辨率和旋转
 

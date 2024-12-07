@@ -40,7 +40,7 @@ Raspberry Pi 3 上的 USB 启动默认值取决于使用的版本。有关在默
 [NOTE]
 ====
 * 如果没有插入 SD 卡，SD 启动模式需要 5 秒钟才能失效。为了减少这种情况并更快地回到 USB 模式，可以插入一张没有任何内容的 SD 卡，或者使用上述 GPIO 启动模式 OTP 设置只启用 USB。
-* GPIO 的默认值在 https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[ARM 外围设备数据表] 第 102 页进行了定义。如果启动时的值不等于默认值，则启用该启动模式。
+* GPIO 的默认值在 https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[ARM 外围设备datasheet] 第 102 页进行了定义。如果启动时的值不等于默认值，则启用该启动模式。
 * USB 枚举是一种向集线器上的下游设备供电的方法，然后等待设备拉动 D+ 和 D- 线，以显示它是 USB 1 还是 USB 2。 这可能需要一些时间：在某些设备上，硬盘驱动器旋转和启动枚举过程可能需要长达三秒钟的时间。因为这是检测硬件是否已连接的唯一方法，所以我们必须等待最短的时间（两秒）。如果设备在最长超时后仍未响应，可以使用 `config.txt` 中的 `program_usb_boot_timeout=1` 将超时时间延长至五秒。
 * MSD 启动优先于以太网启动。
 * 第一个分区不再必须是 FAT 分区，因为 MSD 启动将继续搜索第一个分区以外的 FAT 分区。

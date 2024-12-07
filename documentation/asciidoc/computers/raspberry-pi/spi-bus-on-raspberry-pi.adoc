@@ -12,9 +12,9 @@ Raspberry Pi Zero、1、2和3有三个SPI控制器：
 * `SPI1` 具有三种硬件芯片选择，适用于除原始Raspberry Pi 1 Model A和Model B之外的所有Raspberry Pi型号。
 * `SPI2` 也有三种硬件芯片选择，仅在 Compute Module 1、3和3+上可用。
 
-在树莓派4、400和 Compute Module 4 上，有四个额外的SPI总线：SPI3到SPI6，每个都有两个硬件芯片选择。这些额外的SPI总线可通过某些GPIO引脚上的备用功能分配获得。有关详细信息，请参阅 https://datasheets.raspberrypi.com/bcm2711/bcm2711-peripherals.pdf[BCM2711 Arm外围设备] 数据表。
+在树莓派4、400和 Compute Module 4 上，有四个额外的SPI总线：SPI3到SPI6，每个都有两个硬件芯片选择。这些额外的SPI总线可通过某些GPIO引脚上的备用功能分配获得。有关详细信息，请参阅 https://datasheets.raspberrypi.com/bcm2711/bcm2711-peripherals.pdf[BCM2711 Arm外围设备] datasheet。
 
- https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[BCM2835 Arm外设] 数据表中的第10章描述了主控制器。第2.3章描述了辅助控制器。
+ https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[BCM2835 Arm外设] datasheet中的第10章描述了主控制器。第2.3章描述了辅助控制器。
 
 [[pingpio-mappings]]
 ==== 引脚/GPIO映射

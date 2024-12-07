@@ -7,6 +7,7 @@ Raspberry Pi生产多种官方相机模块，包括：
 * 一千两百万像素 https://raspberrypi.com/products/camera-module-3/[相机模块3]，配有标准和广角镜头，带或不带红外滤光片
 * 一千两百万像素 https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/[高品质相机]，带有CS和M12卡口变体，可用于外部镜头
 * 用于快速运动摄影的160万像素 https://www.raspberrypi.com/products/raspberry-pi-global-shutter-camera/[全局快门相机]
+* 1200万像素的https://www.raspberrypi.com/products/ai-camera/[AI相机]使用索尼IMX500成像传感器，为任何相机应用提供低延迟、高性能的AI功能
 
 有关相机硬件的更多信息，请参阅 xref:../accessories/camera.adoc#about-the-camera-modules[相机硬件文档]。
 

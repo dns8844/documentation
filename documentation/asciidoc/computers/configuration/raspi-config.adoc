@@ -1,108 +1,96 @@
 [[raspi-config]]
-== `raspi-config` 
+== `raspi-config`
 
-TIP: 树莓派桌面用户可以访问此应用程序的图形版本**Preferences** > **Raspberry Pi Configuration**。但是，一些高级配置仅在 `raspi-config` 中可用。
+`raspi-config` 可帮助您配置Raspberry Pi。对 `raspi-config` 的更改将修改 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 和其他配置文件。
 
-`raspi-config` 可帮助您配置Raspberry Pi。Raspberry Pi型号之间的可用选项可能不同。要打开配置工具，请运行以下命令：
+=== Getting started
+
+要从桌面GUI打开配置工具，请转到 **首选项** > **树莓派配置**。
+
+或者，运行以下命令通过终端访问配置工具：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-您应该会在灰色框中看到一个带有选项的蓝屏：
+TIP: 一些高级配置在 `raspi-config` CLI中可用，但在Raspberry Pi配置GUI中不可用。
+
+要从终端导航配置工具：
+
+* 使用上下箭头键在设置列表中滚动。
+* 使用 **Right** 或 **Tab** 访问 `<Select>` 或 `<Finish>` 选项。
+* 使用 **Left** 或 **Tab** 返回设置列表。
+* 输入一个字母以按字母顺序跳转。例如，输入 `E` 可以跳转到时区列表中的'Europe'。
 
 image::images/raspi-config.png[raspi-config main screen]
 
-使用**向上**和**向下**箭头键在可用选项之间移动突出显示的选择。
-
-按**右**箭头键或按**Tab**访问 `<Select>` 和 `<Finish>` 按钮。按**左**或按**Tab**返回选项。
-
-`raspi-config` 自动编辑 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 和各种Linux配置文件。某些选项需要重新启动才能生效。如果您更改了需要重启生效的配置， `raspi-config` 会在您退出时要求您重新启动。
-
-TIP: 在选项值的长列表（如时区城市列表）中，键入一个字母以跳到列表的该部分。例如，输入 `L` 以跳到Lisbon。
-
 [[menu-options]]
-=== 系统选项
+=== System options
 
-系统选项子菜单允许您对引导、登录和网络过程的各个部分进行配置更改，以及一些其他系统级别的更改。
-
-image::images/raspi-system.png[raspi-config system options]
-
+配置引导、登录和网络过程的一部分，以及其他系统级别的更改。
 
 ==== Wireless LAN
 
 配置Wi-Fi SSID和密码。
 
-
 ==== Audio
 
 指定音频输出目的地。
-
 
 ==== Password
 
 更改您的密码。
 
-有关详细信息，请参阅 xref:configuration.adoc#change-user-password[更改用户密码]。
+有关详细信息，请参阅 xref:configuration.adoc#change-user-password[修改用户密码]。
 
 [[hostname]]
 ==== Hostname
 
-为网络上的此Raspberry Pi设置可见的 xref:remote-access.adoc#resolve-raspberrypi-local-with-mdns[mDNS] 名称。
+在网络上设置此Raspberry Pi的可见 xref:remote-access.adoc#resolve-raspberrypi-local-with-mdns[mDNS] 名称。
 
 [[boot-options]]
-==== Boot/auto login
+==== Boot/Auto login
 
-选择是启动到控制台还是桌面，以及您的Raspberry Pi是否在开机时自动登录到您当前的用户帐户。
-
+使用自动登录到当前用户帐户的选项启动到控制台或桌面。
 
 ==== Network at boot
 
 在继续引导之前等待网络连接。
 
-
 ==== Splash screen
 
 启用或禁用启动时显示的启动屏幕。
-
 
 ==== Power LED
 
 如果您的Raspberry Pi型号允许，请更改电源LED的行为。
 
-
 ==== Browser
 
 更改默认网络浏览器。
 
-
 === Display options
-
-image::images/raspi-display.png[raspi-config display options]
 
 [[underscan]]
 ==== Underscan
 
-NOTE: 运行 Wayland 时不可用。
+NOTE: 运行Wayland时不可用。
 
 如果屏幕上显示的初始文本从边缘消失，请启用过扫描以调整边框。在某些显示器上，尤其是显示器上，禁用过扫描将使图片充满整个屏幕并删除黑色边框。
 
-
 ==== Screen blanking
 
-启用或禁用息屏。
+启用或禁用屏幕消隐。
 
 [[resolution]]
 ==== VNC resolution
 
-定义在 xref:configuration.adoc#setting-up-a-headless-raspberry-pi[headless] 设置中使用的视频分辨率。
-
+定义要在 xref:configuration.adoc#setting-up-a-headless-raspberry-pi[headless] 设置中使用的视频分辨率。
 
 ==== Composite
 
 启用或禁用合成视频。
-
 
 ==== 4Kp60 HDMI
 
@@ -113,23 +101,22 @@ NOTE: 运行 Wayland 时不可用。
 
 启用和禁用各种物理和虚拟接口。
 
-image::images/raspi-interface.png[raspi-config interface options]
-
 [[ssh]]
 ==== SSH
 
 启用或禁用远程终端访问您的树莓派使用SSH。
 
-SSH 允许您从另一台计算机远程访问 Raspberry Pi 的命令行。SSH 默认为禁用。在 xref:remote-access.adoc#ssh[SSH 文档页] 上阅读有关使用 SSH 的更多信息。如果将 Raspberry Pi 直接连接到公共网络，除非为所有用户设置了安全密码，否则不应启用 SSH。
+SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。SSH默认禁用。有关SSH的更多信息，请参阅 xref:remote-access.adoc#ssh[SSH documentation]。
+
 [[rpi-connect]]
 ==== RPi Connect
 
-启用或禁用 xref:../services/connect.adoc[Raspberry Pi Connect]，它提供了无需手动网络配置即可远程访问 Raspberry Pi 的功能。
+启用或禁用 xref:../services/connect.adoc[Raspberry Pi Connect]，无需手动网络配置即可远程访问您的Raspberry Pi。
 
 [[VNC]]
 ==== VNC
 
-启用或禁用WayVNC或RealVNC虚拟桌面服务。
+启用或禁用WayVNC或RealVNC虚拟网络计算服务器。
 
 [[spi]]
 ==== SPI
@@ -151,19 +138,16 @@ SSH 允许您从另一台计算机远程访问 Raspberry Pi 的命令行。SSH �
 
 启用或禁用1线接口，通常用于DS18B20温度传感器。
 
-
 ==== Remote GPIO
 
 启用或禁用对GPIO引脚的远程访问。
 
-
 === Performance options
-
-image::images/raspi-perf.png[raspi-config performance options]
 
 [[overclock]]
 ==== Overclock
 
+如果您的Raspberry Pi型号允许，请对CPU进行超频。即使在同一型号中，各个Raspberry Pi设备之间的超频潜力也会有所不同。超频过高可能会导致不稳定。
 
 WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。在启动期间按住 *Shift* 键以暂时禁用超频。
 
@@ -172,87 +156,76 @@ WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到�
 
 更改GPU可用的内存量。
 
-
 ==== Overlay file system
 
 启用或禁用只读文件系统。
 
-
 ==== Fan
 
-自定义与 GPIO 连接的 https://www.raspberrypi.com/products/raspberry-pi-4-case-fan/[Raspberry Pi 4 机箱风扇]的行为。不影响 https://www.raspberrypi.com/products/raspberry-pi-5-case/[Raspberry Pi 5 外壳风扇] 或 https://www.raspberrypi.com/products/active-cooler/[Raspberry Pi 5 主动散热器]中的风扇，它们使用特殊的四针风扇接头连接。
+自定义GPIO连接的 https://www.raspberrypi.com/products/raspberry-pi-4-case-fan/[Raspberry Pi 4 Case Fan] 的行为。不适用于其他风扇型号。
 
 [[localisation-options]]
 === Localisation options
 
 配置位置和国家相关选项。
 
-image::images/raspi-l18n.png[raspi-config localisation options]
-
 [[change-locale]]
-[[locale]]
 ==== Locale
 
-选择区域设置，例如en_GB.UTF-8 UTF-8。
+选择一个区域设置，例如 `en_GB.UTF-8 UTF-8`。
 
 [[change-timezone]]
 ==== Time zone
 
-设置您的当地时区，从地区开始，然后选择一个城市，例如 `Europe/London` 。键入一个字母以跳转到列表中的该字母。
+以 `Region/City` 格式设置您的当地时区，例如“欧洲/伦敦”。键入一个字母以跳转到列表中的该字母。
 
 [[change-keyboard-layout]]
 ==== Keyboard
 
-打开一个菜单，您可以在其中选择键盘布局。更改通常会立即生效，但可能需要重新启动。键入一个字母可跳转到列表中的该字母。
+打开一个菜单，您可以在其中选择键盘布局。更改通常会立即生效，但可能需要重新启动。键入一个字母以跳转到列表中的该字母。
 
 ==== WLAN country
 
-设置无线网络的国家代码。
+为您的无线网络设置国家代码。
 
 [[advanced-options]]
 === Advanced options
 
-image::images/raspi-adv.png[raspi-config advanced options]
+
+WARNING: 对高级选项的更改可能会阻止您的Raspberry Pi按预期工作。除非Raspberry Pi工程师指示，否则避免配置高级选项。
 
 [[expand-filesystem]]
 ==== Expand filesystem
 
-将操作系统分区扩展到整个存储设备，为文件提供更多空间。重新启动 Raspberry Pi 以完成此操作。通常，Raspberry Pi OS 会在首次启动时执行此操作。如果你将操作系统克隆到一个容量大于原存储设备的独立存储设备上，这个选项会很有用。
+扩展您的操作系统分区以填满整个存储设备，为您提供更多用于文件的空间。重新启动您的Raspberry Pi以完成此操作。通常，Raspberry Pi操作系统在首次启动时运行此操作。如果您将操作系统克隆到比原始存储设备容量更大的单独存储设备，此选项可能很有用。
 
-WARNING: 没有确认步骤。选择该选项会立即开始分区扩展。
-
+WARNING: 没有确认步骤。选择该选项立即开始分区扩展。
 
 ==== Network interface names
 
 启用或禁用可预测的网络接口名称。
 
-]
 ==== Network proxy settings
 
 配置网络的代理设置。
 
-
 ==== Boot order
 
-在Raspberry Pi 4及更高版本上，如果未插入SD卡，请指定是从USB或网络引导。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader配置]。
-
+在Raspberry Pi 4及更高版本上，指定在未检测到SD卡或SSD时是从USB或网络启动。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader配置]。
 
 ==== Bootloader version
 
 在Raspberry Pi 4及更高版本上，切换到最新的引导ROM软件。或者，如果最新版本导致问题，您可以恢复出厂默认值。
 
-
 ==== Wayland
 
-在X11和Wayland后端之间切换。Raspberry Pi 4及更高版本默认使用Wayland；其他型号的Raspberry Pi默认使用X11。
+在X11和Wayland后端之间切换，并选择一个窗口管理器。由于Raspberry Pi OS_Bookworm_，所有Raspberry Pi型号默认使用labwc运行Wayland。
 
-NOTE: 要在Raspberry Pi 4之前在Raspberry Pi型号上使用Wayland，您还必须将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt` 。
-
-
+要在树莓派4运行早于_Bookworm_的树莓派操作系统版本之前在树莓派模型上使用Wayland，请将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt`。
 
 ==== Audio config
 
-在PulseAudio和PipeWire音频后端之间切换。在 Raspberry Pi OS Bookworm 之前，树莓派操作系统使用PulseAudio。
+在PulseAudio和PipeWire音频后端之间切换。在树莓派书虫之前，树莓派操作系统使用PulseAudio。
 
 [[update]]
 === Update
@@ -267,25 +240,23 @@ NOTE: 要在Raspberry Pi 4之前在Raspberry Pi型号上使用Wayland，您还�
 [[finish]]
 === Finish
 
-退出 `raspi-config` 。如果您进行了需要重新启动的更改， `raspi-config` 会提示您重新启动。第一次实施更改时，最好重新启动。如果您选择调整SD卡的大小，重新启动可能需要比平时更长的时间。
+退出 `raspi-config`。如有必要，`raspi-config` 会在您退出时要求您重新启动。第一次实施更改时，重新启动以确保您的更改生效。
 
 [[raspi-config-cli]]
-== non-interactive  `raspi-config` 
+== non-interactive `raspi-config`
 
-`raspi-config` 工具还支持非交互式选项和标志，这些选项和标志完全在命令行上更改选项，无需可视化组件。Raspberry Pi型号之间的可用选项可能不同。
+`raspi-config` 工具还支持非交互式选项和标志，它们完全在命令行上更改选项，而无需视觉组件。Raspberry Pi型号之间的可用选项可能不同。
 
 [source,console]
 ----
 $ sudo raspi-config nonint <command> <arguments> [optional-argument]
 ----
 
-NOTE:  `0` 和 `1` 的含义因选项而异。在将值传递给选项之前，请查阅文档。
+NOTE: `0` 和 `1` 的含义因选项而异。在将值传递给选项之前，请始终检查留档。
 
 [[raspi-config-cli-commands]]
 
-[[system-options]]
 === System options
-
 
 ==== Wireless LAN
 
@@ -298,33 +269,32 @@ $ sudo raspi-config nonint do_wifi_ssid_passphrase <ssid> <passphrase> [hidden] 
 
 如果需要，传递无线网络名称（SSID）和密码。以下标志是可选的：
 
-`<hidden>` 选项指示SSID的可见性。如果网络广播打开的SSID，则传递 `0` 或省略该选项。如果您的SSID被隐藏，则传递 `1` 。默认为 `0` 。
+`<hidden>` 选项表示SSID的可见性。如果网络广播打开的SSID，则通过 `0` 或省略该选项。如果您的SSID被隐藏，则通过 `1`。默认为 `0`。
 
-`<plain>` 选项表示是否以明文形式传递口令。如果口令包含空格或特殊字符（如 `!` ），则必须输入 `0` ，并在口令周围使用引号。否则，可以输入 `1` 或省略该选项。默认为 `1` 。 要传递此选项，必须指定 `<hidden>` 的值。
+`<plain>` 选项指示您是否打算以明文形式传递密码。如果您的密码包含空格或特殊字符（如 `!`），则必须传递 `0` 并在密码周围使用引号。否则，您可以传递 `1` 或省略该选项。默认为 `1`。要传递此选项，您必须为 `<hidden>` 指定一个值。
 
 例如，运行以下命令连接到：
 
-* 名为 `myssid` 的非隐藏网络，密码为 `mypassphrase` ：
+* 名为 `myssid` 的非隐藏网络，密码为 `mypassphrase`:
 +
 [source,console]
 ----
 $ sudo raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
 ----
 
-* 名为 `myssid` 的隐藏网络，密码为 `mypassphrase` ：
+* 名为 `myssid` 的隐藏网络，密码为 `mypassphrase`:
 +
 [source,console]
 ----
 $ sudo raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase 1
 ----
 
-* 名为 `myssid` 的非隐藏网络，密码为 `my passphrase` ：
+* 名为 `myssid` 的非隐藏网络，密码为 `my passphrase`：
 +
 [source,console]
 ----
 $ sudo raspi-config nonint do_wifi_ssid_passphrase myssid "my passphrase" 0 0
 ----
-
 
 ==== Audio
 
@@ -335,34 +305,32 @@ $ sudo raspi-config nonint do_wifi_ssid_passphrase myssid "my passphrase" 0 0
 $ sudo raspi-config nonint do_audio <N>
 ----
 
-
 在树莓派4B，您可以使用以下选项：
 
-* `0` ：bcm2835耳机插孔
-* `1` ：vc4-hdmi-0
-* `2` ：vc4-hdmi-1
+* `0`: bcm2835 headphone jack
+* `1`: vc4-hdmi-0
+* `2`: vc4-hdmi-1
 
-有关可能的 `<N>` 值的完整列表，请参阅此选项的 `raspi-config` 版本中使用的数字。
+有关可能的 `<N>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的数字。
 
 [[change-user-password-nonint]]
-
 ==== Password
 
 更改您的密码。
 
-有关详细信息，请参阅 xref:configuration.adoc#change-user-password[更改用户密码]。
+有关详细信息，请参阅 xref:configuration.adoc#change-user-password[Change a user's password]。
 
 [source,console]
 ----
 $ sudo raspi-config nonint do_change_pass
 ----
 
-NOTE: 此函数使用全屏交互式界面，即使从CLI选项运行也是如此。
+NOTE: 此功能使用全屏交互界面，即使从CLI选项运行也是如此。
 
 [[hostname-nonint]]
 ==== Hostname
 
-为网络上的此Raspberry Pi设置可见的 xref:remote-access.adoc#resolve-raspberrypi-local-with-mdns[mDNS] 名称。
+在网络上设置此Raspberry Pi的可见 xref:remote-access.adoc#resolve-raspberrypi-local-with-mdns[mDNS] 名称。
 
 [source,console]
 ----
@@ -370,34 +338,34 @@ $ sudo raspi-config nonint do_hostname <hostname>
 ----
 
 [[boot-options-nonint]]
-==== Boot/auto login
+==== Boot/Auto login
 
-选择是启动到控制台还是桌面，以及您的Raspberry Pi是否在开机时自动登录到您当前的用户帐户。
+在启动时选择以下行为：
 
-[来源，控制台]
+* 是否启动到控制台或桌面
+* 开机时树莓派是否自动登录当前用户账户
+
 [source,console]
 ----
 $ sudo raspi-config nonint do_boot_behaviour <B1/B2/B3/B4>
 ----
 
-* `B1` ：引导到控制台，需要登录
-* `B2` ：开机到控制台，自动登录
-* `B3` ：启动到桌面，需要登录
-* `B4` ：开机到桌面，自动登录
-
+* `B1`: 启动到控制台，需要登录
+* `B2`: 启动到控制台，自动登录
+* `B3`: 启动到桌面，需要登录
+* `B4`: 启动到桌面，自动登录
 
 ==== Network at boot
 
-等待等待网络连接完成后继续引导系统。
+在让引导继续之前等待网络连接。
 
 [source,console]
 ----
 $ sudo raspi-config nonint do_boot_wait <0/1>
 ----
 
-* `0` ：无需等待网络连接即可启动
-* `1` ：等待网络连接后启动
-
+* `0`: 启动时不等待网络连接
+* `1`: 等待网络连接后启动
 
 ==== Splash screen
 
@@ -408,9 +376,8 @@ $ sudo raspi-config nonint do_boot_wait <0/1>
 $ sudo raspi-config nonint do_boot_splash <0/1>
 ----
 
-* `0` ：启用启动画面
-* `1` ：禁用闪屏
-
+* `0`：启用启动画面
+* `1`：禁用闪屏
 
 ==== Power LED
 
@@ -424,7 +391,6 @@ $ sudo raspi-config nonint do_leds <0/1>
 * `0` ：磁盘活动的闪存
 * `1` ：始终保持电源LED亮着
 
-
 ==== Browser
 
 更改默认网络浏览器。选择当前未安装的网络浏览器将不起作用。
@@ -433,7 +399,6 @@ $ sudo raspi-config nonint do_leds <0/1>
 ----
 $ sudo raspi-config nonint do_browser <chromium-browser/firefox>
 ----
-
 
 === Display options
 
@@ -449,20 +414,19 @@ NOTE: 运行Wayland时不可用。
 $ sudo raspi-config nonint do_overscan_kms <device> <enabled>
 ----
 
-Device:
+设备：
 
-* `1` ：HDMI-1
-* `2` ：HDMI-2
+* `1`: HDMI-1
+* `2`: HDMI-2
 
-Enabled:
+启用：
 
-* `0` ：启用过扫描
-* `1` ：禁用过扫描
-
+* `0`: enable overscan
+* `1`: disable overscan
 
 ==== Screen blanking
 
-启用或禁用息屏。
+启用或禁用屏幕消隐。
 
 [source,console]
 ----
@@ -475,13 +439,12 @@ $ sudo raspi-config nonint do_blanking <0/1>
 [[resolution-nonint]]
 ==== VNC resolution
 
-在 xref:configuration.adoc#setting-up-a-headless-raspberry-pi[headless] 设置中定义 VNC 使用的视频分辨率。
+在 xref:configuration.adoc#setting-up-a-headless-raspberry-pi[headless] 设置中定义用于VNC的视频分辨率。
 
 [source,console]
 ----
 $ sudo raspi-config nonint do_vnc_resolution <width>x<height>
 ----
-
 
 ==== Composite
 
@@ -516,6 +479,7 @@ $ sudo raspi-config nonint do_composite <0/1>
 
 启用或禁用远程终端访问您的树莓派使用SSH。
 
+SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。有关SSH的更多信息，请参阅 xref:remote-access.adoc#ssh[SSH documentation]。
 
 [source,console]
 ----
@@ -527,7 +491,7 @@ $ sudo raspi-config nonint do_ssh <0/1>
 [[rpi-connect-nonit]]
 ==== Raspberry Pi Connect
 
-启用或禁用 xref:../services/connect.adoc[Raspberry Pi Connect]，它提供了无需手动网络配置即可远程访问 Raspberry Pi 的功能。
+启用或禁用 xref:../services/connect.adoc[Raspberry Pi Connect]，无需手动网络配置即可远程访问您的Raspberry Pi。
 
 [source,console]
 ----
@@ -535,12 +499,12 @@ $ sudo raspi-config nonint do_rpi_connect <0/1>
 ----
 
 * `0`: 启用 Raspberry Pi Connect
-* `1`: 禁用 Raspberry Pi 连接
+* `1`: 禁用 Raspberry Pi Connect
 
 [[VNC-nonint]]
 ==== VNC
 
-启用或禁用虚拟网络计算 (VNC) 服务器。有关 VNC 的更多信息，请参阅 xref:remote-access.adoc#vnc[VNC 文档]。
+启用或禁用虚拟网络计算（VNC）服务器。有关VNC的更多信息，请参阅 xref:remote-access.adoc#vnc[VNC documentation]。
 
 [source,console]
 ----
@@ -553,7 +517,7 @@ $ sudo raspi-config nonint do_vnc <0/1>
 [[spi-nonint]]
 ==== SPI
 
-启用或禁用 SPI 接口和 SPI 内核模块的自动加载。
+启用或禁用SPI接口和SPI内核模块的自动加载。
 
 [source,console]
 ----
@@ -566,7 +530,7 @@ $ sudo raspi-config nonint do_spi <0/1>
 [[i2c-nonint]]
 ==== I2C
 
-启用或禁用 I2C 接口和 I2C 内核模块的自动加载。
+启用或禁用I2C接口和I2C内核模块的自动加载。
 
 [source,console]
 ----
@@ -577,13 +541,13 @@ $ sudo raspi-config nonint do_i2c <0/1>
 * `1` : 禁用 I2C
 
 [[serial-nonint]]
-==== 串行端口
+==== Serial Port
 
 启用或禁用串行连接硬件。
 
 [source,console]
 ----
-$ sudo raspi-config nonint do_serial_hw <0/1/2>
+$ sudo raspi-config nonint do_serial_hw <0/1>
 ----
 
 * `0` ：启用串行端口
@@ -592,20 +556,20 @@ $ sudo raspi-config nonint do_serial_hw <0/1/2>
 [[serial-console-nonint]]
 ==== Serial console
 
-启用或禁用串行连接上的 shell 和内核消息。
+在串行连接上启用或禁用shell和内核消息。
 
 [source,console]
 ----
-$ sudo raspi-config nonint do_serial_cons <0/1/2>
+$ sudo raspi-config nonint do_serial_cons <0/1>
 ----
 
-* `0` ：通过串行端口启用控制台
-* `1` ：通过串行端口禁用控制台
+* `0` ：启用串行端口控制台
+* `1` ：禁用串行端口控制台
 
 [[one-wire-nonint]]
 ==== 1-wire
 
-启用或禁用 Dallas 1-wire 接口。这通常用于 DS18B20 温度传感器。
+启用或禁用达拉斯1线接口。这通常用于DS18B20温度传感器。
 
 [source,console]
 ----
@@ -615,10 +579,9 @@ $ sudo raspi-config nonint do_onewire <0/1>
 * `0` : 启用 1-wire
 * `1` : 禁用 1-wire
 
+==== Remote GPIO
 
-==== 远程 GPIO
-
-启用或禁用对 GPIO 引脚的远程访问。
+启用或禁用对GPIO引脚的远程访问。
 
 [source,console]
 ----
@@ -628,15 +591,14 @@ $ sudo raspi-config nonint do_rgpio <0/1>
 * `0` : 启用远程 GPIO
 * `1` : 禁用远程 GPIO
 
-
 === Performance options
 
 [[overclock-nonint]]
 ==== Overclock
 
-如果您的 Raspberry Pi 型号允许，请对 CPU 进行超频。即使在同一型号中，各个 Raspberry Pi 设备的超频潜力也不同。超频过高可能会导致不稳定。
+如果您的Raspberry Pi型号允许，请对CPU进行超频。即使在同一型号中，各个Raspberry Pi设备之间的超频潜力也会有所不同。超频过高可能会导致不稳定。
 
-WARNING: *超频可能会缩短 Raspberry Pi 的使用寿命。*如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。启动时按住 *Shift* 键可暂时禁用超频。
+WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。启动时按住*Shift*键可暂时禁用超频。
 
 [source,console]
 ----
@@ -654,13 +616,12 @@ $ sudo raspi-config nonint do_overclock <setting>
 [[memory-split-nonint]]
 ==== GPU memory
 
-更改提供给 GPU 的内存量。
+更改GPU可用的内存量。
 
 [source,console]
 ----
 $ sudo raspi-config nonint do_memory_split <megabytes>
 ----
-
 
 ==== Overlay file system
 
@@ -671,13 +632,12 @@ $ sudo raspi-config nonint do_memory_split <megabytes>
 $ sudo raspi-config nonint do_overlayfs <0/1>
 ----
 
-* `0` ：启用覆盖文件系统
-* `1` ：禁用覆盖文件系统
-
+* `0` ：启用只读文件系统
+* `1` ：禁用只读文件系统
 
 ==== Fan
 
-自定义与 GPIO 连接的 https://www.raspberrypi.com/products/raspberry-pi-4-case-fan/[Raspberry Pi 4 机箱风扇]的行为。不影响 https://www.raspberrypi.com/products/raspberry-pi-5-case/[Raspberry Pi 5 外壳风扇] 或 https://www.raspberrypi.com/products/active-cooler/[Raspberry Pi 5 主动散热器]中的风扇，它们使用特殊的四针风扇接头连接。
+自定义连接GPIO的 https://www.raspberrypi.com/products/raspberry-pi-4-case-fan/[Raspberry Pi 4 Case Fan] 的行为。此设置不适用于其他风扇型号。
 
 [source,console]
 ----
@@ -687,9 +647,9 @@ $ sudo raspi-config nonint do_fan <0/1> [gpio] [onTemp]
 * `0` ：启用风扇
 * `1` ：禁用风扇
 
-`gpio` 默认为 `14` 。
+`gpio` 默认为 `14`。
 
-`onTemp` 默认为 `80` **摄氏度**。
+`onTemp` 默认为 `80`**摄氏度**。
 
 [[localisation-options-nonint]]
 === Localisation options
@@ -697,7 +657,7 @@ $ sudo raspi-config nonint do_fan <0/1> [gpio] [onTemp]
 [[change-locale-nonint]]
 ==== Locale
 
-选择一个区域设置，例如 `en_GB.UTF-8 UTF-8` 。
+选择一个区域设置，例如 `en_GB.UTF-8 UTF-8`。
 
 [source,console]
 ----
@@ -706,9 +666,10 @@ $ sudo raspi-config nonint do_change_locale <locale>
 
 有关可能的 `<locale>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
 
+[[change-timezone-nonint]]
 ==== Time zone
 
-设置您的本地时区，从区域开始，然后选择城市，例如 `Europe/London`。
+以 `Region/City` 格式设置您的当地时区，例如“欧洲/伦敦”。
 
 [source,console]
 ----
@@ -727,11 +688,11 @@ $ sudo raspi-config nonint do_change_timezone <timezone>
 $ sudo raspi-config nonint do_configure_keyboard <keymap>
 ----
 
-
+有关可能的 `<keymap>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
 
 ==== WLAN country
 
-设置无线网络的国家/地区代码。
+为您的无线网络设置国家代码。
 
 [source,console]
 ----
@@ -743,18 +704,20 @@ $ sudo raspi-config nonint do_wifi_country <country>
 [[advanced-options-nonint]]
 === Advanced options
 
+
+WARNING: 对高级选项的更改可能会阻止您的Raspberry Pi按预期工作。除非Raspberry Pi工程师指示，否则避免配置高级选项。
+
 [[expand-filesystem-nonint]]
 ==== Expand filesystem
 
-扩展操作系统分区，使其充满整个存储设备，从而为文件提供更多空间。重启 Raspberry Pi 以完成此操作。通常，Raspberry Pi 操作系统会在首次启动时执行此操作。如果你将操作系统克隆到容量大于原存储设备的独立存储设备上，该选项会很有用。
+扩展您的操作系统分区以填满整个存储设备，为您提供更多用于文件的空间。重新启动Raspberry Pi以完成此操作。通常，Raspberry Pi操作系统在首次启动时运行此操作。如果您将操作系统克隆到比原始存储设备容量更大的单独存储设备，此选项可能很有用。
 
-WARNING: 没有确认步骤。选择该选项会立即开始分区扩展。
+WARNING: 没有确认步骤。选择该选项立即开始分区扩展。
 
 [source,console]
 ----
 $ sudo raspi-config nonint do_expand_rootfs
 ----
-
 
 ==== Network interface names
 
@@ -768,7 +731,6 @@ $ sudo raspi-config nonint do_net_names <0/1>
 * `0` ：启用可预测的网络接口名称
 * `1` ：禁用可预测的网络接口名称
 
-]
 ==== Network proxy settings
 
 配置网络的代理设置。
@@ -778,10 +740,9 @@ $ sudo raspi-config nonint do_net_names <0/1>
 $ sudo raspi-config nonint do_proxy <SCHEMES> <ADDRESS>
 ----
 
-
 ==== Boot order
 
-在 Raspberry Pi 4 及更高版本上，如果未插入 SD 卡，请指定是从 USB 还是网络启动。有关更多信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader configuration] 部分。
+在Raspberry Pi 4及更高版本上，指定在没有SD卡的情况下是从USB还是网络引导。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader configuration] 部分。
 
 [source,console]
 ----
@@ -794,10 +755,9 @@ $ sudo raspi-config nonint do_boot_order <B1/B2/B3>
 * `B2` ：NVMe/USB 启动 - 如果可用，则从 NVMe 启动，否则从 USB 启动，否则从 SD 卡启动
 * `B3` ：网络启动 - 如果已插入，则从 SD 卡启动，否则从网络启动
 
-
 ==== Bootloader version
 
-在 Raspberry Pi 4 及更高版本上，切换到最新的引导 ROM 软件。或者，如果最新版本导致问题，您可以恢复为出厂默认设置。
+在Raspberry Pi 4及更高版本上，切换到最新的引导ROM软件。或者，如果最新版本导致问题，您可以恢复出厂默认值。
 
 [source,console]
 ----
@@ -807,10 +767,11 @@ $ sudo raspi-config nonint do_boot_rom <E1/E2>
 * `E1` ：使用最新的启动 ROM
 * `E2` ：使用出厂默认设置
 
-
 ==== Wayland
 
-在 X11 和 Wayland 后端之间切换。Raspberry Pi 4 及更高版本默认使用 Wayland；其他型号的 Raspberry Pi 默认使用 X11。
+在X11和Wayland后端之间切换，并选择一个窗口管理器。由于Raspberry Pi OS_Bookworm_，所有Raspberry Pi型号默认使用labwc窗口管理器运行Wayland。
+
+要在树莓派4运行早于_Bookworm_的树莓派操作系统版本之前在树莓派模型上使用Wayland，请将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt`。
 
 [source,console]
 ----
@@ -819,12 +780,13 @@ $ sudo raspi-config nonint do_wayland <W1/W2>
 
 * `W1` ：使用 X11 后端
 * `W2` ：使用 Wayland 后端
+* `W3` : 使用带有 Wayland 后端的 labwc 窗口管理器
 
 NOTE: 要在 Raspberry Pi 4 之前的 Raspberry Pi 型号上使用 Wayland，您还必须将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt` 。
 
 ==== Audio config
 
-使用此选项在 PulseAudio 和 PipeWire 音频后端之间切换。在 Raspberry Pi OS Bookworm 之前，Raspberry Pi OS 使用 PulseAudio。
+使用此选项在PulseAudio和PipeWire音频后端之间切换。在树莓派操作系统书虫之前，树莓派操作系统使用PulseAudio。
 
 [source,console]
 ----
@@ -837,7 +799,7 @@ $ sudo raspi-config nonint do_audioconf <1/2>
 [[update-nonint]]
 === Update
 
-将此工具更新为最新版本。
+将此工具更新到最新版本。
 
 [source,console]
 ----

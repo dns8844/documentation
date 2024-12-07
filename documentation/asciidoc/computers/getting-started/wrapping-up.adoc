@@ -21,23 +21,3 @@ image::images/recommended-software.png[Opening the package manager GUI in Raspbe
 === 支持
 
 如需支持官方Raspberry Pi产品，或与其他Raspberry Pi用户联系，请访问 https://forums.raspberrypi.com/[Raspberry Pi论坛]。
-
-
-[.booklink, booktype="buy", link=https://store.rpipress.cc/products/the-official-raspberry-pi-beginners-guide-5th-edition,image=image::images/fifth-editon-cover.png[]]
-
-[[further-reading]]
-=== 进一步阅读
-
-您可以在Gareth Halfacree的最新版 https://store.rpipress.cc/collections/latest-releases/products/the-official-raspberry-pi-beginners-guide-5th-edition[Official Raspberry Pi Beginners Guide] 中找到有关如何开始使用Raspberry Pi的更多信息。
-
-了解如何：
-
-* 设置您的Raspberry Pi，安装其操作系统，然后开始使用这台功能齐全的计算机。
-* 开始编码项目，使用Scratch 3、Python和MicroPython编程语言的分步指南。
-* 尝试连接电子元件，并享受创建令人惊叹的项目的乐趣。
-
-第5版新增：
-
-* 针对最新的Raspberry Pi计算机进行了更新：Raspberry Pi 5和Raspberry Pi Zero 2 W。
-* 涵盖最新的Raspberry Pi OS。
-* 包括树莓派Pico的新篇章！

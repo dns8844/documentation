@@ -63,14 +63,22 @@ $ vcgencmd measure_temp
 [[fan-cases]]
 === 风扇外壳
 
-Raspberry Pi 5有两个官方风扇选项来帮助冷却：
+为确保 Raspberry Pi 的最佳性能，请使用主动冷却解决方案，如风扇。Raspberry Pi 固件可管理所有官方风扇的转速。
+
+==== Raspberry Pi 4 风扇
+
+对于 Raspberry Pi 4，将 https://www.raspberrypi.com/products/raspberry-pi-4-case-fan/[Raspberry Pi 4 外壳风扇] 添加到 Raspberry Pi 4 外壳的盖子上。
+
+==== Raspberry Pi 5 风扇
+
+Raspberry Pi 5可以使用下列选项之一来帮助冷却：
 
 * https://www.raspberrypi.com/products/active-cooler/[主动冷却器]
 * https://www.raspberrypi.com/products/raspberry-pi-5-case/[树莓派5的情况下]
 
-这两个都插入位于40-pin GPIO接头和USB 2端口之间的电路板右上角的四针JST-SH PWM风扇连接器。风扇连接器来自与USB外围设备相同的电流限制。我们推荐用于超频器的Active Cooler外壳，因为它提供了更好的冷却性能。
+Raspberry Pi 5 的两个风扇选项都插入了位于电路板右上方 40 针 GPIO 接头和 USB 2 端口之间的四针 JST-SH PWM 风扇接头。风扇连接器的电流限制与 USB 外围设备相同。我们向超频者推荐 Active Cooler 机箱，因为它能提供更好的散热性能。
 
-这两个可用的官方配件都由Raspberry Pi固件主动管理。随着Raspberry Pi温度的升高，风扇的速度如下：
+当 Raspberry Pi 5 的温度升高时，风扇的反应如下：
 
 * 50°C以下，风扇停止（0%转速）
 * 50°C，风扇低速开启（30%转速）
@@ -82,10 +90,9 @@ Raspberry Pi 5有两个官方风扇选项来帮助冷却：
 
 启动时风扇打开，转速表输入检查风扇是否在旋转。如果是，则启用 `cooling_fan` 设备树overlay。默认情况下，此overlay位于 `bcm2712-rpi-5-b.dtb` 中，但带有 `status=disabled` 。
 
-[[fan-connector-pinout]]
-==== 风扇连接器引脚
+==== Raspberry Pi 5 风扇连接器引脚
 
-风扇连接器是一个1mm间距的JST-SH插座，包含以下四个引脚：
+Raspberry Pi 5 风扇连接器是一个1mm间距的JST-SH插座，包含以下四个引脚：
 
 [cols="1,2,2",width="50"%"]
 |===

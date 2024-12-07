@@ -52,7 +52,7 @@ $ cat /proc/cmdline
 video=HDMI-A-1:1920x1080M@60
 ----
 
-此外，还可以按照标准 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/Documentation/fb/modedb.rst[Linux 帧缓冲器文档]中的说明添加旋转和反射参数。下面的示例定义了一个名为 `HDMI-A-` 的显示器，分辨率为 1080p，刷新率为 60Hz，可旋转 90 度，沿X 轴反转：
+此外，还可以按照标准 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/Documentation/fb/modedb.rst[Linux 帧缓冲器文档]中的说明添加旋转和反射参数。下面的示例定义了一个名为 `HDMI-A-1` 的显示器，分辨率为 1080p，刷新率为 60Hz，可旋转 90 度，沿X 轴反转：
 
 [source,bash]
 ----

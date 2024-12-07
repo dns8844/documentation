@@ -28,12 +28,12 @@ a|
 512MB | 26-pin GPIO header
 a|
 * HDMI
-* 2 × USB 2.0
-* CSI camera port
-* DSI display port
+* 2× USB 2.0
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm audio jack
 * RCA composite video
-* Ethernet (100Mb/s)
+* 100Mb/s Ethernet RJ45
 * SD card slot
 * micro USB power
 ^.^a|
@@ -43,8 +43,8 @@ image::images/model-a.jpg[alt="Raspberry Pi Model A",width="80%"]
 a|
 * HDMI
 * USB 2.0
-* CSI camera port
-* DSI display port
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm audio jack
 * RCA composite video
 * SD card slot
@@ -55,11 +55,11 @@ image::images/model-b-plus.jpg[alt="Raspberry Pi Model B+"]
 | xref:processors.adoc#bcm2835[BCM2835] | 512MB | 40-pin GPIO header
 a|
 * HDMI
-* 4 × USB 2.0
-* CSI camera port
-* DSI display port
+* 4× USB 2.0
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
-* Ethernet (100Mb/s)
+* 100Mb/s Ethernet RJ45
 * microSD card slot
 * micro USB power
 ^.^a|
@@ -73,8 +73,8 @@ a|
 a|
 * HDMI
 * USB 2.0
-* CSI camera port
-* DSI display port
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
 * microSD card slot
 * micro USB power
@@ -84,11 +84,11 @@ image::images/2-model-b.jpg[alt="Raspberry Pi 2 Model B"]
 | xref:processors.adoc#bcm2836[BCM2836] (in version 1.2, switched to xref:processors.adoc#bcm2837[BCM2837]) | 1 GB | 40-pin GPIO header
 a|
 * HDMI
-* 4 × USB 2.0
-* CSI camera port
-* DSI display port
+* 4× USB 2.0
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
-* Ethernet (100Mb/s)
+* 100Mb/s Ethernet RJ45
 * microSD card slot
 * micro USB power
 ^.^a|
@@ -97,11 +97,11 @@ image::images/3-model-b.jpg[alt="Raspberry Pi 3 Model B"]
 | xref:processors.adoc#bcm2837[BCM2837] | 1 GB | 40-pin GPIO header
 a|
 * HDMI
-* 4 × USB 2.0
-* CSI camera port
-* DSI display port
+* 4× USB 2.0
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
-* Ethernet (100Mb/s)
+* 100Mb/s Ethernet RJ45
 * 2.4GHz single-band 802.11n Wi-Fi (35Mb/s)
 * Bluetooth 4.1, Bluetooth Low Energy (BLE)
 * microSD card slot
@@ -112,11 +112,11 @@ image::images/3-model-b-plus.jpg[alt="Raspberry Pi 3 Model B+"]
 | xref:processors.adoc#bcm2837b0[BCM2837b0] | 1GB | 40-pin GPIO header
 a|
 * HDMI
-* 4 × USB 2.0
-* CSI camera port
-* DSI display port
+* 4× USB 2.0
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
-* PoE-capable Ethernet (300Mb/s)
+* 300Mb/s Ethernet RJ45 with PoE support
 * 2.4/5GHz dual-band 802.11ac Wi-Fi (100Mb/s)
 * Bluetooth 4.2, Bluetooth Low Energy (BLE)
 * microSD card slot
@@ -128,8 +128,8 @@ image::images/3-model-a-plus.jpg[alt="Raspberry Pi 3 Model A+"]
 a|
 * HDMI
 * USB 2.0
-* CSI camera port
-* DSI display port
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
 * 2.4/5GHz dual-band 802.11ac Wi-Fi (100Mb/s)
 * Bluetooth 4.2, Bluetooth Low Energy (BLE)
@@ -148,13 +148,13 @@ a|
 
 8GB | 40-pin GPIO header
 a|
-* 2 × micro HDMI
-* 2 × USB 2.0
-* 2 × USB 3.0
-* CSI camera port
-* DSI display port
+* 2× micro HDMI
+* 2× USB 2.0
+* 2× USB 3.0
+* standard 15-pin, 1.0mm pitch, 16mm width, CSI (camera) port
+* standard 15-pin, 1.0mm pitch, 16mm width, DSI (display) port
 * 3.5mm AV jack
-* PoE-capable Gigabit Ethernet (1Gb/s)
+* Gigabit (1Gb/s) Ethernet RJ45 with PoE+ support
 * 2.4/5GHz dual-band 802.11ac Wi-Fi (120Mb/s)
 * Bluetooth 5, Bluetooth Low Energy (BLE)
 * microSD card slot
@@ -164,10 +164,10 @@ a|
 image::images/400.jpg[alt="Raspberry Pi 400"]
 | xref:processors.adoc#bcm2711[BCM2711] | 4GB | 40-pin GPIO header
 a|
-* 2 × micro HDMI
+* 2× micro HDMI
 * USB 2.0
-* 2 × USB 3.0
-* Gigabit Ethernet (1Gb/s)
+* 2× USB 3.0
+* Gigabit (1Gb/s) Ethernet RJ45
 * 2.4/5GHz dual-band 802.11ac Wi-Fi (120Mb/s)
 * Bluetooth 5, Bluetooth Low Energy (BLE)
 * microSD card slot
@@ -175,21 +175,23 @@ a|
 ^.^a|
 .Raspberry Pi 5
 image::images/5.jpg[alt="Raspberry Pi 5"]
-| xref:processors.adoc#bcm2712[BCM2712]
+| xref:processors.adoc#bcm2712[BCM2712] (2GB version uses xref:processors.adoc#bcm2712[BCM2712D0])
 a|
+2GB
+
 4GB
 
 8GB | 40-pin GPIO header
 a|
-* 2 × micro HDMI
-* 2 × USB 2.0
-* 2 × USB 3.0
-* 2 × CSI camera/DSI display ports
+* 2× micro HDMI
+* 2× USB 2.0
+* 2× USB 3.0
+* 2× mini 22-pin, 0.5mm (fine) pitch, 11.5mm width, combined CSI (camera)/DSI (display) ports
 * single-lane https://datasheets.raspberrypi.com/pcie/pcie-connector-standard.pdf[PCIe FFC connector]
 * https://datasheets.raspberrypi.com/debug/debug-connector-specification.pdf[UART connector]
 * RTC battery connector
-* xref:raspberry-pi.adoc#fan-connector-pinout[four-pin JST-SH PWM fan connector]
-* PoE+-capable Gigabit Ethernet (1Gb/s)
+* xref:raspberry-pi.adoc#raspberry-pi-5-fan-connector-pinout[four-pin JST-SH PWM fan connector]
+* Gigabit (1Gb/s) Ethernet RJ45 with PoE+ support
 * 2.4/5GHz dual-band 802.11ac Wi-Fi 5 (300Mb/s)
 * Bluetooth 5, Bluetooth Low Energy (BLE)
 * microSD card slot
@@ -205,9 +207,8 @@ a|
 所有 Zero 型号都具有以下连接功能：
 
 * a microSD card slot
-* a CSI camera port (version 1.3 of the original Zero introduced this port)
 * a mini HDMI port
-* 2 × micro USB ports (one for input power, one for external devices)
+* 2× micro USB ports (one for input power, one for external devices)
 
 [cols="3a,1,1,1,2"]
 |===
@@ -238,6 +239,13 @@ image::images/zero-2-w.jpg[alt="Raspberry Pi Zero 2 W"]
 a|
 * 2.4GHz single-band 802.11n Wi-Fi (35Mb/s)
 * Bluetooth 4.2, Bluetooth Low Energy (BLE)
+^.^a|
+.Raspberry Pi Zero 2 WH
+image::images/zero-2-wh.png[alt="Raspberry Pi Zero 2 WH"]
+| xref:processors.adoc#rp3a0[RP3A0] | 512MB | 40-pin GPIO header
+a|
+* 2.4GHz single-band 802.11n Wi-Fi (35Mb/s)
+* Bluetooth 4.2, Bluetooth Low Energy (BLE)
 |===
 
 === Compute Module series
@@ -250,8 +258,7 @@ a|
 .Raspberry Pi Compute Module 1
 image::images/compute-module-1.jpg[alt="Raspberry Pi Compute Module 1"]
 | xref:processors.adoc#bcm2835[BCM2835] | 512MB
-a|
-0GB (Lite)
+| 4GB | DDR2 SO-DIMM ^| none
 
 4GB | DDR2 SO-DIMM ^| none
 ^.^a|
@@ -320,9 +327,32 @@ a| optional:
 * 2.4/5GHz dual-band 802.11ac Wi-Fi 5 (300Mb/s)
 * Bluetooth 5, Bluetooth Low Energy (BLE)
 
+^.^a|
+.Raspberry Pi Compute Module 5
+image::images/compute-module-5.png[alt="Raspberry Pi Compute Module 5"]
+| xref:processors.adoc#bcm2712[BCM2712]
+a|
+2GB
+
+4GB
+
+8GB
+a|
+0GB (Lite)
+
+16GB
+
+32GB
+
+64GB
+| dual 100-pin high density connectors
+a| optional:
+
+* 2.4/5GHz dual-band 802.11ac Wi-Fi 5 (300Mb/s)
+* Bluetooth 5, Bluetooth Low Energy (BLE)
 |===
 
-NOTE: 一些计算模块使用 DDR2 SO-DIMM 物理外形，但与 DDR2 SO-DIMM 电气规格不兼容。
+NOTE: 使用 DDR2 SO-DIMM 物理外形尺寸的计算模块与 DDR2 SO-DIMM 电气规格 *不* 兼容。
 
 有关 Raspberry Pi 计算模块的更多信息，请参阅 xref:../computers/compute-module.adoc[计算模块文档]。
 
@@ -337,26 +367,36 @@ NOTE: 一些计算模块使用 DDR2 SO-DIMM 物理外形，但与 DDR2 SO-DIMM �
 a|
 .Raspberry Pi Pico
 image::images/pico.png[alt="Raspberry Pi Pico"]
-| xref:../microcontrollers/rp2040.adoc#welcome-to-rp2040[RP2040] | 264kB | 2MB | 40-pin GPIO header (unpopulated) ^| none
+| xref:../microcontrollers/silicon.adoc#rp2040[RP2040] | 264KB | 2MB | two 20-pin GPIO headers (unpopulated) ^| none
 a|
 .Raspberry Pi Pico H
 image::images/pico-h.png[alt="Raspberry Pi Pico H"]
-| xref:../microcontrollers/rp2040.adoc#welcome-to-rp2040[RP2040] | 264kB | 2MB | 40-pin GPIO header (unpopulated) ^| none
+| xref:../microcontrollers/silicon.adoc#rp2040[RP2040] | 264KB | 2MB | two 20-pin GPIO headers ^| none
 a|
 .Raspberry Pi Pico W
 image::images/pico-w.png[alt="Raspberry Pi Pico W"]
-| xref:../microcontrollers/rp2040.adoc#welcome-to-rp2040[RP2040] | 264kB | 2MB | 40-pin GPIO header (unpopulated)
+| xref:../microcontrollers/silicon.adoc#rp2040[RP2040] | 264KB | 2MB | two 20-pin GPIO headers (unpopulated)
 a|
 * 2.4GHz single-band 802.11n Wi-Fi (10Mb/s)
 * Bluetooth 5.2, Bluetooth Low Energy (BLE)
 a|
 .Raspberry Pi Pico WH
 image::images/pico-wh.png[alt="Raspberry Pi Pico WH"]
-| xref:../microcontrollers/rp2040.adoc#welcome-to-rp2040[RP2040] | 264kB | 2MB | 40-pin GPIO header
+| xref:../microcontrollers/silicon.adoc#rp2040[RP2040] | 264KB | 2MB | two 20-pin GPIO headers
 a|
+* 2.4GHz single-band 802.11n Wi-Fi (10Mb/s)
+* Bluetooth 5.2, Bluetooth Low Energy (BLE)
+a|
+.Raspberry Pi Pico 2
+image::images/pico-2.png[alt="Raspberry Pi Pico 2"]
+| xref:../microcontrollers/silicon.adoc#rp2350[RP2350] | 520KB | 4MB | two 20-pin GPIO headers (unpopulated) ^| none
+a|
+.Raspberry Pi Pico 2 W
+image::images/pico-2-w.png[alt="Raspberry Pi Pico 2 W"]
+| xref:../microcontrollers/silicon.adoc#rp2350[RP2350] | 520KB | 4MB | two 20-pin GPIO headers (unpopulated) a|
 * 2.4GHz single-band 802.11n Wi-Fi (10Mb/s)
 * Bluetooth 5.2, Bluetooth Low Energy (BLE)
 
 |===
 
-有关 Raspberry Pi Pico 型号的更多信息，请参阅 xref:../microcontrollers/raspberry-pi-pico.adoc[Pico 文档]。
+有关 Raspberry Pi Pico 型号的更多信息，请参阅 xref:../microcontrollers/pico-series.adoc[Pico 文档]。

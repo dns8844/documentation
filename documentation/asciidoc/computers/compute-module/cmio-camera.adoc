@@ -112,7 +112,7 @@ image::images/CMIO-Cam-Adapter.jpg[alt="连接适配器板", width="60%"]
 image:images/CMIO-Cam-GPIO2.jpg[alt="与额外摄像头的 GPIO 连接", width="60%"]
 
 
-. _（仅限CM4）_：用两个vertical-orientation跳线连接J6 GPIO引脚。
+. _（CM4和CM5）_：用两个vertical-orientation跳线连接J6 GPIO引脚。
 +
 image:images/j6_vertical.jpg[alt="按垂直方向连接 J6 GPIO 引脚", width="60%"]
 

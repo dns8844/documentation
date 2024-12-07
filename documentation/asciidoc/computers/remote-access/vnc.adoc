@@ -39,7 +39,6 @@ image::images/vnc-enable.png[在接口选项卡中，单击 VNC 切换到活动�
 --
 . 单击 *OK* 按钮保存配置更改。
 
-[[enable-the-vnc-server-on-the-command-line]]
 ==== 在命令行上启用 VNC 服务器
 
 使用 xref:configuration.adoc#raspi-config[raspi-config] 在命令行上启用 VNC 服务器。

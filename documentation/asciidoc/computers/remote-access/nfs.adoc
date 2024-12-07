@@ -37,7 +37,7 @@ TIP: 如果您计划配置 LDAP/NIS 身份验证，请跳过下面的 `chmod` �
 
 [source,console]
 ----
-$ chmod -R 777 777 /export
+$ chmod -R 777 /export
 ----
 
 接下来，使用以下命令挂载真正的 `users` 目录：

@@ -52,7 +52,7 @@ error: externally-managed-environment
 
   For more information visit http://rptl.io/venv
 
-note: 如果您认为这是一个错误，请联系您的 Python 安装或操作系统发行提供商。您可以通过 --break-system-packages 来覆盖此选项，但这有可能破坏您的 Python 安装或操作系统。
+NOTE: 如果您认为这是一个错误，请联系您的 Python 安装或操作系统发行提供商。您可以通过 --break-system-packages 来覆盖此选项，但这有可能破坏您的 Python 安装或操作系统。
 提示：详细规范请参见 PEP 668。
 ----
 
@@ -65,113 +65,122 @@ note: 如果您认为这是一个错误，请联系您的 Python 安装或操作
 
 要使用虚拟环境，需要创建一个容器来存储环境。根据你使用 Python 的方式，有几种方法可以做到这一点。
 
-运行以下命令创建虚拟环境配置文件夹，将 `<env-name>` 替换为您想用于虚拟环境的名称（例如 `env`）：
+[tabs]
+======
+per-project environments::
++
+许多用户为每个Python项目创建单独的虚拟环境。在每个项目的根文件夹中找到虚拟环境，通常使用 `env` 之类的共享名称。从每个项目的根文件夹中运行以下命令以创建虚拟环境配置文件夹：
++
+[source,console]
+----
+$ python -m venv env
+----
++
+在项目上工作之前，从项目根目录运行以下命令开始使用虚拟环境：
++
+[source,console]
+----
+$ source env/bin/activate
+----
++
+然后您会看到类似下面的提示：
++
+[source,console?prompt=(env) $]
+----
+(env) $
+----
++
+完成项目工作后，可以在任意目录运行以下命令离开虚拟环境：
++
+[source,console?prompt=(env) $]
+----
+(env) $ deactivate
+----
+
+单独用户环境::
++
+您可以为您的用户帐户创建一个虚拟环境，而不是为每个Python项目创建一个虚拟环境。**在运行任何Python代码之前激活该虚拟环境。**这种方法对于跨项目共享许多库的工作流来说更方便。
++
+在整个用户帐户中为多个项目创建虚拟环境时，请考虑在主目录中定位虚拟环境配置文件。默认情况下，将配置存储在 https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments[folder whose name begins with a period] 中以隐藏文件夹，防止它弄乱主文件夹。
++
+使用以下命令在当前用户主目录的隐藏文件夹中创建虚拟环境：
++
+[source,console]
+----
+$ python -m venv ~/.env
+----
++
+从任意目录运行以下命令开始使用虚拟环境：
++
+[source,console]
+----
+$ source ~/.env/bin/activate
+----
++
+然后，您应该会看到类似于以下内容的提示：
++
+[source,console?prompt=(.env) $]
+----
+(.env) $
+----
++
+要离开虚拟环境，请从任何目录运行以下命令：
++
+[source,console?prompt=(.env) $]
+----
+(.env) $ deactivate
+----
+======
+
+===== Create a virtual environment
+
+运行以下命令创建虚拟环境配置文件夹，将 `<env-name>` 替换为您希望用于虚拟环境的名称（例如 `env`）：
 
 [source,console]
 ----
 $ python -m venv <env-name>
 ----
 
-TIP: 在文件夹名称前加上 `-system-site-packages` 标志，将系统中当前安装的所有 Python 软件包预加载到虚拟环境中。
+TIP: 在文件夹名称前传递 `--system-site-packages` 标志以将系统Python安装中所有当前安装的包预加载到虚拟环境中。
 
-然后，执行虚拟环境配置文件夹中的 `bin/activate` 脚本，进入虚拟环境：
+===== Enter a virtual environment
+
+然后，执行虚拟环境配置文件夹中的 `bin/activate` 脚本进入虚拟环境：
 
 [source,console]
 ----
 $ source <env-name>/bin/activate
 ----
 
-然后您会看到类似下面的提示：
+然后，您应该会看到类似于以下内容的提示：
 
 [source,console?prompt=(<env-name>) $]
 ----
 (<env-name>) $
 ----
 
-命令提示符前缀 `(<env-name>)` 表示当前终端会话处于名为 `<env-name>`.的虚拟环境中。
+`(<env-name>)` 命令提示符前缀表示当前终端会话位于名为 `<env-name>` 的虚拟环境中。
 
-要检查是否处于虚拟环境中，可使用 `pip list` 查看已安装软件包的列表：
+要检查您是否处于虚拟环境中，请使用 `pip list` 查看已安装软件包的列表：
 
 [source,console?prompt=(<env-name>) $]
 ----
 (<env-name>) $ pip list
 Package    Version
 ---------- -------
-pip        23.0.1
-setuptools 66.1.1
+pip23.0.1
+SetupToks66.1.1
 ----
 
-该列表应该比系统 Python 中安装的软件包列表短得多。现在可以安全地使用 `pip` 安装软件包了。在虚拟环境中使用 `pip` 安装的软件包只能安装到该虚拟环境。在虚拟环境中，`python` 或 `python3` 命令会自动使用虚拟环境的 Python 版本和已安装的软件包，而不是系统 Python。
+该列表应该比系统 Python 中安装的软件包列表短得多。现在可以安全地使用 `pip` 安装软件包了。在虚拟环境中使用 `pip` 安装的软件包只能安装到该虚拟环境。在虚拟环境中，`python` 或 `python3` 命令会自动使用虚拟环境的 Python 版本和安装的软件包，而不是系统 Python。
+
+===== 退出虚拟环境
 
 要离开虚拟环境，请运行以下命令：
 
 [source,console?prompt=(<env-name>) $]
 ----
 (<env-name>) $ deactivate
-----
-
-==== 为每个项目使用单独的环境
-
-许多用户会为每个 Python 项目创建单独的虚拟环境。在每个项目的根文件夹中找到虚拟环境，通常使用共享名称，如 `env`。在每个项目的根文件夹中运行以下命令，以创建虚拟环境配置文件夹：
-
-[source,console]
-----
-$ python -m venv env
-----
-
-在项目上工作之前，从项目根目录运行以下命令开始使用虚拟环境：
-
-[source,console]
-----
-$ source env/bin/activate
-----
-
-然后您会看到类似下面的提示：
-
-[source,console?prompt=(env) $]
-----
-(env) $
-----
-
-完成项目工作后，从任意目录运行以下命令离开虚拟环境：
-
-[source,console?prompt=(env) $]
-----
-(env) $ deactivate
-----
-
-==== 为每个用户使用单独的环境
-
-与其为每个 Python 项目创建一个虚拟环境，不如为用户账户创建一个单独的虚拟环境。**在运行任何 Python 代码之前激活该虚拟环境。** 这种方法对于在项目间共享许多库的工作流来说可能更方便。
-
-为整个用户账户的多个项目创建虚拟环境时，请考虑将虚拟环境配置文件放在主目录下。将配置文件存储在 https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments[名称以点开头的文件夹]中，默认情况下隐藏该文件夹，以防止主文件夹杂乱无章。
-
-使用以下命令在当前用户主目录的隐藏文件夹中创建虚拟环境：
-
-[source,console]
-----
-$ python -m venv ~/.env
-----
-
-从任意目录运行以下命令，开始使用虚拟环境：
-
-[source,console]
-----
-$ source ~/.env/bin/activate
-----
-
-然后您会看到类似下面的提示：
-
-[source,console?prompt=(.env) $]
-----
-(.env) $
-----
-
-要离开虚拟环境，请从任意目录运行以下命令：
-
-[source,console?prompt=(.env) $]
-----
-(.env) $ deactivate
 ----
 
 === 使用 Thonny 编辑器

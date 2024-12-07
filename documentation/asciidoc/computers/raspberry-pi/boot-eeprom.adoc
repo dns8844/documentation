@@ -1,24 +1,30 @@
 [[raspberry-pi-boot-eeprom]]
 == 树莓派启动EEPROM
 
-Raspberry Pi 5、Raspberry Pi 4、400、Compute Module 4和 Compute Module 4S 使用EEPROM来启动系统。所有其他型号的Raspberry Pi计算机都使用位于引导文件系统中的 `bootcode.bin` 文件。
+以下 Raspberry Pi 型号使用 EEPROM 启动系统：
+
+* 自 Raspberry Pi 4 起的旗舰机型
+* 从 CM4 开始的计算模块型号（包括 CM4S）
+* 自 Pi 400 起带键盘的型号
+
+所有其他型号的 Raspberry Pi 计算机都使用位于启动文件系统中的 `bootcode.bin` 文件。
 
 NOTE: 您可以在 https://github.com/raspberrypi/rpi-eeprom/[rpi-eeprom GitHub存储库] 中找到用于创建 `rpi-eeprom` 的脚本和预编译二进制文件。
 
-[[boot-diagnostics]]
-=== 启动诊断
+=== 诊断
 
-如果在引导过程中发生错误，则将通过绿色LED显示 xref:configuration.adoc#led-warning-flash-codes[错误代码]。较新版本的引导加载程序将显示 xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[诊断消息]，该消息将显示在两个HDMI显示器上。
+如果在启动过程中发生错误，则会通过绿色 LED 显示 xref:configuration.adoc#led-warning-flash-codes[错误代码]。较新版本的引导加载程序将在所有 HDMI 显示屏上显示 xref:raspberry-pi.adoc#boot-diagnostics[诊断信息]。
 
 [[bootloader_update_stable]]
 === 更新引导加载程序
 
 有多种方法可以更新Raspberry Pi的引导加载程序。
 
-[[raspberry-pi-5-raspberry-pi-4-and-raspberry-pi-400]]
-==== Raspberry Pi 5, Raspberry Pi 4 和 Raspberry Pi 400
+==== 旗舰型号自 Raspberry Pi 4 开始；计算模块自 CM5 开始；键盘型号自 Pi 400 开始
 
 Raspberry Pi OS 会自动更新引导加载程序以修复重要错误。要手动更新引导加载器或更改启动顺序，请使用 xref:configuration.adoc#raspi-config[raspi-config]。
+
+NOTE: 计算模块 4 和计算模块 4S 不支持自动引导加载程序更新，因为引导rom 无法从 eMMC 加载`recovery.bin`文件。推荐的更新机制是 `rpiboot` 或通过 `flashrom` - 请参阅 `rpi-eeprom-update -h` 获取更多信息。
 
 [[imager]]
 ==== 使用 Raspberry Pi Imager 更新引导加载程序

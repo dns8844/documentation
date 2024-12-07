@@ -579,7 +579,7 @@ NOTE: 此列表并非详尽无遗-可能有未在此表中使用的代码。有�
 | Sony UK
 
 | c03130
-| Pi 400
+| 400
 | 1.0
 | 4GB
 | Sony UK
@@ -612,6 +612,12 @@ NOTE: 此列表并非详尽无遗-可能有未在此表中使用的代码。有�
 | Zero 2 W
 | 1.0
 | 512MB
+| Sony UK
+
+| b04170
+| 5
+| 1.0
+| 2GB
 | Sony UK
 
 | c04170
@@ -742,7 +748,6 @@ Raspberry Pi型号具有以下设备树值：
 | Raspberry Pi 5                | `raspberrypi`   | `5-model-b`        | `brcm`     | `bcm2712`
 | Raspberry Pi 400              | `raspberrypi`   | `400`              | `brcm`     | `bcm2711`
 | Raspberry Pi Compute Module 4 | `raspberrypi`   | `4-compute-module` | `brcm`     | `bcm2711`
-| Raspberry Pi 4 Model A        | `raspberrypi`   | `4-model-a`        | `brcm`     | `bcm2711`
 | Raspberry Pi 4 Model B        | `raspberrypi`   | `4-model-b`        | `brcm`     | `bcm2711`
 | Raspberry Pi Compute Module 3 | `raspberrypi`   | `3-compute-module` | `brcm`     | `bcm2837`
 | Raspberry Pi 3 Model A+       | `raspberrypi`   | `3-model-a-plus`   | `brcm`     | `bcm2837`

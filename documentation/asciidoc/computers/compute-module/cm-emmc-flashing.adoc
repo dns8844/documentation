@@ -1,36 +1,41 @@
 [[flash-compute-module-emmc]]
-== 将图像烧录到计算模块
+== 将映像烧录到计算模块
+
+TIP: 要将同一镜像烧入多个计算模块，请使用 https://github.com/raspberrypi/rpi-sb-provisioner[Raspberry Pi Secure Boot Provisioner]。要制作个性化操作系统映像，请使用 https://github.com/RPi-Distro/pi-gen[pi-gen]。
 
 [[flashing-the-compute-module-emmc]]
 
 计算模块有一个连接到主 SD 卡接口的板载 eMMC 设备。本指南介绍如何将操作系统映像闪存（写入）到单个计算模块的 eMMC 存储器中。
 
-NOTE: **Lite** 版本的计算模块没有板载 eMMC。相反，您可以按照 xref:../computers/getting-started.adoc#installing-the-operating-system[Install an operating system] 中为其他 Raspberry Pi 设备烧录存储设备的步骤进行操作。
-
-将映像烧录到多个计算模块时，请考虑使用计算模块供应程序：
-
-[.whitepaper, title="使用Compute Module Provisioner进行大规模烧录", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003468-WP/Using-the-Compute-Module-Provisioner.pdf]
-****
-Compute Module Provisioner 是一款网络应用程序，可帮助开发人员同时对多个 Compute Module 设备进行编程。
-
-除了自动标签打印和固件更新外，它还提供内核映像数据库，并能在闪存过程中运行脚本。
-****
+**Lite** 版本的计算模块没有板载 eMMC。请按照 xref:../computers/getting-started.adoc#installing-the-operating-system[安装操作系统] 中为其他 Raspberry Pi 设备烧录镜像的步骤进行操作。
 
 === 前提条件
 
 要闪存计算模块 eMMC，您需要具备以下条件：
 
-* 另一台计算机，在本指南中称为 *主机设备*。您可以使用 Linux（Raspberry Pi OS 或 Ubuntu）、Windows 或 macOS。
+* 另一台计算机，在本指南中称为 *主机设备*。您可以使用 Linux（推荐 Raspberry Pi OS 或 Ubuntu）、Windows 11 或 macOS。
 * Compute Module IO 板 xref:compute-module.adoc#io-board-compatibility[与您的 Compute Module 型号相对应]。
-* 微型 USB 电缆。
+* 微型 USB 电缆，或 USB-C 数据线（适用于 CM5IO 之后的计算模块型号）。
+
+TIP: 在某些情况下，USB 集线器会阻止主机设备识别 Compute 模块。如果主机设备无法识别 Compute 模块，请尝试将 Compute 模块直接连接到主机设备。有关更多诊断技巧，请参阅 https://github.com/raspberrypi/usbboot?tab=readme-ov-file#troubleshooting[usbboot故障排除指南]。
 
 === 安装 IO 板
 
 首先，物理安装 IO 板。这包括将计算模块和主机设备连接到 IO 板。
+[tabs%sync]
+======
+Compute Module 5 IO Board::
++
+设置计算模块 5 IO 板：
++
+. 将计算模块连接到 IO 板。连接后，计算模块应平放。
+. 将 `nRPI_BOOT` 安装到 IO 板跳线 J2（`disable eMMC Boot`）上。
+. 将电缆从 IO 板上的 USB-C 从端口 J11 连接到主机设备。
 
-==== Compute Module 4 IO 板
-
+Compute Module 4 IO Board::
++
 设置计算模块 4 IO 板：
++
 
 . 将计算模块连接到 IO 板。连接后，计算模块应平放。
 
@@ -38,10 +43,10 @@ Compute Module Provisioner 是一款网络应用程序，可帮助开发人员�
 
 . 将电缆从 IO 板上的微型 USB 从端口 J11 连接到主机设备。
 
-==== Compute Module IO 板
-
+Compute Module IO Board
++
 设置计算模块 IO 板：
-
++
 . 将计算模块连接到 IO 板。连接时，计算模块应平行于电路板，啮合夹应卡紧到位。
 
 . 将 J4（"USB SLAVE BOOT ENABLE"）设为 1-2 =（"USB BOOT ENABLED"）。
@@ -52,60 +57,54 @@ Compute Module Provisioner 是一款网络应用程序，可帮助开发人员�
 
 接下来，让我们在主机设备上设置软件。
 
-==== Linux
-
+TIP: 对于主机设备，我们建议使用运行 64 位 Raspberry Pi OS 的 Raspberry Pi 4 或更新版本。
+[tabs%sync]
+======
+Linux::
++
 在 Linux 主机设备上设置软件：
-
++
 . 运行以下命令安装 `rpiboot`：
 +
 [source,console]
 ----
 $ sudo apt install rpiboot
 ----
-
 . 连接 IO 板电源。
-
 . 然后运行 `rpiboot`：
 +
 [source,console]
 ----
 $ sudo rpiboot
 ----
-
 . 几秒钟后，计算模块应显示为一个大容量存储设备。检查 `/dev/` 目录，可能是 `/dev/sda` 或 `/dev/sdb`。或者，运行 `lsblk` 查找存储容量与计算模块容量相匹配的设备。
 
-TIP: 或者，您也可以 https://github.com/raspberrypi/usbboot[从源代码构建 `rpiboot`]。
-
-==== macOS
-
+macOS::
++
 在 macOS 主机设备上设置软件：
-
++
 . 首先，https://github.com/raspberrypi/usbboot?tab=readme-ov-file#macos[从源代码构建`rpiboot`]。
-
 . 连接 IO 板电源。
-
 . 然后，使用以下命令运行 `rpiboot` 可执行文件：
 +
 [source,console]
 ----
 $ sudo ./rpiboot
 ----
+. 命令运行完成后，你会看到一条信息，提示 "你插入的磁盘本计算机无法读取(The disk you inserted was not readable by this computer.)"。单击 **忽略**。现在，您的计算模块应显示为大容量存储设备。
 
-. 命令运行完成后，你会看到一条信息，提示 "你插入的磁盘本计算机无法读取"。单击**忽略**。现在，您的计算模块应显示为大容量存储设备。
-
-==== Windows
-
+Windows::
++
 在 Windows 主机设备上设置软件：
-
-. 下载 https://github.com/raspberrypi/usbboot/raw/master/win32/rpiboot_setup.exe[Windows 安装程序］
-
-. 双击安装程序运行。这将安装驱动程序和启动工具。
-
++
+. 下载 https://github.com/raspberrypi/usbboot/raw/master/win32/rpiboot_setup.exe[Windows 安装程序］ 或 https://github.com/raspberrypi/usbboot[从源构建 `rpiboot`].
+. 双击安装程序运行。这将安装驱动程序和启动工具。不要关闭安装过程中出现的任何驱动程序安装窗口。
+. 重新启动
 . 连接 IO 板电源。Windows 将发现硬件并配置所需的驱动程序。
+. 在 CM4 及更高版本的设备上，从开始菜单中选择 **Raspberry Pi - Mass Storage Gadget - 64 bit**。几秒钟后，计算模块 eMMC 或 NVMe 将显示为 USB 大容量存储设备。这还提供了一个作为串口小工具的调试控制台。
+. 在 CM3 和更旧的设备上，选择 **rpiboot**。双击 `RPiBoot.exe` 运行它。几秒钟后，计算模块 eMMC 应显示为 USB 大容量存储设备。
 
-. 双击 `RPiBoot.exe` 运行。几秒钟后，计算模块 eMMC 应显示为 USB 大容量存储设备。
-
-TIP: 或者，您也可以 https://github.com/raspberrypi/usbboot[从源代码构建 `rpiboot`]。
+======
 
 === Flash the eMMC
 
@@ -131,13 +130,20 @@ $ sudo dd if=raw_os_image.img of=/dev/sdX bs=4MiB
 
 === 从 eMMC 启动
 
-==== Compute Module 4 IO 板
-
+[tabs%sync]
+======
+Compute Module 5 IO Board::
++
 断开 IO 板跳线 J2（`禁用 eMMC 启动`）上的 `nRPI_BOOT`。
 
-==== Compute Module IO 板
+Compute Module 4 IO Board::
++
+断开 IO 板跳线 J2（`禁用 eMMC 启动`）上的 `nRPI_BOOT`。
 
+Compute Module IO Board::
++
 将 J4（`USB SLAVE BOOT ENABLE`）设置为 2-3（`USB BOOT DISABLED`）。
+======
 
 ==== Boot
 
@@ -145,7 +151,7 @@ $ sudo dd if=raw_os_image.img of=/dev/sdX bs=4MiB
 
 === 已知问题
 
-* 一小部分 CM3 出现了启动问题。我们已将这些问题追溯到创建 FAT32 分区的方法；我们认为问题是由于 CPU 和 eMMC 之间的时间差造成的。如果在启动 CM3 时遇到问题，请使用以下命令手动创建分区：
+* 一小部分 CM3 设备可能会出现启动问题。我们已将这些问题追溯到创建 FAT32 分区的方法；我们认为问题是由于 CPU 和 eMMC 之间的时间差造成的。如果在启动 CM3 时遇到问题，请使用以下命令手动创建分区：
 +
 [source,console]
 ----

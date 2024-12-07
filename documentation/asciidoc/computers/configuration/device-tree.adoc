@@ -66,7 +66,7 @@ Device Trees通常用称为Device Trees源（DTS）的文本形式编写，并�
 * 几个分散的属性
 * 一个重复节点（ `/node2` ）
 
-属性是简单的键值对，其值可以为空，也可以包含任意字节。虽然数据类型未在数据结构中编码，但有一些基本数据表示可以在 Device Trees 源文件中表示。
+属性是简单的键值对，其值可以为空，也可以包含任意字节。虽然数据类型未在数据结构中编码，但有一些基本datasheet示可以在 Device Trees 源文件中表示。
 
 文本字符串（以NUL结尾）用双引号表示：
 
@@ -827,7 +827,7 @@ ALSA 不会阻止其编解码器和其他组件在使用中被卸载。如果删
 [[part3.6]]
 ==== 支持的 overlay 和参数
 
-请参阅 `/boot/firmware/overays` 中 `.dtbo` 文件旁边的 https://github.com/raspberrypi/firmware/blob/master/boot/firmware/overlays/README[README] 文件。它会及时添加和更改保持最新的状态。
+有关支持的overlay和参数列表，请参阅 `/boot/firmware/overays` 中 `.dtbo` 文件旁边的 https://github.com/raspberrypi/firmware/blob/master/boot/firmware/overlays/README[README] 文件。它会及时添加和更改保持最新的状态。
 
 [[part4]]
 === 固件参数

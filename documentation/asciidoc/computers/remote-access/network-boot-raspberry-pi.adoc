@@ -67,16 +67,16 @@ $ vcgencmd bootloader_config
 
 在配置网络启动之前，请记下序列号和 MAC 地址，以便 TFTP/DHCP 服务器可以识别该板。
 
-在 Raspberry Pi 4 上，MAC 地址是在制造时编程的，MAC 地址和序列号之间没有任何联系。MAC 地址和序列号都显示在引导加载程序 xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[HDMI 诊断] 屏幕上。
+在 Raspberry Pi 4 和以后的旗舰产品上，MAC 地址是在制造时编程的，MAC 地址和序列号之间没有任何联系。MAC 地址和序列号都显示在引导加载程序 xref:raspberry-pi.adoc#boot-diagnostics[HDMI 诊断] 屏幕上。
 
-要查找以太网 MAC 地址：
+要查找以太网 MAC 地址，运行下面命令：
 
 [source,console]
 ----
 $ ethtool -P eth0
 ----
 
-要查找序列号：
+要查找序列号，运行下面命令：
 
 [source,console]
 ----
