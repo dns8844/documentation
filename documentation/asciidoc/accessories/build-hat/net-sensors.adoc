@@ -1,10 +1,10 @@
 === Use Sensors from .NET
 
-Like for motors, you have active and passive sensors. Most recent sensors are active. The passive one are lights and simple buttons. Active ones are distance or colour sensors, as well as small 3×3 pixel displays.
+就像电机一样，您有主动和被动传感器。最近的传感器是主动的。被动的是灯和简单的按钮。主动的是距离或颜色传感器，以及小型3×3像素显示器。
 
 ==== Button/Touch Passive Sensor
 
-The button/touch passive sensor have one specific property `IsPressed`. The property is set to true when the button is pressed. Here is a complete example with events:
+按钮/触摸无源传感器有一个特定属性 `IsPressed`。按下按钮时，该属性设置为true。这是一个完整的事件示例：
 
 [source,csharp]
 ----
@@ -34,10 +34,10 @@ void ButtonPropertyEvent(object? sender, PropertyChangedEventArgs e)
 
 ==== Passive Light
 
-.Passive light, https://www.bricklink.com/v2/catalog/catalogitem.page?P=22168c01&name=Electric,%20Light%20Unit%20Powered%20Up%20Attachment&category=%5BElectric,%20Light%20&%20Sound%5D#T=C&C=11[Image from Bricklink]
+.无源光，https://www.bricklink.com/v2/catalog/catalogitem.page?P=22168c01&name=Electric，%20Light%20Unit%20Powered%20Up%20Attachment和category=%5BElectric，%20Light%20&%20Sound%5D#T=C&C=11[图片来自Bricklink]
 image::images/passive-light.png[Passive light, width="60%"]
 
-The passive light are the train lights. They can be switched on and you can controlled their brightness.
+被动灯是火车灯。它们可以打开，你可以控制它们的亮度。
 
 [source,csharp]
 ----
@@ -55,20 +55,20 @@ light.Off()
 
 ==== Active Sensor
 
-The active sensor class is a generic one that all the active sensor inherit including active motors. They contains a set of properties regarding how they are connected to the Build HAT, the modes, the detailed Combi modes, the hardware, software versions and a specific property called `ValueAsString`. The value as string contains the last measurement as a collection of strings. A measurement arrives like `P0C0: +23 -42 0`, the enumeration will contains `P0C0:`, `+23`, `-42` and `0`. This is made so if you are using advance modes and managing yourself the Combi modes and commands, you'll be able to get the measurements.
+有源传感器类是所有有源传感器继承的通用类，包括有源电机。它们包含一组关于它们如何连接到构建HAT、模式、详细的Combi模式、硬件、软件版本和一个名为 `ValueAsString` 的特定属性的属性。字符串形式的值包含作为字符串集合的最后一个测量值。测量值像 `P0C0: +23 -42 0` 一样到达，枚举将包含 `P0C0:`、`+23`、`-42` 和 `0`。这是这样做的，所以如果你使用高级模式并管理自己的Combi模式和命令，你将能够获得测量值。
 
-All active sensor can run a specific measurement mode or a Combi mode. You can setup one through the advance mode using the `SelectModeAndRead` and `SelectCombiModesAndRead` functions with the specific mode(s) you'd like to continuously have. It is important to understand that changing the mode or setting up a new mode will stop the previous mode.
+所有活动传感器都可以运行特定的测量模式或Combi模式。您可以使用 `SelectModeAndRead` 和 `SelectCombiModesAndRead` 功能通过高级模式设置一个，并使用您希望持续使用的特定模式。重要的是要了解更改模式或设置新模式将停止以前的模式。
 
-The modes that can be combined in the Combi mode are listed in the `CombiModes` property. Al the properties of the sensors will be updated automatically when you'll setup one of those modes.
+`CombiModes` 属性中列出了可以在Combi模式中组合的模式。当您设置其中一种模式时，传感器的属性将自动更新。
 
 ==== WeDo Tilt Sensor
 
-.WeDo Tilt sensor, https://www.bricklink.com/v2/catalog/catalogitem.page?S=45305-1&name=WeDo%202.0%20Tilt%20Sensor&category=%5BEducational%20&%20Dacta%5D%5BWeDo%5D#T=S&O={%22iconly%22:0}[Image from Bricklink]
+.WeDo倾斜传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?S=45305-1&name=WeDo%202.0%20Tilt%20Sensor&category=%5BEducational%20&%20Dacta%5D%5BWeDo%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/wedo-tilt.png[WeDo Tilt sensor, width="60%"]
 
-WeDo Tilt Sensor has a special `Tilt` property. The type is a point with X is the X tilt and Y is the Y tilt. The values goes from -45 to + 45, they are caped to those values and represent degrees.
+WeDo倾斜传感器具有特殊的 `Tilt` 属性。类型是一个点，X是X倾斜，Y是Y倾斜。值从-45到+45，它们被限制为这些值并表示度数。
 
-You can set a continuous measurement for this sensor using the `ContinuousMeasurement` property.
+您可以使用 `ContinuousMeasurement` 属性设置此传感器的连续测量。
 
 [source,csharp]
 ----
@@ -86,10 +86,10 @@ while(!console.KeyAvailable)
 
 ==== WeDoDistance Sensor
 
-.WeDo Distance sensor, https://www.bricklink.com/v2/catalog/catalogitem.page?S=45304-1&name=WeDo%202.0%20Motion%20Sensor&category=%5BEducational%20&%20Dacta%5D%5BWeDo%5D#T=S&O={%22iconly%22:0}[Image from Bricklink]
+.WeDo距离传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?S=45304-1&name=WeDo%202.0%20Motion%20Sensor&category=%5BEducational%20&%20Dacta%5D%5BWeDo%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/wedo-distance.png[WeDo Distance sensor, width="60%"]
 
-WeDo Distance Sensor gives you a distance in millimetres with the Distance property.
+WeDo距离传感器通过距离属性为您提供以毫米为单位的距离。
 
 [source,csharp]
 ----
@@ -105,10 +105,10 @@ while(!console.KeyAvailable)
 
 ==== SPIKE Prime Force Sensor
 
-.Spike Force Sensor, https://www.bricklink.com/v2/catalog/catalogitem.page?P=37312c01&name=Electric%20Sensor,%20Force%20-%20Spike%20Prime&category=%5BElectric%5D#T=C&C=11[Image from Bricklink]
+.力传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?P=37312c01&name=Electric%20Sensor，%20Force%20-%20Spike%20Prime和category=%5BElectric%5D#T=C&C=11[图片来自Bricklink]
 image::images/spike-force.png[spike force sensor, width="60%"]
 
-This force sensor measure the pressure applies on it and if it is pressed. The two properties can be access through `Force` and `IsPressed` properties.
+该力传感器测量施加在其上的压力以及是否被按压。可以通过 `Force` 和 `IsPressed` 属性访问这两个属性。
 
 [source,csharp]
 ----
@@ -124,10 +124,10 @@ while(!force.IsPressed)
 
 ==== SPIKE Essential 3×3 Colour Light Matrix
 
-.spike 3×3 matrix, https://www.bricklink.com/v2/catalog/catalogitem.page?P=45608c01&name=Electric,%203%20x%203%20Color%20Light%20Matrix%20-%20SPIKE%20Prime&category=%5BElectric%5D#T=C[Image from Bricklink]
+.spike 3×3矩阵，https://www.bricklink.com/v2/catalog/catalogitem.page?P=45608c01&name=Electric，%203%20x%203%20Color%20Light%20Matrix%20-%20SPIKE%20Prime和category=%5BElectric%5D#T=C[图片来自Bricklink]
 image::images/3x3matrix.png[spike 3×3 matrix, width="60%"]
 
-This is a small 3×3 display with 9 different LEDs that can be controlled individually. The class exposes functions to be able to control the screen. Here is an example using them:
+这是一个小型3×3显示器，带有9个不同的LED，可以单独控制。该类公开了能够控制屏幕的功能。以下是使用它们的示例：
 
 [source,csharp]
 ----
@@ -156,19 +156,19 @@ matrix.DisplayColorPerPixel(brg, col);
 
 ==== SPIKE Prime Colour Sensor and Colour and Distance Sensor
 
-SPIKE colour sensor:
+SPIKE颜色传感器：
 
-.spike colour sensor, https://www.bricklink.com/v2/catalog/catalogitem.page?P=37308c01&name=Electric%20Sensor,%20Color%20-%20Spike%20Prime&category=%5BElectric%5D#T=C&C=11[Image from Bricklink]
+.spike颜色传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?P=37308c01&name=Electric%20Sensor，%20Color%20-%20Spike%20Prime和category=%5BElectric%5D#T=C&C=11[图片来自Bricklink]
 image::images/spike-color.png[spike color sensor, width="60%"]
 
-Colour and distance sensor:
+颜色和距离传感器：
 
-.Color distance sensor, https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0891c01&name=Electric%20Sensor,%20Color%20and%20Distance%20-%20Boost&category=%5BElectric%5D#T=C&C=1[Image from Bricklink]
+.颜色距离传感器、https://www.bricklink.com/v2/catalog/catalogitem.page?P=bb0891c01&name=Electric%20Sensor、%20Color%20and%20Distance%20-%20Boost和category=%5BElectric%5D#T=C&C=1[图片来自Bricklink]
 image::images/color-distance.png[Colour distance sensor, width="60%"]
 
-Those colour sensor has multiple properties and functions. You can get the `Color`, the `ReflectedLight` and the `AmbiantLight`.
+这些颜色传感器具有多种特性和功能。您可以获得 `Color`、`ReflectedLight` 和 `AmbiantLight`。
 
-On top of this, the Colour and Distance sensor can measure the `Distance` and has an object `Counter`. It will count automatically the number of objects which will go in and out of the range. This does allow to count objects passing in front of the sensor. The distance is limited from 0 to 10 centimetres.
+除此之外，颜色和距离传感器可以测量 `Distance` 并有一个物体 `Counter`。它将自动计算进出范围的物体数量。这确实允许计算从传感器前面经过的物体。距离限制在0到10厘米之间。
 
 [source,csharp]
 ----
@@ -191,14 +191,14 @@ while (!Console.KeyAvailable)
 }
 ----
 
-NOTE: For better measurement, it is not recommended to change the measurement mode in a very fast way, the colour integration may not be done in a proper way. This example gives you the full spectrum of what you can do with the sensor. Also, this class do not implement a continuous measurement mode. You can setup one through the advance mode using the `SelectModeAndRead` function with the specific mode you'd like to continuously have. It is important to understand that changing the mode or setting up a new mode will stop the previous mode.
+NOTE: 为了更好的测量，不建议以非常快速的方式更改测量模式，颜色集成可能无法以正确的方式完成。这个例子为您提供了使用传感器可以做什么的全部光谱。此外，这个类不实现连续测量模式。您可以使用 `SelectModeAndRead` 功能通过高级模式设置一个，并使用您想要的特定模式。重要的是要理解更改模式或设置新模式将停止以前的模式。
 
 ==== SPIKE Prime Ultrasonic Distance Sensor
 
-.Spike distance sensor, https://www.bricklink.com/v2/catalog/catalogitem.page?P=37316c01&name=Electric%20Sensor,%20Distance%20-%20Spike%20Prime&category=%5BElectric%5D#T=C&C=11[Image from Bricklink]
+.距离传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?P=37316c01&name=Electric%20Sensor，%20Distance%20-%20Spike%20Prime和category=%5BElectric%5D#T=C&C=11[图片来自Bricklink]
 image::images/spike-distance.png[Spike distance sensor, width="60%"]
 
-This is a distance sensor and it does implement a `Distance` property that will give the distance in millimetre. A `ContinuousMeasurement` mode is also available on this one.
+这是一个距离传感器，它确实实现了一个 `Distance` 属性，该属性将以毫米为单位给出距离。`ContinuousMeasurement` 模式也可用在这个上。
 
 [source,csharp]
 ----

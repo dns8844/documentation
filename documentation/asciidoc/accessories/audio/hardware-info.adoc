@@ -1,72 +1,72 @@
 == Hardware information
 
-Hardware information: 
+硬件信息：
 
-* PCB screws are all M2.5.
-* PCB standoffs (for case) are 5mm male/female.
-* PCB standoffs (for Raspberry Pi to audio boards) are 9mm female/female.
-* PCB standoffs (for XLR to DAC PRO) are 8mm female/male.
-* PCB standoffs (for the official Raspberry Pi 7-inch display) are 5mm male/female.
-* The rotary encoders we have used and tested are the Alpha three-pin rotary encoder
-RE160F-40E3-20A-24P, the ALPS EC12E2430804 (RS: 729-5848), and the Bourns ECW0JB24-AC0006L (RS: 263-2839).
-* The barrel connector used for powering the DigiAMP{plus} is 2.5mmID, 5.5mmOD, 11mm.
-* The DigiAMP{plus} is designed to operate with a 12V to 24V, 3A supply such as the XPPower
-VEC65US19 or similar.
-* The DigiAMP{plus} uses CamdenBoss two-part connectors. Those fitted to the PCB are 
-CTBP9350/2AO.
-* The speaker terminal used on the Codec Zero will accept wires of between 14~26 AWG
-(wire of max 1.6mm in diameter).
+* PCB 螺钉均为 M2.5。
+* PCB 支座（用于外壳）为 5 毫米公头/母头。
+* PCB 支座（用于 Raspberry Pi 与音频板连接）为 9 毫米母头/母头。
+* PCB 支座（用于 XLR 至 DAC PRO）为 8 毫米母头/公头。
+* PCB 支座（用于 Raspberry Pi 官方 7 英寸显示屏）为 5 毫米公头/母头。
+* 我们使用并测试的旋转编码器是 Alpha 三针旋转编码器
+RE160F-40E3-20A-24P，阿尔卑斯山EC12E2430804（RS： 729-5848）和伯恩斯ECW0JB24-AC0006L（RS：263-2839）。
+* 用于为 DigiAMP{plus} 供电的桶形连接器直径为 2.5mm，直径为 5.5mm，直径为 11mm。
+* DigiAMP{plus} 的设计工作电压为 12V 至 24V，3A，如 XPPower VEC65US19 或类似。
+VEC65US19 或类似。
+* DigiAMP{plus} 使用 CamdenBoss 两部分连接器。安装在 PCB 上的连接器是 
+CTBP9350/2AO。
+* Codec Zero 上使用的扬声器端子可接受 14~26 AWG 的导线。
+直径（最大为 1.6mm 的电线）。
 
 === GPIO usage 
 
-Raspberry Pi audio boards take advantage of a number of pins on the GPIO header in
-order to operate successfully. Some of these pins are solely for the use of the board, and
-some can be shared with other peripherals, sensors, etc.
+Raspberry Pi音频板利用GPIO接头上的多个引脚
+为了成功操作。其中一些引脚仅供电路板使用，并且
+有些可以与其他外围设备、传感器等共享。
 
-The following Raspberry Pi GPIO pins will be used by the audio boards:
+音频板将使用以下Raspberry Pi GPIO引脚：
 
-* All power pins
-* All ground pins
-* GPIO 2/3 (I2C)
-* GPIO 18/19/20/21 (I2S)
+* 所有电源引脚
+* 所有接地引脚
+* GPIO 2/3（I2C）
+* GPIO 18/19/20/21（I2S）
 
-If appropriate then the following are also used:
+如果合适，还可以使用以下内容：
 
-* GPIO 22 (DigiAMP+ mute/unmute support)
-* GPIO 23/24 for rotary encoder (physical volume control) or status LED (Codec Zero)
-* GPIO 25 for the IR Sensor
-* GPIO 27 for the rotary encoder push switch/Codec Zero switch
+* GPIO 22（支持 DigiAMP+ 静音/静音）
+* GPIO 23/24，用于旋转编码器（物理音量控制）或状态 LED（Codec Zero）
+* 用于红外传感器的 GPIO 25
+* GPIO 27，用于旋转编码器按钮开关/Codec Zero开关
 
 === DAC PRO, DAC{plus}, DigiAMP{plus}, Codec Zero
 
 image::images/pin_table_new.jpg[width="80%"]
 
-The DAC PRO, DAC{plus} and DigiAMP{plus} re-expose the Raspberry Pi signals, allowing additional sensors and peripherals
-to be added easily. Please note that some signals are for exclusive use (I2S and EEPROM) by some
-of our boards; others such as I2C can be shared across multiple boards.
+DAC PRO、DAC{plus} 和 DigiAMP{plus} 可重新显示 Raspberry Pi 信号，从而轻松添加其他传感器和外设。
+轻松添加额外的传感器和外设。请注意，有些信号（I2S 和 EEPROM）是我们的某些电路板专用的，而其他信号（如 I2S 和 EEPROM）则是共用的。
+和 EEPROM）；其他信号（如 I2C）则可在多个电路板上共享。
 
 image::images/pin_out_new.jpg[width="80%"]
 
 
 === Saving AlsaMixer settings
 
-To store the AlsaMixer settings, add the following at the command line:
+要存储AlsaMixer设置，请在命令行添加以下内容：
 
 [source,console]
 ----
 $ sudo alsactl store
 ----
 
-You can save the current state to a file, then reload that state at startup.
+您可以将当前状态保存到文件中，然后在启动时重新加载该状态。
 
-To save, run the following command, replacing `<username>` with your username:
+要保存，请运行以下命令，将 `<username>` 替换为您的用户名：
 
 [source,console]
 ----
 $ sudo alsactl store -f /home/<username>/usecase.state
 ----
 
-To restore a saved file, run the following command, replacing `<username>` with your username:
+要恢复保存的文件，请运行以下命令，将 `<username>` 替换为您的用户名：
 
 [source,console]
 ----
@@ -75,12 +75,12 @@ $ sudo alsactl restore -f /home/<username>/usecase.state
 
 === MPD-based audio with volume control
 
-To allow Music Player Daemon (MPD)-based audio software to control the audio board's built in volume, the file
-`/etc/mpd.conf` may need to be changed to support the correct AlsaMixer name.
+要允许基于Music Player Daemon（MPD）的音频软件控制音频板的内置音量，文件
+`/etc/mpd.conf` 可能需要更改以支持正确的AlsaMixer名称。
 
-This can be achieved by ensuring the 'Audio output' section of `/etc/mpd.conf` has the 'mixer_control'
-line. Below is an example for the Texas Instruments-based boards (DAC
-PRO/DAC{plus}/DigiAMP{plus}):
+这可以通过确保 `/etc/mpd.conf` 的“音频输出”部分具有“mixer_control”来实现
+行。以下是基于德州仪器的电路板(DAC
+PRO/DAC{plus}/DigiAMP{plus}):：
 
 ----
 audio_output {

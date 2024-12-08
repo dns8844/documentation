@@ -1,0 +1,31 @@
+== About
+
+.树莓派5的树莓派保护套
+image::images/bumper.jpg[width="80%"]
+
+适用于Raspberry Pi 5的Raspberry Pi保护套是一种卡扣式硅胶盖，可保护
+板的底部和边缘。连接时，Raspberry Pi的安装孔仍然可以通过保护套访问。
+
+保护套仅与Raspberry Pi 5兼容。
+
+== Assembly instructions
+
+.组装保护套
+image::images/assembly.png[width="80%"]
+
+要将Raspberry Pi保护套连接到您的Raspberry Pi：
+
+. 关闭您的Raspberry Pi并断开电源线。
+. 从Raspberry Pi的SD卡插槽中取出SD卡。
+. 将保护套与板对齐。
+. 轻轻但牢固地将板压入保护套，注意避免保护套与板的任何组件接触。
+. 将您的SD卡插入Raspberry Pi的SD卡插槽。
+. 将您的Raspberry Pi重新连接到电源。
+
+要拆下Raspberry Pi保护套：
+
+. 关闭您的Raspberry Pi并断开电源线。
+. 从Raspberry Pi的SD卡插槽中取出SD卡。
+. 轻轻但牢固地将保护套从电路板上剥离，注意避免保护套和电路板的任何组件接触。
+. 将您的SD卡插入Raspberry Pi的SD卡插槽。
+. 将您的Raspberry Pi重新连接到电源。

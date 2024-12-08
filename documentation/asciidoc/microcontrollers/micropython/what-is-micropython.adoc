@@ -1,6 +1,6 @@
 == What is MicroPython?
 
-MicroPython is a full implementation of the Python 3 programming language that runs directly on embedded hardware like Raspberry Pi Pico. You get an interactive prompt (the REPL) to execute commands immediately via USB Serial, and a built-in filesystem. The Pico port of MicroPython includes modules for accessing low-level chip-specific hardware.
+MicroPython是Python 3编程语言的完整实现，直接在Raspberry PiPico等嵌入式硬件上运行。您可以通过USB串行和内置文件系统获得交互式提示（REPL）以立即执行命令。MicroPython的Pico端口包括用于访问低级芯片特定硬件的模块。
 
 * The https://github.com/micropython/micropython/wiki[MicroPython Wiki]
 * The https://forum.micropython.org/[MicroPython Forums]

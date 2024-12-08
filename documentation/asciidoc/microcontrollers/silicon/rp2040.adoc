@@ -1,0 +1,106 @@
+== RP2040
+
+RP2040是由Raspberry Pi设计的微控制器。
+
+image::images/rp2040.jpg[]
+
+无论您使用的是 xref:pico-series.adoc#pico-1-technical-specification[Raspberry Pi Pico 1]，还是其他基于 RP2040 的微控制器板，这里都有入门所需的一切。您可以在 Raspberry Pi Pico 上找到 xref:c_sdk.adoc#sdk-setup[C/{cpp}] 或 xref:micropython.adoc#what-is-micropython[MicroPython] 的入门支持，以及使用 RP2040 的其他电路板的资源链接。还有 Raspberry Pi Pico 微控制器板和我们的 RP2040 微控制器芯片的技术文档链接。
+
+=== Why is the chip called RP2040?
+
+RP2040 的后缀数字来源于以下内容、
+
+image::images/rp2040_explanation.svg[width=640]
+
+. 处理器内核数量 (2)
+. 处理器类型 (M0+) .
+. floor(log2(RAM / 16k))
+. floor(log2(nonvolatile / 16k))，如果没有板载非易失性存储器，则为 0
+
+=== Technical Specification
+
+RP2040是树莓派的首款微控制器。它带来了我们高性能、低成本、
+和易于使用的微控制器空间。
+
+具有大型片上存储器、对称双核处理器复合体、确定性总线结构和丰富的外设集
+借助我们独特的可编程I/O（PIO）子系统，它为专业用户提供无与伦比的功能
+和灵活性。通过详细的留档、抛光的MicroPython端口和ROM中的UF2引导加载程序，它具有
+初学者和业余用户的最低入门门槛。
+
+RP2040是一个无状态设备，支持来自外部QSPI内存的缓存就地执行。这种设计
+决策允许您为您的应用选择合适的非易失性存储密度，并从中受益
+商品闪光零件的低价。
+
+RP2040采用现代40nm工艺节点制造，提供高性能、低动态功耗
+消耗和低泄漏，具有多种低功耗模式，支持电池延长运行时间
+权力
+
+主要规格：
+
+* 双 ARM Cortex-M0+ @ 133MHz
+* 264kB 片上 SRAM，分六个独立的存储组
+* 通过专用 QSPI 总线支持高达 16MB 的片外闪存
+* DMA 控制器
+* 完全连接的 AHB 交叉条
+* 内插器和整数除法器外设
+* 片上可编程 LDO 生成内核电压
+* 2 个片上 PLL，用于产生 USB 和内核时钟
+* 30 个 GPIO 引脚，其中 4 个可用作模拟输入
+* 外设
+** 2 个 UART
+** 2 个 SPI 控制器
+** 2 个 I2C 控制器
+** 16 个 PWM 通道
+** USB 1.1 控制器和 PHY，支持主机和设备
+** 8 个 PIO 状态机
+
+[.whitepaper, title="用于低待机电流应用的功率开关 RP2040", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-004339-WP/Power-switching-RP2040-for-low-standby-current-applications.pdf]
+****
+即使在深度睡眠中RP2040也会汲取约180μA的典型电流，并且睡眠电流非常依赖于PVT：工艺（电流因芯片而异）、电压（电流随电压线性变化）和温度（电流随温度非线性变化）。
+
+对于许多需要最小电流消耗的用例，最好的选择是尽可能完全关闭系统（或系统的RP2040部分）。本应用笔记提供了几个如何做到这一点的选项，这些电路非常简单，设计人员可以根据自己的用例进行调整。
+****
+
+==== 设计文件
+
+* Download https://datasheets.raspberrypi.com/rp2040/Minimal-KiCAD.zip[Minimal Viable Board] Design Files (KiCad)
+* Download https://datasheets.raspberrypi.com/rp2040/VGA-KiCAD.zip[VGA Carrier Board] Design Files (KiCad)
+
+=== RP2040-based Boards
+
+xref:pico-series.adoc#pico-1-family[Raspberry Pi Pico 1] 由Raspberry Pi设计，既是开发板，也是参考设计，是一系列基于RP2040的板。
+
+Raspberry Pi Pico 和 Pico W的设计文件是公开的，没有限制。
+
+* Download https://datasheets.raspberrypi.com/pico/RPi-Pico-R3-PUBLIC-20200119.zip[Design Files] for Raspberry Pi Pico (Cadence Allegro)
+* Download https://datasheets.raspberrypi.com/picow/RPi-PicoW-PUBLIC-20220607.zip[Design Files] for Raspberry Pi Pico W (Cadence Allegro)
+
+特此授予使用、复制、修改和/或分发本设计用于任何目的的许可，无论是否收费。
+
+本设计按“原样”提供，作者不承担与本设计有关的所有保证，包括对适销性和适用性的所有暗示保证。在任何情况下，作者均不对因使用、数据或利润损失而导致的任何特殊、直接、间接或后果性损害或任何损害负责，无论是由于合同、疏忽或其他侵权行为，还是与使用或执行本设计有关。
+
+==== Other Boards
+
+您可以在 https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi forums] 上找到关于基于第三方RP2040的板的讨论。
+
+==== USB PIDs
+
+许多基于RP2040的设备使用Raspberry Pi的USB供应商ID和产品ID组合。如果您基于RP2040构建第三方板，您可能需要唯一的USB产品ID（PID）。
+
+如果您需要为Windows用户提供自定义驱动程序，您可能需要唯一的USB PID。
+
+USB-IF已授予Raspberry Pi许可其供应商ID（`0x2E8A`）的USB产品ID值用于与RP2040一起使用的常见硅组件的权限。
+
+要保留与Raspberry Pi的供应商ID关联的USB PID，请按照 https://github.com/raspberrypi/usb-pid[Raspberry Pi USB PID git repository] 中的说明进行操作。
+
+NOTE: 如果您使用标准RP2040 PID，您可以使用 `iManufacturer`、`iProduct` 和 `iSerial` 字符串来唯一标识您的设备。
+
+=== Internal Temperature Sensor
+
+RP2040封装中的内部温度传感器是一种低分辨率传感器，需要用户校准才能达到任何精度。
+
+准确确定测量温度的一个关键部分是了解ADC VREF电压。转换公式意味着ADC VREF电压中的小误差会导致计算的温度出现相当大的差异。RP2040没有可用于确定VREF电压的内部固定电压基准，因此需要手动测量VREF电压——但警告它可能会改变——或者需要提供外部固定电压基准。
+
+NOTE: RP2040传感器电压随温度升高而下降。
+
+有关内部温度传感器的更多详细信息，请参见 https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf[RP2040 Datasheet] 的第4章4.9.5节。

@@ -1,78 +1,71 @@
 == Camera Filters
 
-Some transmission characteristics are available for the Camera Module 3 and the HQ and GS cameras.
+一些传输特性可用于相机模块3以及HQ和GS相机。
 
-NOTE: These graphs are available as https://datasheets.raspberrypi.com/camera/camera-extended-spectral-sensitivity.pdf[a PDF].
+NOTE: 这些图表可作为 https://datasheets.raspberrypi.com/camera/camera-extended-spectral-sensitivity.pdf[PDF] 获得。
 
 === Camera Module 3
 
-The Camera Module 3 is built around the IMX708, which has the following spectral sensitivity characteristics.
+相机模块3围绕IMX708构建，具有以下光谱灵敏度特性。
 
 image::images/cm3-filter.png[Camera Module 3 Transmission Graph, width="65%"]
 
 === HQ Camera
 
-Raspberry Pi HQ Camera without IR-Cut filter.
+不带IR-Cut滤镜的Raspberry Pi HQ相机。
 
 image::images/hq.png[HQ Camera Transmission Graph without IR-Cut filter,width="65%"]
 
 
 === GS Camera
 
-Raspberry Pi GS Camera without IR-Cut filter.
+不带IR-Cut滤镜的Raspberry Pi GS相机。
 
 image::images/gs.png[GS Camera Transmission Graph without IR-Cut filter,width="65%"]
 
 
 === HQ and GS Cameras
 
-The HQ and GS Cameras use a Hoya CM500 infrared filter. Its transmission characteristics are as represented in the following graph.
+HQ和GS相机使用Hoya CM500红外滤光片。其透射特性如下图所示。
 
 image::images/hoyacm500.png[CM500 Transmission Graph,width="65%"]
 
-== Filter Removal
+== IR Filter
 
-NOTE: This procedure applies to both the HQ and GS cameras. 
+高品质相机和全局快门相机都包含一个红外滤光片，以降低相机对红外光的敏感性并帮助户外照片看起来更自然。但是，您可以删除过滤器以：
 
-WARNING: *This procedure cannot be reversed:* the adhesive that attaches the filter will not survive being lifted and replaced, and while the IR filter is about 1.1mm thick, it may crack when it is removed. *Removing it will void the warranty on the product*. Nevertheless, removing the filter will be desirable to some users.
+* Enhance colours in certain types of photography, such as images of plants, water, and the sky
+* Provide night vision in a location that is illuminated with infrared light
+
+=== Filter Removal
+
+WARNING: *此过程不可逆转：* 过滤器在吊起和更换时会损坏，虽然IR过滤器约为1.1毫米厚，但在移除时可能会破裂。*产品保修将失效*。
+
+您可以从HQ和GS相机上移除滤镜。HQ相机显示在下面的演示中。
 
 image:images/FILTER_ON_small.jpg[width="65%"]
 
-Both the High Quality Camera and Global Shutter Camera contain an IR filter, which is used to reduce the camera's sensitivity to infrared light. This ensures that outdoor photos look more natural. However, some nature photography can be enhanced with the removal of this filter; the colours of sky, plants, and water can be affected by its removal. The camera can also be used without the filter for night vision in a location that is illuminated with infrared light.
+NOTE: 确保在清洁无尘的环境中工作，因为传感器将暴露在空气中。
 
-WARNING: Before proceeding read through all of the steps and decide whether you are willing to void your warranty. *Do not proceed* unless you are sure that you are willing to void your warranty.
-
-To remove the filter:
-
-* Work in a clean and dust-free environment, as the sensor will be exposed to the air.
-
-*  Unscrew the two 1.5 mm hex lock keys on the underside of the main circuit board. Be careful not to let the washers roll away. There is a gasket of slightly sticky material between the housing and PCB which will require some force to separate.
-
+. 拧开主电路板下侧的两个1.5毫米六角锁键。小心不要让垫圈滚走。
++
 image:images/SCREW_REMOVED_small.jpg[width="65%"]
-
-*  Lift up the board and place it down on a very clean surface. Make sure the sensor does not touch the surface.
-
+. 外壳和PCB之间有一个稍微粘的材料垫圈，需要一些力才能分开。您可以尝试一些方法来削弱粘合剂，例如少量异丙醇和/或加热（~20-30）。
+. 一旦粘合剂松动，提起板并将其放在非常干净的表面上。确保传感器不会接触表面。
++
 image:images/FLATLAY_small.jpg[width="65%"]
-
-* You may try some ways to weaken the adhesive, such as a little isopropyl alcohol and/or heat (~20-30 C). 
-
+. 将镜头朝上，将支架放在平坦的表面上。
++
 image:images/SOLVENT_small.jpg[width="65%"]
-
-*  Turn the lens mount around so that it is "looking" upwards and place it on a table.
-
-* Using a pen top or similar soft plastic item, push down on the filter only at the very edges where the glass attaches to the aluminium - to minimise the risk of breaking the filter. The glue will break and the filter will detach from the lens mount.
-
+. 为了尽量减少损坏过滤器的风险，请使用笔尖或类似的软塑料物品，仅在玻璃与铝连接的边缘向下推过滤器。胶水会露出缝隙，过滤器会从镜头支架上脱落。
++
 image:images/REMOVE_FILTER_small.jpg[width="65%"]
-
-*  Given that changing lenses will expose the sensor, at this point you could affix a clear filter (for example, OHP plastic) to minimize the chance of dust entering the sensor cavity.
-
-*  Replace the main housing over the circuit board. Be sure to realign the housing with the gasket, which remains on the circuit board.
-
-*  The nylon washer prevents damage to the circuit board; apply this washer first. Next, fit the steel washer, which prevents damage to the nylon washer.
-
-*  Screw down the two hex lock keys. As long as the washers have been fitted in the correct order, they do not need to be screwed very tightly.
-
+. 鉴于更换镜头会导致传感器暴露在外，此时您可以贴上透明过滤器（例如OHP塑料），以最大限度地减少灰尘进入传感器腔的机会。
+. 更换电路板上的主外壳。请务必将外壳与垫圈重新对齐，垫圈仍留在电路板上。
+. 先涂上尼龙垫圈，防止损坏电路板。
+. 接下来，安装钢垫圈，防止损坏尼龙垫圈。拧下两个六角锁键。只要垫圈按正确的顺序安装，就不需要拧得很紧。
++
 image:images/FILTER_OFF_small.jpg[width="65%"]
 
-NOTE: It is likely to be difficult or impossible to glue the filter back in place and return the device to functioning as a normal optical camera.
+NOTE: 不太可能可以将过滤器粘回原位并使设备恢复正常光学相机的功能。
 

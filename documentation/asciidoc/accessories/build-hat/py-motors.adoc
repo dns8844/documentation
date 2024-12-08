@@ -1,17 +1,17 @@
 === Use Motors from Python
 
-There are xref:build-hat.adoc#device-compatibility[a number of motors] that work with the Build HAT.
+有 xref:build-hat.adoc#device-compatibility[a number of motors] 与Build HAT一起使用。
 
 ==== Connect a Motor
 
-Connect a motor to port A on the Build HAT. The LPF2 connectors need to be inserted the correct way up. If the connector doesn't slide in easily, rotate by 180 degrees and try again.
+将电机连接到Build HAT上的A端口。LPF2连接器需要正确向上插入。如果连接器不容易滑入，请旋转180度，然后重试。
 
 image::images/connect-motor.gif[width="80%"]
 
 
 ==== Work with Motors
 
-Start the https://thonny.org/[Thonny IDE]. Add the program code below:
+启动 https://thonny.org/[Thonny IDE]。添加以下程序代码：
 
 [source,python]
 ----
@@ -22,31 +22,31 @@ motor_a = Motor('A')
 motor_a.run_for_seconds(5)
 ----
 
-Run the program by clicking the play/run button. If this is the first time you're running a Build HAT program since the Raspberry Pi has booted, there will be a few seconds pause while the firmware is copied across to the board. You should see the red LED extinguish and the green LED illuminate. Subsequent executions of a Python program will not require this pause.
+通过单击播放/运行按钮运行程序。如果这是Raspberry Pi启动后第一次运行Build HAT程序，则在将固件烧录到板上时会有几秒钟的暂停。您应该会看到红色LED熄灭，绿色LED亮起。Python程序的后续执行不需要此暂停。
 
 image::images/blinking-light.gif[width="80%"]
 
-Your motor should turn clockwise for 5 seconds.
+你的马达应该顺时针转5秒钟。
 
 image::images/turning-motor.gif[width="80%"]
 
-Change the final line of your program and re-run. 
+更改程序的最后一行并重新运行。
 
 [source,python]
 ----
 motor_a.run_for_seconds(5, speed=50)
 ----
 
-The motor should now turn faster. Make another change:
+电机现在应该转得更快了。做另一个改变：
 
 [source,python]
 ----
 motor_a.run_for_seconds(5, speed=-50)
 ----
 
-The motor should turn in the opposite (anti-clockwise) direction
+电机应向相反（逆时针）方向转动
 
-Create a new program by clicking on the plus button in Thonny. Add the code below:
+通过单击Thonny中的加号按钮创建一个新程序。添加下面的代码：
 
 [source,python]
 ----
@@ -58,4 +58,5 @@ while True:
     print("Position: ", motor_a.get_aposition())
 ----
 
-Run the program. Grab the motor and turn the shaft. You should see the numbers printed in the Thonny REPL changing. 
+运行程序。抓住马达并转动轴。您应该会看到Thonny REPL中打印的数字发生变化。
+ 

@@ -1,0 +1,37 @@
+== About
+
+.插入Raspberry Pi 5的Raspberry Pi SD卡
+image::images/sd-hero.jpg[width="80%"]
+
+SD卡质量是决定树莓派整体用户体验的关键因素。缓慢的总线速度和没有有效的命令排队机制会降低即使是最强大的树莓派型号的性能。
+
+树莓派的官方microSD卡支持DDR50和SDR104总线速度。此外，树莓派SD卡支持命令队列（CQ）扩展，允许随机读取操作的一些流水线，确保最佳性能。
+
+您甚至可以购买使用最新版本的Raspberry Pi OS预编程的Raspberry Pi SD卡。
+
+Raspberry Pi SD卡有以下尺寸可供选择：
+
+* 32GB
+* 64GB
+* 128GB
+
+== Specifications
+
+.一张128GB树莓派SD卡
+image::images/sd-cards.png[width="80%"]
+
+Raspberry Pi SD卡使用SD6.1 SD规范。
+
+Raspberry Pi SD卡使用microSDHC/microSDXC外形尺寸。
+
+Raspberry Pi SD卡具有以下速度等级：C10、U3、V30、A2。
+
+下表描述了使用4KB随机数据的Raspberry Pi SD卡的读写速度：
+
+|===
+| Raspberry Pi 型号 | 接口 | 读取速度 | 写入速度
+
+| 4 | DDR50  | 3,200 IOPS | 1,200 IOPS
+| 5 | SDR104 | 5,000 IOPS | 2,000 IOPS
+|===
+

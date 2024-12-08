@@ -1,27 +1,27 @@
 == Serial Wire Debug (SWD)
 
-Serial Wire Debug (SWD) is a two-pin interface (https://developer.arm.com/documentation/101761/1-0/Debug-and-trace-interface/Serial-Wire-Debug-signals[SWDIO and SWCLK]) alternative to the JTAG four- or five-pin debugging interface standard.
+串行线调试（SWD）是JTAG四针或五针调试接口标准的两针接口（https://developer.arm.com/documentation/101761/1-0/Debug-and-trace-interface/Serial-Wire-Debug-signals[SWDIO and SWCLK]）替代品。
 
 === Uploading new programs to your Pico
 
-The Pico Debug Probe will let you load binaries via the SWD port and OpenOCD: you will not need to unplug, and then push-and-hold, the BOOTSEL button every time you push a new binary to your Pico. Using the Debug Probe uploading new binaries is an entirely hands off affair.
+Pico Debug Probe 允许通过SWD端口和OpenOCD加载二进制文件：每次将新二进制文件推送到Pico时，您不需要拔掉BOOTSEL按钮再按住按钮。使用Debug Probe上传新文件无需额外操作。
 
-Once you have built a binary: 
+构建二进制文件后：
 
 [source,console]
 ----
 $ sudo openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "adapter speed 5000" -c "program blink.elf verify reset exit"
 ----
 
-NOTE: When you use the Debug Probe to upload a binary the ELF version of the file is used, not the UF2 file that you would use when you drag-and-drop.
+NOTE: 当您使用Debug Probe上传二进制文件时，使用的是文件的ELF版本，而不是您在拖放时使用的UF2文件。
 
 === Debugging with SWD
 
-It'll also let you use `openocd` in server mode, and connect GDB, which gives you break points and "proper" debugging.
+它还允许您在服务器模式下使用 `openocd`，并连接GDB，从而为您提供断点和“正确”调试。
 
 [IMPORTANT] 
 ======
-To allow debugging, you must build your binaries as `Debug` rather than `Release` build type, e.g.
+要允许调试，您必须将二进制文件构建为 `Debug` 而不是 `Release` 构建类型，例如。
 
 ----
 $ cd ~/pico/pico-examples/
@@ -34,19 +34,19 @@ $ cd blink
 $ make -j4
 ----
 
-In a debug build you will get more information when you run it under the debugger, as the compiler builds your program with the information to tell GDB what your program is doing.
+在调试构建中，当您在调试器下运行它时，您将获得更多信息，因为编译器使用这些信息构建您的程序以告诉GDB您的程序在做什么。
 
-See Chapter 6 of https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico] for more information.
+有关详细信息，请参阅 https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Raspberry Pi Pico 入门] 的第6章。
 ======
 
-To start an OpenOCD server, run the following command:
+要启动OpenOCD服务器，请运行以下命令：
 
 [source,console]
 ----
 $ sudo openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "adapter speed 5000"
 ----
 
-Then open a second terminal window, switch to the directory containing your built binary, and start a debugger to attach it to the OpenOCD server:
+然后打开第二个终端窗口，切换到包含您构建的二进制文件的目录，并启动调试器以将其附加到OpenOCD服务器：
 
 [source,console]
 ----
@@ -56,7 +56,7 @@ $ gdb blink.elf
 > continue
 ----
 
-GDB doesn't work on all platforms. Use one of the following alternatives instead of `gdb`, depending on your operating system and device:
+GDB并非适用于所有平台。根据您的操作系统和设备，使用以下替代方案之一而不是 `gdb`：
 
-* On Linux devices that are _not_ Raspberry Pis, use `gdb-multiarch`.
-* On Arm-based macOS devices, use `lldb`.
+* 在 _非_ Raspberry Pi 的 Linux 设备上，使用 `gdb-multiarch`。
+* 在 macOS 设备上，使用 `arm-none-eabi-gdb`。

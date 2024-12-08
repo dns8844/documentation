@@ -1,8 +1,8 @@
 === Use Motors from .NET
 
-There are two types of motors, the *passive* ones and the *active* ones. Active motors will provide detailed position, absolute position and speed while passive motors can only be controlled with speed.
+有两种类型的电机，*被动*的和*主动*的。主动电机将提供详细的位置，绝对位置和速度，而被动电机只能控制速度。
 
-A common set of functions to control the speed of the motors are available. There are 2 important ones: `SetPowerLimit` and `SetBias`:
+可以使用一组通用的功能来控制电机的速度。有两个重要的：`SetPowerLimit` 和 `SetBias`：
 
 [source,csharp]
 ----
@@ -10,20 +10,20 @@ train.SetPowerLimit(1.0);
 train.SetBias(0.2);
 ----
 
-The accepted values are only from 0.0 to 1.0. The power limit is a convenient ay to reduce in proportion the maximum power.
+可接受的值仅为0.0到1.0。功率限制是按比例降低最大功率的方便方法。
 
-The bias value sets for the current port which is added to positive motor drive values and subtracted from negative motor drive values. This can be used to compensate for the fact that most DC motors require a certain amount of drive before they will turn at all.
+偏置值设置为电流端口，它被添加到正电机驱动值中，并从负电机驱动值中减去。这可以用来补偿大多数直流电机在转动之前需要一定的驱动量的事实。
 
-The default values when a motor is created is 0.7 for the power limit and 0.3 for the bias.
+创建电机时的默认值为功率限制0.7，偏置0.3。
 
 ==== Passive Motors
 
-.Train motor, https://www.bricklink.com/v2/catalog/catalogitem.page?S=88011-1&name=Train%20Motor&category=%5BPower%20Functions%5D%5BPowered%20Up%5D#T=S&O={%22iconly%22:0}[Image from Bricklink]
+.火车电机，https://www.bricklink.com/v2/catalog/catalogitem.page?S=88011-1&name=Train%20Motor&category=%5BPower%20Functions%5D%5BPowered%20Up%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/train-motor.png[Train motor,width="60%"]
 
-The typical passive motor is a train and older Powered Up motors. The `Speed` property can be set and read. It is the target and the measured speed at the same time as those sensors do not have a way to measure them. The value is from -100 to +100.
+典型的无源电机是火车和较旧的加电电机。`Speed` 属性可以设置和读取。它是目标和测量速度，同时这些传感器没有办法测量它们。值从-100到+100。
 
-Functions to control `Start`, `Stop` and `SetSpeed` are also available. Here is an example of how to use it:
+还提供控制 `Start`、`Stop` 和 `SetSpeed` 的功能。以下是如何使用它的示例：
 
 [source,csharp]
 ----
@@ -49,16 +49,16 @@ Console.WriteLine("Stop the train");
 train.Stop();
 ----
 
-NOTE: Once the train is started, you can adjust the speed and the motor will adjust accordingly.
+NOTE: 列车启动后，您可以调整速度，电机将相应调整。
 
 ==== Active Motors
 
-.Active motor, https://www.bricklink.com/v2/catalog/catalogitem.page?S=88014-1&name=Technic%20XL%20Motor&category=%5BPower%20Functions%5D%5BPowered%20Up%5D#T=S&O={%22iconly%22:0}[Image from Bricklink]
+.活动电机，https://www.bricklink.com/v2/catalog/catalogitem.page?S=88014-1&name=Technic%20XL%20Motor&category=%5BPower%20Functions%5D%5BPowered%20Up%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/active-motor.png[Active motor,width="60%"]
 
-Active motors have `Speed`, `AbsolutePosition`, `Position` and `TargetSpeed` as special properties. They are read continuously even when the motor is stopped.
+有源电机具有 `Speed`、`AbsolutePosition`、`Position` 和 `TargetSpeed` 等特殊性能。即使电机停止，它们也会连续读取。
 
-The code snippet shows how to get the motors, start them and read the properties:
+代码片段展示了如何获取电机、启动它们并读取属性：
 
 [source,csharp]
 ----
@@ -86,9 +86,9 @@ active.Stop();
 active2.Stop();
 ----
 
-NOTE: Don't forget to start and stop your motors when needed.
+NOTE: 不要忘记在需要时启动和停止电机。
 
-Advance features are available for active motors. You can request to move for seconds, to a specific position, a specific absolute position. Here are couple of examples:
+主动电机可使用高级功能。您可以请求移动几秒钟，移动到特定位置，特定的绝对位置。这里有几个例子：
 
 [source,csharp]
 ----
@@ -101,7 +101,7 @@ active.MoveToPosition(0, true);
 active2.MoveToPosition(0, true);
 ----
 
-Each function allow you to block or not the thread for the time the operation will be performed. Note that for absolute and relative position moves, there is a tolerance of few degrees.
+每个函数都允许您在执行操作的时间内阻塞或不阻塞线程。请注意，对于绝对和相对位置移动，有几度的容差。
 
 [source,csharp]
 ----
@@ -125,4 +125,4 @@ active.MoveToAbsolutePosition(-180, PositionWay.Shortest, true);
 active.Float();
 ----
 
-You can place the motor in a float position, meaning, there are no more constrains on it. This is a mode that you can use when using the motor as a tachometer, moving it and reading the position. If you still have constrains on the motors, you may not be able to move it.
+您可以将电机置于浮动位置，这意味着它不再受约束。在将电机用作转速计、移动电机并读取位置时，可以使用这种模式。如果电机上仍有约束，则可能无法移动。

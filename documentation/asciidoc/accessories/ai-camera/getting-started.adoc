@@ -1,0 +1,137 @@
+== Getting started
+
+下面的说明描述了如何在Raspberry Pi AI相机上运行预打包的MobileNet SSD和PoseNet神经网络模型。
+
+=== Prerequisites
+
+这些说明假定您使用的是连接到Raspberry Pi 4 Model B或Raspberry Pi 5板上的AI相机。稍作改动后，您可以在其他带有相机连接器的Raspberry Pi型号上遵循这些说明，包括Raspberry Pi Zero 2 W和Raspberry Pi 3 Model B+。
+
+首先，确保您的Raspberry Pi运行最新的软件。运行以下命令进行更新：
+
+[source,console]
+----
+$ sudo apt update && sudo apt full-upgrade
+----
+
+=== Install the IMX500 firmware
+
+AI相机必须在启动期间将运行时固件下载到IMX500传感器上。要将这些固件文件安装到您的Raspberry Pi上，请运行以下命令：
+
+[source,console]
+----
+$ sudo apt install imx500-all
+----
+
+这条命令：
+
+* installs the `/lib/firmware/imx500_loader.fpk` and `/lib/firmware/imx500_firmware.fpk` firmware files required to operate the IMX500 sensor
+* places a number of neural network model firmware files in `/usr/share/imx500-models/`
+* installs the IMX500 post-processing software stages in `rpicam-apps`
+* installs the Sony network model packaging tools
+
+NOTE: IMX500内核设备驱动程序在相机启动时加载所有固件文件。如果之前没有缓存神经网络模型固件，这可能需要几分钟时间。下面的演示在控制台上显示一个进度条来指示固件加载进度。
+
+=== Reboot
+
+现在您已经满足q了前提条件，请重新启动Raspberry Pi：
+
+[source,console]
+----
+$ sudo reboot
+----
+
+== Run example applications
+
+更新所有系统包并安装固件文件后，我们就可以开始运行一些示例应用程序了。如前所述，树莓派AI相机与 `libcamera`、`rpicam-apps` 和 `Picamera2` 完全集成。
+
+=== `rpicam-apps`
+
+xref:../computers/camera_software.adoc#rpicam-apps[`rpicam-apps` 相机应用程序] 包括可在后处理管道中运行的 IMX500 对象检测和姿态估计阶段。有关后处理管道的更多信息，请参阅  xref:../computers/camera_software.adoc#post-process-file[后处理(post-processing)文档]。
+
+此页面上的示例使用位于 `/usr/share/rpicam-assets/` 中的后处理JSON文件。
+
+==== Object detection
+
+MobileNet SSD神经网络执行基本目标检测，为找到的每个对象提供边界框和置信度值。`imx500_mobilenet_ssd.json` 包含使用MobileNet SSD神经网络的IMX500目标检测后处理阶段的配置参数。
+
+`imx500_mobilenet_ssd.json` 声明了一个包含两个阶段的后处理管道：
+
+. `imx500_object_detection`，它在输出张量中挑选出神经网络生成的边界框和置信度值
+. `object_detect_draw_cv`，在图像上绘制边界框和标签
+
+MobileNet SSD张量无需对Raspberry Pi进行大量后处理即可生成边界框的最终输出。所有目标检测都直接在AI相机上运行。
+
+以下ok运行 `rpicam-hello` 并进行目标检测后处理：
+
+[source,console]
+----
+$ rpicam-hello -t 0s --post-process-file /usr/share/rpi-camera-assets/imx500_mobilenet_ssd.json --viewfinder-width 1920 --viewfinder-height 1080 --framerate 30
+----
+
+运行命令后，您应该会看到一个取景器，它将边界框覆盖在神经网络识别的对象上：
+
+image::images/imx500-mobilenet.jpg[IMX500 MobileNet]
+
+要录制带有目标检测覆盖的视频，请改用 `rpicam-vid`：
+
+[source,console]
+----
+$ rpicam-vid -t 10s -o output.264 --post-process-file /usr/share/rpi-camera-assets/imx500_mobilenet_ssd.json --width 1920 --height 1080 --framerate 30
+----
+
+您可以通过多种方式配置 `imx500_object_detection` 阶段。
+
+例如，`max_detections` 定义了管道在任何给定时间将检测到的最大对象数。`threshold` 定义了管道将任何输入视为对象所需的最小置信度值。
+
+该网络的原始推理输出数据可能非常嘈杂，因此此阶段还预先进行了一些时间过滤并应用滞后。要禁用此过滤，请删除 `temporal_filter` 配置块。
+
+==== Pose estimation
+
+PoseNet神经网络执行位姿估计，标记与关节和四肢相关的身体上的关键点。`imx500_posenet.json` 包含使用PoseNet神经网络的IMX500位姿估计后处理阶段的配置参数。
+
+`imx500_posenet.json` 声明了一个包含两个阶段的后处理管道：
+
+* `imx500_posenet`, which fetches the raw output tensor from the PoseNet neural network
+* `plot_pose_cv`, which draws line overlays on the image
+
+AI相机执行基本检测，但输出张量需要在主机Raspberry Pi上进行额外的后处理才能产生最终输出。
+
+以下命令运行 `rpicam-hello` 并进行姿势预测后处理：
+
+[source,console]
+----
+$ rpicam-hello -t 0s --post-process-file /usr/share/rpi-camera-assets/imx500_posenet.json --viewfinder-width 1920 --viewfinder-height 1080 --framerate 30
+----
+
+image::images/imx500-posenet.jpg[IMX500 PoseNet]
+
+您可以通过多种方式配置 `imx500_posenet` 阶段。
+
+例如，`max_detections` 定义了管道在任何给定时间将检测到的最大主体数量。`threshold` 定义了管道将输入视为主体所需的最小置信值。
+
+=== Picamera2
+
+有关使用Picamera2的图像分类、目标检测、对象分割和姿势预测的示例，请参阅 https://github.com/raspberrypi/picamera2/blob/main/examples/imx500/[ `picamera2` GitHub 仓库]。
+
+大多数示例使用OpenCV进行一些额外的处理。要安装运行OpenCV所需的依赖项，请运行以下命令：
+
+[source,console]
+----
+$ sudo apt install python3-opencv python3-munkres
+----
+
+现在将 https://github.com/raspberrypi/picamera2[the `picamera2` repository] 下载到您的Raspberry Pi以运行示例。您将在根目录中找到示例文件，并在 `README.md` 文件中找到其他信息。
+
+从存储库运行以下脚本以运行YOLOv8目标检测：
+
+[source,console]
+----
+$ python imx500_object_detection_demo.py --model /usr/share/imx500-models/imx500_network_ssd_mobilenetv2_fpnlite_320x320_pp.rpk
+----
+
+要在Picamera2中尝试姿势预测，请从存储库运行以下脚本：
+
+[source,console]
+----
+$ python imx500_pose_estimation_higherhrnet_demo.py
+----

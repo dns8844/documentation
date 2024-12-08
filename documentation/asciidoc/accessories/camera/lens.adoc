@@ -1,12 +1,12 @@
 == Recommended Lenses
 
-The following lenses are recommended for use with our HQ and GS cameras.
+以下镜头推荐用于我们的HQ和GS相机。
 
-NOTE: While the HQ Camera is available in both C/CS- and M12-mount versions, the GS Camera is available only with a C/CS-mount.
+NOTE: 虽然HQ相机提供C/CS-和M12卡口版本，但GS相机仅提供C/CS-卡口。
 
 === C/CS Lenses
 
-We recommend two lenses, a 6mm wide angle lens and a 16mm telephoto lens. These lenses should be available from your nearest https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/[Authorised Reseller].
+我们推荐两个镜头，一个6mm广角镜头和一个16mm长焦镜头。这些镜头应该可以从您最近的 https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/[授权经销商] 买到。
 
 [cols="1,1,1,1"]
 |===
@@ -28,7 +28,7 @@ We recommend two lenses, a 6mm wide angle lens and a 16mm telephoto lens. These 
 
 image::images/m12-lens.jpg[]
 
-We recommend three lenses manufactured by https://www.gaojiaoptotech.com/[Gaojia Optotech]. These lenses should be available from your nearest https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/[Authorised Reseller].
+我们推荐三种由 https://www.gaojiaoptotech.com/[高佳光学技术] 制造的镜片。这些镜片可在离您最近的 https://www.raspberrypi.com/products/raspberry-pi-high-quality-camera/[授权经销商]处购买。
 
 [cols="1,1,1,1,1"]
 |===

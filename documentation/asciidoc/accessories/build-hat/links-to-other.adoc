@@ -1,13 +1,13 @@
 == Further Resources
 
-You can download documentation on the,
+你可以从下面链接下载文档，
 
-* https://datasheets.raspberrypi.com/build-hat/build-hat-serial-protocol.pdf[Raspberry Pi Build HAT Serial Protocol]
-* https://datasheets.raspberrypi.com/build-hat/build-hat-python-library.pdf[Raspberry Pi Build HAT Python Library]
+* https://datasheets.raspberrypi.com/build-hat/build-hat-serial-protocol.pdf[树莓派Build HAT 串行协议]
+* https://datasheets.raspberrypi.com/build-hat/build-hat-python-library.pdf[树莓派Build HAT Python 库]
 
-and full details of the Python Library documentation can also be found https://buildhat.readthedocs.io/[on ReadTheDocs]. You can find more information on the .NET library in the https://github.com/dotnet/iot/tree/main/src/devices/BuildHat[.NET IoT] Github repository.
+Python Library 文档的完整详细信息也可以在 https://buildhat.readthedocs.io/[ReadTheDocs]上找到。您可以在 https://github.com/dotnet/iot/tree/main/src/devices/BuildHat[.NET IoT] Github 存储库中找到有关 .NET 库的更多信息。
 
-You can also follow along with projects from the Raspberry Pi Foundation,
+您还可以关注树莓派基金会的项目，
 
 * https://projects.raspberrypi.org/en/projects/lego-game-controller[LEGO® Game Controller]
 * https://projects.raspberrypi.org/en/projects/lego-robot-car[LEGO® Robot Car]

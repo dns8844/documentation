@@ -1,14 +1,14 @@
 === Raspberry Pi DAC Pro
 
-The Raspberry Pi DAC Pro HAT is our highest-fidelity digital to analogue converter (DAC).
+Raspberry Pi DAC Pro HAT是我们最高保真的数模转换器（DAC）。
 
 image::images/DAC_Pro_Board_Diagram.jpg[width="80%"]
 
-With the Texas Instruments PCM5242, the DAC Pro provides outstanding signal-to-noise ratio (SNR)
-and supports balanced/differential output in parallel to phono/RCA line-level output. It also includes a
-dedicated headphone amplifier. The DAC Pro is powered by a Raspberry Pi through the GPIO header.
+借助德州仪器PCM5242，DAC Pro提供出色的信噪比（SNR）
+并支持与唱机/RCA线路级输出并行的平衡/差分输出。它还包括一个
+专用耳机放大器。DAC Pro由Raspberry Pi通过GPIO接头供电。
 
-As part of the DAC Pro, two three-pin headers (P7/P9) are exposed above the Raspberry Pi's USB and Ethernet ports for use by the optional XLR board, allowing differential/balanced output.
+作为DAC Pro的一部分，两个三针接头（P7/P9）暴露在Raspberry Pi的USB和以太网端口上方，供可选的XLR板使用，从而实现差分/平衡输出。
 
 ==== Pinouts
 
@@ -23,8 +23,8 @@ audio and left and right ground.
 
 ==== Optional XLR Board
 
-The Pi-DAC PRO exposes a 6 pin header used by the optional XLR board to provide Differential / Balanced output exposed by XLR sockets above the Pi's USB/Ethernet ports.
+Pi-DAC PRO公开了可选XLR板使用的6引脚标头，以提供由Pi的USB/以太网端口上方的XLR插座公开的差分/平衡输出。
 
 image::images/optional_xlr_board.jpg[width="80%"]
 
-An XLR connector is used in Studio and some hi-end hifi systems. It can also be used to drive ACTIVE "monitor" speakers as used at discos or on stage.
+XLR连接器用于工作室和一些高端高保真系统。它还可用于驱动迪斯科舞厅或舞台上使用的ACIVE“监视器”扬声器。

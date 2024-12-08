@@ -1,15 +1,15 @@
 == Updating the firmware on the Debug Probe
 
-Firmware for the Debug Probe is available as a UF2 file distributed by Raspberry Pi.
+Debug Probe 的固件可作为Raspberry Pi分发的UF2文件获得。
 
-The latest version of the Debug Probe firmware is version 2. If you're running an older version, or if you have accidentally overwritten the firmware on your Debug Probe, you can find the latest release of the firmware in https://github.com/raspberrypi/debugprobe/releases/latest[the debugprobe GitHub repository].
+Debug Probe固件的最新版本是2.2版。如果您运行的是旧版本，或者您不小心覆盖了Debug Probe上的固件，您可以在 https://github.com/raspberrypi/debugprobe/releases/latest[the debugprobe GitHub repository] 中找到固件的最新版本。
 
-Download `debugprobe.uf2` from the latest release.
+从最新版本下载 `debugprobe.uf2`。
 
-Pinch to remove the top of the Debug Probe enclosure.
+捏住，取下Debug Probe外壳的顶部。
 
-Push and hold the BOOTSEL button as you plug the Debug Probe into your computer to mount a volume called "RPI-RP2".
+当您将Debug Probe插入计算机以挂载名为“RPI-RP2”的卷时，按住BOOTSEL按钮。
 
-Copy `debugprobe.uf2` onto the "RPI-RP2" volume. The volume will dismount automatically after the file finishes copying onto the device.
+将 `debugprobe.uf2` 复制到“RPI-RP2”卷上。文件完成复制到设备后，该卷将自动卸载。
 
-Your Debug Probe will reboot and now runs an updated version of the Debug Probe firmware. It is now ready for debugging.
+您的Debug Probe将重新启动，现在运行Debug Probe固件的更新版本。它现在已准备好进行调试。

@@ -1,14 +1,14 @@
 === Use Sensors from Python
 
-There is a xref:build-hat.adoc#device-compatibility[large range of sensors] that work with the Build HAT.
+有一个与Build HAT一起使用的 xref:build-hat.adoc#device-compatibility[大范围传感器]。
 
 ==== Work with Sensors
 
-Connect a Colour sensor to port B on the Build HAT, and a Force sensor to port C.
+将颜色传感器连接到Build HAT上的端口B，将力传感器连接到端口C。
 
-NOTE: If you're not intending to drive a motor, then you don't need an external power supply and you can use a standard USB power supply for your Raspberry Pi.
+NOTE: 如果您不打算驱动电机，那么您不需要外部电源，您可以为Raspberry Pi使用标准USB电源。
 
-Create another new program:
+创建另一个新程序：
 
 [source,python]
 ----
@@ -30,4 +30,4 @@ button.when_released = handle_released
 pause()
 ----
 
-Run it and hold a coloured object (LEGO® elements are ideal) in front of the colour sensor and press the Force sensor plunger. The sensor's LED should switch on and the name of the closest colour should be displayed in the Thonny REPL.
+运行它，将一个彩色物体（乐高®元件是理想的）放在颜色传感器前面，按下力传感器柱塞。传感器的发光二极管应该打开，最接近的颜色的名称应该显示在Thonny REPL中。

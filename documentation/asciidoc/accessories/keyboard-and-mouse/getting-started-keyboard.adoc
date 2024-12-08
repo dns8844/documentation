@@ -1,19 +1,19 @@
 == Getting Started with your Keyboard
 
-Our official keyboard includes three host USB ports for connecting external devices, such as USB mice, USB drives, and other USB- controlled devices.
+我们的官方键盘包括三个主机USB端口，用于连接外部设备，例如USB鼠标、USB驱动器和其他USB控制的设备。
 
-The product's micro USB port is for connection to the Raspberry Pi. Via the USB hub built into the keyboard, the Raspberry Pi controls, and provides power to, the three USB Type A ports.
+该产品的微型USB端口用于连接到Raspberry Pi。通过键盘内置的USB集线器，Raspberry Pi控制三个USB Type A端口并为其供电。
 
 image::images/back-of-keyboard.png[width="80%"]
 
 === Keyboard Features
 
-The Raspberry Pi keyboard has three lock keys: `Num Lock`, `Caps Lock`, and `Scroll Lock`. There are three LEDs in the top right-hand corner that indicate which locks are enabled.
+Raspberry Pi键盘有三个锁定键：`Num Lock`、`Caps Lock` 和 `Scroll Lock`。右上角有三个LED指示启用了哪些锁。
 
 image::images/num-cap-scroll.png[width="80%"]
 
-`Num Lock`:: Allows use of the red number keys on the letter keys, effectively creating a numeric keypad. This mode is enabled and disabled by pressing the `Num Lock` key.
+`Num Lock`:: 允许使用字母键上的红色数字键，有效地创建数字小键盘。按 `Num Lock` 键启用和禁用此模式。
 
-`Caps Lock`:: Allows typing capital letters; press the `Shift` key to type lower-case letters in this mode. This mode is enabled and disabled by pressing the `Caps Lock` key.
+`Caps Lock`:: 允许键入大写字母；在此模式下按 `Shift` 键键入小写字母。按 `Caps Lock` 键启用和禁用此模式。
 
-`Scroll Lock (ScrLk)`:: Allows use of the cursor keys for browsing web pages and spreadsheets without the mouse. This mode is enabled and disabled by pressing the `ScrLk` key while holding the Fn key.
+`Scroll Lock (ScrLk)`:: 允许在没有鼠标的情况下使用光标键浏览网页和电子表格。按住Fn键时按 `ScrLk` 键启用和禁用此模式。

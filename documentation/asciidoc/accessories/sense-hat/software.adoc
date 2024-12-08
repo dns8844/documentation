@@ -1,28 +1,28 @@
 == Install
 
-In order to work correctly, the Sense HAT requires:
+为了正常工作，Sense HAT需要：
 
-* an up-to-date kernel
-* https://en.wikipedia.org/wiki/I%C2%B2C[I2C] enabled on your Raspberry Pi
-* a few dependencies
+* 最新的内核
+* 在 Raspberry Pi 上启用 https://en.wikipedia.org/wiki/I%C2%B2C[I2C]。
+* 一些依赖项
 
-Complete the following steps to get your Raspberry Pi device ready to connect to the Sense HAT:
+完成以下步骤，让您的Raspberry Pi设备准备好连接到Sense HAT：
 
-. First, ensure that your Raspberry Pi runs the latest software. Run the following command to update:
+. 首先，确保您的Raspberry Pi运行最新的软件。运行以下命令进行更新：
 +
 [source,console]
 ----
-$ sudo apt update && sudo apt upgrade
+$ sudo apt update && sudo apt full-upgrade
 ----
 
-. Next, install the `sense-hat` package, which will ensure the kernel is up to date, enable I2C, and install the necessary dependencies:
+. 接下来，安装 `sense-hat` 包，这将确保内核是最新的，启用I2C，并安装必要的依赖项：
 +
 [source,console]
 ----
 $ sudo apt install sense-hat
 ----
 
-. Finally, reboot your Raspberry Pi to enable I2C and load the new kernel, if it changed:
+. 最后，重新启动您的Raspberry Pi以启用I2C并加载新内核，如果它发生变化：
 +
 [source,console]
 ----
@@ -31,7 +31,7 @@ $ sudo reboot
 
 == Calibrate
 
-Install the necessary software and run the calibration program as follows:
+安装必要的软件并运行校准程序，如下所示：
 
 [source,console]
 ----
@@ -43,7 +43,7 @@ $ cd RTEllipsoidFit
 $ RTIMULibCal
 ----
 
-The calibration program displays the following menu:
+校准程序显示以下菜单：
 
 ----
 Options are:
@@ -56,37 +56,37 @@ Options are:
 Enter option:
 ----
 
-Press lowercase `m`. The following message will then show. Press any key to start.
+按小写 `m`。然后将显示以下消息。按任意键开始。
 
 ----
-Magnetometer min/max calibration
+磁力计最小/最大校准
 -------------------------------
-Waggle the IMU chip around, ensuring that all six axes
-(+x, -x, +y, -y and +z, -z) go through their extrema.
-When all extrema have been achieved, enter 's' to save, 'r' to reset
-or 'x' to abort and discard the data.
+左右摆动IMU芯片，确保所有六个轴
+（+x，-x，+y，-y和+z，-z）通过它们的极值。
+当所有极值都达到时，输入's'保存，'r'重置
+或“x”中止并丢弃数据。
 
-Press any key to start...
+按任意键启动…
 ----
 
-After it starts, you should see output similar to the following scrolling up the screen:
+启动后，你会看到类似下面的输出在屏幕上滚动：
 
 ----
 Min x:  51.60  min y:  69.39  min z:  65.91
 Max x:  53.15  max y:  70.97  max z:  67.97
 ----
 
-Focus on the two lines at the very bottom of the screen, as these are the most recently posted measurements from the program.
+关注屏幕最下方的两行，因为这两行是程序最近发布的测量结果。
 
-Now, pick up the Raspberry Pi and Sense HAT and move it around in every possible way you can think of. It helps if you unplug all non-essential cables to avoid clutter.
+现在，拿起 Raspberry Pi 和 Sense HAT，以你能想到的各种方式移动它。如果能拔掉所有非必要的电缆，就能避免杂乱无章。
 
-Try and get a complete circle in each of the pitch, roll and yaw axes. Take care not to accidentally eject the SD card while doing this. Spend a few minutes moving the Sense HAT, and stop when you find that the numbers are not changing any more.
+尝试在俯仰、滚动和偏航轴上各绕一圈。注意在此过程中不要意外弹出 SD 卡。花几分钟时间移动 Sense HAT，当发现数字不再变化时就停止。
 
-Now press lowercase `s` then lowercase `x` to exit the program. If you run the `ls` command now, you'll see a new `RTIMULib.ini` file has been created.
+现在按小写 `s` 键，然后按小写 `x` 键退出程序。现在运行 `ls` 命令，你会看到一个新的 `RTIMULib.ini` 文件已经创建。
 
-In addition to those steps, you can also do the ellipsoid fit by performing the steps above, but pressing `e` instead of `m`.
+除了这些步骤外，你还可以执行上述步骤进行椭圆拟合，但要按 `e` 而不是 `m`。
 
-When you're done, copy the resulting `RTIMULib.ini` to `/etc/` and remove the local copy in `~/.config/sense_hat/`:
+完成后，将生成的 `RTIMULib.ini` 复制到 `/etc/`，并删除 `~/.config/sense_hat/` 中的本地副本：
 
 [source,console]
 ----
@@ -96,48 +96,47 @@ $ sudo cp RTIMULib.ini /etc
 
 == Getting started
 
-After installation, example code can be found under `/usr/src/sense-hat/examples`.
+安装后，可在 `/usr/src/sense-hat/examples` 下找到示例代码。
 
 === Use the Sense HAT with Python
 
-`sense-hat` is the officially supported library for the Sense HAT; it provides access to all of the on-board sensors and the LED matrix.
+`sense-hat` 是官方支持的 Sense HAT 库；它提供了对所有板载传感器和 LED 矩阵的访问。
 
-Complete documentation for the library can be found at https://sense-hat.readthedocs.io/en/latest/[sense-hat.readthedocs.io].
+有关该库的完整文档，请访问 https://sense-hat.readthedocs.io/en/latest/[sense-hat.readthedocs.io]。
 
 === Use the Sense HAT with {cpp}
 
-https://github.com/RPi-Distro/RTIMULib[RTIMULib] is a {cpp} and Python library that makes it easy to use 9-dof and 10-dof IMUs with embedded Linux systems. A pre-calibrated settings file is provided in `/etc/RTIMULib.ini`, which is also copied and used by `sense-hat`. The included examples look for `RTIMULib.ini` in the current working directory, so you may wish to copy the file there to get more accurate data.
+https://github.com/RPi-Distro/RTIMULib[RTIMULib]是一个 {cpp} 和Python库，可在嵌入式Linux系统中轻松使用9-dof和10-dof IMU。在 `/etc/RTIMULib.ini`中提供了一个预校准设置文件，`sense-hat`也会复制并使用该文件。附带的示例会在当前工作目录下查找 `RTIMULib.ini`，因此您可能希望将该文件复制到该目录下，以获得更准确的数据。
 
-The RTIMULibDrive11 example comes pre-compiled to help ensure everything works as intended. It can be launched by running `RTIMULibDrive11` and closed by pressing `Ctrl C`.
+RTIMULibDrive11 示例已预编译，可帮助确保一切按预期运行。运行 `RTIMULibDrive11` 即可启动该示例，按下 `Ctrl C` 即可关闭。
 
-NOTE: The C/{cpp} examples can be compiled by running `make` in the appropriate directory.
+注意：C/{cpp} 示例可通过在相应目录下运行 `make` 进行编译。
 
 == Troubleshooting
 
 === Read and write EEPROM data
 
-These steps are provided for debugging purposes only.
+这些步骤仅供调试之用。
 
-NOTE: On Raspberry Pi 2 Model B Rev 1.0 and Raspberry Pi 3 Model B boards, these steps may not work. The firmware will take control of I2C0, causing the ID pins to be configured as inputs.
+NOTE: 在 Raspberry Pi 2 Model B Rev 1.0 和 Raspberry Pi 3 Model B 板上，这些步骤可能不起作用。固件将控制 I2C0，导致 ID 引脚被配置为输入。
 
-Before you can read and write EEPROM data to and from the Sense HAT, you must complete the following steps:
+在向 Sense HAT 读写 EEPROM 数据之前，必须完成以下步骤：
 
-. Enable I2C0 and I2C1 by adding the following line to the xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] file:
+. 在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 文件中添加以下一行，启用 I2C0 和 I2C1：
 +
 [source,ini]
 ----
 dtparam=i2c_vc=on
 dtparam=i2c_arm=on
 ----
-
-. Run the following command to reboot:
+. 运行以下命令重新启动：
 +
 [source,console]
 ----
 $ sudo reboot
 ----
 
-. Download and build the flash tool:
+. 下载并构建烧录工具：
 +
 [source,console]
 ----
@@ -148,7 +147,7 @@ $ make
 
 ==== Read
 
-To read EEPROM data, run the following command:
+要读取 EEPROM 数据，请运行以下命令：
 
 [source,console]
 ----
@@ -157,10 +156,11 @@ $ sudo ./eepflash.sh -f=sense_read.eep -t=24c32 -r
 
 ==== Write
 
-NOTE: This operation will not damage your Raspberry Pi or Sense HAT, but if an error occurs, your Raspberry Pi may fail to automatically detect the HAT.
+NOTE: 此操作不会损坏 Raspberry Pi 或 Sense HAT，但如果发生错误，Raspberry Pi 可能无法自动检测 HAT。
 
 
-. First, download EEPROM settings and build the `.eep` binary:
+
+. 首先，下载 EEPROM 设置并生成`.eep`二进制文件：
 +
 [source,console]
 ----
@@ -168,7 +168,7 @@ $ wget https://github.com/raspberrypi/rpi-sense/raw/master/eeprom/eeprom_setting
 $ ./eepmake sense_eeprom.txt sense.eep /boot/firmware/overlays/rpi-sense-overlay.dtb
 ----
 
-. Next, disable write protection:
+. 然后，禁用写保护：
 +
 [source,console]
 ----
@@ -189,8 +189,3 @@ $ sudo ./eepflash.sh -f=sense.eep -t=24c32 -w
 $ i2cset -y -f 1 0x46 0xf3 0
 ----
 
-[.booklink, booktype="free", link=https://github.com/raspberrypipress/released-pdfs/raw/main/experiment-with-the-sense-hat.pdf, image=image::images/experiment-with-the-sense-hat.png[]]
-
-== Further reading
-
-You can find more information on how to use the Sense HAT in the Raspberry Pi Press book https://github.com/raspberrypipress/released-pdfs/raw/main/experiment-with-the-sense-hat.pdf[Experiment with the Sense HAT]. Written by The Raspberry Pi Foundation's Education Team, it is part of the MagPi Essentials series published by Raspberry Pi Press. The book covers the background of the Astro Pi project, and walks you through how to make use of all the Sense HAT features using the xref:sense-hat.adoc#use-the-sense-hat-with-python[Python library].

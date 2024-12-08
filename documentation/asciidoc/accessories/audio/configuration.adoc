@@ -1,50 +1,54 @@
 == Configuration
 
-A pre-programmed EEPROM is included on all Raspberry Pi audio boards. Raspberry Pi audio boards are designed to be plug-and-play; Raspberry Pi OS is able to automatically detect and configure itself. In Raspberry Pi OS, right-clicking on the audio settings in the top right-hand corner of your screen will allow you to switch between the on-board audio settings and the HAT audio settings:
+所有Raspberry Pi音频板都包含预编程的EEPROM。Raspberry Pi音频板设计为即插即用；Raspberry Pi OS能够自动检测和配置自身。在Raspberry Pi OS中，右键单击屏幕右上角的音频设置将允许您在板载音频设置和HAT音频设置之间切换：
 
 image::images/gui.png[]
 
-There are a number of third-party audio software applications available for Raspberry Pi that will support the plug-and-play feature of our audio boards. Often these are used headless. They can be controlled via a PC or Mac application, or by a web server installed on Raspberry Pi, with interaction through a webpage.
+有许多可用于Raspberry Pi的第三方音频软件应用程序将支持我们音频板的即插即用功能。这些通常是无头使用的。它们可以通过PC或Mac应用程序或安装在Raspberry Pi上的网络服务器进行控制，并通过网页进行交互。
 
-If you need to configure Raspberry Pi OS yourself, perhaps if you're running a headless system of your own and don't have the option of control via the GUI, you will need to make your Raspberry Pi audio board the primary audio device in Raspberry Pi OS, disabling the Raspberry Pi's on-board audio device. This is done by editing the xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] file. Using a Terminal session connected to your Raspberry Pi via SSH, run the following command to edit the file:
+如果你需要自己配置树莓派操作系统，也许如果你正在运行自己的无头系统，并且没有通过GUI进行控制的选项，你需要让你的树莓派音频板成为树莓派操作系统中的主要音频设备，禁用树莓派的板载音频设备。这是通过编辑 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 文件来完成的。使用通过SSH连接到树莓派的终端，运行以下确定来编辑文件：
 
 [source,console]
 ----
 $ sudo nano /boot/firmware/config.txt
 ----
 
-Find the `dtparam=audio=on` line in the file and comment it out by placing a # symbol at the start of the line. Anything written after the # symbol in any given line will be disregarded by the program. Your `/boot/firmware/config.txt` file should now contain the following entry:
+在文件中找到 `dtparam=audio=on` 行，并在该行的开头放置一个#符号将其注释掉。程序将忽略任何给定行中#符号之后写入的任何内容。您的 `/boot/firmware/config.txt` 文件现在应该包含以下条目：
 
 [source,ini]
 ----
 #dtparam=audio=on
 ----
 
-Press `Ctrl+X`, then the `Y` key, then *Enter* to save. Finally, reboot your Raspberry Pi in order for the settings to take effect.
+按 `Ctrl+X`，然后按 `Y` 键，然后按*Enter*保存。最后，重新启动您的Raspberry Pi以使设置生效。
 
 [source,console]
 ----
 $ sudo reboot
 ----
 
-Alternatively, the `/boot/firmware/config.txt` file can be edited directly onto the Raspberry Pi's microSD card, inserted into your usual computer. Using the default file manager, open the `/boot/firmware/` volume on the card and edit the `config.txt` file using an appropriate text editor, then save the file, eject the microSD card and reinsert it back into your Raspberry Pi.
+另外，可以直接在树莓派的 microSD 卡上的 `/boot/firmware/config.txt` 文件进行编辑，方法是将卡插入到您常用的计算机中。使用默认的文件管理器，打开卡上的 `/boot/firmware/` 分区，使用合适的文本编辑器编辑 `config.txt` 文件，然后保存文件，弹出 microSD 卡并重新插入回您的树莓派。
 
 === Attach the HAT
 
-The Raspberry Pi audio boards attach to the Raspberry Pi's 40-pin header. They are designed to be supported on the Raspberry Pi using the supplied circuit board standoffs and screws. No soldering is required on the Raspberry Pi audio boards for normal operation unless you are using hardwired connections for specific connectors such as XLR (External Line Return) connections on the DAC Pro.
+Raspberry Pi音频板连接到Raspberry Pi的40针接头。它们设计为使用随附的电路板支架和螺丝支持Raspberry Pi。Raspberry Pi音频板无需焊接即可正常操作，除非您使用特定连接器的硬接线连接，例如DAC Pro上的XLR（外部线路返回）连接。
 
-All the necessary mounting hardware including spacers, screws and connectors is provided. The PCB spacers should be screwed, finger-tight only, to the Raspberry Pi before adding the audio board. The remaining screws should then be screwed into the spacers from above.
+提供了所有必要的安装硬件，包括垫片、螺钉和连接器。在添加音频板之前，PCB垫片应拧在Raspberry Pi上，仅用手指紧。然后，剩余的螺钉应从上面拧入垫片。
 
 === Hardware versions
 
-There are multiple versions of the audio cards, and the version that you possess determines the actions required to configure it. Older IQaudIO-marked boards (black PCB) are electrically equivalent to the Raspberry Pi-branded boards (green PCB) but have different EEPROM contents. The following command can be used to confirm which version you have:
+有多个版本的音频卡。您的特定版本决定了配置所需的操作。较旧的IQaudIO品牌板有黑色PCB。较新的Raspberry Pi品牌板有绿色PCB。这些板在电路上是等效的，但具有不同的EEPROM内容。
+
+连接HAT并通电后，检查声卡上的电源LED是否亮着（如果有的话）。例如，编解码器零有一个标有 `PWR` 的LED。
+
+建立卡有电后，使用以下ok检查您的板的版本：
 
 [source,console]
 ----
 $ grep -a . /proc/device-tree/hat/*
 ----
 
-If the vendor string says "Raspberry Pi Ltd." then no further action is needed (but see below for the extra Codec Zero configuration). If it says "IQaudIO Limited www.iqaudio.com" then you will need the additional config.txt settings outlined below. If it says "No such file or directory" then the HAT is not being detected, but these config.txt settings may still make it work.
+如果供应商字符串显示“Raspberry Pi Ltd.”，则不需要进一步的操作（但请参阅下面的额外编解码器零配置）。如果它显示“IQaudIO Limitedwww.iqaudio.com”，那么您将需要下面概述的额外config. txt设置。如果它说“否此类文件或目录”，则未检测到HAT，但这些config.txt设置仍可能使其正常工作。
 
 [source,ini]
 ----
@@ -59,57 +63,72 @@ dtoverlay=rpi-digiampplus
 
 === Extra Codec Zero configuration
 
-The Raspberry Pi Codec Zero board uses the Dialog Semiconductor DA7212 codec. This allows
-the recording of audio from the built-in MEMS microphone, from stereo phono sockets (AUX
-IN) or two mono external electret microphones. Playback is through stereo phono sockets (AUX OUT)
-or a mono speaker connector.
+树莓派编解码器零板使用Dialog半导体DA7212编解码器。这允许
+从内置MEMS麦克风、立体声唱机插座（AUX
+IN）或两个单声道外置驻极体麦克风。通过立体声唱机插座（AUX OUT）播放
+或单声道扬声器连接器。
 
-Each input and output device has its own mixer, allowing the audio levels and volume to be adjusted
-independently. Within the codec itself, other mixers and switches exist to allow the output to be mixed to a single mono channel for single-speaker output. Signals may also be inverted; there is a five-band equaliser to adjust certain frequency bands. These settings can be controlled interactively, using AlsaMixer, or programmatically.
+每个输入和输出设备都有自己的混音器，允许调整音频电平和音量
+独立的。在编解码器本身，存在其他混频器和开关，以允许输出混合到单个单声道，以实现单个扬声器输出。信号也可以反转；有一个五波段均衡器来调整某些频段。这些设置可以使用AlsaMixer进行交互控制，也可以通过编程进行控制。
 
-Both the AUX IN and AUX OUT are 1V RMS. It may be necessary to adjust
-the AUX IN's mixer to ensure that the input signal doesn't saturate the ADC. Similarly, the output mixers can be to be adjusted to get the best possible output.
+AUX IN和AUX OUT均为1V RMS。可能需要调整
+AUX IN的混频器确保输入信号不会使ADC饱和。同样，可以调整输出混频器以获得最佳输出。
 
-Preconfigured scripts (loadable ALSA settings) https://github.com/raspberrypi/Pi-Codec[are available on GitHub], offering:
- 
-* Mono MEMS mic recording, mono speaker playback
-* Mono MEMS mic recording, mono AUX OUT playback
-* Stereo AUX IN recording, stereo AUX OUT playback
-* Stereo MIC1/MIC2 recording, stereo AUX OUT playback
+预配置脚本（可加载ALSA设置）https://github.com/raspberrypi/Pi-Codec[可在 GitHub 上获取]，提供：
 
-The Codec Zero needs to know which of these input and output settings are being used each time the Raspberry Pi powers on. Using a Terminal session on your Raspberry Pi, run the following command to download the scripts:
+* 单声道 MEMS 麦克风录音，单声道扬声器回放
+* 单声道 MEMS 麦克风录音，单声道 AUX 输出回放
+* 立体声 AUX IN 录音，立体声 AUX OUT 播放
+* 立体声 MIC1/MIC2 录音，立体声 AUX 输出回放
+
+每次Raspberry Pi开机时，编解码器Zero需要知道正在使用这些输入和输出设置中的哪些。在Raspberry Pi上使用终端会话，运行以下命令下载脚本：
 
 [source,console]
 ----
 $ git clone https://github.com/raspberrypi/Pi-Codec.git
 ----
 
-If git is not installed, run the following command to install it:
+如果没有安装git，运行以下命令安装它：
 
 [source,console]
 ----
 $ sudo apt install git
 ----
 
-The following command will set your device to use the on-board MEMS microphone and output for speaker playback:
+以下命令将设置您的设备使用板载MEMS麦克风和扬声器播放输出：
 
 [source,console]
 ----
 $ sudo alsactl restore -f /home/<username>/Pi-Codec/Codec_Zero_OnboardMIC_record_and_SPK_playback.state
 ----
 
-In order for your project to operate with your required settings when it is powered on, edit the `/etc/rc.local` file. The contents of this file are run at the end of every boot process, so it is ideal for this purpose. Edit the file:
+此命令可能会导致错误消息，包括：
+
+* "failed to import hw"
+* "No state is present for card"
+
+在大多数情况下，这些警告是无害的；您可以放心地忽略它们。
+
+但是，以下警告可能表示硬件故障：
+
+* "Remote I/O error"
+
+在Linux中，以下警告表明内核无法与I2C设备通信：
+
+* "Remote I/O error" (`REMOTEIO`)
+
+为了让您的项目在开机时使用所需的设置运行，请编辑 `/etc/rc.local` 文件。此文件的内容在每次启动过程结束时运行，因此非常适合此目的。编辑文件：
 
 [source,console]
 ----
 $ sudo nano /etc/rc.local
 ----
 
-Add the chosen script command above the exit 0 line and then *Ctrl X*, *Y* and *Enter* to save. The file should now look similar to this depending on your chosen setting:
+在退出0行上方添加选定的脚本命令，然后 *Ctrl X*、*Y* 和*Enter*保存。根据您选择的设置，该文件现在应该类似于此：
 
 [source,bash]
 ----
-#!/bin/sh -e
+#!/bin/sh
 #
 # rc.local
 #
@@ -127,21 +146,21 @@ sudo alsactl restore -f /home/<username>/Pi-Codec/Codec_Zero_OnboardMIC_record_a
 exit 0
 ----
 
-Press `Ctrl+X`, then the `Y` key, then *Enter* to save. Reboot for the settings to take effect:
+按 `Ctrl+X`，然后按 `Y` 键，然后*Enter*保存。重新启动设置以生效：
 
 [source,console]
 ----
 $ sudo reboot
 ----
 
-If you are using your Raspberry Pi and Codec Zero in a headless environment, there is one final step required to make the Codec Zero the default audio device without access to the GUI audio settings on the desktop. We need to create a small file in your home folder:
+如果您在无头环境中使用Raspberry Pi和Codec Zero，则需要最后一步才能使Codec Zero成为默认音频设备，而无需访问桌面上的GUI音频设置。我们需要在您的主文件夹中创建一个小文件：
 
 [source,console]
 ----
 $ sudo nano .asoundrc
 ----
 
-Add the following to the file:
+将以下内容添加到文件中：
 
 ----
 pcm.!default {
@@ -150,7 +169,17 @@ pcm.!default {
 }
 ----
 
-Press `Ctrl+X`, then the `Y` key, then *Enter* to save. Reboot once more to complete the configuration:
+按 `Ctrl+X`，然后按 `Y` 键，然后*Enter*保存。再次重启完成配置：
+
+Raspberry Pi OS等现代Linux发行版通常使用PulseAudio或PipeWire进行音频控制。这些框架能够混合和切换来自多个来源的音频。它们提供了一个高级API供音频应用程序使用。许多音频应用程序默认使用这些框架。
+
+仅当音频应用程序需要时才创建 `~/.asoundrc`：
+
+* 直接与 ALSA 通信
+* 在没有 PulseAudio 或 PipeWire 的环境中运行
+
+此文件可能会干扰UI对底层音频资源的查看。因此，我们不建议在运行Raspberry Pi OS桌面时创建 `~/.asoundrc`。
+如果此文件存在，UI可能会自动清理和删除它。
 
 [source,console]
 ----
@@ -159,47 +188,47 @@ $ sudo reboot
 
 === Mute and unmute the DigiAMP{plus}
 
-The DigiAMP{plus} mute state is toggled by GPIO22 on Raspberry Pi. The latest audio device tree
-supports the unmute of the DigiAMP{plus} through additional parameters.
+DigiAMP{plus} 静音状态由Raspberry Pi上的GPIO22切换。最新的音频设备树
+通过附加参数支持 DigiAMP{plus} 的取消静音。
 
-Firstly a "one-shot" unmute when kernel module loads.
+首先，内核模块加载时“一次性”取消静音。
 
-For Raspberry Pi boards:
+对于树莓派板：
 
 [source,ini]
 ----
 dtoverlay=rpi-digiampplus,unmute_amp
 ----
 
-For IQaudIO boards:
+对于IQaudIO板：
 
 [source,ini]
 ----
 dtoverlay=iqaudio-digiampplus,unmute_amp
 ----
 
-Unmute the amp when an ALSA device is opened by a client. Mute, with a five-second delay
-when the ALSA device is closed. (Reopening the device within the five-second close
-window will cancel mute.)
+当客户端打开ALSA设备时取消放大器静音。静音，延迟五秒
+当ALSA设备关闭时。（在关闭五秒内重新打开设备
+窗口将取消静音。）
 
-For Raspberry Pi boards:
+对于树莓派板：
 
 [source,ini]
 ----
 dtoverlay=rpi-digiampplus,auto_mute_amp
 ----
 
-For IQaudIO boards:
+对于IQaudIO板：
 
 [source,ini]
 ----
 dtoverlay=iqaudio-digiampplus,auto_mute_amp
 ----
 
-If you do not want to control the mute state through the device tree, you can also script your own
-solution. 
+如果您不想通过设备树控制静音状态，您也可以编写自己的脚本
+来控制。
 
-The amp will start up muted. To unmute the amp:
+放大器将启动静音。取消放大器静音：
 
 [source,console]
 ----
@@ -208,7 +237,7 @@ $ sudo sh -c "echo out >/sys/class/gpio/gpio22/direction"
 $ sudo sh -c "echo 1 >/sys/class/gpio/gpio22/value"
 ----
 
-To mute the amp once more:
+要再次静音放大器：
 
 [source,console]
 ----

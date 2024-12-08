@@ -1,127 +1,113 @@
+[[link-connect]]
 == Link a Raspberry Pi device with a Connect account
 
-Now that you've installed Connect on your Raspberry Pi device, you must associate your device with your Connect account before you can use Connect.
-
-If you do not have a Connect account:
-
-. xref:id.adoc#create-a-raspberry-pi-id[Create a Raspberry Pi ID].
-. Visit https://connect.raspberrypi.com[connect.raspberrypi.com] and create a Connect account using your Raspberry Pi ID.
-
-To link your device with your Connect account, use the Connect client software to generate a verification URL. Visit the URL and sign into your Connect account with your Raspberry Pi ID to add your device to your account.
-
-To generate the verification URL, use the Connect icon on the Raspberry Pi Desktop or the `rpi-connect` CLI. Follow the instructions below:
+现在您已经在Raspberry Pi设备上安装并启动了Connect，您必须将您的设备与您的Connect帐户相关联。
 
 === via the Raspberry Pi Desktop
 
-Once the `rpi-connect` service starts running, the Connect icon appears in the system tray.
+如果您使用菜单栏的Connect插件，首次单击 “Turn On Raspberry Pi Connect” 将打开您的浏览器，提示您使用Raspberry Pi ID登录：
 
-image::images/just_installed.png[width="80%"]
+image::images/browser-sign-in.png[width="80%"]
 
-Click on the Connect icon and choose "Sign in" from the drop-down menu.
+或者，您可以从下拉框中选择"Sign In..."：
 
 image::images/sign-in.png[width="80%"]
 
-This opens a verification URL you can use to link your device to your Connect account.
+如果您还没有Raspberry Pi ID，请单击 *create one for free* 到 xref:id.adoc#create-a-raspberry-pi-id[创建一个二]。
 
 === via the command line
 
-Use the following command to generate a link that will connect your device with your Connect account:
+使用以下命令生成将您的设备与Connect帐户连接的链接：
 
 [source,console]
 ----
 $ rpi-connect signin
 ----
 
-This command should output something like the following:
+此命令应输出如下内容：
 
 ----
 Complete sign in by visiting https://connect.raspberrypi.com/verify/XXXX-XXXX
 ----
 
-Visit the verification URL on any device and sign in with your Raspberry Pi ID to link your device with your Connect account.
+访问任何设备上的验证URL并使用您的Raspberry Pi ID登录以将您的设备与您的Connect帐户链接。
 
 === Finish linking your Raspberry Pi
 
-Visit the verification URL generated in the previous step.
+身份验证后，为您的设备分配一个名称。选择唯一标识设备的名称。单击 **Create device and sign in** 按钮继续。
 
-Sign in to Connect using your xref:id.adoc[Raspberry Pi ID].
+image::images/new-device.png[width="80%"]
 
-image::images/login-with-id.png[width="80%"]
-
-After authenticating, assign a name to your device. Choose a name that uniquely identifies the device. Click the **Create device and sign in** button to continue.
-
-image::images/create-device.png[width="80%"]
-
-You can now remotely connect to your device. The Connect system tray icon will turn blue to indicate that your device is now signed in to the Connect service. You should receive an email notification indicating that a new device is linked to your Connect account.
+您现在可以远程连接到您的设备。菜单栏中的连接图标将变为蓝色，表示您的设备现在已登录到连接服务。您应该会收到一封电子邮件通知，表明新设备已链接到您的连接帐户。
 
 image::images/sign-in-email.png[width="70%"]
 
-WARNING: If you receive an email that says a device that you do not recognise has signed into Connect, change your Raspberry Pi ID password immediately. xref:connect.adoc#manage-devices[Remove the device from Connect] to permanently disassociate it from your account. Consider xref:id.adoc#enable-two-factor-authentication[enabling two-factor authentication] to keep your account secure.
+WARNING: 如果您收到一封电子邮件，显示您不认识的设备已登录 Connect，请立即更改您的 Raspberry Pi ID 密码。xref:connect.adoc#manage-devices[从 Connect 中移除设备] 可将该设备从您的帐户永久移除。考虑 xref:id.adoc#enable-two-factor-authentication[启用双因素身份验证]，以确保账户安全。
 
-Click the Connect system tray icon to open the Connect menu. This menu shows your current sign in status, an option to sign out, and options to enable or disable remote access methods.
+单击菜单栏中的连接图标以打开连接菜单。此菜单允许您打开和关闭连接、登录和退出以及允许或禁止远程访问方法。
 
-TIP: Connect signs communication with your device serial number. Moving your SD card between devices will sign you out of Connect.
+TIP: Connect使用您的设备序列号签署通信。在设备之间交换SD卡会使您退出Connect。
 
 == Access your Raspberry Pi device
 
-Now that your device appears on your Connect dashboard, you can access your device from anywhere using only a browser. Connect provides multiple ways to interact with your device remotely.
+现在您的设备出现在Connect仪表板上，您可以仅使用浏览器从任何地方访问您的设备。Connect提供多种方式与您的设备远程交互。
 
 === Screen sharing
 
-Connect includes the ability to share your device's screen in a browser. Use the following instructions to share your device's screen.
+Connect包括在浏览器中共享设备屏幕的功能。使用以下说明共享设备屏幕。
 
-NOTE: Screen sharing requires the **Wayland** window server. By default, Raspberry Pi OS only uses Wayland for **64-bit** distributions of Raspberry Pi OS **Bookworm** on Raspberry Pi 5, 4, or 400. Screen sharing is **not** compatible with Raspberry Pi OS Lite or systems that use the X window server.
+NOTE: 屏幕共享需要 **Wayland** 窗口服务器。Raspberry Pi OS _Bookworm_ 和以后默认使用Wayland。屏幕共享与Raspberry Pi OS Lite或使用X窗口服务器的系统 **不** 兼容。
 
-Visit https://connect.raspberrypi.com[connect.raspberrypi.com] on any computer.
+在任何计算机上访问 https://connect.raspberrypi.com[connect.raspberrypi.com]。
 
-Connect redirects you to the Raspberry Pi ID service to sign in. After signing in, Connect displays a list of linked devices. Devices available for screen sharing show a grey **Screen sharing** badge below the name of the device.
+Connect会将您重定向到Raspberry Pi ID服务进行登录。登录后，Connect会显示链接设备列表。可用于屏幕共享的设备在设备名称下方显示灰色**屏幕共享**图标。
 
-image::images/list-of-devices.png[width="80%"]
+image::images/devices.png[width="80%"]
 
-Click the **Connect via** button to the right of the device you would like to access. Select the **Screen sharing** option from the menu. This opens a browser window that displays your device's desktop.
+单击您要访问的设备右侧的 **Connect via** 连接按钮。从菜单中选择 **Screen sharing** 选项。这将打开一个显示设备桌面的浏览器窗口。
 
-image::images/screen-sharing-connecting.png[width="80%"]
+image::images/waiting-for-screen-sharing.png[width="80%"]
 
-You can now use your device as you would locally. For more information about the connection, hover your mouse over the padlock icon immediately to the right of the **Disconnect** button.
+您现在可以像在本地一样使用您的设备。有关连接的更多信息，请将鼠标悬停在 **Disconnect** 按钮右侧的锁图标上。
 
-image::images/screen-sharing-start.png[width="80%"]
+image::images/screen-sharing.png[width="80%"]
 
-TIP: Use the **Copy from remote** and **Paste to remote** buttons above your desktop to transfer text between your local and remote clipboards.
+TIP: 使用桌面上方的 **从远程(Copy from remote)** 复制和 **粘贴到远程(Paste to remote)** 按钮在本地和远程剪贴板之间传输文本。
 
-Once connected, a green dot appears next to the **Screen sharing** badge in the Connect dashboard. This indicates an active screen sharing session. Hover to see the current number of screen sharing sessions.
+连接后，连接仪表板中的 **屏幕共享(Screen sharing)** 图标旁边会出现一个绿点。这表示活动的屏幕共享会话。悬停以查看当前屏幕共享会话的数量。
 
-image::images/screen-sharing-active.png[width="80%"]
+image::images/screen-sharing-in-progress.png[width="80%"]
 
-The Connect icon in the system tray turns purple and displays a closed circle when a screen sharing session is in progress.
+当屏幕共享会话正在进行时，系统托盘中的连接图标变为紫色并显示一个关闭的圆圈。每当屏幕共享会话开始时，都会出现桌面通知。
 
-image::images/screen-sharing-connected.png[width="80%"]
+image::images/screen-sharing-notification.png[width="80%"]
 
 ==== Stop screen sharing
 
-To close a screen sharing session, click the **Disconnect** button above your desktop.
+要关闭屏幕共享会话，请单击桌面上方的**Disconnect**按钮。
 
-image::images/screen-sharing-end.png[width="80%"]
+image::images/screen-sharing-ended.png[width="80%"]
 
-==== Disable screen sharing
+==== Disallow screen sharing
 
-To turn off screen sharing, click the Connect system tray icon and unselect **Allow screen sharing**.  Your device remains signed into Connect, but you won't be able to create a screen sharing session from the Connect dashboard.
+要关闭屏幕共享，请单击菜单栏中的连接图标并取消选择 **允许屏幕共享(Allow Screen Sharing)**。您的设备仍登录到连接，但您将无法从连接仪表板创建屏幕共享会话。
 
-image::images/screen-sharing-disabled-desktop.png[width="80%"]
+image::images/disallow-screen-sharing.png[width="80%"]
 
-Alternatively, you can disable screen sharing with the following command:
+或者，您可以使用以下命令禁止屏幕共享：
 
 [source,console]
 ----
 $ rpi-connect vnc off
 ----
 
-In the Connect dashboard, the **Screen sharing** badge and the **Screen sharing** option in the **Connect via** menu will appear crossed-out.
+在连接仪表板中，**屏幕共享(Screen sharing)** 图标和 **通过连接** 菜单中的 **屏幕共享** 选项将显示为划线。
 
 image::images/screen-sharing-disabled.png[width="80%"]
 
-To re-enable screen sharing, do one of the following:
+要重新启用屏幕共享，请执行以下操作之一：
 
-* click the Connect system tray icon and select **Allow screen sharing**
+* click the Connect icon in the menu bar and select **Allow Screen Sharing**
 * run the following command:
 +
 [source,console]
@@ -131,62 +117,62 @@ $ rpi-connect vnc on
 
 === Remote shell
 
-Connect includes the ability to access a shell running on your device from a browser. Use the following instructions to access the remote shell.
+Connect包括从浏览器启动在您的设备上运行的shell的能力。使用以下说明访问远程shell。
 
-Visit https://connect.raspberrypi.com[connect.raspberrypi.com] on any computer.
+在任何计算机上访问 https://connect.raspberrypi.com[connect.raspberrypi.com]。
 
-Connect redirects you to the Raspberry Pi ID service to sign in. After signing in, Connect displays a list of linked devices. Devices available for remote shell access show a grey **Remote shell** badge below the name of the device.
+Connect会将您重定向到Raspberry Pi ID服务进行登录。登录后，Connect会显示链接设备列表。可用于远程shell访问的设备在设备名称下方显示灰色 **Remote shell** 图标。
 
-image::images/list-of-devices.png[width="80%"]
+image::images/devices.png[width="80%"]
 
-Click the **Connect via** button to the right of the device you would like to access. Select the **Remote shell** option from the menu. This opens a shell session on your device.
+单击您要访问的设备右侧的 **通过连接(Connect via)** 按钮。从菜单中选择 **Remote shell** 选项。这会在您的设备上打开一个shell会话。
 
-image::images/remote-shell-connecting.png[width="80%"]
+image::images/waiting-for-remote-shell.png[width="80%"]
 
-You can now use your device as you would locally.
+您现在可以像在本地一样使用您的设备。
 
-image::images/remote-shell-start.png[width="80%"]
+image::images/remote-shell.png[width="80%"]
 
-TIP: On some operating systems, the browser intercepts key combinations like **Ctrl+Shift+C** and **Ctrl+C**. Instead, you can use the right click menu or **Ctrl+Insert** to copy and **Shift+Insert** to paste.
+TIP: 在某些操作系统上，浏览器会拦截 **Ctrl+Shift+C** 和 **Ctrl+C** 等组合键。相反，您可以使用右键菜单或 **Ctrl+Insert** 复制和 **Shift+Insert** 粘贴。
 
-Once connected, a green dot appears next to the **Remote shell** badge in the Connect dashboard. This indicates an active remote shell session. Hover to see the current number of remote shell sessions.
+连接后，Connect仪表板中的 **Remote shell** 图标旁边会出现一个绿点。这表示活动的远程shell会话。悬停以查看当前远程shell会话的数量。
 
-image::images/remote-shell-active.png[width="80%"]
+image::images/remote-shell-in-progress.png[width="80%"]
 
-TIP: Every remote shell connection creates a brand new connection, just like SSH. To persist background commands and configuration across multiple sessions, use `screen` or `tmux`.
+每个远程shell连接都会创建一个全新的连接，就像SSH一样。要在多个会话中持久化后台命令和配置，请使用 `screen` 或 `tmux`。
 
-The Connect icon in the system tray turns purple and displays a closed circle when a remote shell session is in progress.
+当远程shell会话正在进行时，菜单栏中的连接图标变为紫色并显示一个关闭的圆圈。每当远程shell会话开始时，都会出现桌面通知。
 
-image::images/remote-shell-connected.png[width="80%"]
+image::images/remote-shell-notification.png[width="80%"]
 
-TIP: The `CONNECT_TTY` environment variable indicates that a session uses a remote shell provided by Connect.
+TIP: `CONNECT_TTY` 环境变量表示会话使用Connect提供的远程shell。
 
 ==== End your remote shell session
 
-To close a remote shell session, run the `exit` command or close the window.
+要关闭远程shell会话，请运行 `exit` 命令或关闭窗口。
 
-image::images/remote-shell-end.png[width="80%"]
+image::images/remote-shell-ended.png[width="80%"]
 
-==== Disable remote shell access
+==== Disallow remote shell access
 
-To turn off remote shell access, click the Connect system tray icon and unselect **Allow remote shell**. Your device remains signed into Connect, but you won't be able to create a remote shell session from the Connect dashboard.
+要关闭远程shell访问，请单击菜单栏中的连接图标并取消选择 **允许远程shell访问(*Allow Remote Shell Access)**。您的设备仍登录到连接，但您将无法从连接仪表板创建远程shell会话。
 
-image::images/remote-shell-disabled-desktop.png[width="80%"]
+image::images/disallow-remote-shell.png[width="80%"]
 
-Alternatively, you can disable remote shell access with the following command:
+或者，您可以使用以下命令禁止远程shell访问：
 
 [source,console]
 ----
 $ rpi-connect shell off
 ----
 
-In the Connect dashboard, the **Remote shell** badge and the **Remote shell** option in the **Connect via** menu will appear crossed-out.
+在Connect仪表板中，**Remote shell** 图标和 **Connect via** 菜单中的**Remote shell** 选项将显示为划掉。
 
 image::images/remote-shell-disabled.png[width="80%"]
 
-To re-enable screen sharing, do one of the following:
+要重新启用远程shell访问，请执行以下操作之一：
 
-* click the Connect system tray icon and select **Allow remote shell**
+* click the Connect system tray icon and select **Allow Remote Shell Access**
 * run the following command:
 +
 [source,console]
@@ -196,30 +182,30 @@ $ rpi-connect shell on
 
 == Enable remote shell at all times
 
-Connect runs as a user-level service, not as root. As a result, Connect only works when your user account is currently logged in on your device. This can make your device unreachable if you reboot with automatic login disabled. To continue running Connect even when you aren't logged into your device, enable **user-lingering**. Run the following command from your user account to enable user-lingering:
+Connect作为用户级服务运行，而不是以root身份运行。因此，Connect仅在您的用户帐户当前登录到您的设备时才有效。如果您在禁用自动登录的情况下重新启动，这可能会使您的设备无法访问。即使您没有登录到设备，要继续运行Connect，请启用 **user-lingering**。从您的用户帐户运行以下命令以启用user-lingering：
 
 [source,console]
 ----
 $ loginctl enable-linger
 ----
 
-TIP: We recommend enabling user-lingering on all headless Raspberry Pi OS Lite setups to prevent your device from becoming unreachable after a remote reboot.
+TIP: 我们建议在所有无头Raspberry Pi OS Lite设置上启用用户逗留，以防止您的设备在远程重启后变得无法访问。
 
 == Manage devices
 
-The Connect dashboard lists all of the devices linked with your Connect account and shows you the various ways you can access them.
+Connect仪表板列出了与您的Connect帐户链接的所有设备，并向您展示了访问它们的各种方式。
 
-image::images/list-of-devices.png[width="80%"]
+image::images/devices.png[width="80%"]
 
-Click on a device name to open the device details page. This screen provides low-level information about your device. You can also edit the device name or remove the device from Connect.
+单击设备名称以打开设备详情页。此屏幕提供有关您的设备的低级信息。您还可以编辑设备名称或从连接中删除设备。
 
-image::images/device-details.png[width="80%"]
+image::images/device.png[width="80%"]
 
-Deleting a device from Connect automatically signs you out of Connect on the device. The Connect system tray icon turns grey and the menu only provides a **Sign in** option.
+从连接中删除设备会自动使您退出设备上的连接。菜单栏中的连接图标变为灰色，菜单仅提供 **登录…(Sign In...)** 选项。
 
 == Update
 
-To update to the latest version of Connect, run the following command:
+要更新到最新版本的Connect，请运行以下命令：
 
 [source, console]
 ----
@@ -227,35 +213,32 @@ $ sudo apt update
 $ sudo apt install --only-upgrade rpi-connect
 ----
 
-Reboot your device to put your update into effect:
-
-[source, console]
-----
-$ sudo reboot
-----
+TIP: 如果您安装了Connect Lite，请在上述命令中将 `rpi-connect` 替换为 `rpi-connect-lite`。
 
 == Disconnect a device from Connect
 
-Run the following command on your device to sign out of your Raspberry Pi ID, which will disable your device on the Connect screen:
+在您的设备上运行以下命令以注销您的Raspberry Pi ID，这将在连接屏幕上禁用您的设备：
 
 [source,console]
 ----
 $ rpi-connect signout
 ----
 
-TIP: To fully remove a device from your Connect account, xref:connect.adoc#manage-devices[remove it from the Connect dashboard].
+或者，单击菜单栏中的连接图标，然后单击“退出(Sign Out)”。
+
+TIP: 要从您的Connect帐户中完全删除设备，xref:connect.adoc#manage-devices[从控制台中移除]。
 
 == Uninstall
 
-Run the following command to remove Connect software from a device:
+运行以下命令从设备中停止和删除Connect：
 
 [source,console]
 ----
 $ sudo apt remove --purge rpi-connect
 ----
 
-TIP: If you installed Connect Lite, replace `rpi-connect` with `rpi-connect-lite` in the above command.
+TIP: 如果您安装了Connect Lite，请在上述命令中将 `rpi-connect` 替换为 `rpi-connect-lite`。
 
-After uninstalling, the serial number of the device remains linked with your Connect account. The device still appears in the Connect dashboard, but can't be used for remote access. If you install Connect again, even with a different SD card, on the same device, it will reuse the existing device name in the Connect dashboard.
+卸载后，设备的序列号仍然与您的Connect帐户相关联。该设备仍然出现在Connect仪表板中，但不能用于远程访问。如果您在同一设备上再次安装Connect，即使使用不同的SD卡，它也会重复使用Connect仪表板中的现有设备名称。
 
-To sever the link between a device and a Connect account, remove the device from the list of devices in the Connect dashboard.
+若要从Connect帐户删除设备，请从Connect仪表板中的设备列表中删除该设备。

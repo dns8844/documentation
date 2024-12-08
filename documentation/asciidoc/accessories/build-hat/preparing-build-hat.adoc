@@ -1,18 +1,18 @@
 == Prepare your Build HAT
 
-NOTE: Before starting to work with your Raspberry Pi Build HAT you should xref:../computers/getting-started.adoc#setting-up-your-raspberry-pi[set up] your Raspberry Pi, xref:../computers/getting-started.adoc#installing-the-operating-system[install] the latest version of the operating system using https://www.raspberrypi.com/downloads/[Raspberry Pi Imager].
+NOTE: 在开始使用 Raspberry Pi Build HAT 之前，你应该 xref:../computers/getting-started.adoc#setting-up-your-raspberry-pi[设置] 你的 Raspberry Pi，xref:../computers/getting-started.adoc#installing-the-operating-system[install] 使用 https://www.raspberrypi.com/downloads/[Raspberry Pi Imager] 安装最新版本的操作系统。
 
-Attach 9mm spacers to the bottom of the board. Seat the Raspberry Pi Build HAT onto your Raspberry Pi. Make sure you put it on the right way up. Unlike other HATs, all the components are on the bottom, leaving room for a breadboard or LEGO® elements on top.  
+将9毫米垫片连接到板的底部。将Raspberry Pi放在Raspberry Pi上。确保你把它放在正确的位置。与其他帽子不同，所有组件都在底部，为面包板或乐高®元素在顶部留出空间。
 
 image::images/fitting-build-hat.gif[width="80%"]
 
 === Access the GPIO Pins
 
-If you want to access the GPIO pins of the Raspberry Pi, you can add an optional tall header and use 15 mm spacers.
+如果要访问Raspberry Pi的GPIO引脚，可以添加可选的高接头并使用15 mm垫片。
 
 image::images/tall-headers.png[width="80%"]
 
-The following pins are used by the Build HAT itself and you should not connect anything to them.
+以下引脚由Build HAT本身使用，您不应该用任何连接它们。
 
 [[table_passive_ids]]
 [cols="^1,^1,^1", width="75%", options="header"]
@@ -29,50 +29,50 @@ The following pins are used by the Build HAT itself and you should not connect a
 
 === Set up your Raspberry Pi
 
-Once the Raspberry Pi has booted, open the Raspberry Pi Configuration tool by clicking on the Raspberry Menu button and then selecting "Preferences" and then "Raspberry Pi Configuration".
+启动Raspberry Pi后，通过单击Raspberry菜单按钮打开Raspberry Pi配置工具，然后选择“首选项(Preferences)”，然后选择“Raspberry Pi配置”。
 
-Click on the "interfaces" tab and adjust the Serial settings as shown below:
+单击“interfaces”选项卡并调整串行设置，如下所示：
 
 image::images/setting-up.png[width="50%"]
 
 ==== Use your Raspberry Pi headless
 
-If you are running your Raspberry Pi headless and using `raspi-config`, select "Interface Options" from the first menu.
+如果您正在无头运行Raspberry Pi并使用 `raspi-config`，请从第一个菜单中选择“接口选项”。
 
 image::images/raspi-config-1.png[width="70%"]
 
-Then "P6 Serial Port".
+然后是“P6串口”。
 
 image::images/raspi-config-2.png[width="70%"]
 
-Disable the serial console:
+禁用串行控制台：
 
 image::images/raspi-config-3.png[width="70%"]
 
-And enable the serial port hardware.
+并启用串口硬件。
 
 image::images/raspi-config-4.png[width="70%"]
 
-The final settings should look like this.
+最终设置应如下所示。
 
 image::images/raspi-config-5.png[width="70%"]
 
-You will need to reboot at this point if you have made any changes.
+如果您进行了任何更改，此时需要重新启动。
 
 === Power the Build HAT
 
-Connect an external power supply — the https://raspberrypi.com/products/build-hat-power-supply[official Raspberry Pi Build HAT power supply] is recommended — however any reliable +8V±10% power supply capable of supplying 48W via a DC 5521 centre positive barrel connector (5.5mm × 2.1mm × 11mm) will power the Build HAT. You don't need to connect an additional USB power supply to the Raspberry Pi as well, unless you are using a Raspberry Pi 400.
+连接外部电源——建议使用 https://raspberrypi.com/products/build-hat-power-supply[official Raspberry Pi Build HAT power supply]——但是任何能够通过DC 5521中心正极筒形连接器（5.5毫米×2.1毫米×11毫米）提供48W的可靠+8V±10%电源都将为构建HAT供电。除非您使用的是Raspberry Pi 400，否则您也不需要将额外的USB电源连接到Raspberry Pi。
 
 [NOTE]
 ====
-The Build HAT can not power the Raspberry Pi 400 as it does not support being powered via the GPIO headers.
+Build HAT无法为Raspberry Pi 400供电，因为它不支持通过GPIO标头供电。
 ====
 
 image::images/powering-build-hat.gif[width="80%"]
 
 [NOTE]
 ====
-The LEGO® Technic™ motors are very powerful; so to drive them you'll need an external 8V power supply. If you want to read from motor encoders and the SPIKE™ force sensor, you can power your Raspberry Pi and Build HAT the usual way, via your Raspberry Pi's USB power socket. The SPIKE™ colour and distance sensors, like the motors, require an https://raspberrypi.com/products/build-hat-power-supply[external power supply].
+LEGO® Technic™ 马达的功率非常大，因此需要外部 8V 电源才能驱动它们。如果要读取电机编码器和 SPIKE™ 力传感器的数据，可以通过 Raspberry Pi 的 USB 电源插座，以常规方式为 Raspberry Pi 和 Build HAT 供电。SPIKE™ 颜色和距离传感器与电机一样，需要 https://raspberrypi.com/products/build-hat-power-supply[外部电源]。
 ====
 
-You have the choice to use Build HAT with Python or .NET.
+您可以选择将Build HAT与Python或.NET一起使用。

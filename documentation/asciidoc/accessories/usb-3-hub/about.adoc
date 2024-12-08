@@ -1,0 +1,17 @@
+== About
+
+https://www.raspberrypi.com/products/usb-3-hub/[Raspberry Pi USB 3 Hub] 为您的设备提供额外的连接，将一个USB-A端口扩展到四个端口。可选的外部USB-C电源输入支持高功率外围设备。您可以使用USB 3集线器为低功耗外围设备供电，例如大多数鼠标和键盘，无需外部电源。
+
+.树莓派USB 3.0集线器
+image::images/usb-3-hub-hero.png[width="80%"]
+
+== Specification
+
+* 1 个上游 USB 3.0 Type-A 接口，带 8 厘米线缆
+* 4 个下游 USB 3.0 Type-A 端口
+* 数据传输速度高达 5Gbps
+* 功率传输最高可达 900 mA（4.5 W）；可选的外部 USB-C 电源输入可为高功率下游外设提供最高 5V @ 3A 的电压
+* 兼容 USB 3.0 和 USB 2.0 Type-A 主机端口
+
+.物理规格
+image::images/usb-3-hub-physical-specification.png[]

@@ -1,0 +1,85 @@
+== RP2350
+
+RP2350是由Raspberry Pi设计的微控制器。
+
+image::images/rp2350.png[]
+
+无论您使用的是 xref:pico-series.adoc#pico-2-technical-specification[Raspberry Pi Pico 2]，还是其他基于 RP2350 的微控制器板，这里都有入门所需的一切。您可以在 Raspberry Pi Pico 2 上找到 xref:c_sdk.adoc#sdk-setup[C/{cpp}] 或 xref:micropython.adoc#what-is-micropython[MicroPython] 的入门支持，以及使用 RP2350 的其他板的资源链接。还有 Raspberry Pi Pico 2 微控制器板和我们的 RP2350 微控制器芯片的技术文档链接。
+
+=== Why is the chip called RP2350?
+
+RP2350 的后缀数字来源于以下内容、
+
+image::images/rp2350_explanation.svg[width=640]
+
+. 处理器内核数量 (2)
+. 处理器类型 (M33)
+. floor(log2(RAM / 16KB))
+. floor(log2(nonvolatile / 128KB)) 或 0（如果没有板载非易失性存储器
+
+=== Technical Specification
+
+RP2350是一款来自Raspberry Pi的高性能、安全、低成本、易于使用的微控制器。
+
+凭借大型片上存储器、对称双核处理器复合体、确定性总线结构和丰富的外设集以及我们独特的可编程输入输出（PIO）子系统，它为专业用户提供了无与伦比的强大功能和灵活性。凭借详细的留档、精美的MicroPython端口和ROM中的UF2引导加载程序，它对初学者和业余用户来说具有最低的入门门槛。
+
+RP2350是一个无状态设备，支持从外部QSPI存储器缓存就地执行。这种设计决策允许您为您的应用选择适当的非易失性存储密度，并从商品闪存部件的低价格中受益。
+
+RP2350采用现代40nm工艺节点制造，提供高性能、低动态功耗和低泄漏，具有多种低功耗模式，支持延长电池电量运行时间。
+
+主要功能包括：
+
+* 双 Cortex-M33 或 Hazard3 处理器，频率高达 150MHz
+* 520KB 多组高性能 SRAM
+* 通过专用 QSPI 总线支持高达 16MB 的片外闪存
+* DMA 控制器
+* 完全连接的 AHB 横条
+* 片上可编程 LDO 生成内核电压
+* 2 个片上 PLL，用于产生 USB 和内核时钟
+* 30 个 GPIO 引脚，其中 4 个可用作模拟输入
+* 外设
+** 2 个 UART
+** 2 个 SPI 控制器
+** 2 个 I2C 控制器
+** 24 个 PWM 通道
+** USB 1.1 控制器和 PHY，支持主机和设备
+** 3 个可编程 IO (PIO) 块，共 12 个状态机
+
+==== Security
+
+RP2350具有全面的安全架构，围绕Arm TrustZone for Cortex-M构建，包括以下功能：
+
+* 支持签名启动
+* 8KB 片上防干扰一次性可编程 (OTP) 存储器
+* SHA-256 加速
+* 硬件真随机数生成器 (TRNG)
+
+==== Architecture Switching
+
+RP2350包括一对开放硬件Hazard3 RISC-V内核，可以在启动时替换Cortex-M33内核。我们的引导ROM甚至可以自动检测已构建第二阶段二进制文件的架构，并将芯片重新启动到适当的模式。芯片的所有功能，除了少数安全功能和双精度浮点加速器，都可以在RISC-V模式下使用。
+
+=== RP2350-based Boards
+
+xref:pico-series.adoc#pico-2-technical-specification[Raspberry Pi Pico 2] 由Raspberry Pi设计，既是开发板，也是参考设计，基于RP2350。
+
+特此授予使用、复制、修改和/或分发本设计用于任何目的的许可，无论是否收费。
+
+本设计按“原样”提供，作者不承担与本设计有关的所有保证，包括对适销性和适用性的所有暗示保证。在任何情况下，作者均不对因使用、数据或利润损失而导致的任何特殊、直接、间接或后果性损害或任何损害负责，无论是由于合同、疏忽或其他侵权行为，还是与使用或执行本设计有关。
+
+==== Other Boards
+
+您可以在 https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi forums] 上找到关于基于第三方RP2350的板的讨论。
+
+==== USB PIDs
+
+许多基于RP2350的设备使用Raspberry Pi的USB供应商ID和产品ID组合。如果您基于RP2350构建第三方板，您可能需要唯一的USB产品ID（PID）。
+
+如果您需要为Windows用户提供自定义驱动程序，您可能需要唯一的USB PID。
+
+USB-IF已授予Raspberry Pi许可其供应商ID（`0x2E8A`）的USB产品ID值用于与RP2350一起使用的常见硅组件的权限。
+
+要保留与Raspberry Pi的供应商ID关联的USB PID，请按照 https://github.com/raspberrypi/usb-pid[Raspberry Pi USB PID git repository] 中的说明进行操作。
+
+NOTE: 如果您使用标准RP2350 PID，您可以使用 `iManufacturer`、`iProduct` 和 `iSerial` 字符串来唯一标识您的设备。
+
+

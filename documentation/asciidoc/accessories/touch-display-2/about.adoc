@@ -1,0 +1,130 @@
+== About
+
+https://www.raspberrypi.com/products/touch-display-2/[Raspberry Pi Touch Display 2] 是一款纵向触摸屏LCD显示屏，专为平板电脑、娱乐系统和信息仪表板等交互式项目而设计。
+
+.树莓派触控显示屏2
+image::images/touch-display-2-hero.jpg[width="80%"]
+
+Touch Display 2使用DSI连接器和GPIO连接器连接到树莓派。树莓派操作系统为触摸屏驱动程序提供了对五指多点触控和屏幕键盘的支持，无需连接键盘或鼠标即可提供完整的功能。
+
+== Specifications
+
+* 1280×720px resolution, 24-bit RGB display
+* 155×88mm active area
+* 7" diagonal
+* powered directly by the host Raspberry Pi, requiring no separate power supply
+* supports up to five points of simultaneous multi-touch
+
+Touch Display 2兼容所有型号的树莓派从树莓派1B+开始，除了树莓派零和零2 W，它们缺少DSI连接器。
+
+Touch Display 2框包含以下部分（下图中从左到右、从上到下的顺序）：
+
+* Touch Display 2
+* 8 个 M2.5 螺钉
+* 15 路至 15 路 FFC
+* 用于 Raspberry Pi 5 的 22 路至 15 路 FFC
+* GPIO 连接器电缆
+
+.Touch Display 2盒中包含的零件
+image::images/touch-display-2-whats-in-the-booooox.jpg["Parts included in the Touch Display 2 box", width="80%"]
+
+== Install
+
+.连接并安装到Touch Display 2的Raspberry Pi 5
+image::images/touch-display-2-installation-diagram.png["A Raspberry Pi 5 connected and mounted to the Touch Display 2", width="80%"]
+
+要将Touch Display 2连接到Raspberry Pi，请使用扁平柔性电缆（FFC）和GPIO连接器。您将使用的FFC取决于您的Raspberry Pi型号：
+
+* 对于 Raspberry Pi 5，使用随附的 22 pin 至 15 pin FFC
+* 对于任何其他型号的 Raspberry Pi，使用随附的 15 pin 至 15 pin FFC
+
+为Raspberry Pi型号确定正确的FFC后，完成以下步骤以将Touch Display 2连接到Raspberry Pi：
+
+. 断开您的Raspberry Pi电源。
+. 提起Touch Display 2上FFC连接器两侧的固定夹。
+. 将FFC的一个15 pin端插入Touch Display 2 FFC连接器，金属触点朝上，远离Touch Display 2。
++
+TIP: 如果您使用22 pin至15 pinFFC，22 pin端是电缆的 _小_端。将电缆的 _大_ 端插入Touch Display 2。
+. 在将FFC牢牢固定到位的同时，同时将两个固定夹向下推到Touch Display 2的FFC连接器上。
+. 提起Raspberry Pi的DSI连接器两侧的固定夹。此端口应标有术语 `DISPLAY` 或 `DISP` 的一些变体。如果您的Raspberry Pi有多个DSI连接器，请选择标有 `1` 的端口。
+. 将FFC的另一端插入Raspberry Pi DSI连接器，金属触点面向以太网和USB-A端口。
+. 在将FFC牢牢固定到位的同时，同时将两个固定夹向下推到Raspberry Pi的DSI连接器上。
+. 将GPIO连接器电缆插入Touch Display 2上标有 `J1` 的端口。
+. 将GPIO连接器电缆的另一端（三引脚）连接到 xref:../computers/raspberry-pi.adoc#gpio[Raspberry Pi GPIO] 的引脚2、4和6。将红色电缆（5V电源）连接到引脚2，黑色电缆（接地）连接到引脚6。从上面看，以太网和USB-A端口朝下，这些引脚位于电路板的右上角，引脚2位于最右上角的位置。
++
+.连接Touch Display 2的GPIO
+image::images/touch-display-2-gpio-connection.png[The GPIO connection to the Touch Display 2, width="40%"]
++
+TIP: 如果引脚6不可用，您可以使用任何其他开放的 `GND` 引脚连接黑线。如果引脚2不可用，您可以使用任何其他5V引脚连接红线，例如引脚4。
+.或者，使用随附的M2.5螺丝将Raspberry Pi安装到Touch Display 2的背面。
+.. 将Raspberry Pi的四个角支架与围绕FFC连接器的四个安装点和Touch Display 2背面的 `J1` 端口对齐，特别注意不要夹住FFC。
+.. 将螺丝插入四角支架并拧紧，直到您的Raspberry Pi安全。
+. 将您的Raspberry Pi重新连接到电源。初始化Touch Display 2连接并开始显示到屏幕最多可能需要一分钟。
+
+=== Use an on-screen keyboard
+
+树莓派操作系统_ Bookworm_ 和更高版本默认包括Squeekboard屏幕键盘。当连接触摸显示器时，屏幕键盘应该在可以输入文本时自动显示，在不可能输入文本时自动隐藏。
+
+对于不支持文本输入检测的应用程序，请使用任务栏右端的键盘图标手动显示和隐藏键盘。
+
+您还可以在Raspberry Pi Configuration的Display选项卡或 `raspi-config` 的 `Display` 部分永久显示或隐藏屏幕键盘。
+
+在 _Bookworm_ 之前的Raspberry Pi OS版本中，请改用 `matchbox-keyboard`。如果您使用wayfire桌面合成器，请改用 `wvkbd`。
+
+=== Change screen orientation
+
+如果您想物理旋转显示器，或将其安装在特定位置，请从 **首选项** 菜单中选择 **屏幕配置**。右键单击布局编辑器中的触摸显示矩形（可能是DSI-1），选择 **方向**，然后选择适合您需求的最佳选项。
+
+==== Rotate screen without a desktop
+
+要在缺少桌面环境的设备上设置屏幕方向，请编辑 `/boot/firmware/cmdline.txt` 配置文件以将方向传递给系统。将以下条目添加到 `cmdline.txt` 的末尾：
+
+[source,ini]
+----
+video=DSI-1:720x1280@60,rotate=<rotation-value>
+----
+
+将 `<rotation-value>` 占位符替换为以下值之一，这些值对应于相对于显示器上默认值的旋转程度：
+
+* `0`
+* `90`
+* `180`
+* `270`
+
+例如，`90` 的旋转值将显示器向右旋转90度。`180` 将显示器旋转180度，或上下颠倒。
+
+NOTE: 无法使用 `cmdline.txt` 将DSI显示器与HDMI显示器分开旋转。当您同时使用DSI和HDMI时，它们使用相同的旋转值。
+
+==== Touch Display 2 device tree option reference
+
+`vc4-kms-dsi-ili9881-7inch` overlay支持以下选项：
+
+|===
+| DT parameter | Action
+
+| `sizex`
+| Sets X resolution (default 720)
+
+| `sizey`
+| Sets Y resolution (default 1280)
+
+| `invx`
+| Invert X coordinates
+
+| `invy`
+| Invert Y coordinates
+
+| `swapxy`
+| Swap X and Y coordinates
+
+| `disable_touch`
+| Disables the touch overlay totally
+|===
+
+要指定这些选项，请将它们添加到 `/boot/firmware/config.txt` 中的 `dtoverlay` 行，中间用逗号隔开。布尔值出现时默认为 “true”，但可以使用后缀“=0 ”将其设置为 “false”。整数值需要一个值，例如 `sizey=240`。例如，要将 X 分辨率设置为 400 像素并反转 X 和 Y 坐标，请使用下面一行：
+
+
+[source,ini]
+----
+dtoverlay=vc4-kms-dsi-ili9881-7inch,sizex=400,invx,invy
+----

@@ -1,14 +1,14 @@
 == Legacy Support
 
-WARNING: These instructions are for the original Raspberry Pi, Model A, and B, boards only. To identify an original Raspberry Pi, check the GPIO header connector. Only the original model has a 26-pin GPIO header connector; subsequent models have 40 pins.
+WARNING: 这些说明仅适用于原始Raspberry Pi、型号A和B板。要识别原始Raspberry Pi，请检查GPIO接头连接器。只有原始型号有26针GPIO接头；后续型号有40针。
 
-The DSI connector on both the Raspberry Pi 1 Model A and B boards does not have the I2C connections required to talk to the touchscreen controller and DSI controller. To work around this, use the additional set of jumper cables provided with the display kit. Connect SCL/SDA on the GPIO header to the horizontal pins marked SCL/SDA on the display board. Power the Model A/B via the GPIO pins using the jumper cables.
+Raspberry Pi 1 Model A和B板上的DSI连接器没有与触摸屏控制器和DSI控制器通信所需的I2C连接。要解决这个问题，请使用显示套件随附的附加跳线电缆。将GPIO接头上的SCL/SDA连接到显示板上标记为SCL/SDA的水平引脚。使用跳线电缆通过GPIO引脚为Model A/B供电。
 
-DSI display autodetection is disabled by default on these boards. To enable detection, add the following line to the xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] file:
+在这些板上默认禁用DSI显示自动检测。要启用检测，请将以下行添加到 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 文件中：
 
 [source,ini]
 ----
 ignore_lcd=0
 ----
 
-Power the setup via the `PWR IN` micro-USB connector on the display board. Do not power the setup via the Raspberry Pi's micro-USB port. This will exceed the input polyfuse's maximum current rating, since the display consumes approximately 400mA.
+通过显示板上的 `PWR IN` micro-USB连接器为设置供电。不要通过Raspberry Pi的micro-USB端口为设置供电。这将超过输入聚熔断器的最大额定电流，因为显示器消耗大约400mA。

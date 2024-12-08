@@ -2,18 +2,18 @@
 
 === Install the Build HAT Python Library
 
-To install the Build HAT Python library, open a terminal window and run the following command:
+要安装Build HAT Python库，请打开终端窗口并运行以下命令：
 
 [source,console]
 ----
 $ sudo apt install python3-build-hat 
 ----
 
-Raspberry Pi OS versions prior to _Bookworm_ do not have access to the library with `apt`. Instead, run the following command to install the library using `pip`:
+_Bookworm_ 之前的Raspberry Pi OS版本无法使用 `apt` 访问库。请运行以下命令以使用 `pip` 安装库：
 
 [source,console]
 ----
 $ sudo pip3 install buildhat
 ----
 
-For more information about the Build HAT Python Library see https://buildhat.readthedocs.io/[ReadTheDocs].
+有关Build HAT Python库的更多信息，请参阅 https://buildhat.readthedocs.io/[ReadTheDocs]。

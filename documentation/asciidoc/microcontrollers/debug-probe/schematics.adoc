@@ -1,10 +1,10 @@
 == Schematics
 
-Schematics and mechanical drawing of the Debug Probe are available:
+Debug Probe 的原理图和机械图可供选择：
 
 * https://datasheets.raspberrypi.com/debug/raspberry-pi-debug-probe-schematics.pdf[Schematics] (PDF)
 * https://datasheets.raspberrypi.com/debug/raspberry-pi-debug-probe-mechanical-drawing.pdf[Mechanical Diagram] (PDF)
 
-The test point (TP) shown on the schematics are located as shown in the diagram below.
+原理图上显示的测试点（TP）如下图所示。
 
 image::images/debug-probe-tps.jpg[width="70%"]

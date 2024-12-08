@@ -1,13 +1,13 @@
 == Introduction
 
-Raspberry Pi Connect provides secure access to your Raspberry Pi from anywhere in the world.
+Raspberry Pi Connect提供从世界任何地方安全访问您的Raspberry Pi。
 
 image::images/hero.png[width="100%"]
 
-To use Connect, xref:connect.adoc#install-connect[install the Connect software] on your Raspberry Pi. Then visit https://connect.raspberrypi.com[connect.raspberrypi.com] to access the desktop or a shell running on your Raspberry Pi in a browser window.
+要使用 Connect，请在 Raspberry Pi 上 xref:connect.adoc#install-connect[安装 Connect 软件] 和 xref:connect.adoc#link-connect[将设备与帐户链接]。然后访问 https://connect.raspberrypi.com[connect.raspberrypi.com]，在浏览器窗口中访问 Raspberry Pi 上运行的桌面或 shell。
 
-Connect uses a secure, encrypted connection. By default, Connect communicates directly between your Raspberry Pi and your browser. However, when Connect can't establish a direct connection between your Raspberry Pi and your browser, we use a relay server. In such cases, Raspberry Pi only retains the metadata required to operate Connect.
+Connect使用安全、加密的连接。默认情况下，Connect在您的Raspberry Pi和浏览器之间直接通信。但是，当Connect无法在您的Raspberry Pi和浏览器之间建立直接连接时，我们使用中继服务器。在这种情况下，Raspberry Pi只保留操作Connect所需的元数据。
 
-Connect is currently in the Beta phase of development.
+Connect目前处于Beta开发阶段。
 
-NOTE: To use Connect, your Raspberry Pi must run https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/[Raspberry Pi OS Bookworm] or later.
+NOTE: 要使用Connect，您的Raspberry Pi必须运行 https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/[Bookworm] 或更高版本。

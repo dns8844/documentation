@@ -1,89 +1,94 @@
 [[ai-kit]]
 == About
 
-.The Raspberry Pi AI Kit
+. 树莓派AI套件
 image::images/ai-kit.jpg[width="80%"]
 
-The Raspberry Pi AI Kit bundles the xref:m2-hat-plus.adoc#m2-hat-plus[Raspberry Pi M.2 HAT+] with a Hailo AI acceleration module for use with Raspberry Pi 5. The kit contains the following:
+Raspberry Pi AI套件将 xref:m2-hat-plus.adoc#m2-hat-plus[Raspberry Pi M.2 HAT+] 与Hailo AI加速模块捆绑在一起，用于Raspberry Pi 5。该套件包含以下配件：
 
-* Hailo AI module containing a Neural Processing Unit (NPU)
-* Raspberry Pi M.2 HAT+, to connect the AI module to your Raspberry Pi 5
-* thermal pad pre-fitted between the module and the M.2 HAT+
-* mounting hardware kit
-* 16mm stacking GPIO header
+* 包含神经处理单元（NPU）的 Hailo AI 模块
+* 树莓派 M.2 HAT+，用于将人工智能模块连接到树莓派 5
+* 预装在模块和 M.2 HAT+ 之间的散热垫
+* 安装材料
+* 16 毫米堆叠 GPIO 接头
 
 == AI module features
 
-* 13 tera-operations per second (TOPS) neural network inference accelerator built around the Hailo-8L chip.
-* M.2 2242 form factor
+* 围绕 Hailo-8L 芯片构建的每秒 13 万亿次操作 (TOPS) 神经网络推理加速器。
+* M.2 2242 外形尺寸
+
 
 [[ai-kit-installation]]
 == Install
 
-To use the AI Kit, you will need:
+要使用AI Kit，您需要：
 
-* a Raspberry Pi 5
+* 一个Raspberry Pi 5
 
-Each AI Kit comes with a pre-installed AI module, ribbon cable, GPIO stacking header, and mounting hardware. Complete the following instructions to install your AI Kit:
+每个AI套件都带有一个预装的AI模块、带状电缆、GPIO堆叠头和安装硬件。完成以下说明以安装您的AI套件：
 
-. First, ensure that your Raspberry Pi runs the latest software. Run the following command to update:
+. 首先，确保您的Raspberry Pi已经更新最新的软件。运行以下命令进行更新：
 +
 [source,console]
 ----
 $ sudo apt update && sudo apt full-upgrade
 ----
 
-. Next, xref:../computers/raspberry-pi.adoc#update-the-bootloader-configuration[ensure that your Raspberry Pi firmware is up-to-date]. Run the following command to see what firmware you're running:
+.接下来，xref:../computers/raspberry-pi.adoc#update-the-bootloader-configuration[ensure that your Raspberry Pi firmware is up-to-date]。运行以下ok以查看您正在运行的固件：
 +
 [source,console]
 ----
 $ sudo rpi-eeprom-update
 ----
 +
-If you see 6 December 2023 or a later date, proceed to the next step. If you see a date earlier than 6 December 2023, run the following command to open the Raspberry Pi Configuration CLI:
+如果您看到2023年12月6日或更晚的日期，请继续下一步。如果您看到早于2023年12月6日的日期，请运行以下命令以打开Raspberry Pi配置CLI：
 +
 [source,console]
 ----
 $ sudo raspi-config
 ----
 +
-Under `Advanced Options` > `Bootloader Version`, choose `Latest`. Then, exit `raspi-config` with `Finish` or the *Escape* key.
+在 `Advanced Options`>`Bootloader Version` 下，选择 `Latest`。然后，使用 `Finish` 或 *Escape* 键退出 `raspi-config`。
 +
-Run the following command to update your firmware to the latest version:
+运行以下命令将您的固件更新到最新版本：
 +
 [source,console]
 ----
 $ sudo rpi-eeprom-update -a
 ----
 +
-Then, reboot with `sudo reboot`.
+然后，用 `sudo reboot` 重新启动。
 
-. Disconnect the Raspberry Pi from power before beginning installation.
+. 开始安装前断开Raspberry Pi的电源。
 
-. For the best performance, we recommend using the AI Kit with the Raspberry Pi Active Cooler. If you have an Active Cooler, install it before installing the AI Kit.
+. 为获得最佳性能，我们建议将AI套件与Raspberry Pi Active Cooler一起使用。如果您有Active Cooler，请在安装AI Kit之前安装它。
 +
 --
 image::images/ai-kit-installation-01.png[width="60%"]
 --
-. Install the spacers using four of the provided screws. Firmly press the GPIO stacking header on top of the Raspberry Pi GPIO pins; orientation does not matter as long as all pins fit into place. Disconnect the ribbon cable from the AI Kit, and insert the other end into the PCIe port of your Raspberry Pi. Lift the ribbon cable holder from both sides, then insert the cable with the copper contact points facing inward, towards the USB ports. With the ribbon cable fully and evenly inserted into the PCIe port, push the cable holder down from both sides to secure the ribbon cable firmly in place.
+. 使用提供的四个螺丝安装垫片。将GPIO堆叠头牢牢地压在Raspberry Pi GPIO引脚的顶部；只要所有引脚都合适，方向并不重要。从AI套件上断开带状电缆，将另一端插入Raspberry Pi的PCIe端口。从两侧提起带状电缆支架，然后将铜接触点朝内的电缆插入USB端口。将带状电缆完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
 +
 --
 image::images/ai-kit-installation-02.png[width="60%"]
 --
-. Set the AI Kit on top of the spacers, and use the four remaining screws to secure it in place.
+. 将AI Kit放置在垫片顶部，然后使用剩余的四个螺丝将其固定到位。
 +
 --
 image::images/ai-kit-installation-03.png[width="60%"]
 --
-. Insert the ribbon cable into the slot on the AI Kit. Lift the ribbon cable holder from both sides, then insert the cable with the copper contact points facing up. With the ribbon cable fully and evenly inserted into the port, push the cable holder down from both sides to secure the ribbon cable firmly in place.
+. 将带状电缆插入AI套件上的插槽。从两侧提起带状电缆支架，然后将铜接触点朝上的电缆插入。将带状电缆完全均匀地插入端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
 +
 --
 image::images/ai-kit-installation-04.png[width="60%"]
 --
-. Congratulations, you have successfully installed the AI Kit. Connect your Raspberry Pi to power; Raspberry Pi OS will automatically detect the AI Kit.
+. 恭喜您，您已成功安装AI Kit。将您的Raspberry Pi连接到电源；Raspberry Pi OS将自动检测AI Kit。
 +
 --
 image::images/ai-kit-installation-05.png[width="60%"]
 --
 
-WARNING: Always disconnect your Raspberry Pi from power before connecting or disconnecting a device from the M.2 slot.
+WARNING: 在从M.2插槽连接或断开设备之前，请务必断开Raspberry Pi的电源。
+
+== Get started with AI on your Raspberry Pi
+
+要开始在您的Raspberry Pi上运行AI加速应用程序，请查看我们的 xref:../computers/ai.adoc[入门人工智能] 指南。

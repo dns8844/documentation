@@ -1,7 +1,7 @@
 == Getting Started with your Mouse
 
-Our official mouse has three buttons, which activate high-quality micro-switches. The wheel is for quick scrolling when browsing documents and web pages.
+我们的官方鼠标有三个按钮，它们使用高质量的微动开关。滚轮用于在浏览文档和网页时快速滚动。
 
 image::images/the-mouse.png[width="80%"]
 
-Always place the mouse on a flat, stable surface while using it. The mouse optically detects movement on the surface on which it is placed. On featureless surfaces, e.g. PVC or acrylic table tops, the mouse cannot detect movement. When you are working on such a surface, place the mouse on a mouse mat.
+使用时，请务必将鼠标放在平坦、稳定的表面上。鼠标可以光学检测放置它的表面上的运动。在光滑的表面上，例如PVC或亚克力桌面，鼠标无法检测到运动。当您在这样的表面上工作时，请将鼠标放在鼠标垫上。

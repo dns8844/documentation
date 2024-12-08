@@ -1,32 +1,27 @@
 == Raspberry Pi Pico C/{cpp} SDK
 
-Our official C SDK can be used from the command line, or from popular integrated development environments like Visual Studio Code, Eclipse, and CLion. To get started, download our C/{cpp} SDK and Examples, and take a look at our 'https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[getting started]' documentation to get going. Or for a quick setup see the next section.
+我们的官方C SDK可以从命令行使用，也可以从流行的集成开发环境中使用，如Visual Studio Code、Eclipse和CLion。要开始使用，请下载我们的C/{cpp}SDK和示例，并查看我们的“https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[getting started]”留档。或者有关快速设置，请参阅下一节。
 
-* The SDK https://github.com/raspberrypi/pico-sdk[Github repository]
+您可以在以下位置找到C/{cpp}SDK的留档：
 
-* The Examples https://github.com/raspberrypi/pico-examples[Github repository]
+https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico-series]:: C/{cpp}开发与树莓派Pico，Pico2和其他树莓派microcontroller-based板
 
-You can find documentation around the C/{cpp} SDK at;
+https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf[用 Raspberry Pi Pico W 连接互联网]:: 使用C/{cpp}或MicroPython在线获取Raspberry Pi Pico W
 
-https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico]:: C/{cpp} development with Raspberry Pi Pico and other RP2040-based microcontroller boards
+https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico-series C/{cpp} SDK]:: 库和工具，用于在Raspberry Pi微控制器上开发C/{cpp}
 
-https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf[Connecting to the Internet with Raspberry Pi Pico W]:: Getting Raspberry Pi Pico W online with C/{cpp} or MicroPython
+树莓派PicoC/{cpp}SDK的 xref:../pico-sdk/index_doxygen.adoc[API level documentation]:: 文档
 
-https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico C/{cpp} SDK]:: Libraries and tools for C/{cpp} development on RP2040 microcontrollers
+https://github.com/raspberrypi/pico-examples[The pico-examples repository]:: 示例项目
 
-xref:../pico-sdk/index_doxygen.adoc[API level documentation]:: Documentation for the Raspberry Pi Pico C/{cpp} SDK
-
-[NOTE]
-====
-If you are building applications with the C/{cpp} SDK and targeting boards other than the Raspberry Pi Pico, you will need to pass `-DPICO_BOARD=boardname` to CMake. Here `boardname` is the name of your board, e.g. for the Adafruit Feather RP2040 you should pass `-DPICO_BOARD=adafruit_feather_rp2040`. See the https://github.com/raspberrypi/pico-sdk/tree/master/src/boards[`boards/` directory] in the Raspberry Pi Pico SDK, and the https://forums.raspberrypi.com/viewtopic.php?f=147&t=304393[forums], for more information.
-====
+SDK源代码是开源的，可通过 https://github.com/raspberrypi/pico-sdk[pico-sdk Github repository] 获得。
 
 [NOTE]
 ====
-Documentation introducing working with Wi-Fi and Bluetooth on Raspberry Pi Pico W with C/{cpp} or MicroPython is presented in the https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf[Connecting to the Internet with Raspberry Pi Pico W] book.
-====
+要使用 C/{cpp} SDK 为除 Raspberry Pi Pico 之外的电路板构建应用程序，请向 CMake 传递 `-DPICO_BOARD=boardname`。要使用 C/{cpp} SDK 为 Raspberry Pi Pico 之外的电路板构建应用程序，请向 CMake 传递 `-DPICO_BOARD=boardname`，其中 `boardname` 是您的电路板名称。例如
 
-[NOTE]
-====
-If you are building applications with the C/{cpp} SDK for Raspberry Pi Pico W and, to connect to a network you will need to pass `-DPICO_BOARD=pico_w -DWIFI_SSID="Your Network" -DWIFI_PASSWORD="Your Password"` to CMake. If you only need to enable Bluetooth support then you do not need to pass a SSID and password, but still need to pass the `-DPICO_BOARD=pico_w` string to CMake.
+* 要为 Adafruit Feather RP2040 构建应用程序，请通过 `-DPICO_BOARD=adafruit_feather_rp2040` 。
+* 要为 Pico W 构建应用程序，请传递 `-DPICO_BOARD=pico_w`（如果希望连接到无线网络，还需添加参数 -DWIFI_SSID="Your Network" -DWIFI_PASSWORD="Your Password"）。
+
+有关详细信息，请参阅 Raspberry Pi Pico SDK 中的 https://github.com/raspberrypi/pico-sdk/tree/master/src/boards[`boards/`目录]和 https://forums.raspberrypi.com/viewtopic.php?f=147&t=304393[论坛]。
 ====

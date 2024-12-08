@@ -1,35 +1,33 @@
 == Your First Binaries
 
-WARNING: If you are using an Apple Mac, and running macOS Ventura, there has been a change in how the Finder works which causes drag-and-drop to fail. Please see our https://www.raspberrypi.com/news/the-ventura-problem/[blog post] for a full explanation, and workarounds, and our https://github.com/raspberrypi/pico-sdk/issues/1081[Github issue] tracking the problem for the current status.
-
 === Blink an LED
 
-The first program anyone writes when using a new microcontroller is to blink an LED on and off. The Raspberry Pi Pico comes with a single LED on-board. The LED is connected to `GP25` on the board's Raspberry Pi RP2040 for Pico, and `WL_GPIO0` on the Infineon 43439 wireless chip for Pico W.
+任何人在使用新微控制器时编写的第一个程序是闪烁和关闭发光二极管。树莓派Pico带有一个板载发光二极管。发光二极管连接到板上树莓派RP2040上的 `GP25` 用于Pico，连接到英飞凌43439无线芯片上的 `WL_GPIO0` 用于Pico W。
 
 image:images/Blink-an-LED-640x360-v2.gif[]
 
-You can blink this on and off by,
+你可以时断时续地打开和关闭，
 
-. Download the Blink UF2 https://datasheets.raspberrypi.com/soft/blink.uf2[for Raspberry Pi Pico], or https://datasheets.raspberrypi.com/soft/blink_picow.uf2[for Pico W].
-. Push and hold the BOOTSEL button and plug your Pico into the USB port of your Raspberry Pi or other computer.
-. It will mount as a Mass Storage Device called RPI-RP2.
-. Drag and drop the Blink UF2 binary onto the RPI-RP2 volume. Pico will reboot.
+. 下载Blink UF2 https://datasheets.raspberrypi.com/soft/blink.uf2[for Raspberry Pi Pico], 或 https://datasheets.raspberrypi.com/soft/blink_picow.uf2[for Pico W]。
+. 按住BOOTSEL按钮，将Pico插入树莓派或其他计算机的USB端口。
+. 它将作为称为RPI-RP2的大容量存储设备安装。
+. 将Blink UF2二进制文件拖放到RPI-RP2卷上。Pico将重新启动。
 
-You should see the on-board LED blinking.
+您应该会看到板载LED闪烁。
 
-You can see the code on Github for the https://github.com/raspberrypi/pico-examples/blob/master/blink/blink.c[Raspberry Pi Pico] and https://github.com/raspberrypi/pico-examples/blob/master/pico_w/wifi/blink/picow_blink.c[Pico W] versions.
+您可以在Github上看到 https://github.com/raspberrypi/pico-examples/blob/master/blink/blink.c[Raspberry Pi Pico] 和 https://github.com/raspberrypi/pico-examples/blob/master/pico_w/wifi/blink/picow_blink.c[Pico W] 版本的代码。
 
 === Say "Hello World"
 
-The next program anyone writes is to say 'Hello World' over a USB serial connection.
+任何人编写的下一个程序是通过USB串行连接说'Hello World'。
 
 image:images/Hello-World-640x360-v2.gif[]
 
-. Download the https://datasheets.raspberrypi.com/soft/hello_world.uf2['Hello World' UF2].
-. Push and hold the BOOTSEL button and plug your Pico into the USB port of your Raspberry Pi or other computer.
-. It will mount as a Mass Storage Device called RPI-RP2.
-. Drag and drop the 'Hello World' UF2 binary onto the RPI-RP2 volume. Pico will reboot.
-. Open a Terminal window and type:
+. 下载 https://datasheets.raspberrypi.com/soft/hello_world.uf2['Hello World' UF2]。
+. 按住BOOTSEL按钮，将Pico插入树莓派或其他计算机的USB端口。
+. 它将作为称为RPI-RP2的大容量存储设备安装。
+. 将 'Hello World' UF2二进制文件拖放到RPI-RP2卷上。Pico将重新启动。
+. 打开终端窗口并输入：
 +
 [source,console]
 ------
@@ -37,6 +35,6 @@ $ sudo apt install minicom
 $ minicom -b 115200 -o -D /dev/ttyACM0
 ------
 
-You should see 'Hello, world!' printed to the Terminal.
+您应该看到 "Hello, world!" 打印到终端。
 
-You can see the code https://github.com/raspberrypi/pico-examples/blob/master/hello_world/usb/hello_usb.c[on Github]
+你可以在 https://github.com/raspberrypi/pico-examples/blob/master/hello_world/usb/hello_usb.c[Github] 看到代码

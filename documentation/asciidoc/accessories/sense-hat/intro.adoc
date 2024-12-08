@@ -1,9 +1,9 @@
 == About
 
-The https://www.raspberrypi.com/products/sense-hat/[Raspberry Pi Sense HAT] is an add-on board that gives your Raspberry Pi an array of sensing capabilities. The on-board sensors allow you to monitor pressure, humidity, temperature, colour, orientation, and movement. The 8×8 RGB LED matrix allows you to visualise data from the sensors. The five-button joystick lets users interact with your projects.
+https://www.raspberrypi.com/products/sense-hat/[Raspberry Pi Sense HAT] 是一款附加板，可为您的Raspberry Pi提供一系列传感功能。板载传感器允许您监控压力、湿度、温度、颜色、方向和运动。8×8 RGB LED矩阵允许您可视化来自传感器的数据。五按钮操纵杆允许用户与您的项目进行交互。
 
 image::images/Sense-HAT.jpg[width="70%"]
 
-The Sense HAT was originally developed for use on the International Space Station as part of the educational https://astro-pi.org/[Astro Pi] programme run by the https://raspberrypi.org[Raspberry Pi Foundation] in partnership with the https://www.esa.int/[European Space Agency]. It can help with any project that requires position, motion, orientation, or environmental sensing.
+Sense HAT 最初是为在国际空间站上使用而开发的，是 https://raspberrypi.org[树莓派基金会] 与 https://www.esa.int/[欧洲航天局] 合作开展的教育 https://astro-pi.org/[Astro Pi] 计划的一部分。它可以用于任何需要位置、运动、方向或环境传感的项目。
 
-An officially supported xref:sense-hat.adoc#use-the-sense-hat-with-python[Python library] provides access to the on-board sensors, LED matrix, and joystick. The Sense HAT is compatible with any Raspberry Pi device with a 40-pin GPIO header.
+官方支持的 xref:sense-hat.adoc#use-the-sense-hat-with-python[Python library] 提供对板载传感器、LED矩阵和操纵杆的访问。Sense HAT与任何具有40针GPIO接口的Raspberry Pi设备兼容。

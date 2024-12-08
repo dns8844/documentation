@@ -1,10 +1,10 @@
 == Serial connections
 
-Ensure that the Debug Probe is connected to the UART pins of your Raspberry Pi Pico. 
+确保 Debug Probe 已连接到Raspberry PiPico的通用异步收发设备引脚。
 
 image:images/wiring.png[width="80%"]
 
-The default pins for Raspberry Pi Pico UART0 are as follows:
+Raspberry Pi Pico UART0的默认引脚如下：
 
 [cols="1,1,1"]
 |===
@@ -15,27 +15,27 @@ The default pins for Raspberry Pi Pico UART0 are as follows:
 | UART0_RX | 2 | GP1
 |===
 
-Once connected, traffic over the Raspberry Pi Pico's UART will be relayed to your computer by the Debug Probe and exposed as a CDC UART. On a Raspberry Pi this will show up as `/dev/ttyACM0`; on other platforms this serial port will show up differently (e.g. on macOS it will appear as `/dev/cu.usbmodemXXXX`).
+连接后，树莓派Pico的通用异步收发设备上的流量将通过 Debug Probe 中继到您的计算机，并作为CDC通用异步收发设备公开。在树莓派上，这将显示为 `/dev/ttyACM0`；在其他平台上，此串行端口将显示不同（例如，在macOS上，它将显示为 `/dev/cu.usbmodemXXXX`）。
 
-If you have not already done so you should install minicom:
+如果您还没有这样做，您应该安装minicom：
 
 [source,console]
 ----
 $ sudo apt install minicom
 ----
 
-and open the serial port:
+并打开串口：
 
 [source,console]
 ----
 $ minicom -b 115200 -o -D /dev/ttyACM0
 ----
 
-TIP: To exit `minicom`, use CTRL-A followed by X.
+TIP: 要退出 `minicom`，请使用CTRL-A后按X。
 
-To test serial communication you can build and upload the "Hello World" example application. 
+要测试串行通信，您可以构建和上传 “Hello World” 示例应用程序。
 
-Change directory into the `hello_world` directory inside the `pico-examples` tree, and run `make`. Afterwards, you can upload it to your Raspberry Pi Pico using `openocd`. For a full walkthrough of building the `hello_serial` example program, see Chapter 4 of https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico].
+将目录更改为 `pico-examples` 树内的 `hello_world` 目录，并运行 `make`。之后，您可以使用 `openocd` 将其上传到您的Raspberry PiPico。有关构建 `hello_serial` 示例程序的完整走查，请参阅 https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico] 的第4章。
 
 [source,console]
 ----
@@ -50,10 +50,11 @@ $ sudo openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "adapter speed
 $ minicom -b 115200 -o -D /dev/ttyACM0
 ----
 
-On opening `minicom` you should see "Hello, world!" printed to the console.
+打开 `minicom` 时，您应该会看到 "Hello, world!" 打印到控制台。
 
-For terminal programs that support it, a description of the USB serial UART is advertised in the USB device description. 
+对于支持它的终端程序，USB串行通用异步收发设备的描述在USB设备描述中公布。
 
 image::images/description.jpg[width="60%"]
 
-The unique serial number in this description means that on Windows your COM port numbering is "sticky" per device, and will allow you to write `udev` rules to associate a named device node with a particular Debug Probe. 
+此描述中的唯一序列号意味着在Windows上，您的COM端口编号对于每个设备是“固定的”，并允许您编写 `udev` 规则以将命名设备节点与特定 Debug Probe 相关联。
+ 

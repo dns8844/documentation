@@ -1,8 +1,8 @@
 == Overview
- 
-Raspberry Pi Audio Boards bring high quality audio to your existing hi-fi or Raspberry Pi-based equipment and projects. We offer four different Hardware Attached on Top (HAT) options that will fit any Raspberry Pi using the 40-pin GPIO header.
 
-Each board has a specific purpose and set of features. The highest audio quality playback is available from our DAC PRO, DAC{plus} and DigiAMP{plus} boards, which support up to full HD audio (192kHz); while the Codec Zero supports up to HD audio (96kHz) and includes a built-in microphone, making it ideal for compact projects.
+Raspberry Pi音频板为您现有的高保真或基于Raspberry Pi的设备和项目带来高质量的音频。我们提供四种不同的顶部附加硬件（HAT）选项，适用于使用40针GPIO接头的任何Raspberry Pi。
+
+每个板卡都有特定的用途和一组功能。我们的DAC PRO、DAC{plus}和DigiAMP{plus}板卡提供最高音频质量的播放，支持高达HD音频（192kHz）；而编解码器零支持高达HD音频（96kHz），并包括一个内置麦克风，非常适合紧凑型项目。
 
 === Features at a glance
 
@@ -16,15 +16,15 @@ Each board has a specific purpose and set of features. The highest audio quality
 | Codec Zero | | | ^| ✓ | ^| ✓ ^| ✓ ^| ✓ ^| ✓ 
 |===
 
-Line out:: A double phono/RCA connector, normally red and white in colour. This output is a variable
-analogue signal (0-2V RMS) and can connect to your existing hi-fi (pre-amp or amplifier), or can be used
-to drive active speakers which have their own amplifier built in.
-Balanced out:: An XLR connector, normally a three-pin male connector. This is used in a studio set-up, and in some
-high-end hi-fi systems. It can also be used to drive active monitor speakers like those used at clubs or on
-stage directed towards the DJ or performers. 
-Stereo speakers:: Two sets of screw terminals for 2×25W speakers. These are for traditional hi-fi speakers without built-in amplification. These are known as passive speakers.
-Mono speaker:: A screw terminal for a single 1.2W speaker, as found in a transistor radio or similar.
-Headphones:: A 3.5mm jack socket delivering stereo audio for a set of headphones. The headphone amplifiers on the Raspberry Pi DAC boards can drive up to 80/90Ω impedance headphones. 
-Aux in:: A double Phono/RCA connector or 3.5mm socket. Accepts analogue audio in up to 1V RMS. This can be used to record audio from a variable analogue source such as a mobile phone, MP3 player or similar.
-Aux out:: A double Phono/RCA connector or 3.5mm socket. Delivers analogue audio out up to 1V RMS. This can be used to feed audio into an amplifier at a reduced volume compared to Line out.
-Ext mic:: A 3.5mm socket for use with an external electret microphone. The built-in MEMS microphone on the Codec Zero is automatically disabled when the external Mic in connector is used.
+排线:: 双唱机/RCA连接器，通常为红色和白色。此输出是一个变量
+模拟信号（0-2V RMS），可以连接到您现有的高保真（前置放大器或放大器），也可以使用
+驱动内置放大器的有源扬声器。
+平衡:: XLR连接器，通常是三针公连接器。这用于工作室设置，在一些
+高端高保真系统。它也可以用来驱动有源监听扬声器，比如俱乐部或
+舞台指向DJ或表演者。
+立体声扬声器:: 两套用于2×25W扬声器的螺丝端子。这些用于没有内置放大的传统高保真扬声器。这些被称为无源扬声器。
+单声道扬声器:: 用于单个1.2W扬声器的螺丝端子，如晶体管收音机或类似产品中所示。
+耳机:: 为一组耳机提供立体声音频的3.5毫米插孔插座。Raspberry Pi DAC板上的耳机放大器可以驱动高达80/90Ω阻抗的耳机。
+辅助:: 双Phono/RCA连接器或3.5毫米插座。接受高达1V RMS的模拟音频。这可用于录制来自可变模拟源（如手机、MP3播放器或类似设备）的音频。
+辅助输出:: 双Phono/RCA连接器或3.5毫米插座。提供高达1V RMS的模拟音频输出。与线路输出相比，这可用于以较小的音量将音频馈入放大器。
+外部麦克风:: 一个3.5毫米插座，用于外部驻极体麦克风。当使用外部麦克风输入连接器时，编解码器零上的内置MEMS麦克风会自动禁用。

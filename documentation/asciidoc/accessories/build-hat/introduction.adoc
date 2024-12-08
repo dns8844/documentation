@@ -1,31 +1,31 @@
 [[about-build-hat]]
 == About
 
-The https://raspberrypi.com/products/build-hat[Raspberry Pi Build HAT] is an add-on board that connects to the 40-pin GPIO header of your Raspberry Pi, which was designed in collaboration with LEGO® Education to make it easy to control LEGO® Technic™ motors and sensors with Raspberry Pi computers. 
+https://raspberrypi.com/products/build-hat[Raspberry Pi Build HAT] 是一个附加板，可连接到树莓派的40针GPIO接头，该接头是与乐高®教育合作设计的，可通过树莓派计算机轻松控制乐高®Technic™电机和传感器。
 
 image::images/build-hat.jpg[width="80%"]
 
-NOTE: A full list of supported devices can be found in the xref:build-hat.adoc#device-compatibility[Device Compatibility] section.
+NOTE: 支持的设备的完整列表可以在 xref:build-hat.adoc#device-compatibility[Device Compatibility] 部分找到。
 
-It provides four connectors for LEGO® Technic™ motors and sensors from the SPIKE™ Portfolio. The available sensors include a distance sensor, a colour sensor, and a versatile force sensor. The angular motors come in a range of sizes and include integrated encoders that can be queried to find their position.
+它为SPIKE™产品组合的乐高®™电机和传感器提供四个连接器。可用的传感器包括距离传感器、颜色传感器和多功能力传感器。角电机有多种尺寸，包括集成编码器，可以查询以找到它们的位置。
 
-The Build HAT fits all Raspberry Pi computers with a 40-pin GPIO header, including, with the addition of a ribbon cable or other extension device, Raspberry Pi 400. Connected LEGO® Technic™ devices can easily be controlled in Python, alongside standard Raspberry Pi accessories such as a camera module.
+Build HAT适用于所有带有40针GPIO接头的Raspberry Pi计算机，包括添加带状电缆或其他扩展设备的Raspberry Pi 400。连接的乐高®Technic™设备可以很容易地用Python控制，以及标准的Raspberry Pi配件，如相机模块。
 
-The Raspberry Pi Build HAT power supply (PSU), which is https://raspberrypi.com/products/build-hat-power-supply[available separately], is designed to power both the Build HAT and Raspberry Pi computer along with all connected LEGO® Technic™ devices.
+树莓派Build HAT电源（PSU）是 https://raspberrypi.com/products/build-hat-power-supply[available separately]，旨在为构建HAT和树莓派计算机以及所有连接的乐高®技术™设备供电。
 
 image::images/psu.jpg[width="80%"]
 
-The LEGO® Education SPIKE™ Prime Set 45678 and SPIKE™ Prime Expansion Set 45681, available separately from LEGO® Education resellers, include a collection of useful elements supported by the Build HAT.
+乐高®教育SPIKE™Prime Set 45678和SPIKE™Prime Expansion Set 45681可从乐高®教育经销商处单独获得，包括由Build HAT支持的有用元素集合。
 
-NOTE: The HAT works with all 40-pin GPIO Raspberry Pi boards, including Raspberry Pi 4 and Raspberry Pi Zero. With the addition of a ribbon cable or other extension device, it can also be used with Raspberry Pi 400.
+NOTE: HAT适用于所有40针GPIO Raspberry Pi板，包括Raspberry Pi 4和Raspberry Pi Zero。通过添加带状电缆或其他扩展设备，它也可以与Raspberry Pi 400一起使用。
 
-* Controls up to 4 LEGO® Technic™ motors and sensors included in the SPIKE™ Portfolio
-* Easy-to-use https://buildhat.readthedocs.io/[Python library] to control your LEGO® Technic™ devices
-* Fits onto any Raspberry Pi computer with a 40-pin GPIO header
-* Onboard xref:../microcontrollers/rp2040.adoc[RP2040] microcontroller manages low-level control of LEGO® Technic™ devices
-* External 8V PSU https://raspberrypi.com/products/build-hat-power-supply[available separately] to power both Build HAT and Raspberry Pi
+* 最多可控制 4 个 LEGO® Technic™ 电机和 SPIKE™ 产品组合中包含的传感器
+* 易于使用 https://buildhat.readthedocs.io/[Python 库]来控制您的乐高® Technic™ 设备
+* 适用于任何带有 40 针 GPIO 接头的 Raspberry Pi 计算机
+* 板载 xref:../microcontrollers/silicon.adoc[RP2040] 微控制器管理乐高® Technic™ 设备的底层控制
+* 外部 8V PSU https://raspberrypi.com/products/build-hat-power-supply[可单独购买]，为 Build HAT 和 Raspberry Pi 供电
 
 [NOTE]
 ====
-The Build HAT cannot power the Raspberry Pi 400, since it does not support power supply over the GPIO headers.
+Build HAT无法为Raspberry Pi 400供电，因为它不支持通过GPIO标头供电。
 ====

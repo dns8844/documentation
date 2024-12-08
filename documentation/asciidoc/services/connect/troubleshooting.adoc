@@ -2,84 +2,184 @@
 
 === Known issues
 
-* Screen sharing only supports sharing a single, primary display of your Raspberry Pi. When a Raspberry Pi is connected to multiple HDMI screens, Connect sometimes shares the contents of the secondary screen. You can work around this by right-clicking the desktop and changing the location of the taskbar in **Desktop Preferences...**.
+* 屏幕共享仅支持共享 Raspberry Pi 的单个主显示屏。当 Raspberry Pi 连接到多个 HDMI 屏幕时，Connect 有时会共享副屏幕的内容。你可以右键单击桌面，在 **Desktop Preferences...** 中更改任务栏的位置来解决这个问题。
 
-* Connect does not support on-screen keyboards. For full functionality, use a physical keyboard.
+* Connect 不支持屏幕键盘。要实现全部功能，请使用实体键盘。
 
-* Connect requires a browser that implements https://caniuse.com/?search=es2020[ECMAScript 2020] (ES11) as it makes use of https://caniuse.com/?feats=mdn-javascript_operators_optional_chaining,mdn-javascript_operators_nullish_coalescing,mdn-javascript_builtins_globalthis,es6-module-dynamic-import,bigint,mdn-javascript_builtins_promise_allsettled,mdn-javascript_builtins_string_matchall,mdn-javascript_statements_export_namespace,mdn-javascript_operators_import_meta[features] unavailable in older browsers.
+* Connect 需要使用实现 https://caniuse.com/?search=es2020[ECMAScript2020]（ES11）的浏览器，因为它使用了旧版浏览器无法使用的 https://caniuse.com/?feats=mdn-javascript_operators_optional_chaining,mdn-javascript_operators_nullish_coalescing,mdn-javascript_builtins_globalthis,es6-module-dynamic-import,bigint,mdn-javascript_builtins_promise_allsettled,mdn-javascript_builtins_string_matchall,mdn-javascript_statements_export_namespace,mdn-javascript_operators_import_meta[功能]。
 
-* Browsers intercept certain keys and key combinations. As a result, you can't type these keys into your Connect window. Screen sharing includes a toolbar to simulate some of the most popular intercepted keys.
+* 浏览器会拦截某些键和组合键。因此，你无法在连接窗口中输入这些按键。屏幕共享包括一个工具栏，可以模拟一些最常用的快捷键。
+
+* 要从版本 1 升级到版本 2，必须先升级当前安装的软件包，然后再在 `rpi-connect` 和 `rpi-connect-lite` 之间切换。这将确保 Connect 服务正确迁移到版本 2 格式。如果当前已安装 `rpi-connect` ，请运行以下命令：
++
+[source,console]
+----
+$ sudo apt install --only-upgrade rpi-connect
+----
++
+或者，如果您当前安装了 `rpi-connect-lite`，请运行以下命令：
++
+[source,console]
+----
+$ sudo apt install --only-upgrade rpi-connect-lite
+----
++
+您应该会在升级期间看到类似于以下内容的输出，表明Connect的服务已迁移到版本2格式：
++
+[source,console]
+----
+Replacing globally-enabled rpi-connect services with user-enabled ones...
+----
+
+=== Common issues
+
+==== Screen sharing not available
+
+如果Connect声明屏幕共享不可用，则无法连接到专用的Connect WayVNC服务。
+
+要了解有关问题原因的更多信息，请运行以下命令检查Connect WayVNC服务的状态：
+
+[source,console]
+----
+$ systemctl --user status rpi-connect-wayvnc
+$ journalctl --user --follow --unit rpi-connect-wayvnc
+----
+
+如果服务启动失败或不存在，请确保您的环境符合以下条件：
+
+. 您使用 `rpi-connect` 版本1.1.0或更高版本。
+. 您没有使用 `rpi-connect-lite`，它缺乏屏幕共享支持。
+. 您使用Wayland合成器，如wayfire或labwc，而不是X。您可以通过 `` raspi-config`` 的高级选项控制此设置。
+. 您使用WayVNC支持的桌面环境，例如Raspberry Pi Desktop。例如，使用KDE将您的Wayland合成器切换到不支持的kwin。
+. 您有一个活动的图形桌面会话以与您登录的用户相同的用户身份运行。对于大多数人来说，这意味着通过 `` raspi-config `` 的系统选项启用“桌面自动登录”。
+
+==== Can't connect after restarting or ending SSH session
+
+Connect作为用户级服务运行，因此只有当登录到服务的用户有活动会话时才可用。如果您希望远程shell访问而不同时运行另一个登录会话，请为您的用户提供 xref:connect.adoc#enable-remote-shell-at-all-times[enable user-lingering]，这将使Connect始终运行。
+
+对于屏幕共享，Connect只能共享现有的图形桌面会话：它不会创建全新的会话。必须已经有一个桌面会话正在进行中。要在启动时自动启动此类会话，请通过 `` raspi-config `` 的系统选项启用桌面自动登录。
+
+==== Networking and firewall issues
+
+Connect通常在设备之间进行通信，而无需更改网络或防火墙。但是，特别严格的网络有时会阻止Connect通信。为了帮助调试此类网络的问题，`rpi-connect` 和 `rpi-connect-lite` 包含 `rpi-connect doctor` 命令。`rpi-connect doctor` 运行一系列测试来检查Connect通信在您的网络上是否正常运行。
+
+
+要在您的设备上运行这些测试，请运行以下命令：
+
+[source,console]
+----
+$ rpi-connect doctor
+----
+
+如果Connect可以在您的网络上正常通信，您应该会看到类似于以下内容的输出：
+
+----
+✓ Communication with Raspberry Pi Connect API
+✓ Authentication with Raspberry Pi Connect API
+✓ Peer-to-peer connection candidate via STUN
+✓ Peer-to-peer connection candidate via TURN
+----
+
+如果Connect无法在您的网络上正确通信，您将在失败的测试用例旁边看到“x”而不是检查。请您的网络管理员在您的网络上启用以下连接：
+
+* 通过 “api.connect.raspberrypi.com`”的 443 端口向 Raspberry Pi Connect API 提出未经验证的 HTTPS 请求 
+* 通过 “api.connect.raspberrypi.com ”的 443 端口向 Raspberry Pi Connect API 发出的已验证请求
+* 通过以下所有 UDP 端口 3478 向 Raspberry Pi Connect STUN 或 TURN 服务器发出请求：
+** `stun.raspberrypi.com`.
+** `turn1.raspberrypi.com`.
+** turn2.raspberrypi.com
+** turn3.raspberrypi.com
+* 向下列所有 TCP 端口 3478 或 443 上的 Raspberry Pi Connect TURN 服务器发出请求：
+** `turn1.raspberrypi.com` `turn2.raspberrypi.com
+** `turn2.raspberrypi.com`.
+** turn3.raspberrypi.com
+* 通过 UDP 端口 3478、443 或 49152 -> 65535 向树莓派连接 TURN 服务器发出以下所有请求：
+** `turn1.raspberrypi.com`.
+** turn2.raspberrypi.com
+** turn3.raspberrypi.com
 
 === View Connect status
 
-To view the current status of the Connect service, run the following command:
+要查看Connect服务的当前状态，请运行以下命令：
 
 [source,console]
 ----
 $ rpi-connect status
 ----
 
-The output of this command indicates whether or not you are currently signed in to Connect, as well as the remote services enabled on your Raspberry Pi.
+您应该会看到类似于以下内容的输出：
+
+----
+Signed in: yes
+Screen sharing: allowed (0 sessions active)
+Remote shell: allowed (0 sessions active)
+----
+
+该命令的输出会显示您当前是否已登录 Connect，以及 Raspberry Pi 上已启用的远程服务。
+
+如果您看到包括“Raspberry Pi Connect未运行，请运行rpi-connect on”在内的输出，请运行 `rpi-connect on` 以启动Connect。
 
 === Enable enhanced logging
 
-You can enable debug logging for both `rpi-connect` and its dedicated WayVNC server for a detailed account of local operations on your Raspberry Pi.
+您可以为 `rpi-connect` 及其专用WayVNC服务器启用调试日志记录，以详细了解Raspberry Pi上的本地操作。
 
 ==== Enable enhanced logging in `rpi-connect`
 
-Open the `rpi-connect` configuration file for editing with the following command:
+使用以下命令重写 `rpi-connect` 服务定义：
 
 [source,console]
 ----
 $ systemctl --user edit rpi-connect
 ----
 
-Enter the following lines of configuration between the comments:
+在注释之间输入以下配置行：
 
 [source,bash]
 ----
+[Service]
 ExecStart=
 ExecStart=/usr/bin/rpi-connectd -socket %t/rpi-connect-wayvnc.sock -v
 ----
 
-NOTE: You need **both** lines that begin with `ExecStart=`.
+NOTE: 您需要两行以 `ExecStart=` 开头的配置行。
 
-Finally, restart the service with the following command:
+最后，使用以下命令重新启动Connect：
 
 [source,console]
 ----
-$ systemctl --user restart rpi-connect
+$ rpi-connect restart
 ----
 
 ==== Enable enhanced logging in the dedicated `wayvnc` server
 
-Open the configuration file for the dedicated WayVNC server associated with Connect:
+使用以下命令覆盖 `rpi-connect-wayvnc` 服务定义：
 
 [source,console]
 ----
 $ systemctl --user edit rpi-connect-wayvnc
 ----
 
-Enter the following lines of configuration between the comments:
+在注释之间输入以下配置行（包括 `-Ldebug` 标志）：
 
 [source,bash]
 ----
+[Service]
 ExecStart=
 ExecStart=/usr/bin/rpi-connect-env /usr/bin/wayvnc --config /etc/rpi-connect/wayvnc.config --render-cursor --unix-socket --socket=%t/rpi-connect-wayvnc-ctl.sock -Ldebug %t/rpi-connect-wayvnc.sock
 ----
 
-NOTE: You need **both** lines that begin with `ExecStart=`.
+NOTE: 您需要两行以 `ExecStart=` 开头的配置行。
 
-Finally, restart the service with the following command:
+最后，使用以下命令重新启动Connect：
 
 [source,console]
 ----
-$ systemctl --user restart rpi-connect-wayvnc
+$ rpi-connect restart
 ----
 
 === View Connect logs
 
-To view logs for the Connect service and its dedicated WayVNC server, run the following command:
+要查看Connect服务及其专用WayVNC服务器的日志，请运行以下命令：
 
 [source,console]
 ----

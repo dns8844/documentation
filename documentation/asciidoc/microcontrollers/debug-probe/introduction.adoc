@@ -2,40 +2,40 @@
 
 image::images/debug-probe.jpg[width="100%"]
 
-The Raspberry Pi Debug Probe is a USB device that provides both a UART serial port and a standard Arm Serial Wire Debug (SWD) interface. The probe is designed for easy, solderless, plug-and-play debugging. It has the following features:
+Raspberry Pi Debug Probe是一款USB设备，提供通用异步收发设备串行端口和标准Arm Serial Wire Debug（SWD）接口。该Probe专为简单、无焊料、即插即用的调试而设计。它具有以下特点：
 
-* USB to ARM https://developer.arm.com/documentation/ihi0031/a/The-Serial-Wire-Debug-Port\--SW-DP-/Introduction-to-the-ARM-Serial-Wire-Debug\--SWD\--protocol[Serial Wire Debug] (SWD) port
-* USB to UART bridge
-* Compatible with the https://developer.arm.com/documentation/101451/0100/About-CMSIS-DAP[CMSIS-DAP] standard
-* Works with https://openocd.org/[OpenOCD] and other tools supporting CMSIS-DAP
-* Open source, easily upgradeable firmware
+* USB 至 ARM https://developer.arm.com/documentation/ihi0031/a/The-Serial-Wire-Debug-Port\--SW-DP-/Introduction-to-the-ARM-Serial-Wire-Debug\--SWD\--protocol[Serial Wire Debug] (SWD) port
+* USB 至 UART 桥接器
+* 兼容 https://developer.arm.com/documentation/101451/0100/About-CMSIS-DAP[CMSIS-DAP]标准
+* 可与 https://openocd.org/[OpenOCD]和其他支持 CMSIS-DAP 的工具配合使用
+* 开源、易于升级的固件
 
-NOTE: For more information on the Raspberry Pi three-pin debug connector see the https://rptl.io/debug-spec[specification].
+NOTE: 有关Raspberry Pi三针debug连接器的更多信息，请参阅 https://rptl.io/debug-spec[规格]。
 
-This makes it easy to use a Raspberry Pi Pico on platforms such as Windows, macOS, and Linux that lack a GPIO header to connect directly to the Pico's serial UART or SWD port.
+这使得在缺少GPIO标头的Windows、macOS和Linux等平台上使用Raspberry PiPico可以轻松地直接连接到Pico的串行通用异步收发设备或SWD端口。
 
 === The Debug Probe
 
-The probe operates at 3.3V nominal I/O voltage.
+probe在3.3V标称I/O电压下工作。
 
 image:images/the-probe.png[width="70%"]
 
-Included with the Debug Probe is a USB power cable and three debug cables:
+Debug Probe随附一根USB电源线和三根调试线：
 
-* three-pin JST-SH connector to 3-pin JST-SH connector cable
-* three-pin JST-SH connector to 0.1-inch header (female)
-* three-pin JST-SH connector to 0.1-inch header (male)
+* 三针 JST-SH 连接器转 3 针 JST-SH 连接器电缆
+* 三针 JST-SH 连接器转 0.1 英寸接头（母头）
+* 三针 JST-SH 连接器转 0.1 英寸接头（公头）
 
-The two 0.1-inch header cables — intended for breadboard (male) or direct connection to a board with header pins (female) — are coloured as below:
+两条0.1英寸的接头电缆-用于面包板（公头）或直接连接到带有接头引脚（母头）的板-颜色如下：
 
-Orange:: TX/SC (Output from Probe)
-Black:: GND
-Yellow:: RX/SD (Input to Probe or I/O)
+橙色:: TX/SC（Probe输出）
+黑色:: GND
+黄色:: RX/SD（输入到Probe或I/O）
 
-While the cable with three-pin JST-SH connectors is intended to be used with the https://rptl.io/debug-spec[standard three-pin connector] which newer Raspberry Pi boards use for the SWD debug port and UART connectors.
+虽然带有三引脚JST-SH连接器的电缆旨在与 https://rptl.io/debug-spec[standard three-pin connector] 一起使用，但较新的Raspberry Pi板用于SWD调试端口和通用异步收发设备连接器。
 
-The Debug Probe has five LEDs, a red LED to indicate power, and four more activity indicator LEDs
+调试Probe有五个LED，一个红色LED指示电源，还有四个活动指示灯LED
 
 image::images/debug-leds.png[width="70%"]
 
-NOTE: OpenOCD switches both DAP LEDs on when the target is connected, and turns them off when it calls `DAP_DISCONNECT`.
+NOTE: OpenOCD在目标连接时打开两个DAP LED，并在调用 `DAP_DISCONNECT` 时关闭它们。

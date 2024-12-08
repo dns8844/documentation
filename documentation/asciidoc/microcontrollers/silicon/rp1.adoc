@@ -1,0 +1,27 @@
+
+== RP1
+
+[[about-rp1]]
+
+.Architecture 
+image::images/rp1.jpg[alt="Architecture diagram of the RP1",width="70%"]
+
+RP1是一个12×12mm、0.65mm间距的BGA南桥芯片，它为Raspberry Pi 5提供了大部分I/O功能。
+
+video::aioB40BGQYU[youtube]
+
+它提供了：
+
+* 4 通道 PCIe 2.0 端点
+* 千兆以太网 MAC
+* 2× USB 3 主机控制器
+** 每个都有 1×USB 3 和 1×USB 2 端口
+** 可用 USB 带宽是 Raspberry Pi 4 的两倍多
+* 2× SDIO 端口/eMMC（Raspberry Pi 5 上未使用）
+* 2× MIPI 收发器（4 通道，支持 DSI 和 CSI-2）
+* 视频 DAC（3 通道，支持 PAL/NTSC 和 VGA）
+** 在 Raspberry Pi 5 上仅使用一个通道（复合通道
+* 低速外设（SPI、UART、I2C、PWM、GPIO、I2S）
+* 三角积分 PWM 音频输出
+
+有关RP1的更多信息，请参阅 https://datasheets.raspberrypi.com/rp1/rp1-peripherals.pdf[RP1 Peripherals] 文档。

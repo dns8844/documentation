@@ -1,39 +1,39 @@
 [[tv-hat]]
 == About
 
-.The Raspberry Pi TV HAT
+.树莓派TV HAT
 image::images/tv-hat.jpg[width="80%"]
 
-The Raspberry Pi TV HAT allows you to receive digital terrestrial TV broadcast systems, using an onboard DVB-T and DVB-T2 tuner, on a Raspberry Pi. With the board you can receive and view TV on a Raspberry Pi, or create a TV server that allows you to stream received TV over a network to other devices. The TV HAT can be used with any 40-pin Raspberry Pi board as a server for other devices on the network. Performance when receiving and viewing TV on the Pi itself can vary, and we recommend using a Raspberry Pi 2 or later for this purpose
+Raspberry Pi TV HAT允许您在Raspberry Pi上使用板载DVB-T和DVB-T2调谐器接收数字地面电视广播系统。使用该板，您可以在Raspberry Pi上接收和观看电视，或者创建一个电视服务器，允许您通过网络将接收到的电视流式传输到其他设备。TV HAT可以与任何40针Raspberry Pi板一起使用，作为网络上其他设备的服务器。在Pi上接收和观看电视时的性能可能会有所不同，我们建议为此使用Raspberry Pi 2或更高版本
 
-Key features:
+主要特点：
 
-* Sony CXD2880 TV tuner
-* Supported TV standards: DVB-T2, DVB-T
-* Reception frequency: VHF III, UHF IV, UHF V
-* Channel bandwidth:
+* 索尼 CXD2880 电视调谐器
+* 支持的电视标准： DVB-T2, DVB-T
+* 接收频率 甚高频三、甚高频四、甚高频五
+* 频道带宽：
 ** DVB-T2: 1.7MHz, 5MHz, 6MHz, 7MHz, 8MHz
-** DVB-T: 5MHz, 6MHz, 7MHz, 8MHz
+** DVB-T：5MHz、6MHz、7MHz、8MHz
 
 == About DVB-T
 
-WARNING: The TV HAT does not support ATSC, the digital TV standard used in North America.
+WARNING: TV HAT不支持ATSC，这是北美使用的数字电视标准。
 
-Digital Video Broadcasting – Terrestrial (DVB-T) is the DVB European-based consortium standard for the broadcast transmission of digital terrestrial television. There are other digital TV standards used elsewhere in the world, e.g. ATSC which is used in North America. However the TV HAT only supports the DVB-T and DVB-T2 standards.
+数码电视广播-地面标准（DVB-T）是以欧洲为基地的数码地面电视广播传输联盟标准。世界其他地方也使用其他数码电视标准，例如北美使用的ATSC。然而，TV HAT只支持DVB-T和DVB-T2标准。
 
-.DTT system implemented or adopted (Source: DVB/EBU/BNE DTT Deployment Database, March 2023)
+.实施或采用的DTT系统（来源：DVB/EBU/BNE DTT部署数据库，2023年3月）
 image::images/dvbt-map.png[width="80%"]
 
 [[tv-hat-installation]]
 == Install
 
-Follow our xref:../computers/getting-started.adoc[getting started] documentation and set up the Raspberry Pi with the newest version of Raspberry Pi OS.
+按照我们的 xref:../computers/getting-started.adoc[入门] 文档，使用最新版本的树莓派操作系统设置树莓派。
 
-Connect the aerial adaptor to the TV HAT and with the adaptor pointing away from the USB ports, press the HAT gently down over the Raspberry Pi's GPIO pins, and place the spacers at two or three of the corners of the HAT, and tighten the screws through the mounting holes to hold them in place. Then connect the TV HAT's aerial adaptor to the cable from your TV aerial.
+将天线适配器连接到TV HAT，使适配器远离USB端口，将HAT轻轻压在Raspberry Pi的GPIO引脚上，将垫片放在HAT的两三个角上，通过安装孔拧紧螺丝以固定它们。然后将TV HAT的天线适配器连接到电视天线上的电缆上。
 
-The software we recommend to decode the streams (known as multiplexes, or muxes for short) and view content is called TVHeadend. The TV HAT can decode one mux at a time, and each mux can contain several channels to choose from. Content can either be viewed on the Raspberry Pi to which the TV-HAT is connected, or sent to another device on the same network.
+我们推荐的用于解码流（简称多路复用）和查看内容的软件称为TVHeadend。TV HAT一次可以解码一个多路复用器，每个多路复用器可以包含多个频道可供选择。内容可以在TV-HAT连接的Raspberry Pi上查看，也可以发送到同一网络上的另一台设备。
 
-Boot your Raspberry Pi and then go ahead open a terminal window, and run the following two commands to install the `tvheadend` software:
+启动Raspberry Pi，然后继续打开终端窗口，并运行以下两个命令来安装 `tvheadend` 软件：
 
 [source,console]
 ----
@@ -41,21 +41,21 @@ $ sudo apt update
 $ sudo apt install tvheadend
 ----
 
-During the `tvheadend` installation, you will be asked to choose an administrator account name and password. You'll need these later, so make sure to pick something you can remember.
+在 `tvheadend` 安装过程中，系统会要求您选择管理员帐户名和密码。稍后您将需要这些，因此请确保选择您能记住的内容。
 
-On another computer on your network, open up a web browser and type the following into the address bar: `http://raspberrypi.local:9981/extjs.html`
+在您网络上的另一台计算机上，打开网络浏览器并在地址栏中输入以下内容：`http://raspberrypi.local:9981/extjs.html`
 
-This should connect to `tvheadend` running on the Raspberry Pi. Once you have connected to `tvheadend` via the browser, you will be prompted to sign in using the account name and password you chose when you installed `tvheadend` on the Raspberry Pi. 
+这应该连接到在Raspberry Pi上运行的 `tvheadend`。通过浏览器连接到 `tvheadend` 后，系统将提示您使用在Raspberry Pi上安装 `tvheadend` 时选择的帐户名和密码登录。
 
-A setup wizard should appear.
+应该会出现一个安装向导。
 
-You will be first ask to set the language you want `tvheadend` to use, and then to set up network, user, and administrator access. If you don't have specific preferences, leave *Allowed network* blank, and enter an asterisk (*) in the *username* and *password* fields. This will let anyone connected to your local network access `tvheadend`.
+系统将首先要求您设置希望 `tvheadend` 使用的语言，然后设置网络、用户和管理员访问权限。如果您没有特定的首选项，请将*允许的网络*留空，并在 *用户名* 和 *密码* 字段中输入星号（*）。这将允许任何连接到您的本地网络的人访问 `tvheadend`。
 
-You should see a window titled *Network settings*. Under *Network 2*, you should see `Tuner: Sony CDX2880 #0 : DVB-T #0`. For *Network type*, choose `DVB-T Network`. The next window is *Assign predefined muxes to networks*; here, you select the TV stream to receive and decode. Under Network 1, for predefined muxes, select your local TV transmitter.
+您应该会看到一个标题为 *网络设置* 的窗口。在 *网络2* 下，您应该会看到 `Tuner: Sony CDX2880 #0 : DVB-T #0`。对于 *网络类型*，选择 `DVB-T Network`。下一个窗口是 *将预定义的多路复用器分配给网络*；在这里，您选择要接收和解码的电视流。在网络1下，对于预定义的多路复用器，选择您的本地电视发射机。
 
-NOTE: Your local transmitter can be found using the https://www.freeview.co.uk/help[Freeview website]. Enter your postcode to see which transmitter should give you a good signal.
+NOTE: 可以使用 https://www.freeview.co.uk/help[Freeview website] 找到您当地的发射机。输入您的邮政编码以查看哪个发射机应该为您提供良好的信号。
 
-When you click *Save & Next*, the software will start scanning for the selected mux, and will show a progress bar. After about two minutes, you should see something like:
+当您单击 *保存和下一步* 时，软件将开始扫描所选的mux，并显示一个进度条。大约两分钟后，您应该会看到如下内容：
 
 [source,console]
 ----
@@ -63,15 +63,15 @@ Found muxes: 8
 Found services: 172
 ----
 
-In the next window, titled *Service mapping*, tick all three boxes: *Map all services*, *Create provider tags*, and *Create network tags*. You should see a list of TV channels you can watch, along with the programmes they're currently showing. 
+在下一个标题为 *服务映射* 的窗口中，勾选所有三个框：*映射所有服务*、*创建提供商标签* 和 *创建网络标签*。您应该会看到您可以观看的电视频道列表，以及它们当前正在播放的节目。
 
-To watch a TV channel in the browser, click the little TV icon to the left of the channel listing, just to the right of the *i* icon. This brings up an in-browser media player. Depending on the decoding facilities  built into your browser and the type of stream being played, you may find that playback can be jerky. In these cases, we recommend using a local media player as the playback application.
+要在浏览器中观看电视频道，请单击频道列表左侧的小电视图标，就在*i*图标的右侧。这会弹出一个浏览器内媒体播放器。根据浏览器内置的解码设施和正在播放的流的类型，您可能会发现播放可能会不稳定。在这些情况下，我们建议使用本地媒体播放器作为播放应用程序。
 
-To watch a TV channel in a local media player, e.g. https://www.videolan.org/vlc[VLC], you'll need to download it as a stream. Click the `i` icon to the left of a channel listing to bring up the information panel for that channel. Here you can see a stream file that you can download.
+要在本地媒体播放器（例如 https://www.videolan.org/vlc[VLC]）中观看电视频道，您需要将其作为流下载。单击频道列表左侧的 `i` 图标以调出该频道的信息面板。在这里您可以看到可以下载的流文件。
 
-NOTE: `tvheadend` is supported by numerous apps, such as TvhClient for iOS, which will play TV from the Raspberry Pi.
+NOTE: `tvheadend` 是由许多应用程序支持，如TvhClientiOS，这将从树莓派播放电视。
 
 == Mechanical Drawing
 
-.The Raspberry Pi TV HAT
+.树莓派TV HAT
 image::images/mechanical.png[]

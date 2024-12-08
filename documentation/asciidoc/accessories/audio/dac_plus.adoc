@@ -1,16 +1,15 @@
 === Raspberry Pi DAC{plus}
 
-Raspberry Pi DAC{plus} is a high-resolution audio output HAT that provides 24-bit 192kHz digital audio output.
+Raspberry Pi DAC{plus}是一款高分辨率音频输出HAT，可提供24位192kHz数字音频输出。
 
 image::images/DAC+_Board_Diagram.jpg[width="80%"]
 
-A Texas Instruments PCM5122 is used in the DAC{plus} to deliver analogue audio to the phono connectors of the device. It also supports a dedicated headphone amplifier and is powered via the Raspberry Pi through the GPIO header.
+DAC{plus}中使用德州仪器PCM5122将模拟音频传送到设备的唱机连接器。它还支持专用耳机放大器，并通过GPIO接头通过Raspberry Pi供电。
 
 ==== Pinouts
 
 [cols="1,12"]
 |===
-| *P1* | Analogue out (0-2V RMS), carries GPIO27, MUTE signal (headphone detect), left and right
-audio and left and right ground.
-| *P6* | Headphone socket signals (pin1: LEFT, 2:GROUND, 3: RIGHT, 4:GROUND, 5:DETECT).
+| *P1* | 模拟输出（0-2V RMS）、GPIO27、MUTE 信号（耳机检测）、左右音频和左右接地。
+| *P6* | 耳机插座信号（第 1 针：左，第 2 针：接地，第 3 针：右，第 4 针：接地，第 5 针：检测）。
 |===

@@ -1,0 +1,32 @@
+== About
+
+.512GB树莓派SSD
+image::images/ssd.png[width="80%"]
+
+SSD质量是决定树莓派整体用户体验的关键因素。
+Raspberry Pi提供经过测试的官方SSD，以确保与Raspberry Pi型号和外围设备的兼容性。
+
+Raspberry Pi SSD有以下尺寸可供选择：
+
+* 256GB
+* 512GB
+
+要将SSD与Raspberry Pi一起使用，您需要与Raspberry Pi 5兼容的M.2适配器，例如 xref:../accessories/m2-hat-plus.adoc[Raspberry Pi M.2 HAT+]。
+
+== Specifications
+
+Raspberry Pi SSD符合PCIe Gen 3。
+
+Raspberry Pi SSD使用NVMe 1.4寄存器接口和命令集。
+
+Raspberry Pi SSD使用M.2 2230外形尺寸。
+
+下表描述了使用4KB随机数据的Raspberry Pi SSD的读写速度：
+
+[cols="1,2,2"]
+|===
+| Size | Read Speed | Write Speed
+
+| 256GB | 40,000 IOPS | 70,000 IOPS
+| 512GB | 50,000 IOPS | 90,000 IOPS
+|===

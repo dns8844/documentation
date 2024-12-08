@@ -1,33 +1,33 @@
 === Raspberry Pi Codec Zero
 
-Raspberry Pi Codec Zero is a Raspberry Pi Zero-sized audio HAT. It delivers bi-directional digital audio signals (I2S) between a Raspberry Pi and the Codec Zero's on-board Dialog Semiconductor DA7212 codec. The Codec Zero supports a range of input and output devices.
+Raspberry Pi Codec Zero是一款Raspberry Pi Zero大小的音频HAT。它在Raspberry Pi和Codec Zero的板载Dialog Semchi DA7212编解码器之间提供双向数字音频信号（I2S）。编解码器Zero支持一系列输入和输出设备。
 
-* High performance 24-bit audio codec
-* Supports common audio sample rates between 8-96kHz
-* Built in micro-electro-mechanical (MEMS) microphone (Mic2)
-* Mono electret microphone (Mic2 left)
-* Automatic MEMS disabling on Mic2 insert detect
-* Supports additional (no fit) mono electret microphone (Mic1 right)
-* Stereo auxiliary input channel (AUX IN) - PHONO/RCA connectors
-* Stereo auxiliary output channel (Headphone/AUX OUT)
-* Flexible analogue and digital mixing paths
-* Digital signal processors (DSP) for  automatic level control (ALC)
-* Five-band EQ 
-* Mono line-out/mini speaker driver: 1.2W @ 5V, THD<10%, R=8Ω
+* 高性能 24 位音频编码器
+* 支持 8-96kHz 之间的常见音频采样率
+* 内置微电机电气（MEMS）麦克风（Mic2）
+* 单声道电容麦克风（Mic2 左）
+* 插入检测时自动禁用 MEMS 麦克风（Mic2）
+* 支持额外的单声道电容麦克风（Mic1 右）
+* 立体声辅助输入通道（AUX IN） - PHONO/RCA 连接器
+* 立体声辅助输出通道（耳机/AUX OUT）
+* 灵活的模拟和数字混音路径
+* 数字信号处理器（DSP）用于自动电平控制（ALC）
+* 五段均衡器
+* 单声道线路输出/迷你扬声器驱动器：1.2W @ 5V，THD<10%，R=8Ω
 
 image::images/Codec_Zero_Board_Diagram.jpg[width="80%"]
 
-The Codec Zero includes an EEPROM which can be used for auto-configuration of the Linux environment if necessary. It has an integrated MEMS microphone, and can be used with stereo microphone input via a 3.5mm socket and a mono speaker (1.2W/8Ω).
+Codec Zero 包括一个 EEPROM，必要时可用于自动配置 Linux 环境。它集成了 MEMS 麦克风，可通过一个 3.5 毫米插座和一个单声道扬声器（1.2W/8Ω）与立体声麦克风输入一起使用。
 
-In addition to the green (GPIO23) and red (GPIO24) LEDs, a tactile programmable button (GPIO27) is also provided.
+除了绿色（GPIO23）和红色（GPIO24）LED外，还提供了触觉可编程按钮（GPIO27）。
 
 ==== Pinouts
 
 [cols="1,12"]
 |===
-| *P1/2* | Support external PHONO/RCA sockets if needed. P1: AUX IN, P2: AUX OUT.
-| *P1* | Pin 1 is square.
+| *P1/2* | 如有需要，支持外部 PHONO/RCA 插口。P1：辅助输入，P2：辅助输出.
+| *P1* | 1 号针脚为正方形。
 |===
 image::images/CODEC_ZERO_ZOOMED_IN_DIAGRAM.jpg[width="50%"]
 
-Codec Zero is an ideal design starting point for small-scale projects such as walkie-talkies, smart doorbells, vintage radio hacks, or smart speakers.
+Codec Zero是小型项目的理想设计起点，例如对讲机、智能门铃、老式无线电黑客或智能扬声器。

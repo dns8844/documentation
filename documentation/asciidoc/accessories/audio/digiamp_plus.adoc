@@ -1,22 +1,22 @@
 === Raspberry Pi DigiAMP{plus}
 
-With Raspberry Pi DigiAMP{plus}, you can connect 2 passive stereo speakers up to 35W with variable output, making it ideal for use in Raspberry Pi-based hi-fi systems.
+借助Raspberry Pi DigiAMP{plus}，您可以连接2个高达35W的无源立体声扬声器，输出可变，非常适合用于基于Raspberry Pi的高保真系统。
 
-DigiAMP{plus} uses the Texas Instruments TAS5756M PowerDAC and must be powered from an external supply. It requires a 12-24V DC power source (the XP Power VEC65US19 power supply is recommended).
+DigiAMP{plus}使用德州仪器TAS5756MPowerDAC，必须由外部电源供电，需要12-24V直流电源（推荐使用XP Power VEC65US19电源）。
 
 image::images/DigiAMP+_Board_Diagram.jpg[width="80%"]
 
-DigiAMP{plus}'s power in barrel connector is 5.5mm × 2.5mm.
+DigiAMP{plus}的圆形电源连接器为5.5mm×2.5mm。
 
-At power-on, the amplifier is muted by default (the mute LED is illuminated). Software is responsible for the mute state and LED control (Raspberry Pi GPIO22).
+开机时，放大器默认静音（静音LED亮起）。软件负责静音状态和LED控制（Raspberry Pi GPIO22）。
 
-DigiAMP{plus} is designed to provide power to the Raspberry Pi and DigiAMP{plus} together in parallel, delivering 5.1V at 2.5amp to the Raspberry Pi through the GPIO header.
+DigiAMP{plus}旨在为Raspberry Pi和DigiAMP{plus}并行供电，通过GPIO接头以2.5amp的速度向Raspberry Pi提供5.1V。
 
-WARNING: Do not apply power to the Raspberry Pi's own power input when using DigiAMP{plus}.
+WARNING: 使用DigiAMP{plus}时，不要对Raspberry Pi自己的电源输入供电。
 
 ==== Pinouts 
 [cols="1,12"]
 |===
-| *P5* | Alternative power input for hard wired installations (polarity must be observed).
-| *P8* | TAS5756m Internal GPIO1/2/3
+| *P5* | 用于硬接线安装的替代电源输入（必须注意极性）。
+| *P8* | TAS5756m 内部 GPIO1/2/3
 |===

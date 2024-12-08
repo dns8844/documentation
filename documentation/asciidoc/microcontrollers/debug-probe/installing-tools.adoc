@@ -1,45 +1,45 @@
 == Install tools
 
-To use the Debug Probe, install the following tools.
+要使用 Debug Probe，请安装以下工具。
 
 === Install OpenOCD
 
-You need to install OpenOCD.
+您需要安装OpenOCD。
 
-To install OpenOCD, run the following command in a terminal:
+要安装OpenOCD，请在终端中运行以下命令：
 
 [source,console]
 ----
 $ sudo apt install openocd
 ----
 
-To run OpenOCD, use the `openocd` command in your terminal.
+要运行OpenOCD，请在终端中使用 `openocd` 命令。
 
 ==== Install OpenOCD on macOS
 
-First, install the https://brew.sh/[Homebrew] package manager:
+首先，安装 https://brew.sh/[Homebrew] 包管理器：
 
 [source,console]
 ----
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ----
 
-To install OpenOCD on macOS, run the following commands:
+要在macOS上安装OpenOCD，请运行以下命令：
 
 [source,console]
 ----
 $ brew install openocd
 ----
 
-To run OpenOCD, use the `openocd` command in your terminal.
+要运行OpenOCD，请在终端中使用 `openocd` 命令。
 
 === Install GDB
 
-We also need to install the GNU debugger (GDB).
+我们还需要安装GNU调试器（GDB）。
 
 ==== Linux
 
-Install `gdb-multiarch`:
+安装 `gdb-multiarch`：
 
 [source,console]
 ----
@@ -48,21 +48,19 @@ $ sudo apt install gdb-multiarch
 
 ==== macOS
 
-Run the following command to install `gdb`:
+运行以下命令安装 `gdb`：
 
 [source,console]
 ----
-$ brew install gdb
+$ brew install arm-none-eabi-gdb
 ----
 
-You can safely ignore the request for "special privileges" messages on installation.
-
-IMPORTANT: GDB does not support `gdb` Arm-based Macs. Instead, either https://gist.github.com/m0sys/711d0ec5e52102c6ba44451caf38bd38[install `gdb` from source] or use `lldb` instead of `gdb`. There is https://inbox.sourceware.org/gdb/3185c3b8-8a91-4beb-a5d5-9db6afb93713@Spark/[no official support] from the developers for running GDB on Arm-based Macs. Support for GDB can be found on the https://inbox.sourceware.org/gdb/[GDB mailing list] on Sourceware.org. `lldb` is installed as part of the Xcode Command Line Tools.
+您可以安全地忽略安装时对“特殊权限”消息的请求。
 
 ==== MS Windows
 
-GDB is available as part of our https://github.com/raspberrypi/pico-setup-windows/releases/latest[Pico setup for Windows installer]. It is also included in the https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads[Arm GNU Toolchain Downloads].
+GDB 可作为 https://github.com/raspberrypi/pico-setup-windows/releases/latest[Pico-setup-for-Windows-installer]的一部分提供。它也包含在 https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads[Arm GNU 工具链]中。
 
-Alternatively information about manual installation can be found in Chapter 9 and Appendix A of our https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting Started with Raspberry Pi Pico] book. 
+关于手动安装的其他信息可以在我们 https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting Started with Raspberry Pi Pico] 书的第9章和附录A中找到。
 
-NOTE: Manual installation of GDB on Windows is not recommended.
+NOTE: 不建议在Windows上手动安装GDB。

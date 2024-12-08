@@ -1,0 +1,14 @@
+== About
+
+.512GB树莓派SSD套件
+image::images/ssd-kit.png[width="80%"]
+
+Raspberry Pi SSD套件配有一个 xref:../accessories/m2-hat-plus.adoc[Raspberry Pi M.2 HAT+] 和一个 xref:../accessories/ssds.adoc[Raspberry Pi SSD]。
+
+Raspberry Pi SSD套件包括一个16毫米堆叠头、垫片和
+用于在Raspberry Pi 5旁边安装Raspberry Pi Active Cooler的螺丝。
+
+== Install
+
+要安装Raspberry Pi SSD套件，请按照 xref:../accessories/m2-hat-plus.adoc#m2-hat-plus-installation[Raspberry Pi M.2 HAT+ 的安装说明
+] 操作。

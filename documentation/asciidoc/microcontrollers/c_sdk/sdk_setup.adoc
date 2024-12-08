@@ -1,6 +1,6 @@
 == SDK Setup
 
-For a full walk-through of how to get going with the C/{cpp} SDK, you should read our 'https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[getting started]' documentation. However, if you are intending to develop for Pico on a xref:../computers/os.adoc[Raspberry Pi], then you can set up the C/{cpp} toolchain quickly by running our https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh[setup script] from the command line.
+要全面了解如何使用 C/{cpp} SDK，请阅读 'https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[入门]' 文档。不过，如果您打算在 xref:../computers/os.adoc[Raspberry Pi] 上为 Pico 进行开发，那么您可以通过命令行运行我们的 https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh[setup script]，快速设置 C/{cpp} 工具链。
 
-NOTE: You should make sure the OS on your Raspberry Pi is xref:../computers/os.adoc#update-software[up to date] before running the setup script.
+NOTE: 在运行安装脚本之前，您应该确保Raspberry Pi上的操作系统是 xref:../computers/os.adoc#update-software[最新的]。
 

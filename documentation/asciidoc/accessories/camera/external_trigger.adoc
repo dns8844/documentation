@@ -1,29 +1,29 @@
 == External Trigger on the GS Camera
 
-The Global Shutter (GS) camera can be triggered externally by pulsing the external trigger (denoted on the board as XTR) connection on the board. Multiple cameras can be connected to the same pulse, allowing for an alternative way to synchronise two cameras.
+全局快门（GS）摄像机可以通过板上的外部触发器（板上表示为XTR）连接进行脉冲外部触发。多个摄像机可以连接到同一个脉冲，从而允许另一种方式同步两个摄像机。
 
-The exposure time is equal to the low pulse-width time plus an additional 14.26us. i.e. a low pulse of 10000us leads to an exposure time of 10014.26us. Framerate is directly controlled by how often you pulse the pin. A PWM frequency of 30Hz will lead to a framerate of 30 frames per second.
+曝光时间等于低脉冲宽度时间加上额外的14.26us。即10000us的低脉冲最终结果为10014.26us的曝光时间。帧率直接由您脉冲引脚的频率控制。30Hz的PWM频率对应每秒30帧的帧率。
 
 image::images/external_trigger.jpg[alt="Image showing pulse format",width="80%"]
 
 === Preparation
 
-WARNING: This modification includes removing an SMD soldered part. You should not attempt this modification unless you feel you are competent to complete it. When soldering to the Camera board, please remove the plastic back cover to avoid damaging it.
+WARNING: 此修改包括移除SMD焊接部分。除非您认为自己有能力完成此修改，否则不应尝试此修改。焊接到相机板时，请移除塑料后盖，以免损坏它。
 
-If your board has transistor Q2 fitted (shown in blue on the image below), then you will need to remove R11 from the board (shown in red). This connects GP1 to XTR and without removing R11, the camera will not operate in external trigger mode.
-The location of the components is displayed below.
+如果您的主板安装了晶体管Q2（下图以蓝色显示），那么您需要从主板上移除R11（以红色显示）。这将GP1连接到XTR，如果不移除R11，相机将无法在外部触发模式下运行。
+组件的位置显示在下面。
 
 image::images/resistor.jpg[alt="Image showing resistor to be removed",width="80%"]
 
-Next, solder a wire to the touchpoints of XTR and GND on the GS Camera board. Note that XTR is a 1.8V input, so you may need a level shifter or potential divider.
+接下来，将电线焊接到GS相机板上XTR和GND的接触点。请注意，XTR是1.8V输入，因此您可能需要电平转换器或电位分压器。
 
-We can use a Raspberry Pi Pico to provide the trigger. Connect any Pico GPIO pin (GP28 is used in this example) to XTR via a 1.5kΩ resistor. Also connect a 1.8kΩ resistor between XTR and GND to reduce the high logic level to 1.8V. A wiring diagram is shown below.
+我们可以使用树莓派Pico来提供触发器。通过1.5kΩ电阻将任何PicoGPIO引脚（本例中使用GP28）连接到XTR。还可以在XTR和GND之间连接1.8kΩ电阻，以将高逻辑电平降低到1.8V。接线图如下所示。
 
 image::images/pico_wiring.jpg[alt="Image showing Raspberry Pi Pico wiring",width="50%"]
 
 ==== Boot up the Raspberry Pi with the camera connected.
 
-Enable external triggering through superuser mode:
+通过超级用户模式启用外部触发：
 
 [source,console]
 ----
@@ -51,19 +51,19 @@ pwm.freq(framerate)
 pwm.duty_u16(int((1 - (shutter - 14) / frame_length) * 65535))
 ----
 
-The low pulse width is equal to the shutter time, and the frequency of the PWM equals the framerate.
+低脉冲宽度等于快门时间，PWM的频率等于帧速率。
 
-NOTE: In this example, Pin 28 connects to the XTR touchpoint on the GS camera board.
+NOTE: 在此示例中，引脚28连接到GS相机板上的XTR接触点。
 
 === Operation
 
-Run the code on the Pico, and set the camera running:
+运行Pico上的代码，并设置相机运行：
 
 [source,console]
 ----
 $ rpicam-hello -t 0 --qt-preview --shutter 3000
 ----
 
-Every time that the Pico pulses the pin, it should generate a frame. To control the framerate, vary the duration between pulses.
+每次Pico脉冲引脚，它将会生成一个帧。如果需要控制帧速率，就改变脉冲之间的持续时间。
 
-NOTE: When running `rpicam-apps`, always specify a fixed shutter duration to ensure the AGC does not adjust the camera's shutter speed. The duration does not matter, since it is actually controlled by the external trigger pulse.
+NOTE: 运行 `rpicam-apps` 时，始终指定固定的快门持续时间，以确保AGC不会调整相机的快门速度。持续时间无关紧要，因为它实际上是由外部触发脉冲控制的。

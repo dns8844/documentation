@@ -1,0 +1,9 @@
+[[ai-camera]]
+== About
+
+树莓派人工智能相机使用索尼IMX500成像传感器为所有相机应用程序提供低延迟、高性能的人工智能功能。与 xref:../computers/camera_software.adoc[Raspberry Pi's camera software stack] 的紧密集成允许用户以最小的努力部署自己的神经网络模型。
+
+image::images/ai-camera.png[The Raspberry Pi AI Camera]
+
+本节演示如何在相机上运行预打包或自定义神经网络模型。此外，本节还包括解释 https://github.com/raspberrypi/rpicam-apps[`rpicam-apps`] and https://github.com/raspberrypi/picamera2[Picamera2] 中IMX500上运行的神经网络生成的推理数据所需的步骤。
+

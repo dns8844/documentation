@@ -1,35 +1,35 @@
 === Use the Build HAT from .NET
 
-The Raspberry Pi Built HAT is referred to "Brick" in LEGO® parlance and you can talk directly to it from .NET using the https://datasheets.raspberrypi.com/build-hat/build-hat-serial-protocol.pdf[Build HAT Serial Protocol].
+Raspberry Pi Built HAT 在乐高®术语中被称为 “Brick”，您可以使用 https://datasheets.raspberrypi.com/build-hat/build-hat-serial-protocol.pdf[Build HAT串行协议]通过.NET与它直接对话。
 
-You can create a `brick` object as below,
+您可以创建一个 `brick` 对象，如下所示，
 
 [source,csharp]
 ----
 Brick brick = new("/dev/serial0");
 ----
 
-but you need to remember to dispose of the `brick` at the end of your code.
+但您需要记住在代码末尾处理 `brick`。
 
 [source,csharp]
 ----
 brick.Dispose();
 ----
 
-WARNING: If you do not call `brick.Dispose()` your program will not terminate.
+WARNING: 如果您不调用 `brick.Dispose()`，您的程序将不会终止。
 
-If you want to avoid calling `brick.Dispose` at the end, then create your brick with the `using` statement:
+如果您想避免在最后调用 `brick.Dispose`，请使用 `using` 语句创建砖块：
 
 [source,csharp]
 ----
 using Brick brick = new("/dev/serial0");
 ----
 
-In this case, when reaching the end of the program, your brick will be automatically disposed.
+在这种情况下，当到达程序结束时，您的砖块将被自动处理。
 
 ==== Display Build HAT information
 
-You can gather the various software versions, the signature, and the input voltage:
+您可以收集各种软件版本、签名和输入电压：
 
 [source,csharp]
 ----
@@ -39,11 +39,11 @@ Console.WriteLine($"{BitConverter.ToString(info.Signature)}");
 Console.WriteLine($"Vin = {brick.InputVoltage.Volts} V");
 ----
 
-NOTE: The input voltage is read only once at boot time and is not read again afterwards.
+NOTE: 输入电压在启动时只读取一次，之后不会再次读取。
 
 ==== Getting sensors and motors details
 
-The functions `GetSensorType`, `GetSensor` will allow you to retrieve any information on connected sensor.
+功能 `GetSensorType`、`GetSensor` 将允许您检索有关连接传感器的任何信息。
 
 [source,csharp]
 ----
@@ -51,7 +51,7 @@ SensorType sensor = brick.GetSensorType((SensorPort)i);
 Console.Write($"Port: {i} {(Brick.IsMotor(sensor) ? "Sensor" : "Motor")} type: {sensor} Connected: ");
 ----
 
-In this example, you can as well use the `IsMotor` static function to check if the connected element is a sensor or a motor.
+在此示例中，您也可以使用 `IsMotor` 静态函数来检查连接的元件是传感器还是电机。
 
 [source,csharp]
 ----
@@ -66,13 +66,13 @@ else
 }
 ----
 
-`ActiveSensor` have a collection of advanced properties and functions allowing to understand every element of the sensor. It is also possible to call the primitive functions from the brick from them. This will allow you to select specific modes and do advance scenarios. While this is possible, motor and sensor classes have been created to make your life easier.
+`ActiveSensor` 有一个高级属性和功能的集合，允许理解传感器的每个元素。也可以从砖块中调用原始函数。这将允许您选择特定模式并进行高级场景。虽然这是可能的，但电机和传感器类已经创建，让您的生活更轻松。
 
 ==== Events
 
-Most sensors implements events on their special properties. You can simply subscribe to `PropertyChanged` and `PropertyUpdated`. The changed one will be fired when the value is changing while the updated one when there is a success update to the property. Depending on the modes used, some properties may be updated in the background all the time while some others occasionally.
+大多数传感器在其特殊属性上实现事件。您可以简单地订阅 `PropertyChanged` 和 `PropertyUpdated`。更改后的值将在值更改时触发，而更新后的值将在属性成功更新时触发。根据使用的模式，一些属性可能一直在后台更新，而另一些属性偶尔会更新。
 
-You may be interested only when a colour is changing or the position of the motor is changing, using it as a tachometer. In this case, the `PropertyChanged` is what you need!
+只有当颜色发生变化或电机位置发生变化时，您才会感兴趣，将其用作转速计。在这种情况下，`PropertyChanged` 就是您需要的！
 
 [source,csharp]
 ----
@@ -104,11 +104,11 @@ void MotorPropertyEvent(object? sender, PropertyChangedEventArgs e)
 
 ==== Wait for initialization
 
-The brick can take a long time before it initializes. A wait for a sensor to be connected has been implemented.
+brick可能需要很长时间才能初始化。已实现等待连接传感器。
 
 [source,csharp]
 ----
 brick.WaitForSensorToConnect(SensorPort.PortB);
 ----
 
-It does as well take a `CancellationToken` if you want to implement advance features like warning the user after some time and retrying.
+如果您想实现高级功能（例如在一段时间后警告用户并重试），也需要 `CancellationToken`。

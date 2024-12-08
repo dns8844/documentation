@@ -1,7 +1,7 @@
 [[install-connect]]
 == Install
 
-To begin installation, open a Terminal window. Run the following command to update your system and packages:
+如果您的Raspberry Pi OS版本中尚未安装Connect，请打开终端窗口。运行以下命令来更新您的系统和软件包：
 
 [source,console]
 ----
@@ -9,46 +9,60 @@ $ sudo apt update
 $ sudo apt full-upgrade
 ----
 
-Run the following command on your Raspberry Pi to install Connect:
+在Raspberry Pi上运行以下命令来安装Connect：
 
 [source,console]
 ----
 $ sudo apt install rpi-connect
 ----
 
-After installation, reboot your Raspberry Pi or xref:connect.adoc#manually-start-connect[manually start the Connect service] to use Connect:
+您还可以从推荐的软件应用程序安装Connect。
+
+安装后，使用 `rpi-connect` 命令行界面为当前用户启动Connect：
 
 [source,console]
 ----
-$ sudo reboot
+$ rpi-connect on
 ----
 
-Connect will automatically start the next time you log in to your Raspberry Pi.
+或者，单击菜单栏中的连接图标打开下拉框并选择 *Turn On Raspberry Pi Connect*：
+
+image::images/turn-on-connect.png[width="80%"]
 
 === Connect Lite
 
-We distribute an alternate *Lite* variant of Connect that only supports remote shell access, with no ability to screen share.
+我们分发了Connect的替代 *Lite* 变体，它仅支持远程shell访问，无法进行屏幕共享。
 
-Run the following command on your Raspberry Pi to install Connect Lite:
+在Raspberry Pi上运行以下命令以安装Connect Lite：
 
 [source,console]
 ----
 $ sudo apt install rpi-connect-lite
 ----
 
-Reboot your Raspberry Pi or xref:connect.adoc#manually-start-connect[manually start the Connect service] to use Connect.
-
-Consider xref:connect.adoc#enable-remote-shell-at-all-times[enabling user lingering] to make your device accessible even when your user account isn't logged in.
-
-TIP: Lite commands use the same `rpi-connect` name as the full version of Connect. `rpi-connect-lite` is just a package name.
-
-=== Manually start Connect
-
-NOTE: By default, Connect automatically starts at login. You don't need to manually start Connect after it starts for the first time unless you remove it from your login items.
-
-To start the service manually from the command line, run the following command:
+安装后，使用 `rpi-connect` 命令行界面为当前用户启动Connect：
 
 [source,console]
 ----
-$ systemctl --user start rpi-connect
+$ rpi-connect on
+----
+
+xref:connect.adoc#enable-remote-shell-at-all-times[Enable user-lingering] 使您的设备即使在您的用户帐户未登录时也可以访问。
+
+TIP: Lite命令使用与Connect完整版相同的 `rpi-connect` 名称。`rpi-connect-lite` 只是一个包名称。
+
+=== Manually start and stop Connect
+
+要从命令行启动Connect，请运行以下命令：
+
+[source,console]
+----
+$ rpi-connect on
+----
+
+要停止Connect，请运行以下命令：
+
+[source,console]
+----
+$ rpi-connect off
 ----

@@ -1,0 +1,5 @@
+include::ai-hat-plus/about.adoc[]
+
+== Product brief
+
+有关AI HAT+的更多信息，包括机械规格和操作环境限制，请参阅 https://datasheets.raspberrypi.com/ai-hat-plus/raspberry-pi-ai-hat-plus-product-brief.pdf[产品简介]。

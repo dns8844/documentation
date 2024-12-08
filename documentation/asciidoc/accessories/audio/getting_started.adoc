@@ -2,36 +2,36 @@
 
 === Create a toy chatter box
 
-As an example of what Raspberry Pi Audio Boards can do, let's walk through the creation of a toy chatter box. Its on-board microphone, programmable button and speaker driver make the Codec Zero an ideal choice for this application. 
+作为Raspberry Pi Audio Boards可以做什么的示例，让我们来看看玩具聊天盒的创建。它的板载麦克风、可编程按钮和扬声器驱动程序使Codec Zero成为此应用程序的理想选择。
 
 image::images/Chatter_Box.jpg[width="80%"]
 
-A random pre-recorded five-second audio clip will be played when the button is pressed. After holding for ten seconds, a notifying burp sound will be emitted, after which a new five-second clip will be recorded. Holding the button down for more than 20 seconds will play a second burp sound, and then erase all previous recordings.
+按下按钮时会播放一段随机预先录制的五秒音频剪辑。按住十秒后，会发出通知性的打嗝声，之后会录制一段新的五秒剪辑。按住按钮超过20秒会播放第二次打嗝声，然后擦除所有以前的录音。
 
 === Hardware and wiring
 
-For this project, any small passive speaker should be sufficient. We're using one available https://shop.pimoroni.com/products/3-speaker-4-3w?variant=380549926[here], which handles 5W of power at 4Ω. We have also used an illuminated momentary push button, and a laser-cut box to house all the components; but both are entirely optional. This example will work just using the Codec Zero's on-board button, which is pre-wired to GPIO 27. (Alternatively, you can use any momentary push button, such as those available https://shop.pimoroni.com/products/mini-arcade-buttons?variant=40377171274[here].)
+对于这个项目，任何小型无源扬声器都应该足够了。我们正在使用一个可用的 https://shop.pimoroni.com/products/3-speaker-4-3w?variant=380549926[扬声器], 它能在 4Ω 下处理 5W 功率。我们还使用了一个发光的瞬时按钮和一个激光切割盒来放置所有元件，但这两者都是完全可选的。本示例只需使用 Codec Zero 的板载按钮即可，该按钮已预先连接到 GPIO 27。(或者，您也可以使用任何瞬时按钮，如现有的 https://shop.pimoroni.com/products/mini-arcade-buttons?variant=40377171274[按钮]。)
 
 image::images/Chatterbox_Labels.png[width="80%"]
 
-Use a small flat-head screwdriver to attach your speaker to the screw terminals. For the additional push button, solder the button wires directly to the Codec Zero pads as indicated, using GPIO pin 27 and Ground for the switch, and +3.3V and Ground for the LED, if necessary. 
+使用小平头螺丝刀将扬声器连接到螺丝端子。对于额外的按钮，请将按钮线直接焊接到编解码器零焊盘，如有必要，使用GPIO引脚27和接地作为开关，+3.3V和接地作为LED。
 
 === Set up your Raspberry Pi
 
-In this example, we are using Raspberry Pi OS Lite. Refer to our guide on xref:../computers/getting-started.adoc#installing-the-operating-system[installing Raspberry Pi OS] for more details.
+在此示例中，我们使用的是Raspberry Pi OS Lite。有关更多详细信息，请参阅我们关于 xref:../computers/getting-started.adoc#installing-the-operating-system[安装 Raspberry Pi 操作系统] 的指南。
 
-Make sure that you update your operating system before proceeding and follow the instructions provided for Codec Zero configuration, including the commands to enable the on-board microphone and speaker output.
+确保在继续之前更新操作系统，并按照编解码器零配置提供的说明进行操作，包括启用板载麦克风和扬声器输出的命令。
 
 === Program your Raspberry Pi
 
-Open a shell — for instance by connecting via SSH — on your Raspberry Pi and run the following to create our Python script:
+在Raspberry Pi上打开一个shell（例如通过SSH连接）并运行以下命令来创建我们的Python脚本：
 
 [source,console]
 ----
 $ sudo nano chatter_box.py
 ----
 
-Add the following to the file, replacing `<username>` with your username:
+将以下内容添加到文件中，将 `<username>` 替换为您的用户名：
 
 [source,python]
 ----
@@ -104,36 +104,37 @@ pause()
 
 ----
 
-Press `Ctrl+X`, then the `Y` key, then *Enter* to save. To make the script executable, type the following:
+按 `Ctrl+X`，然后按 `Y` 键，然后*Enter*保存。要使脚本可执行，请键入以下内容：
 
 [source,console]
 ----
 $ sudo chmod +x chatter_box.py
 ----
 
-Next, we need to create a crontab daemon that will automatically start the script each time the device is powered on. Run the following command to open your crontab for editing:
+接下来，我们需要创建一个crontab守护进程，它将在每次设备通电时自动启动脚本。运行以下命令打开您的crontab进行编辑：
 
 [source,console]
 ----
 $ crontab -e
 ----
 
-You will be asked to select an editor; we recommend you use `nano`. Select it by entering the corresponding number, and press Enter to continue. The following line should be added to the bottom of the file, replacing `<username>` with your username:
+您将被要求选择一个编辑器；我们建议您使用 `nano`。通过输入相应的数字来选择它，然后按Enter继续。应在文件底部添加以下行，将 `<username>` 替换为您的用户名：
 
 ----
 @reboot python /home/<username>/chatter_box.py
 ----
 
-Press *Ctrl X*, then *Y*, then *Enter* to save, then reboot your device with `sudo reboot`.
+按 *Ctrl X*，然后按 *Y*，然后按*Enter*保存，然后使用 `sudo reboot` 重新启动设备。
 
 === Use the toy chatter box
 
-The final step is to ensure that everything is operating as expected. Press the button and release it when you hear the burp. The recording will now begin for a period of five seconds. Once you have released the button, press it briefly again to hear the recording. Repeat this process as many times as you wish, and your sounds will be played at random. You can delete all recordings by pressing and holding the button, keeping the button pressed during the first burp and recording process, and releasing it after at least 20 seconds, at which point you will hear another burp sound confirming that the recordings have been deleted.
+最后一步是确保一切都按预期运行。按下按钮并在听到打嗝时释放它。录音现在将开始一段五秒钟的时间。一旦您释放了按钮，请再次短暂按下它以听到录音。根据需要重复此过程多次，您的声音将随机播放。您可以通过按住按钮删除所有录音，在第一次打嗝和录音过程中保持按下按钮，并在至少20秒后释放它，此时您将听到另一个打嗝声，确认录音已被删除。
 
 video::BjXERzu8nS0[youtube]
 
 === Next steps
 
-Upgrades! It is always fun to upgrade a project, so why not add some additional features, such as an LED that will illuminate when recording? This project has all the parts required to make your own version of a https://aiyprojects.withgoogle.com/[Google intelligent speaker system], or you may want to consider building a second device that can be used to create a pair of walkie-talkies that are capable of transferring audio files over a network via SSH. 
+升级！升级一个项目总是很有趣的，所以为什么不添加一些额外的功能，比如录音时会发光的发光二极管呢？这个项目拥有制作你自己的 https://aiyprojects.withgoogle.com/[Google intelligent speaker system] 版本所需的所有部件，或者你可能想考虑构建第二个设备，用于创建一对对讲机，能够通过SSH通过网络传输音频文件。
 
 
+ 

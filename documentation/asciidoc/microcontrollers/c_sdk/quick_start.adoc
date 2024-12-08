@@ -1,26 +1,26 @@
 == Quick-start your own project
 
-NOTE: The following instructions are terse, and Linux-based only. For detailed steps, instructions for other platforms, and just in general, we recommend you see the https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico] and https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico C/{cpp} SDK] books.
+以下说明简洁，仅基于Linux。有关详细步骤、其他平台的说明以及一般说明，我们建议您查看 https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico] 和 https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico C/{cpp} SDK] 书籍。
 
-Install CMake (at least version 3.13), and GCC cross compiler
+安装CMake（至少3.13版本）和GCC交叉编译器
 
 [source,console]
 ----
 $ sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
 ----
 
-Set up your project to point to use the Raspberry Pi Pico SDK by cloning the SDK locally:
+通过在本地克隆SDK，将您的项目设置为指向使用树莓派PicoSDK：
 
 [source,console]
 ----
 $ git clone https://github.com/raspberrypi/pico-sdk.git
 ----
 
-Copy `external/pico_sdk_import.cmake` from the SDK into your project directory
+将 `external/pico_sdk_import.cmake` 从SDK复制到您的项目目录中
 
-Set `PICO_SDK_PATH` to the SDK location in your environment, or pass it (`-DPICO_SDK_PATH=`) to `cmake` later.
+将 `PICO_SDK_PATH` 设置为您环境中的SDK位置，或稍后将其（`-DPICO_SDK_PATH=`）传递给 `cmake`。
 
-Setup a `CMakeLists.txt` like:
+设置一个 `CMakeLists.txt`，如下所示：
 
 ----
 cmake_minimum_required(VERSION 3.13)
@@ -37,9 +37,9 @@ pico_sdk_init()
 # rest of your project
 ----
 
-Go ahead and write your code, see https://github.com/raspberrypi/pico-examples[pico-examples] or the https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico C/{cpp} SDK] book for more information on how to go about that.
+继续编写您的代码，请参阅 https://github.com/raspberrypi/pico-examples[pico-examples] 或者 https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico C/{cpp} SDK] 书籍以获取有关如何做到这一点的更多信息。
 
-About the simplest you can do is a single source file (e.g. `hello_world.c`)
+您可以做的最简单的事情是单个源文件（例如 `hello_world.c`）
 
 [source,c]
 ----
@@ -53,7 +53,7 @@ int main() {
 }
 ----
 
-and add the following to your CMakeLists.txt:
+并将以下内容添加到您的CMakeLists.txt:
 
 ----
 add_executable(hello_world
@@ -67,9 +67,9 @@ target_link_libraries(hello_world pico_stdlib)
 pico_add_extra_outputs(hello_world)
 ----
 
-NOTE: This example uses the default UART for stdout; if you want to use the default USB see the hello-usb example.
+NOTE: 本示例使用标准输出的默认通用异步收发设备；如果要使用默认USB，请参阅hello-usb示例。
 
-Setup a CMake build directory. For example, if not using an IDE:
+设置CMake构建目录。例如，如果不使用IDE：
 
 [source,console]
 ----
@@ -78,17 +78,17 @@ $ cd build
 $ cmake ..
 ----
 
-When building for a board other than the Raspberry Pi Pico, you should pass `-DPICO_BOARD=board_name` to the cmake command above, e.g. cmake `-DPICO_BOARD=pico_w ..` to configure the SDK and build options accordingly for that particular board.
+当为Raspberry PiPico以外的板构建时，您应该将 `-DPICO_BOARD=board_name` 传递给上面的cmake命令，例如 cmake `-DPICO_BOARD=pico_w ..` 来配置SDK并相应地为该特定板构建选项。
 
-Doing so sets up various compiler defines (e.g. default pin numbers for UART and other hardware) and in certain cases also enables the use of additional libraries (e.g. wireless support when building for `PICO_BOARD=pico_w`) which cannot be built without a board which provides the requisite functionality.
+这样做可以设置各种编译器定义（例如通用异步收发设备和其他硬件的默认引脚号），并且在某些情况下还可以使用额外的库（例如为 `PICO_BOARD=pico_w` 构建时的无线支持），如果没有提供必要功能的板，这些库就无法构建。
 
-For a list of boards defined in the SDK itself, look in https://github.com/raspberrypi/pico-sdk/blob/master/src/boards/include/boards[this directory] which has a header for each named board.
+有关SDK本身中定义的板列表，请查看 https://github.com/raspberrypi/pico-sdk/blob/master/src/boards/include/boards[this directory]，其中每个命名板都有一个标头。
 
-Make your target from the build directory you created.
+从您创建的构建目录创建您的目标。
 
 [source,console]
 ----
 $ make hello_world
 ----
 
-You now have `hello_world.elf` to load via a debugger, or `hello_world.uf2` that can be installed and run on your Raspberry Pi Pico via drag and drop.
+您现在可以通过调试器加载 `hello_world.elf`，或者可以通过拖放在Raspberry PiPico上安装和运行 `hello_world.uf2`。

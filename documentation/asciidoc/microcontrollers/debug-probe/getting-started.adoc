@@ -2,19 +2,19 @@
 
 image:images/labelled-wiring.jpg[width="100%"]
 
-Depending on your setup, there are several ways to wire the Debug Probe to a xref:raspberry-pi-pico.adoc[Raspberry Pi Pico]. Below, we connect the Debug Probe to a Raspberry Pi Pico H which has the newer three-pin JST-SH connector for SWD.
+根据您的设置，有几种方法可以将 Debug Probe 连接到 xref:pico-series.adoc[Pico系列设备]。下面，我们将 Debug Probe 连接到树莓派PicoH，它具有用于SWD的较新的三引脚JST-SH连接器。
 
 video::4RCZBZsfsek[youtube]
 
-Connect the following:
+按照以下方式连接：
 
-* The Debug Probe "D" port to Pico H SWD JST-SH connector
-* The Debug Probe "U" port, with the three-pin JST-SH connector to 0.1-inch header (male):
-** Debug Probe `RX` connected to Pico H `TX` pin
-** Debug Probe `TX` connected to Pico H `RX` pin
-** Debug Probe `GND` connected to Pico H `GND` pin
+* Debug Probe "D" 端口与 Pico H SWD JST-SH 连接器连接
+* Debug Probe "U" 端口，三针 JST-SH 连接器连接至 0.1 英寸接头（公头）：
+** Debug Probe `RX` 连接到 Pico H `TX` 引脚
+** Debug Probe `TX` 连接到 Pico H `RX` 引脚
+** Debug Probe `GND` 连接到 Pico H `GND` 引脚
 
-NOTE: If you have a non-H Pico or Pico W (without a JST-SH connector) you can still connect it to a Debug Probe. Solder a male connector to the `SWCLK`, `GND`, and `SWDIO` header pins on the board. Using the alternate 3-pin JST-SH connector to 0.1-inch header (female) cable included with the Debug Probe, connect to the Debug Probe "D" port. Connect `SWCLK`, `GND`, and `SWDIO` on the Pico or Pico W to the `SC`, `GND`, and `SD` pins on the Debug Probe, respectively.
+NOTE: 如果您有非H Pico或Pico W（没有JST-SH连接器），您仍然可以将其连接到 Debug Probe 。将公连接器焊接到板上的 `SWCLK`、`GND` 和 `SWDIO` 接头引脚上。使用替代的3针JST-SH连接器连接到 Debug Probe 随附的0.1英寸接头（母）电缆，连接到 Debug Probe "D"端口。分别将Pico或PicoW上的 `SWCLK`、`GND` 和 `SWDIO` 连接到 Debug Probe 上的 `SC`、`GND` 和 `SD` 引脚。
 
 image:images/wiring.png[width="70%"]
 

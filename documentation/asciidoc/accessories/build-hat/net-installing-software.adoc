@@ -2,30 +2,30 @@
 
 === Install the .NET Framework
 
-The .NET framework from Microsoft is not available via `apt` on Raspberry Pi. However, you can follow the https://docs.microsoft.com/en-us/dotnet/iot/deployment[official instructions] from Microsoft to install the .NET framework. Alternatively, there is a simplified https://www.petecodes.co.uk/install-and-use-microsoft-dot-net-5-with-the-raspberry-pi/[third party route] to get the .NET toolchain on to your Raspberry Pi. 
+在 Raspberry Pi 上无法通过 `apt` 安装微软的 .NET 框架。不过，您可以按照微软提供的 https://docs.microsoft.com/en-us/dotnet/iot/deployment[官方说明]安装 .NET 框架。另外，还有一个简化的 https://www.petecodes.co.uk/install-and-use-microsoft-dot-net-5-with-the-raspberry-pi/[第三方途径]，可以将 .NET 工具链安装到 Raspberry Pi 上。
 
-WARNING: The installation script is run as `root`. You should read it first and make sure you understand what it is doing. If you are at all unsure you should follow the https://docs.microsoft.com/en-us/dotnet/iot/deployment[official instructions] manually.
+WARNING: 安装脚本以 `root` 运行。您应该先阅读它并确保您了解它在做什么。如果您完全不确定，您应该手动遵循 https://docs.microsoft.com/en-us/dotnet/iot/deployment[官方说明]。
 
 [source,console]
 ----
 $ wget -O - https://raw.githubusercontent.com/pjgpetecodes/dotnet5pi/master/install.sh | sudo bash
 ----
 
-After installing the .NET framework you can create your project:
+安装.NET框架后您可以创建您的项目：
 
 [source,console]
 ----
 $ dotnet new console --name buildhat
 ----
 
-This creates a default program in the `buildhat` subdirectory, and we need to be in that directory in order to continue:
+这会在 `buildhat` 子目录中创建一个默认程序，我们需要在该目录中才能继续：
 
 [source,console]
 ----
 $ cd buildhat
 ----
 
-You will now need to install the following nuget packages:
+您现在需要安装以下nuget包：
 
 [source,console]
 ----
@@ -35,7 +35,7 @@ $ dotnet add package Iot.Device.Bindings --version 2.1.0
 
 === Run C# Code
 
-You can run the program with the `dotnet run` command. Let's try it now to make sure everything works.  It should print "Hello World!"
+您可以使用 `dotnet run` 命令运行程序。让我们现在尝试一下，以确保一切正常。它应该打印“Hello World！”
 
 [source,console]
 ----
@@ -43,10 +43,10 @@ $ dotnet run
 Hello World!
 ----
 
-(When instructed to "run the program" in the instructions that follow, you will simply rerun `dotnet run`) 
+（当在随后的说明中指示“运行程序”时，您只需重新运行 `dotnet run`）
 
 === Edit C# Code
 
-In the instructions below, you will be editing the file `buildhat/Program.cs`, the C# program which was generated when you ran the above commands.
+在下面的说明中，您将编辑文件 `buildhat/Program.cs`，即运行上述命令时生成的C#程序。
 
-Any text editor will work to edit C# code, including Geany, the IDE/Text Editor that comes pre-installed. https://code.visualstudio.com/docs/setup/raspberry-pi/[Visual Studio Code] (often called "VS Code") is also a popular alternative.
+任何文本编辑器都可以编辑C#代码，包括预装的IDE/文本编辑器Geany。https://code.visualstudio.com/docs/setup/raspberry-pi/[Visual Studio Code]（通常称为“VS Code”）也是一种流行的替代方案。

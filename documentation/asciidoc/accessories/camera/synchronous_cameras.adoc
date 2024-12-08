@@ -1,36 +1,36 @@
 == Synchronous Captures
 
-Both the HQ Camera and the Global Shutter Camera, have support for synchronous captures.
-Making use of the XVS pin (Vertical Sync) allows one camera to pulse when a frame capture is initiated.
-The other camera can then listen for this sync pulse, and capture a frame at the same time as the other camera.
+HQ相机和全局快门相机都支持同步捕获。
+利用XVS引脚（垂直同步）允许一台相机在开始帧捕捉时脉冲。
+然后，另一台摄像机可以监听此同步脉冲，并与另一台摄像机同时捕获一帧。
 
 === Using the HQ Camera
 
-For correct operation, both cameras require a 1.65V pull up voltage on the XVS line, which is created by a potential divider through the 3.3V and GND pins on the Raspberry Pi.
+为了正确操作，两台摄像机都需要XVS线路上的1.65V上拉电压，该电压由通过Raspberry Pi上的3.3V和GND引脚的电位分压器创建。
 
 image::images/synchronous_camera_wiring.jpg[alt="Image showing potential divider setup",width="50%"]
 
-Create a potential divider from two 10kΩ resistors to 3.3V and ground (to make 1.65V with an effective source impedance of 5kΩ). This can be connected to either Raspberry Pi.
+创建一个分压器，从两个10kΩ电阻到3.3V和地（使有效源阻抗为5kΩ的1.65V）。这可以连接到任一树莓派。
 
-Solder the GND and XVS test points of each HQ Camera board to each other.
+将每个HQ相机板的GND和XVS测试点焊接到彼此。
 
-Connect the XVS wires to the 1.65V potential divider pull-up.
+将XVS线连接到1.65V电位分压器上拉。
 
 ==== Boot up both Raspberry Pis
 
-The file `/sys/module/imx477/parameters/trigger_mode` determines which board outputs pulses, or waits to receive pulses (source and sink).
-This parameter can only be altered in superuser mode.
+文件 `/sys/module/imx477/parameters/trigger_mode` 确定哪些板输出脉冲，或等待接收脉冲（源和接收器）。
+此参数只能在超级用户模式下更改。
 
-Run the following commands to configure the sink:
+运行以下命令配置接收器：
 
-[[source,console]h]
+[source,console]
 ----
 $ sudo su
 $ echo 2 > /sys/module/imx477/parameters/trigger_mode
 $ exit
 ----
 
-Run the following commands to configure the source:
+运行以下命令配置源：
 
 [source,console]
 ----
@@ -39,62 +39,62 @@ $ echo 1 > /sys/module/imx477/parameters/trigger_mode
 $ exit
 ----
 
-Run the following command to start the sink:
+运行以下命令启动接收器：
 
 [source,console]
 ----
 $ rpicam-vid --frames 300 --qt-preview -o sink.h264
 ----
 
-Run the following command to start the source:
+运行以下命令启动源：
 
 [source,console]
 ----
 $ rpicam-vid --frames 300 --qt-preview -o source.h264
 ----
 
-Frames should be synchronous. Use `--frames` to ensure the same number of frames are captured, and that the recordings are exactly the same length.
-Running the sink first ensures that no frames are missed.
+帧应该是同步的。使用 `--frames` 确保捕获相同数量的帧数，并且记录的长度完全相同。
+首先运行接收器可确保不会丢失任何帧。
 
-NOTE: The potential divider is needed to pull up the XVS pin to high whilst the source is in an idle state. This ensures that no frames are created or lost upon startup. The source whilst initialising goes from LOW to HIGH which can trigger a false frame.
+NOTE: 当源处于空闲状态时，需要潜在的分频器将XVS引脚拉至高电平。这可确保在启动时不会创建或丢失帧。初始化时源从低到高，这可能会触发假帧。
 
 === Use the GS Camera
 
-NOTE: The Global Shutter (GS) camera can also be operated in a synchronous mode. However, the source camera will record one extra frame. A much better alternative method to ensure that both cameras capture the same amount of frames is to use the xref:camera.adoc#external-trigger-on-the-gs-camera[external trigger method].
+NOTE: 全局快门（GS）相机也可以在同步模式下操作。但是，源相机将记录一个额外的帧。确保两个相机捕获相同数量的帧的一个更好的替代方法是使用 xref:camera.adoc#external-trigger-on-the-gs-camera[外部触发方式]。
 
-To operate as source and sink together, the Global Shutter Cameras also require connection of the XHS (horizontal sync) pins together. However, these do not need connection to a pullup resistor.
+要同时作为源极和接收器运行，全局快门相机还需要将XHS（水平同步）引脚连接在一起。然而，这些不需要连接到上拉电阻。
 
-The wiring setup is identical to the xref:camera.adoc#using-the-hq-camera[HQ Camera method], except that you will also need to connect the XHS pins together.
+接线设置与 xref:camera.adoc#using-the-hq-camera[HQ Camera method] 相同，只是您还需要将XHS引脚连接在一起。
 
-Create a potential divider from two 10kΩ resistors to 3.3V and ground (to make 1.65V with an effective source impedance of 5kΩ). This can be connected to either Raspberry Pi.
+创建一个分压器，从两个10kΩ电阻到3.3V和地（使有效源阻抗为5kΩ的1.65V）。这可以连接到任一树莓派。
 
-Solder 2 wires to the XVS test points on each board and connect both of these wires together to the 1.65V potential divider.
+将2根电线焊接到每块板上的XVS测试点，并将这两根电线连接到1.65V电位分压器上。
 
-Solder the GND of each Camera board to each other. Also solder 2 wires to the XHS test points on each board and connect these. No pullup is needed for XHS pin.
+将每个相机板的GND焊接到彼此。还将2根电线焊接到每块板上的XHS测试点并将它们连接起来。XHS引脚不需要上拉。
 
-On the boards that you wish to act as sinks, solder the two halves of the MAS pad together. This tells the sensor to act as a sink, and will wait for a signal to capture a frame.
+在您希望充当水槽的板上，将MAS焊盘的两半焊接在一起。这告诉传感器充当水槽，并将等待信号以捕获帧。
 
 ==== Boot up source and sink
 
-Run the following command to start the sink:
+运行以下命令启动接收器：
 
 [source,console]
 ----
 $ rpicam-vid --frames 300 -o sync.h264
 ----
 
-Due to the limitations of the IMX296 sensor, the sink cannot record exactly the same number of frames as the source. **The source records one extra frame before the sink starts recording**. Because of this, you need to specify that the sink records one less frame with the `--frames` option.
+由于IMX296传感器的限制，接收器不能记录与源完全相同的帧数。**源在接收器开始记录之前多记录一帧**。因此，您需要使用 `--frames` 选项指定接收器少记录一帧。
 
-Wait at least two seconds before you start the source.
+在启动源之前至少等待两秒钟。
 
-After waiting two seconds, run the following command to start the source:
+等待两秒钟后，运行以下命令启动源：
 
 [source,console]
 ----
 $ rpicam-vid --frames 299 -o sync.h264
 ----
 
-Because the sink and source record a different number of frames, use `ffmpeg` to resync the videos. By dropping the first frame from the source, we then get two recordings with the same starting point and frame length:
+因为接收器和源记录的帧数不同，所以使用 `ffmpeg` 重新同步视频。通过从源中删除第一帧，我们会得到两个具有相同起点和帧长的录音：
 
 [source,console]
 ----
