@@ -71,7 +71,7 @@ image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspb
 
 对于Raspberry Pi OS安装，我们建议使用至少具有32GB存储空间的SD卡。对于Raspberry Pi OS Lite，我们建议至少使用16GB。您可以使用任何容量小于2TB的SD卡。由于 https://en.wikipedia.org/wiki/Master_boot_record[MBR] 的限制，目前不支持2TB以上的容量。与任何其他引导介质一样，你会发现 SD 卡的性能有所提高，读写速度更快。
 
-如果不确定购买哪种 SD 卡，请参考 xref：.../accessories/sd-cards.adoc[Raspberry Pi 的官方 SD 卡]。
+如果不确定购买哪种 SD 卡，请参考 xref:../accessories/sd-cards.adoc[Raspberry Pi 的官方 SD 卡]。
 
 由于硬件限制，以下设备只能从256GB或更小的引导分区引导：
 
@@ -109,6 +109,7 @@ Raspberry Pi型号具有以下显示连接性：
 |2× micro HDMI
 
 |树莓派4（所有型号）
+|2×微型 HDMI，通过 3.5 毫米 http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔输出音频和复合信号
 
 |树莓派3（所有型号）
 |HDMI、音频和复合输出通过3.5mm http://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards[TRRS] 插孔
@@ -133,7 +134,6 @@ NOTE: 没有Raspberry Pi型号支持USB-C视频（DisplayPort alt模式）。
 大多数显示器没有 micro 或 mini HDMI 接口。但是，您可以使用 https://www.raspberrypi.com/products/micro-hdmi-to-standard-hdmi-a-cable/[micro-HDMI到HDMI电缆] 或 https://www.raspberrypi.com/products/standard-hdmi-a-male-to-mini-hdmi-c-male-cable/[mini-HDMI到HDMI电缆] 将树莓派上的这些接口连接到任何HDMI显示器。对于不支持HDMI的显示器，请考虑使用适配器，将显示输出从HDMI转换到显示器支持的接口。
 
 image::images/peripherals/cable-hdmi.png[alt="Plugging a micro HDMI cable into a Raspberry Pi."]
-
 
 === 音频
 

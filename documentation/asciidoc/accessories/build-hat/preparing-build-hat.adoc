@@ -2,7 +2,7 @@
 
 NOTE: 在开始使用 Raspberry Pi Build HAT 之前，你应该 xref:../computers/getting-started.adoc#setting-up-your-raspberry-pi[设置] 你的 Raspberry Pi，xref:../computers/getting-started.adoc#installing-the-operating-system[install] 使用 https://www.raspberrypi.com/downloads/[Raspberry Pi Imager] 安装最新版本的操作系统。
 
-将9毫米垫片连接到板的底部。将Raspberry Pi放在Raspberry Pi上。确保你把它放在正确的位置。与其他帽子不同，所有组件都在底部，为面包板或乐高®元素在顶部留出空间。
+将9毫米垫片连接到板的底部。将Raspberry Pi放在Raspberry Pi上。确保你把它放在正确的位置。与其他HAT不同，所有组件都在底部，为面包板或乐高®元素在顶部留出空间。
 
 image::images/fitting-build-hat.gif[width="80%"]
 
@@ -37,7 +37,7 @@ image::images/setting-up.png[width="50%"]
 
 ==== Use your Raspberry Pi headless
 
-如果您正在无头运行Raspberry Pi并使用 `raspi-config`，请从第一个菜单中选择“接口选项”。
+如果您正在无显示器运行Raspberry Pi并使用 `raspi-config`，请从第一个菜单中选择“接口选项”。
 
 image::images/raspi-config-1.png[width="70%"]
 
@@ -61,7 +61,7 @@ image::images/raspi-config-5.png[width="70%"]
 
 === Power the Build HAT
 
-连接外部电源——建议使用 https://raspberrypi.com/products/build-hat-power-supply[official Raspberry Pi Build HAT power supply]——但是任何能够通过DC 5521中心正极筒形连接器（5.5毫米×2.1毫米×11毫米）提供48W的可靠+8V±10%电源都将为构建HAT供电。除非您使用的是Raspberry Pi 400，否则您也不需要将额外的USB电源连接到Raspberry Pi。
+连接外部电源——建议使用 https://raspberrypi.com/products/build-hat-power-supply[official Raspberry Pi Build HAT power supply]——但是任何能够通过DC 5521中心正极筒形连接器（5.5毫米×2.1毫米×11毫米）提供48W的可靠+8V±10%电源都将为Build HAT供电。除非您使用的是Raspberry Pi 400，否则您也不需要将额外的USB电源连接到Raspberry Pi。
 
 [NOTE]
 ====

@@ -22,4 +22,4 @@ LED矩阵是ID为 `RPi-Sense FB` 的RGB565 https://www.kernel.org/doc/Documentat
 
 === Joystick
 
-操纵杆是一个名为 `Raspberry Pi Sense HAT Joystick` 的输入事件设备，映射到箭头键和**Enter**。任何能够处理输入的库都应该支持它，或者直接通过 https://www.kernel.org/doc/Documentation/input/input.txt[evdev 接口]。合适的库包括 SDL、http://www.pygame.org/docs/[pygame] 和 https://python-evdev.readthedocs.org/en/latest/[python-evdev]。包含的 `snake` 示例显示了如何直接访问操纵杆。
+操纵杆是一个名为 `Raspberry Pi Sense HAT Joystick` 的输入事件设备，映射到箭头键和 **Enter**。任何能够处理输入的库都应该支持它，或者直接通过 https://www.kernel.org/doc/Documentation/input/input.txt[evdev 接口]。合适的库包括 SDL、http://www.pygame.org/docs/[pygame] 和 https://python-evdev.readthedocs.org/en/latest/[python-evdev]。包含的 `snake` 示例显示了如何直接访问操纵杆。

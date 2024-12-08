@@ -36,11 +36,8 @@ Compute Module 4 IO Board::
 +
 设置计算模块 4 IO 板：
 +
-
 . 将计算模块连接到 IO 板。连接后，计算模块应平放。
-
 . 将 "nRPI_BOOT "安装到 IO 板跳线 J2（"禁用 eMMC 启动"）上。
-
 . 将电缆从 IO 板上的微型 USB 从端口 J11 连接到主机设备。
 
 Compute Module IO Board
@@ -48,10 +45,9 @@ Compute Module IO Board
 设置计算模块 IO 板：
 +
 . 将计算模块连接到 IO 板。连接时，计算模块应平行于电路板，啮合夹应卡紧到位。
-
 . 将 J4（"USB SLAVE BOOT ENABLE"）设为 1-2 =（"USB BOOT ENABLED"）。
-
 . 将电缆从 IO 板上的微型 USB 从端口 J15 连接到主机设备。
+======
 
 === 设置主机设备
 

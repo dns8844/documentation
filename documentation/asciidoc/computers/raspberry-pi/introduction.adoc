@@ -210,6 +210,10 @@ a|
 * a mini HDMI port
 * 2× micro USB ports (one for input power, one for external devices)
 
+Since version 1.3 of the original Zero, all Zero models also include:
+
+* a mini 22-pin, 0.5mm (fine) pitch, 11.5mm width, CSI (camera) port
+
 [cols="3a,1,1,1,2"]
 |===
 | Model | SoC | Memory | GPIO | Wireless Connectivity
@@ -259,8 +263,6 @@ a|
 image::images/compute-module-1.jpg[alt="Raspberry Pi Compute Module 1"]
 | xref:processors.adoc#bcm2835[BCM2835] | 512MB
 | 4GB | DDR2 SO-DIMM ^| none
-
-4GB | DDR2 SO-DIMM ^| none
 ^.^a|
 .Raspberry Pi Compute Module 3
 image::images/compute-module-3.jpg[alt="Raspberry Pi Compute Module 3"]
@@ -349,6 +351,7 @@ a|
 a| optional:
 
 * 2.4/5GHz dual-band 802.11ac Wi-Fi 5 (300Mb/s)
+
 * Bluetooth 5, Bluetooth Low Energy (BLE)
 |===
 

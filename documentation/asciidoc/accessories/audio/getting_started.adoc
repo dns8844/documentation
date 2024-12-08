@@ -14,13 +14,13 @@ image::images/Chatter_Box.jpg[width="80%"]
 
 image::images/Chatterbox_Labels.png[width="80%"]
 
-使用小平头螺丝刀将扬声器连接到螺丝端子。对于额外的按钮，请将按钮线直接焊接到编解码器零焊盘，如有必要，使用GPIO引脚27和接地作为开关，+3.3V和接地作为LED。
+使用小平头螺丝刀将扬声器连接到螺丝端子。对于额外的按钮，请将按钮线直接焊接到Codec Zero焊盘，如有必要，使用GPIO引脚27和接地作为开关，+3.3V和接地作为LED。
 
 === Set up your Raspberry Pi
 
 在此示例中，我们使用的是Raspberry Pi OS Lite。有关更多详细信息，请参阅我们关于 xref:../computers/getting-started.adoc#installing-the-operating-system[安装 Raspberry Pi 操作系统] 的指南。
 
-确保在继续之前更新操作系统，并按照编解码器零配置提供的说明进行操作，包括启用板载麦克风和扬声器输出的命令。
+确保在继续之前更新操作系统，并按照Codec Zero配置提供的说明进行操作，包括启用板载麦克风和扬声器输出的命令。
 
 === Program your Raspberry Pi
 
@@ -104,7 +104,7 @@ pause()
 
 ----
 
-按 `Ctrl+X`，然后按 `Y` 键，然后*Enter*保存。要使脚本可执行，请键入以下内容：
+按 `Ctrl+X`，然后按 `Y` 键，然后 *Enter* 保存。要使脚本可执行，请键入以下内容：
 
 [source,console]
 ----
@@ -124,7 +124,7 @@ $ crontab -e
 @reboot python /home/<username>/chatter_box.py
 ----
 
-按 *Ctrl X*，然后按 *Y*，然后按*Enter*保存，然后使用 `sudo reboot` 重新启动设备。
+按 *Ctrl X*，然后按 *Y*，然后按 *Enter* 保存，然后使用 `sudo reboot` 重新启动设备。
 
 === Use the toy chatter box
 

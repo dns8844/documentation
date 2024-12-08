@@ -17,10 +17,11 @@ def heading_to_anchor(filepath, heading, anchor):
     if anchor is None:
         # The replace(' -- ', '') is needed because AsciiDoc transforms ' -- ' to '&#8201;&#8212;&#8201;' (narrow-space, em-dash, narrow-space) which then collapses down to '' when calculating the anchor
         anchor = re.sub(r'\-+', '-', re.sub(r'[^-^\u4e00-\u9fa5^\w]', '', heading.lower().replace(' -- ', '').replace(' ', '-').replace('.', '-')))
+        anchor = re.sub(r'(strong-classcontexttag-)(rp\d+)(rp\d+strong)', '\\2', anchor)
     if filepath not in file_headings:
         file_headings[filepath] = set()
     proposed_anchor = anchor
-    
+
     num = 1 # this isn't a logic bug, the first duplicate anchor gets suffixed with "-2"
     while proposed_anchor in file_headings[filepath]:
         num += 1

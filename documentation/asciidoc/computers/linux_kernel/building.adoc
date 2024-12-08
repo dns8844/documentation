@@ -253,6 +253,7 @@ kernel=kernel-myconfig.img
 将此方法与自定义的`LOCALVERSION` 相结合，可将自定义内核与系统管理的原版内核映像分开。有了这种安排，当你的内核无法启动时，你就可以迅速恢复到原版内核。
 ====
 
+[[cross-compile-the-kernel]]
 === 交叉编译内核
 
 首先，你需要一台合适的 Linux 交叉编译主机。我们倾向于使用 Ubuntu；因为 Raspberry Pi OS 也是 Debian 发行版，所以编译命令也类似。

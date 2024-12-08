@@ -49,7 +49,7 @@ image::images/vnc-enable.png[在接口选项卡中，单击 VNC 切换到活动�
 ----
 $ sudo raspi-config
 ----
-. 导航至*Interface Options*。按 `Enter` 键选择。
+. 导航至 *Interface Options*。按 `Enter` 键选择。
 . 选择 *VNC*。按 `Enter` 键选择。
 . 在 *Would you like the VNC Server to be enabled?*（是否启用 VNC 服务器）下，选择 `<Yes>` ，然后按 `Enter` 。
 . 按 `Enter` 返回菜单。按 `Esc` 键退出 `raspi-config` 。

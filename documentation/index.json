@@ -54,6 +54,12 @@
                     "subpath": "camera_software.adoc"
                 },
                 {
+                    "title": "AI 软件",
+                    "description": "Raspberry Pi 硬件上的AI软件和库",
+                    "image": "full-sized/ai.png",
+                    "subpath": "ai.adoc"
+                },
+                {
                     "title": "Raspberry Pi 硬件",
                     "description": "有关 Raspberry Pi 硬件的技术信息",
                     "image": "full-sized/Raspberry-Pi-Hardware.png",
@@ -79,22 +85,58 @@
             "default_tab": "no",
             "subitems": [
                 {
+                    "title": "SD Cards",
+                    "description": "Raspberry Pi's official SD cards",
+                    "image": "full-sized/sd-card.png",
+                    "subpath": "sd-cards.adoc"
+                },
+                {
+                    "title": "SSDs",
+                    "description": "Raspberry Pi's official Solid State Drives",
+                    "image": "full-sized/ssds.png",
+                    "subpath": "ssds.adoc"
+                },
+                {
+                    "title": "SSD Kit",
+                    "description": "Storage for your Raspberry Pi",
+                    "image": "full-sized/ssd-kit.png",
+                    "subpath": "ssd-kit.adoc"
+                },
+                {
+                    "title": "M.2 HAT+",
+                    "description": "Connect storage to your Raspberry Pi via PCIe",
+                    "image": "full-sized/m2-hat-plus.png",
+                    "subpath": "m2-hat-plus.adoc"
+                },
+                {
+                    "title": "Touch Display 2",
+                    "description": "The Raspberry Pi Touch Display 2",
+                    "image": "full-sized/Touch-Display-2.png",
+                    "subpath": "touch-display-2.adoc"
+                },
+                {
                     "title": "摄像头",
                     "description": "Raspberry Pi 摄像头板",
                     "image": "full-sized/Camera.png",
                     "subpath": "camera.adoc"
                 },
                 {
-                    "title": "显示屏",
-                    "description": "树莓派触摸显示屏",
-                    "image": "full-sized/Display.png",
-                    "subpath": "display.adoc"
+                    "title": "AI Camera",
+                    "description": "树莓派的AI摄像头",
+                    "image": "full-sized/ai-cam.png",
+                    "subpath": "ai-camera.adoc"
                 },
                 {
                     "title": "键盘和鼠标",
                     "description": "官方 Raspberry Pi 键盘和鼠标",
                     "image": "full-sized/Keyboard-and-Mouse.png",
                     "subpath": "keyboard-and-mouse.adoc"
+                },
+                {
+                    "title": "USB Hub",
+                    "description": "官方 Raspberry Pi USB hub",
+                    "image": "full-sized/usb-3-hub.png",
+                    "subpath": "usb-3-hub.adoc"
                 },
                 {
                     "title": "Build HAT",
@@ -109,22 +151,16 @@
                     "subpath": "sense-hat.adoc"
                 },
                 {
-                    "title": "TV HAT",
-                    "description": "用 Raspberry Pi 观看电视",
-                    "image": "full-sized/TV-HAT.png",
-                    "subpath": "tv-hat.adoc"
-                },
-                {
-                    "title": "M.2 HAT+",
-                    "description": "通过 PCIe 将存储设备连接到 Raspberry Pi",
-                    "image": "full-sized/m2-hat-plus.png",
-                    "subpath": "m2-hat-plus.adoc"
-                },
-                {
                     "title": "AI Kit",
-                    "description": "Raspberry Pi 的 NPU",
+                    "description": "通过 M.2 连接到 Raspberry Pi 的 NPU",
                     "image": "full-sized/ai-kit.png",
                     "subpath": "ai-kit.adoc"
+                },
+                {
+                    "title": "AI HAT+",
+                    "description": "An NPU HAT+ for your Raspberry Pi",
+                    "image": "full-sized/ai-hat-plus.png",
+                    "subpath": "ai-hat-plus.adoc"
                 },
                 {
                     "title": "Raspberry Pi Audio",
@@ -137,6 +173,24 @@
                     "description": "有关 HAT 规范的信息",
                     "image": "full-sized/Designing-a-HAT.png",
                     "url": "https://datasheets.raspberrypi.com/hat/hat-plus-specification.pdf"
+                },
+                {
+                    "title": "触摸显示屏",
+                    "description": "树莓派触摸显示屏",
+                    "image": "full-sized/Display.png",
+                    "subpath": "display.adoc"
+                },
+                {
+                    "title": "TV HAT",
+                    "description": "用 Raspberry Pi 观看电视",
+                    "image": "full-sized/TV-HAT.png",
+                    "subpath": "tv-hat.adoc"
+                },
+                {
+                    "title": "保护套",
+                    "description": "Raspberry Pi 5 的保护套",
+                    "image": "full-sized/bumper.png",
+                    "subpath": "bumper.adoc"
                 }
             ]
         },
@@ -145,29 +199,23 @@
             "path": "microcontrollers",
             "subitems": [
                 {
-                    "title": "RP2040",
-                    "description": "Raspberry Pi's flagship microcontroller device",
-                    "image": "full-sized/RP2040.png",
-                    "subpath": "rp2040.adoc"
+                    "title": "硅芯片",
+                    "description": "Raspberry Pi 内部硅芯片",
+                    "image": "full-sized/silicon.png",
+                    "subpath": "silicon.adoc"
                 },
                 {
-                    "title": "Raspberry Pi Pico and Pico W",
-                    "description": "Support for Raspberry Pi Pico, Pico H, Pico W, and Pico WH",
-                    "image": "full-sized/Pico.png",
-                    "subpath": "raspberry-pi-pico.adoc"
+                    "title": "Pico-series Microcontrollers",
+                    "description": "Raspberry Pi Pico 系列设备支持",
+                    "image": "full-sized/pico-series.png",
+                    "subpath": "pico-series.adoc"
                 },
                 {
                     "title": "Raspberry Pi Debug Probe",
                     "description": "Supports Arm Serial Wire Debug (SWD), and acts as a UART bridge",
                     "image": "full-sized/Debug-Probe.png",
                     "subpath": "debug-probe.adoc"
-                },
-                {
-                    "title": "RP1",
-                    "description": "Our southbridge for Raspberry Pi 5",
-                    "image": "full-sized/RP1.png",
-                    "subpath": "rp1.adoc"
-                },				
+                },		
                 {
                     "title": "MicroPython",
                     "description": "Getting started with MicroPython",

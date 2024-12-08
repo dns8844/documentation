@@ -22,7 +22,7 @@ M.2 HAT+ _只能_ 与 https://www.raspberrypi.com/products/raspberry-pi-5-case/[
 * 电源和活动 LED 指示灯
 * 符合 https://datasheets.raspberrypi.com/hat/hat-plus-specification.pdf[Raspberry Pi HAT+ 规范］
 * 包括
- ** 带状电缆
+ ** 排线
  ** 16 毫米 GPIO 堆叠接头
  ** 4 个螺纹垫片
  ** 8 个螺钉
@@ -34,7 +34,7 @@ M.2 HAT+ _只能_ 与 https://www.raspberrypi.com/products/raspberry-pi-5-case/[
 
 * 一个 Raspberry Pi 5
 
-每个M.2 HAT+都带有带状电缆、GPIO堆叠接头和安装硬件。完成以下说明以安装您的M.2 HAT+：
+每个M.2 HAT+都带有排线、GPIO堆叠接头和安装硬件。完成以下说明以安装您的M.2 HAT+：
 
 .首先，确保您的Raspberry Pi运行最新的软件。运行以下命令进行更新：
 +
@@ -76,7 +76,7 @@ $ sudo rpi-eeprom-update -a
 --
 image::images/m2-hat-plus-installation-01.png[width="60%"]
 --
-.使用提供的四个螺丝安装垫片。将GPIO堆叠头牢牢地压在Raspberry Pi GPIO引脚顶部；只要所有引脚都合适，方向并不重要。断开带状电缆与M.2 HAT+的连接，并将另一端插入Raspberry Pi的PCIe端口。从两侧提起带状电缆支架，然后将铜接触点朝内的电缆插入USB端口。将带状电缆完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
+.使用提供的四个螺丝安装垫片。将GPIO延长插针牢牢地压在Raspberry Pi GPIO引脚顶部；只要所有引脚都合适，方向并不重要。断开排线与M.2 HAT+的连接，并将另一端插入Raspberry Pi的PCIe端口。从两侧提起排线支架，然后将铜接触点朝内的电缆插入USB端口。将排线完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将排线牢固固定到位。
 +
 --
 image::images/m2-hat-plus-installation-02.png[width="60%"]
@@ -86,7 +86,7 @@ image::images/m2-hat-plus-installation-02.png[width="60%"]
 --
 image::images/m2-hat-plus-installation-03.png[width="60%"]
 --
-. 将带状电缆插入M.2 HAT+的插槽。从两侧提起带状电缆支架，然后将电缆插入，铜接触点朝上。将带状电缆完全均匀地插入端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
+. 将排线插入M.2 HAT+的插槽。从两侧提起排线支架，然后将电缆插入，铜接触点朝上。将排线完全均匀地插入端口后，从两侧向下推电缆支架，以将排线牢固固定到位。
 +
 --
 image::images/m2-hat-plus-installation-04.png[width="60%"]

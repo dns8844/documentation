@@ -1,5 +1,5 @@
-[[boot-diagnostics-on-the-raspberry-pi-4]]
-== 树莓派4上的启动诊断
+[[boot-diagnostics]]
+== 启动诊断
 
 从Raspberry Pi 4引导加载程序的版本2020-04-16开始，可以在启动时在HDMI显示器上显示诊断信息。要查看此诊断信息，请关闭Raspberry Pi 4电源，取出SD卡，然后重新启动。显示器上应显示类似于以下的诊断显示。
 

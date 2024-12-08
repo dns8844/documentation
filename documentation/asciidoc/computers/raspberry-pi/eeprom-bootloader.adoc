@@ -311,7 +311,7 @@ MAC_ADDRESS_OTP=0,1
 [[DISABLE_HDMI]]
 ==== `DISABLE_HDMI` 
 
-如果 `DISABLE_HDMI=1` ， xref:raspberry-pi.adoc#boot-diagnostics-on-the-raspberry-pi-4[HDMI 启动诊断] 显示将被禁用。其他非零值保留供将来使用。
+如果 `DISABLE_HDMI=1`， xref:raspberry-pi.adoc#boot-diagnostics[HDMI 启动诊断] 显示将被禁用。其他非零值保留供将来使用。
 
 默认值： `0` 
 

@@ -1,0 +1,166 @@
+== Getting Started
+
+本指南将帮助您使用Raspberry Pi 5设置Hailo NPU。这将使您能够使用AI神经网络加速器运行 `rpicam-apps` 相机Demo。
+
+=== Prerequisites
+
+对于本指南，您将需要以下内容：
+
+* 一台 Raspberry Pi 5
+* 下列 NPU 之一：
+** 一个 xref:../accessories/ai-kit.adoc[Raspberry Pi AI Kit]，其中包括
+*** 一个 M.2 HAT+
+*** 一个预装的 Hailo-8L AI 模块
+** 一个 xref:../accessories/ai-hat-plus.adoc[Raspberry Pi AI HAT+]。
+* 安装 64 位 Raspberry Pi OS Bookworm
+* 任何 Raspberry Pi 官方摄像头（如摄像头模块 3 或高质量摄像头）
+
+=== Hardware setup
+
+. 按照 xref:../accessories/camera.adoc#install-a-raspberry-pi-camera[安装 Raspberry Pi Camera] 的说明将相机连接到Raspberry Pi 5板上。您可以跳过将Raspberry Pi重新连接到电源，因为您需要在下一步断开Raspberry Pi的电源。
+
+. 根据您的NPU，请按照 xref:../accessories/ai-kit.adoc#ai-kit-installation[AI Kit] 或 xref:../accessories/ai-hat-plus.adoc#ai-hat-plus-installation[AI HAT+] 的安装说明将您的硬件连接到Raspberry Pi 5。
+
+. 按照 xref:raspberry-pi.adoc#pcie-gen-3-0[enable PCIe Gen 3.0] 的说明进行操作。此步骤是可选的，但_highlyrecommended_使用NPU实现最佳性能。
+
+. 安装使用NPU所需的依赖项。从终端窗口运行以下命令：
++
+[source,console]
+----
+$ sudo apt install hailo-all
+----
++
+这会安装以下依赖项：
++
+* Hailo kernel device driver and firmware
+* HailoRT middleware software
+* Hailo Tappas core post-processing libraries
+* The `rpicam-apps` Hailo post-processing software demo stages
+
+. 最后，使用 `sudo reboot` 重新启动Raspberry Pi让这些设置生效。
+
+. 要确保一切正常运行，请运行以下命令：
++
+[source,console]
+----
+$ hailortcli fw-control identify
+----
++
+如果您看到类似于以下内容的输出，则表示您已成功安装NPU及其软件依赖项：
++
+----
+Executing on device: 0000:01:00.0
+Identifying board
+Control Protocol Version: 2
+Firmware Version: 4.17.0 (release,app,extended context switch buffer)
+Logger Version: 0
+Board Name: Hailo-8
+Device Architecture: HAILO8L
+Serial Number: HLDDLBB234500054
+Part Number: HM21LB1C2LAE
+Product Name: HAILO-8L AI ACC M.2 B+M KEY MODULE EXT TMP
+----
++
+此外，您可以运行 `dmesg | grep -i hailo` 来检查内核日志，这应该会产生类似于以下内容的输出：
++
+----
+[    3.049657] hailo: Init module. driver version 4.17.0
+[    3.051983] hailo 0000:01:00.0: Probing on: 1e60:2864...
+[    3.051989] hailo 0000:01:00.0: Probing: Allocate memory for device extension, 11600
+[    3.052006] hailo 0000:01:00.0: enabling device (0000 -> 0002)
+[    3.052011] hailo 0000:01:00.0: Probing: Device enabled
+[    3.052028] hailo 0000:01:00.0: Probing: mapped bar 0 - 000000000d8baaf1 16384
+[    3.052034] hailo 0000:01:00.0: Probing: mapped bar 2 - 000000009eeaa33c 4096
+[    3.052039] hailo 0000:01:00.0: Probing: mapped bar 4 - 00000000b9b3d17d 16384
+[    3.052044] hailo 0000:01:00.0: Probing: Force setting max_desc_page_size to 4096 (recommended value is 16384)
+[    3.052052] hailo 0000:01:00.0: Probing: Enabled 64 bit dma
+[    3.052055] hailo 0000:01:00.0: Probing: Using userspace allocated vdma buffers
+[    3.052059] hailo 0000:01:00.0: Disabling ASPM L0s
+[    3.052070] hailo 0000:01:00.0: Successfully disabled ASPM L0s
+[    3.221043] hailo 0000:01:00.0: Firmware was loaded successfully
+[    3.231845] hailo 0000:01:00.0: Probing: Added board 1e60-2864, /dev/hailo0
+----
+
+. 为确保相机正常运行，请运行以下命令：
++
+[source,console]
+----
+$ rpicam-hello -t 10s
+----
++
+这将启动相机并显示10秒钟的预览窗口。一旦您验证所有内容都安装正确，就可以运行一些演示了。
+
+=== Demos
+
+`rpicam-apps` 相机应用程序套件实现了 xref:camera_software.adoc#post-processing-with-rpicam-apps[post-processing framework]。本节包含一些演示后处理阶段，突出了NPU的一些功能。
+
+以下演示使用了默认显示预览窗口的 xref:camera_software.adoc#rpicam-hello[`rpicam-hello`]。不过，您也可以使用其他 `rpicam-apps` 代替，包括 xref:camera_software.adoc#rpicam-vid[`rpicam-vid`] 和 xref:camera_software.adoc#rpicam-still[`rpicam-still`] 。您可能需要添加或修改一些命令行选项，以使Demo命令与其他应用程序兼容。
+
+首先，下载演示所需的后处理JSON文件。这些文件确定要运行哪些后处理阶段并配置每个阶段的行为。例如，您可以在目标检测演示中启用、禁用、加强或削弱时间过滤的强度。或者您可以在分割演示中启用或禁用输出蒙版绘制。
+
+要下载整个后处理JSON文件集合，请克隆 `rpicam-apps` 存储库。运行以下命令以仅从存储库克隆最近的提交，从而节省空间：
+
+[source,console]
+----
+$ git clone --depth 1 https://github.com/raspberrypi/rpicam-apps.git ~/rpicam-apps
+----
+
+TIP: 后续部分中提供的命令使用此存储库中的JSON文件。为了便于引用这些文件，此命令在您的主文件夹中创建克隆的 `rpicam-apps` 目录。如果修改此目录的位置，还必须更改下面的demo命令以引用JSON文件的新位置。
+
+==== Object Detection
+
+此演示显示神经网络检测到的对象周围的边界框。要禁用取景器，请使用 xref:camera_software.adoc#nopreview[`-n`] 标志。要返回描述检测到的对象的纯文本输出，请添加 `-v 2` 选项。运行以下命令在Raspberry Pi上尝试演示：
+
+[source,console]
+----
+$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov6_inference.json --lores-width 640 --lores-height 640
+----
+
+或者，您可以尝试另一种在性能和效率方面具有不同权衡的模型。
+
+要使用Yolov8模型运行演示，请运行以下命令：
+
+[source,console]
+----
+$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov8_inference.json --lores-width 640 --lores-height 640
+----
+
+要使用YoloX模型运行演示，请运行以下命令：
+
+[source,console]
+----
+$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolox_inference.json --lores-width 640 --lores-height 640
+----
+
+要使用Yolov5 Person and Face模型运行演示，请运行以下命令：
+
+[source,console]
+----
+$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov5_personface.json --lores-width 640 --lores-height 640
+----
+
+==== Image Segmentation
+
+此演示通过在取景器图像上绘制颜色蒙版来执行目标检测并分割对象。运行以下命令在Raspberry Pi上尝试演示：
+
+[source,console]
+----
+$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov5_segmentation.json --lores-width 640 --lores-height 640 --framerate 20
+----
+
+==== Pose Estimation
+
+此演示执行17标点人体姿势预测，绘制连接检测到的点的线条。运行以下命令在Raspberry Pi上尝试演示：
+
+[source,console]
+----
+$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov8_pose.json --lores-width 640 --lores-height 640
+----
+
+=== Further Resources
+
+Hailo还创建了一组Demo，您可以在 https://github.com/hailo-ai/hailo-rpi5-examples[hailo-ai/hailo-rpi5-examples GitHub repository] 中提供的Raspberry Pi 5上运行。
+
+你可以在 https://github.com/hailo-ai/hailo_model_zoo/tree/master/docs/public_models/HAILO8L[hailo-ai/hailo_model_zoo GitHub repository] 中找到Hailo广泛的模型库，其中包含大量的神经网络。
+
+查看 https://community.hailo.ai/[Hailo community forums and developer zone] 以进一步讨论Hailo硬件和工具。

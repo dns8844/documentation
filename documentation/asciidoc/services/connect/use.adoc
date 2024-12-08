@@ -13,7 +13,7 @@ image::images/browser-sign-in.png[width="80%"]
 
 image::images/sign-in.png[width="80%"]
 
-如果您还没有Raspberry Pi ID，请单击 *create one for free* 到 xref:id.adoc#create-a-raspberry-pi-id[创建一个二]。
+如果您还没有Raspberry Pi ID，请单击 *create one for free* 到 xref:id.adoc#create-a-raspberry-pi-id[创建一个]。
 
 === via the command line
 
@@ -189,7 +189,7 @@ Connect作为用户级服务运行，而不是以root身份运行。因此，Con
 $ loginctl enable-linger
 ----
 
-TIP: 我们建议在所有无头Raspberry Pi OS Lite设置上启用用户逗留，以防止您的设备在远程重启后变得无法访问。
+TIP: 我们建议在所有无显示器Raspberry Pi OS Lite设置上启用用户逗留，以防止您的设备在远程重启后变得无法访问。
 
 == Manage devices
 

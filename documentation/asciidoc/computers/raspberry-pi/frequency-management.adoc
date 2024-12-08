@@ -18,7 +18,7 @@ Raspberry Pi 4设备实现动态电压和频率缩放（DVFS）。这种技术�
 
 SoC 内部的各种时钟（如 Arm、Core、V3D、ISP、H264、HEVC）都受到固件的监控，只要它们不是以全速运行，提供给由时钟驱动的芯片特定部分的电压就会相对于全速降低。实际上，只需提供足够的电压，就能保证模块以特定的速度正常运行。这可以显著降低 SoC 的功耗，从而减少产生的总热量。
 
-由于低电压运行可能涉及系统稳定性问题，尤其是在使用低电压固定时钟外设（如 PCIe）时，因此有三种 DVFS 模式可用，可在 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中使用以下属性进行配置。大多数系统应使用 `dvfs=3` ，无头系统可能会因使用 `dvfs=1` 而略微降低功耗，但有可能出现 PCIe 稳定性问题。
+由于低电压运行可能涉及系统稳定性问题，尤其是在使用低电压固定时钟外设（如 PCIe）时，因此有三种 DVFS 模式可用，可在 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中使用以下属性进行配置。大多数系统应使用 `dvfs=3` ，无显示器系统可能会因使用 `dvfs=1` 而略微降低功耗，但有可能出现 PCIe 稳定性问题。
 
 [cols="1m,3"]
 |===
@@ -90,6 +90,7 @@ Raspberry Pi 5 的两个风扇选项都插入了位于电路板右上方 40 针 
 
 启动时风扇打开，转速表输入检查风扇是否在旋转。如果是，则启用 `cooling_fan` 设备树overlay。默认情况下，此overlay位于 `bcm2712-rpi-5-b.dtb` 中，但带有 `status=disabled` 。
 
+[[raspberry-pi-5-fan-connector-pinout]]
 ==== Raspberry Pi 5 风扇连接器引脚
 
 Raspberry Pi 5 风扇连接器是一个1mm间距的JST-SH插座，包含以下四个引脚：

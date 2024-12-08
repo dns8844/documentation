@@ -25,7 +25,7 @@ Raspberry Pi AI套件将 xref:m2-hat-plus.adoc#m2-hat-plus[Raspberry Pi M.2 HAT+
 
 * 一个Raspberry Pi 5
 
-每个AI套件都带有一个预装的AI模块、带状电缆、GPIO堆叠头和安装硬件。完成以下说明以安装您的AI套件：
+每个AI套件都带有一个预装的AI模块、排线、GPIO延长插针和安装硬件。完成以下说明以安装您的AI套件：
 
 . 首先，确保您的Raspberry Pi已经更新最新的软件。运行以下命令进行更新：
 +
@@ -66,7 +66,7 @@ $ sudo rpi-eeprom-update -a
 --
 image::images/ai-kit-installation-01.png[width="60%"]
 --
-. 使用提供的四个螺丝安装垫片。将GPIO堆叠头牢牢地压在Raspberry Pi GPIO引脚的顶部；只要所有引脚都合适，方向并不重要。从AI套件上断开带状电缆，将另一端插入Raspberry Pi的PCIe端口。从两侧提起带状电缆支架，然后将铜接触点朝内的电缆插入USB端口。将带状电缆完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
+. 使用提供的四个螺丝安装垫片。将GPIO延长插针牢牢地压在Raspberry Pi GPIO引脚的顶部；只要所有引脚都合适，方向并不重要。从AI套件上断开排线，将另一端插入Raspberry Pi的PCIe端口。从两侧提起排线支架，然后将铜接触点朝内的电缆插入USB端口。将排线完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将排线牢固固定到位。
 +
 --
 image::images/ai-kit-installation-02.png[width="60%"]
@@ -76,7 +76,7 @@ image::images/ai-kit-installation-02.png[width="60%"]
 --
 image::images/ai-kit-installation-03.png[width="60%"]
 --
-. 将带状电缆插入AI套件上的插槽。从两侧提起带状电缆支架，然后将铜接触点朝上的电缆插入。将带状电缆完全均匀地插入端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
+. 将排线插入AI套件上的插槽。从两侧提起排线支架，然后将铜接触点朝上的电缆插入。将排线完全均匀地插入端口后，从两侧向下推电缆支架，以将排线牢固固定到位。
 +
 --
 image::images/ai-kit-installation-04.png[width="60%"]

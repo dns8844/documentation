@@ -5,7 +5,7 @@ image::images/ssd-kit.png[width="80%"]
 
 Raspberry Pi SSD套件配有一个 xref:../accessories/m2-hat-plus.adoc[Raspberry Pi M.2 HAT+] 和一个 xref:../accessories/ssds.adoc[Raspberry Pi SSD]。
 
-Raspberry Pi SSD套件包括一个16毫米堆叠头、垫片和
+Raspberry Pi SSD套件包括一个16毫米延长插针、垫片和
 用于在Raspberry Pi 5旁边安装Raspberry Pi Active Cooler的螺丝。
 
 == Install

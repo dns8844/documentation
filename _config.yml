@@ -18,7 +18,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Raspberry Pi Documentation.
 baseurl: "/documentation" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-githuburl: "https://github.com/dns8888/documentation/"
+githuburl: "https://github.com/dns8844/documentation/"
 githubbranch: develop
 githubbranch_edit: develop
 

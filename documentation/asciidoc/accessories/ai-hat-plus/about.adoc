@@ -18,7 +18,7 @@ AI HAT+使用树莓派5的PCIe接口进行通信。主机树莓派5自动检测�
 
 * a Raspberry Pi 5
 
-每个AI HAT+都配有带状电缆、GPIO堆叠式连接器和安装配件。完成以下说明以安装您的AI HAT+：
+每个AI HAT+都配有排线、GPIO延长插针和安装配件。完成以下说明以安装您的AI HAT+：
 
 . 首先，确保您的Raspberry Pi运行最新的软件。运行以下命令进行更新：
 +
@@ -59,14 +59,14 @@ $ sudo rpi-eeprom-update -a
 --
 image::images/ai-hat-plus-installation-01.png[width="60%"]
 --
-. 使用提供的四个螺丝安装垫片。将GPIO堆叠式连接器牢牢地压在Raspberry Pi GPIO引脚的顶部；只要所有引脚都合适，方向并不重要。断开带状电缆与AI HAT+的连接，并将另一端插入Raspberry Pi的PCIe端口。从两侧提起带状电缆支架，然后将铜接触点朝内的电缆插入USB端口。将带状电缆完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
+. 使用提供的四个螺丝安装垫片。将GPIO延长插针牢牢地压在Raspberry Pi GPIO引脚的顶部；只要所有引脚都合适，方向并不重要。断开排线与AI HAT+的连接，并将另一端插入Raspberry Pi的PCIe端口。从两侧提起排线支架，然后将铜接触点朝内的电缆插入USB端口。将排线完全均匀地插入PCIe端口后，从两侧向下推电缆支架，以将排线牢固固定到位。
 +
 --
 image::images/ai-hat-plus-installation-02.png[width="60%"]
 --
 . 将AI HAT+设置在垫片顶部，然后使用剩余的四个螺丝将其固定到位。
 
-. 将带状电缆插入AI HAT+的插槽。从两侧提起带状电缆支架，然后将铜接触点朝上插入电缆。将带状电缆完全均匀地插入端口后，从两侧向下推电缆支架，以将带状电缆牢固固定到位。
+. 将排线插入AI HAT+的插槽。从两侧提起排线支架，然后将铜接触点朝上插入电缆。将排线完全均匀地插入端口后，从两侧向下推电缆支架，以将排线牢固固定到位。
 
 . 恭喜您，您已成功安装AI HAT+。将您的Raspberry Pi连接到电源；Raspberry Pi OS将自动检测AI HAT+。
 

@@ -4,9 +4,9 @@
 
 image::images/gui.png[]
 
-有许多可用于Raspberry Pi的第三方音频软件应用程序将支持我们音频板的即插即用功能。这些通常是无头使用的。它们可以通过PC或Mac应用程序或安装在Raspberry Pi上的网络服务器进行控制，并通过网页进行交互。
+有许多可用于Raspberry Pi的第三方音频软件应用程序将支持我们音频板的即插即用功能。这些通常是无显示器使用的。它们可以通过PC或Mac应用程序或安装在Raspberry Pi上的网络服务器进行控制，并通过网页进行交互。
 
-如果你需要自己配置树莓派操作系统，也许如果你正在运行自己的无头系统，并且没有通过GUI进行控制的选项，你需要让你的树莓派音频板成为树莓派操作系统中的主要音频设备，禁用树莓派的板载音频设备。这是通过编辑 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 文件来完成的。使用通过SSH连接到树莓派的终端，运行以下确定来编辑文件：
+如果你需要自己配置树莓派操作系统，也许如果你正在运行自己的无显示器系统，并且没有通过GUI进行控制的选项，你需要让你的树莓派音频板成为树莓派操作系统中的主要音频设备，禁用树莓派的板载音频设备。这是通过编辑 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 文件来完成的。使用通过SSH连接到树莓派的终端，运行以下确定来编辑文件：
 
 [source,console]
 ----
@@ -20,7 +20,7 @@ $ sudo nano /boot/firmware/config.txt
 #dtparam=audio=on
 ----
 
-按 `Ctrl+X`，然后按 `Y` 键，然后按*Enter*保存。最后，重新启动您的Raspberry Pi以使设置生效。
+按 `Ctrl+X`，然后按 `Y` 键，然后按 *Enter* 保存。最后，重新启动您的Raspberry Pi以使设置生效。
 
 [source,console]
 ----
@@ -39,7 +39,7 @@ Raspberry Pi音频板连接到Raspberry Pi的40针接头。它们设计为使用
 
 有多个版本的音频卡。您的特定版本决定了配置所需的操作。较旧的IQaudIO品牌板有黑色PCB。较新的Raspberry Pi品牌板有绿色PCB。这些板在电路上是等效的，但具有不同的EEPROM内容。
 
-连接HAT并通电后，检查声卡上的电源LED是否亮着（如果有的话）。例如，编解码器零有一个标有 `PWR` 的LED。
+连接HAT并通电后，检查声卡上的电源LED是否亮着（如果有的话）。例如，Codec Zero有一个标有 `PWR` 的LED。
 
 建立卡有电后，使用以下ok检查您的板的版本：
 
@@ -48,7 +48,7 @@ Raspberry Pi音频板连接到Raspberry Pi的40针接头。它们设计为使用
 $ grep -a . /proc/device-tree/hat/*
 ----
 
-如果供应商字符串显示“Raspberry Pi Ltd.”，则不需要进一步的操作（但请参阅下面的额外编解码器零配置）。如果它显示“IQaudIO Limitedwww.iqaudio.com”，那么您将需要下面概述的额外config. txt设置。如果它说“否此类文件或目录”，则未检测到HAT，但这些config.txt设置仍可能使其正常工作。
+如果供应商字符串显示“Raspberry Pi Ltd.”，则不需要进一步的操作（但请参阅下面的额外Codec Zero配置）。如果它显示“IQaudIO Limitedwww.iqaudio.com”，那么您将需要下面概述的额外config. txt设置。如果它说“否此类文件或目录”，则未检测到HAT，但这些config.txt设置仍可能使其正常工作。
 
 [source,ini]
 ----
@@ -63,7 +63,7 @@ dtoverlay=rpi-digiampplus
 
 === Extra Codec Zero configuration
 
-树莓派编解码器零板使用Dialog半导体DA7212编解码器。这允许
+树莓派Codec Zero板使用Dialog半导体DA7212编解码器。这允许
 从内置MEMS麦克风、立体声唱机插座（AUX
 IN）或两个单声道外置驻极体麦克风。通过立体声唱机插座（AUX OUT）播放
 或单声道扬声器连接器。
@@ -81,7 +81,7 @@ AUX IN的混频器确保输入信号不会使ADC饱和。同样，可以调整�
 * 立体声 AUX IN 录音，立体声 AUX OUT 播放
 * 立体声 MIC1/MIC2 录音，立体声 AUX 输出回放
 
-每次Raspberry Pi开机时，编解码器Zero需要知道正在使用这些输入和输出设置中的哪些。在Raspberry Pi上使用终端会话，运行以下命令下载脚本：
+每次Raspberry Pi开机时，Codec Zero需要知道正在使用这些输入和输出设置中的哪些。在Raspberry Pi上使用终端会话，运行以下命令下载脚本：
 
 [source,console]
 ----
@@ -124,7 +124,7 @@ $ sudo alsactl restore -f /home/<username>/Pi-Codec/Codec_Zero_OnboardMIC_record
 $ sudo nano /etc/rc.local
 ----
 
-在退出0行上方添加选定的脚本命令，然后 *Ctrl X*、*Y* 和*Enter*保存。根据您选择的设置，该文件现在应该类似于此：
+在退出0行上方添加选定的脚本命令，然后 *Ctrl X*、*Y* 和 *Enter* 保存。根据您选择的设置，该文件现在应该类似于此：
 
 [source,bash]
 ----
@@ -146,14 +146,14 @@ sudo alsactl restore -f /home/<username>/Pi-Codec/Codec_Zero_OnboardMIC_record_a
 exit 0
 ----
 
-按 `Ctrl+X`，然后按 `Y` 键，然后*Enter*保存。重新启动设置以生效：
+按 `Ctrl+X`，然后按 `Y` 键，然后 *Enter* 保存。重新启动设置以生效：
 
 [source,console]
 ----
 $ sudo reboot
 ----
 
-如果您在无头环境中使用Raspberry Pi和Codec Zero，则需要最后一步才能使Codec Zero成为默认音频设备，而无需访问桌面上的GUI音频设置。我们需要在您的主文件夹中创建一个小文件：
+如果您在无显示器环境中使用Raspberry Pi和Codec Zero，则需要最后一步才能使Codec Zero成为默认音频设备，而无需访问桌面上的GUI音频设置。我们需要在您的主文件夹中创建一个小文件：
 
 [source,console]
 ----
@@ -169,7 +169,7 @@ pcm.!default {
 }
 ----
 
-按 `Ctrl+X`，然后按 `Y` 键，然后*Enter*保存。再次重启完成配置：
+按 `Ctrl+X`，然后按 `Y` 键，然后 *Enter* 保存。再次重启完成配置：
 
 Raspberry Pi OS等现代Linux发行版通常使用PulseAudio或PipeWire进行音频控制。这些框架能够混合和切换来自多个来源的音频。它们提供了一个高级API供音频应用程序使用。许多音频应用程序默认使用这些框架。
 

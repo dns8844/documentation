@@ -10,7 +10,7 @@ IMPORTANT: 在继续之前，请将在Raspberry Pi上运行的Raspberry Pi OS版
 
 image::images/write_protect_tabs.jpg[width="80%"]
 
-NOTE: 在某些情况下，两个焊盘可能已经安装了一个0Ω电阻器来桥接写保护链路，如上面的编解码器零板图片所示。
+NOTE: 在某些情况下，两个焊盘可能已经安装了一个0Ω电阻器来桥接写保护链路，如上面的Codec Zero板图片所示。
 
 === Program the EEPROM
 
