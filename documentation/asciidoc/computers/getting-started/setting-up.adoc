@@ -1,7 +1,8 @@
 [[setting-up-your-raspberry-pi]]
 == 开始使用您的Raspberry Pi
 
-video::CQtliTJ41ZE[youtube]
+
+bilibili::BV1xS6JYkEZ9[]
 
 要开始使用Raspberry Pi，您需要以下配件：
 
