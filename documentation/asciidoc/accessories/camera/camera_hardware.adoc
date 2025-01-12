@@ -25,7 +25,7 @@ image::images/ai-camera-hero.png[The Raspberry Pi AI Camera]
 .全局快门相机
 image::images/gs-camera.jpg[GS Camera]
 
-NOTE: Raspberry Pi相机模块与所有带有CSI连接器的Raspberry Pi计算机兼容-即除Raspberry Pi 400和2016年推出的Zero版本之外的所有型号。
+NOTE: 所有带有CSI接口的Raspberry Pi计算机都可以使用Raspberry Pi相机模块。
 
 === Rolling or Global shutter?
 

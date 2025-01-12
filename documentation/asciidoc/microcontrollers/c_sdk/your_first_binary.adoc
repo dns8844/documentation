@@ -4,7 +4,7 @@
 
 任何人在使用新微控制器时编写的第一个程序是闪烁和关闭发光二极管。树莓派Pico带有一个板载发光二极管。发光二极管连接到板上树莓派RP2040上的 `GP25` 用于Pico，连接到英飞凌43439无线芯片上的 `WL_GPIO0` 用于Pico W。
 
-image:images/Blink-an-LED-640x360-v2.gif[]
+video::images/Blink-an-LED.webm[width="80%"]
 
 你可以时断时续地打开和关闭，
 
@@ -21,7 +21,7 @@ image:images/Blink-an-LED-640x360-v2.gif[]
 
 任何人编写的下一个程序是通过USB串行连接说'Hello World'。
 
-image:images/Hello-World-640x360-v2.gif[]
+video::images/Hello-World.webm[width="80%"]
 
 . 下载 https://datasheets.raspberrypi.com/soft/hello_world.uf2['Hello World' UF2]。
 . 按住BOOTSEL按钮，将Pico插入树莓派或其他计算机的USB端口。

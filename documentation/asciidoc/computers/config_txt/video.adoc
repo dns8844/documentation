@@ -6,22 +6,21 @@
 
 要控制 HDMI 设置，请使用 `cmdline.txt` 中的 xref:configuration.adoc#set-resolution-and-rotation[屏幕配置实用程序] 或 xref:configuration.adoc#set-the-kms-display-mode[KMS 视频设置]。
 
-[[hdmi-pipeline-for-raspberry-pi-4]]
-==== Raspberry Pi 4 的 HDMI
+==== 树莓派4-系列的HDMI
 
-为了支持双显示器和高达 4Kp60 的模式，Raspberry Pi 4 在每个时钟周期生成 2 个输出像素。
+为了支持双显示器和高达 4Kp60 的模式，Raspberry Pi 4、CM4、和Pi 400 在每个时钟周期生成 2 个输出像素。
 
 每种 HDMI 模式都有一个时序列表，用于控制同步脉冲持续时间周围的所有参数。这些时序通常通过像素时钟、活动像素数量、前廊、同步脉冲以及水平和垂直方向的后廊来定义。
 
-以每时钟 2 像素的速度运行所有程序意味着 Raspberry Pi 4 不能支持任何不能被 2 整除的时序。
+以每时钟 2 像素的速度运行所有程序意味着4-系列设备不能支持任何不能被 2 整除的时序。
 
 CEA 和 DMT标准中只有一种不兼容的模式：DMT模式81、1366x768@60Hz。这种模式的水平同步和后门廊时序具有奇数值，宽度不能被8整除。
 
-如果您的显示器具有这种分辨率，Raspberry Pi 4 会自动降到显示器所宣传的下一模式；通常为 1280x720。
+如果您的显示器具有这种分辨率，4-系列设备会自动降到显示器所宣传的下一模式；通常为 1280x720。
 
-==== Raspberry Pi 5 的 HDMI
+==== 树莓派5-系列的HDMI
 
-虽然 Raspberry Pi 5 也是每个时钟周期输出 2 个像素，但它对奇数时序有特殊处理，可以直接处理这些模式。
+从 Raspberry Pi 5 开始的旗舰机型、从 CM5 开始的计算模块机型以及从 Pi 500 开始的键盘机型也在每个时钟周期输出 2 个像素。这些型号对奇数时序有特殊处理，可以直接处理这些模式
 
 [[composite-video-mode]]
 === 复合视频模式
@@ -47,12 +46,12 @@ CEA 和 DMT标准中只有一种不兼容的模式：DMT模式81、1366x768@60Hz
 | 3.5mm AV jack
 |===
 
-NOTE: Raspberry Pi 400上不提供复合视频输出。
+NOTE: 键盘系列产品上不提供复合视频输出。
 
 [[enable_tvout]]
 ==== `enable_tvout` 
 
-设置为 `1` 以启用复合视频输出，设置为 `0` 以禁用。在Raspberry Pi 4和5上，复合输出仅在您将其设置为 `1` 时可用，这也会禁用HDMI输出。Raspberry Pi 400上不提供复合输出。
+设置为 `1` 以启用复合视频输出，设置为 `0` 以禁用。从 Raspberry Pi 4 开始的旗舰机型、从 CM4 开始的计算模块以及 Zero 机型上均可使用，复合输出仅在您将其设置为 `1` 时可用，这也会禁用HDMI输出。键盘系列产品上不提供复合输出。
 
 [%header,cols="1,1"]
 
@@ -67,7 +66,7 @@ NOTE: Raspberry Pi 400上不提供复合视频输出。
 |1
 |===
 
-在除树莓派4和5之外的所有型号上，需要禁用HDMI输出才能启用复合输出。当没有连接/检测到HDMI显示器时，HDMI输出被禁用。设置 `enable_tvout=0` 以防止在禁用HDMI时启用复合。
+在所有支持此功能的型号上，需要禁用HDMI输出才能启用复合输出。当没有连接/检测到HDMI显示器时，HDMI输出被禁用。设置 `enable_tvout=0` 以防止在禁用HDMI时启用复合。
 
 要启用复合输出，请在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中的 `dtoverlay=vc4-kms-v3d` 行末尾添加 `,composite` ：
 

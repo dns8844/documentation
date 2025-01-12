@@ -8,29 +8,40 @@
 
 Raspberry Pi Zero、Zero W 和 Zero 2 W 有一个迷你 HDMI 端口，因此您需要迷你 HDMI 转全尺寸 HDMI 的导线或适配器。
 
-Raspberry Pi 4、Raspberry Pi 5 和 Raspberry Pi 400 有两个微型 HDMI 端口，因此您需要为每个要连接的显示器准备一个微型 HDMI 转全尺寸 HDMI 连接线或适配器。在打开 Raspberry Pi 之前连接电缆。
+从 Raspberry Pi 4B 开始的旗舰机型和键盘机型有两个微型 HDMI 端口，因此您需要为每台要连接的显示器准备一条微型 HDMI 转全尺寸 HDMI 的导线或适配器。在打开 Raspberry Pi 之前连接电缆。
 
-Raspberry Pi 4 和 400 最多可驱动两台显示器，分辨率可达 1080p，刷新率为 60Hz。这些设备支持两台刷新率为 30Hz 的 4K 显示器。如果将显示器连接到 "HDMI0 "端口，并在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中设置 "hdmi_enable_4kp60=1 "标志，还可以以 60Hz 的刷新率驱动一台 4K 显示器。
+自 Raspberry Pi 4B 开始的旗舰机型、自 CM4 开始的计算模块（CM4S 除外）以及键盘机型最多可驱动两台显示器。
 
-Raspberry Pi 5 最多可驱动两台分辨率为 4K、刷新率为 60hz 的显示器，无需额外配置。
+4 系列设备以 60Hz 的刷新率支持高达 1080p 的分辨率，或以 30Hz 的刷新率支持两台 4K 显示器。如果将显示器连接到 `HDMI0` 端口，并在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中设置 `hdmi_enable_4kp60=1` 标志，还能以 60Hz 的刷新率驱动一台 4K 显示器。
+
+5 系列设备无需额外配置，即可以 60hz 的刷新率支持多达两台 4K 分辨率的显示器。
 
 [[set-resolution-and-rotation]]
 === 设置分辨率和旋转
 
-==== 桌面
-
 在 Raspberry Pi 桌面上，打开 *Preferences* 菜单，选择 **Screen Configuration** 实用程序。你会看到连接到 Raspberry Pi 的显示器的图形显示。右键单击要修改的显示屏，然后选择一个选项。单击 **Apply** 并关闭 **Screen Configuration** 以保存更改。
 
-==== CLI
+或者, 使用以下命令打开 **Screen Configuration** 组件:
+[source,console]
+----
+$ raindrop
+----
 
-使用以下命令打开 **Screen Configuration** 实用程序：
+[TIP]
+====
+如果你的系统不包含 `raindrop`可以使用以下命令安装：
 
 [source,console]
 ----
-$ arandr
+$ sudo apt install raindrop
 ----
 
-你会看到连接到 Raspberry Pi 的显示器的图形显示。右键单击要修改的显示屏，选择一个选项。点击 **Apply** 并关闭 **Screen Configuration** 以保存更改。
+旧版本的 Raspberry Pi OS 使用名为 `arandr` 的不同屏幕配置实用程序。要卸载 `arandr`，请运行以下命令：
+[source,console]
+----
+$ sudo apt purge arandr
+----
+====
 
 === 手动设置分辨率和旋转
 

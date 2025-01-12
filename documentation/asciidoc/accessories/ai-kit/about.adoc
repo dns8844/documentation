@@ -91,4 +91,4 @@ WARNING: 在从M.2插槽连接或断开设备之前，请务必断开Raspberry P
 
 == Get started with AI on your Raspberry Pi
 
-要开始在您的Raspberry Pi上运行AI加速应用程序，请查看我们的 xref:../computers/ai.adoc[入门人工智能] 指南。
+要开始在您的Raspberry Pi上运行AI加速应用程序，请查看我们的 xref:../computers/ai.adoc[入门AI及AI套件] 指南。

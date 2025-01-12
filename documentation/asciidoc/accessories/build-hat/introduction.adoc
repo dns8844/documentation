@@ -9,7 +9,7 @@ NOTE: 支持的设备的完整列表可以在 xref:build-hat.adoc#device-compati
 
 它为SPIKE™产品组合的乐高®™电机和传感器提供四个连接器。可用的传感器包括距离传感器、颜色传感器和多功能力传感器。角电机有多种尺寸，包括集成编码器，可以查询以找到它们的位置。
 
-Build HAT适用于所有带有40针GPIO接头的Raspberry Pi计算机，包括添加排线或其他扩展设备的Raspberry Pi 400。连接的乐高®Technic™设备可以很容易地用Python控制，以及标准的Raspberry Pi配件，如相机模块。
+Build HAT适用于所有带有40针GPIO接头的Raspberry Pi计算机，包括添加排线或其他键盘系列设备。连接的乐高®Technic™设备可以很容易地用Python控制，以及标准的Raspberry Pi配件，如相机模块。
 
 树莓派Build HAT电源（PSU）是 https://raspberrypi.com/products/build-hat-power-supply[available separately]，旨在为Build HAT和树莓派计算机以及所有连接的乐高®技术™设备供电。
 
@@ -17,7 +17,7 @@ image::images/psu.jpg[width="80%"]
 
 乐高®教育SPIKE™Prime Set 45678和SPIKE™Prime Expansion Set 45681可从乐高®教育经销商处单独获得，包括由Build HAT支持的有用元素集合。
 
-NOTE: HAT适用于所有40针GPIO Raspberry Pi板，包括Raspberry Pi 4和Raspberry Pi Zero。通过添加排线或其他扩展设备，它也可以与Raspberry Pi 400一起使用。
+NOTE: HAT适用于所有40针GPIO Raspberry Pi板，包括Raspberry Pi Zero系列。通过添加排线或其他扩展设备，它也可以与键盘系列设备一起使用。
 
 * 最多可控制 4 个 LEGO® Technic™ 电机和 SPIKE™ 产品组合中包含的传感器
 * 易于使用 https://buildhat.readthedocs.io/[Python 库]来控制您的乐高® Technic™ 设备
@@ -27,5 +27,5 @@ NOTE: HAT适用于所有40针GPIO Raspberry Pi板，包括Raspberry Pi 4和Raspb
 
 [NOTE]
 ====
-Build HAT无法为Raspberry Pi 400供电，因为它不支持通过GPIO标头供电。
+Build HAT无法为键盘系列设备供电，因为它不支持通过GPIO标头供电。
 ====

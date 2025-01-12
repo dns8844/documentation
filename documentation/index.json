@@ -54,7 +54,7 @@
                     "subpath": "camera_software.adoc"
                 },
                 {
-                    "title": "AI 软件",
+                    "title": "AI套件及AI HAT+ 软件",
                     "description": "Raspberry Pi 硬件上的AI软件和库",
                     "image": "full-sized/ai.png",
                     "subpath": "ai.adoc"
@@ -113,6 +113,12 @@
                     "description": "The Raspberry Pi Touch Display 2",
                     "image": "full-sized/Touch-Display-2.png",
                     "subpath": "touch-display-2.adoc"
+                },
+                {
+                    "title": "Monitor",
+                    "description": "The Raspberry Pi Monitor",
+                    "image": "full-sized/monitor.png",
+                    "subpath": "monitor.adoc"
                 },
                 {
                     "title": "摄像头",

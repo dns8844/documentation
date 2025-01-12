@@ -4,15 +4,11 @@
 [[common-display-options]]
 === 常用显示选项
 
-[[hdmi_enable_4kp60-raspberry-pi-4-only]]
-==== `hdmi_enable_4kp60` （仅限树莓派4）
+==== `hdmi_enable_4kp60`
 
-默认情况下，当连接到 4K 显示器时，Raspberry Pi 4B、400 和 CM4 将选择 30Hz 刷新率。使用该选项可选择 60Hz 刷新率。Raspberry Pi 4 不支持同时通过两个微型 HDMI 端口输出 4Kp60。设置 `hdmi_enable_4kp60`会增加功耗和温度。
+NOTE: 此配置只可用在 Raspberry Pi 4, Compute Module 4, Compute Module 4S, 和 Pi 400.
 
-
-IMPORTANT: 无法在Raspberry Pi 4的两个micro HDMI端口上同时输出4Kp60。
-
-WARNING: 设置 `hdmi_enable_4kp60` 会增加功耗和树莓派的温度。
+默认情况下，当连接到 4K 显示器时，某些型号会选择 30Hz 刷新率。使用该选项可选择 60Hz 刷新率。受此设置影响的机型不支持同时在两个微型 HDMI 端口上输出 4Kp60。启用此设置会增加功耗和温度。
 
 [[common-hardware-configuration-options]]
 === 常用硬件配置选项
@@ -20,12 +16,20 @@ WARNING: 设置 `hdmi_enable_4kp60` 会增加功耗和树莓派的温度。
 [[camera_auto_detect]]
 ==== `camera_auto_detect` 
 
-启用此设置后（在Raspberry Pi OS中默认启用），固件将自动加载它识别的CSI相机的overlays。设置 `camera_auto_detect=0` 以禁用该设置。
+默认情况下，Raspberry Pi OS 在 `/boot/firmware/config.txt`中包含一行启用此设置的内容。
+
+启用后，固件将自动为识别到的 CSI 摄像头加载设备树。
+
+要禁用，请设置 `camera_auto_detect=0`。
 
 [[display_auto_detect]]
 ==== `display_auto_detect` 
 
-启用此设置后（在Raspberry Pi OS中默认启用），固件将自动加载它识别的DSI显示器的overlay。设置 `display_auto_detect=0` 以禁用。
+默认情况下，Raspberry Pi OS 在 `/boot/firmware/config.txt`中包含一行启用此设置的内容。
+
+启用后，固件将自动为识别到的 DSI 显示器加载设备树。
+
+要禁用，请设置 `display_auto_detect=0`。
 
 [[dtoverlay]]
 ==== `dtoverlay` 
@@ -43,12 +47,20 @@ Raspberry Pis的设备树配置文件支持许多参数，例如启用I2C和SPI�
 
 有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays and config.txt]。
 
-[[arm_boost-raspberry-pi-4-only]]
-==== `arm_boost` （仅限树莓派4）
+==== `arm_boost`
 
-所有树莓派400和树莓派4B的更新版本都配备了用于SoC电压轨的第二个开关模式电源，这允许默认涡轮模式时钟从1.5GHz增加到1.8GHz。此更改在树莓派操作系统中默认启用。设置 `arm_boost=0` 以禁用。
+注意：此选项仅适用于包含两相供电的 Raspberry Pi 4B 后续版本，以及 Pi 400 的所有版本。
 
-[[power_force_3v3_pwm-raspberry-pi-5-only]]
-==== `power_force_3v3_pwm` （仅限树莓派5）
+默认情况下，Raspberry Pi OS 在 `/boot/firmware/config.txt` 中包含一行，可在支持的设备上启用此设置。
 
-使用3V3电源时强制PWM。设置 `power_force_3v3_pwm=0` 以禁用。
+某些 Raspberry Pi 设备为 SoC 电压轨配备了第二个开关模式电源。启用后，默认的涡轮模式时钟频率将从 1.5GHz 增至 1.8GHz。
+
+要禁用，请设置 `arm_boost=0`。
+
+==== `power_force_3v3_pwm`
+
+NOTE: 该选项仅适用于 Raspberry Pi 5、Compute Module 5 和 Pi 500。
+
+强制从 GPIO 针座或 CSI 连接器输出 3.3V 电压的 PWM。
+
+若要禁用，请设置 `power_force_3v3_pwm=0`。

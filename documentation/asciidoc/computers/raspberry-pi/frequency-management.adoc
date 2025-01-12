@@ -12,7 +12,7 @@ Raspberry Pi 4 Model B继续采用与Raspberry Pi 3 Model B+相同的PCB技术�
 [[use-dvfs]]
 === 使用DVFS
 
-NOTE: DVFS的讨论仅适用于Raspberry Pi 4 Model B、Raspberry Pi 400和计算模块4。
+NOTE: DVFS的讨论仅适用于4-系列产品（Raspberry Pi 4 Model B、Raspberry Pi 400 和 Compute Module 4，Pi 400）。
 
 Raspberry Pi 4设备实现动态电压和频率缩放（DVFS）。这种技术允许Raspberry Pi 4设备在较低温度下运行，同时仍能提供相同的性能。
 
@@ -34,7 +34,7 @@ SoC 内部的各种时钟（如 Arm、Core、V3D、ISP、H264、HEVC）都受到
 | 如果在 `config.txt` 中指定了 `over_voltage` ，则禁用动态电压缩放，导致系统恢复为 `dvfs=2` 。
 |===
 
-NOTE: 此设置已在Raspberry Pi 5上删除，并且实际上始终处于模式3。
+NOTE: 此设置已在5-系列设备上删除，并且实际上始终处于模式3。
 
 此外，更步进的中央处理器调速器也用于对ARM核心频率进行更细粒度的控制，这意味着DVFS更有效。这些步骤现在是1500MHz、1000MHz、750MHz和600MHz。当SoC被节流时，这些步骤也会有所帮助，这意味着一路节流回600MHz的可能性要小得多，从而全面提高满载性能。
 

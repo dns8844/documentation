@@ -5,11 +5,11 @@
 
 NOTE: 在没有 "H" 后缀的 Zero 和 Pico 设备上，报头没有填充（没有报头）。
 
-image::images/GPIO-Pinout-Diagram-2.png[alt="GPIO pinout diagram",width="60%"]
+image::images/GPIO-Pinout-Diagram-2.png[alt="GPIO pinout diagram",width="100%"]
 
 通用 I/O (GPIO) 引脚可配置为通用输入、通用输出或多达六种特殊备用设置之一，其功能取决于引脚。
 
-image::images/GPIO.png[alt="GPIO layout",width="60%"]
+image::images/GPIO.png[alt="GPIO layout",width="100%"]
 
 NOTE: GPIO 引脚编号方案不按数字顺序排列。电路板上有 GPIO 引脚 0 和 1（物理引脚 27 和 28），但这两个引脚是为高级用途预留的。
 
@@ -178,7 +178,7 @@ BCM2835 封装上的 GPIO 连接有时在外设datasheet中称为 "引脚"，这
 ^b^ 默认驱动强度（8mA） +
 ^c^ 最大驱动强度（16mA）
 
-下表给出了基于 BCM2711 的产品（如 Raspberry Pi 4 和 Raspberry Pi 400）上 GPIO 引脚的电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关datasheet]。
+下表给出了基于 BCM2711 的产品（4-系列产品）上 GPIO 引脚的电压规格。有关计算模块的信息，请参阅 xref:compute-module.adoc#specifications[相关datasheet]。
 
 |===
 | Symbol | Parameter | Conditions &emsp; | Min | Typical | Max | Unit

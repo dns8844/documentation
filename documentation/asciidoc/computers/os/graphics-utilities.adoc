@@ -167,7 +167,7 @@ $ vcgencmd get_config total_mem
 
 ===== `codec_enabled [type]`
 
-报告是否启用了指定的编解码器类型。可能的类型选项有 AGIF、FLAC、H263、H264、MJPA、MJPB、MJPG、MPG2、MPG4、MVC0、PCM、THRA、VORB、VP6、VP8、WMV9 和 WVC1。请注意，由于 Raspberry Pi 4 和 400 上的 H.265 HW 块不是 VideoCore GPU 的一部分，因此不能通过此命令访问其状态。
+报告是否启用了指定的编解码器类型。可能的类型选项有 AGIF、FLAC、H263、H264、MJPA、MJPB、MJPG、MPG2、MPG4、MVC0、PCM、THRA、VORB、VP6、VP8、WMV9 和 WVC1。因为 Raspberry Pi 4 和 400 上的 H.265 HW 块不是 VideoCore GPU 的一部分，因此不能通过此命令访问其状态。
 
 ===== `mem_oom`
 

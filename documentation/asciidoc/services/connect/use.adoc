@@ -3,34 +3,36 @@
 
 现在您已经在Raspberry Pi设备上安装并启动了Connect，您必须将您的设备与您的Connect帐户相关联。
 
-=== via the Raspberry Pi Desktop
-
+[tabs]
+======
+桌面::
++
 如果您使用菜单栏的Connect插件，首次单击 “Turn On Raspberry Pi Connect” 将打开您的浏览器，提示您使用Raspberry Pi ID登录：
-
++
 image::images/browser-sign-in.png[width="80%"]
-
++
 或者，您可以从下拉框中选择"Sign In..."：
-
++
 image::images/sign-in.png[width="80%"]
 
 如果您还没有Raspberry Pi ID，请单击 *create one for free* 到 xref:id.adoc#create-a-raspberry-pi-id[创建一个]。
-
-=== via the command line
-
+CLI::
++
 使用以下命令生成将您的设备与Connect帐户连接的链接：
-
++
 [source,console]
 ----
 $ rpi-connect signin
 ----
-
++
 此命令应输出如下内容：
-
++
 ----
 Complete sign in by visiting https://connect.raspberrypi.com/verify/XXXX-XXXX
 ----
-
++
 访问任何设备上的验证URL并使用您的Raspberry Pi ID登录以将您的设备与您的Connect帐户链接。
+======
 
 === Finish linking your Raspberry Pi
 

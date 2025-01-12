@@ -80,13 +80,13 @@ $ sudo nmcli connection add type ethernet slave-type bridge \
 $ sudo nmcli connection modify 'Hotspot' master bridge0
 ----
 
-* 如果您尚未创建无线热点连接，请使用单个命令创建一个新接口并将其添加到网桥，将 `<hotspot-password>` 占位符替换为您选择的密码：
+* 如果您尚未创建无线热点连接，请使用单个命令创建一个新接口并将其添加到网桥，将 `<hotspot-ssid>` `<hotspot-password>` 占位符替换为您选择的热点和密码：
 +
 [source,console?prompt=$]
 ----
 $ sudo nmcli connection add con-name 'Hotspot' \
     ifname wlan0 type wifi slave-type bridge master bridge0 \
-    wifi.mode ap wifi.ssid Hotspot wifi-sec.key-mgmt wpa-psk \
+    wifi.mode ap wifi.ssid <hotspot-ssid> wifi-sec.key-mgmt wpa-psk \
     wifi-sec.proto rsn wifi-sec.pairwise ccmp \
     wifi-sec.psk <hotspot-password>
 ----

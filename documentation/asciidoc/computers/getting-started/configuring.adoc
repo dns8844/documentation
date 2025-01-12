@@ -7,11 +7,11 @@
 如果您将操作系统安装在microSD卡上，您现在可以将其插入Raspberry Pi的SD卡插槽。
 如果您在任何其他存储设备上安装了操作系统，您现在可以将其连接到您的Raspberry Pi。
 
-image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspberry Pi."]
+image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspberry Pi.",width="80%"]
 
 然后，插入任何其他外围设备，例如鼠标、键盘和显示器。
 
-image::images/peripherals/cable-all.png[alt="Attaching the power supply to a Raspberry Pi."]
+image::images/peripherals/cable-all.png[alt="Attaching the power supply to a Raspberry Pi.",width="80%"]
 
 最后，将电源连接到您的Raspberry Pi。当您的Pi上电时，您应该会看到状态LED亮起。如果您的Pi已经连接到显示器，您应该会在几分钟内看到启动屏幕。
 
@@ -28,7 +28,7 @@ image::images/peripherals/cable-all.png[alt="Attaching the power supply to a Ras
 
 如果您选择跳过Imager中的自定义操作系统配置，您的Raspberry Pi将在首次启动时运行配置向导。您需要一个显示器和键盘来完成配置，鼠标是可选的。
 
-image::images/initial-setup/start.png[alt="Click Next to get started with configuration."]
+image::images/initial-setup/start.png[alt="Click Next to get started with configuration.",width="80%"]
 
 [[bluetooth]]
 === 蓝牙
@@ -42,7 +42,7 @@ image::images/initial-setup/start.png[alt="Click Next to get started with config
 
 此页面可帮助您配置您的国家、语言和时区以及键盘布局。
 
-image::images/initial-setup/locale.png[alt="Adjust country, language, time zone, and keyboard layout."]
+image::images/initial-setup/locale.png[alt="Adjust country, language, time zone, and keyboard layout.",width="80%"]
 
 [[user]]
 === 用户
@@ -51,31 +51,30 @@ image::images/initial-setup/locale.png[alt="Adjust country, language, time zone,
 
 默认情况下，旧版本的 Raspberry Pi OS 将用户名设置为 "pi"。如果使用用户名 "pi"，请避免使用默认密码 "raspberry"，以确保 Raspberry Pi 的安全。
 
-image::images/initial-setup/user.png[alt="Create your username and password."]
+image::images/initial-setup/user.png[alt="Create your username and password.",width="80%"]
 
 [[wi-fi]]
 === Wi-Fi
 
 此页面可帮助您连接到 Wi-Fi 网络。从列表中选择您的网络。
 
-image::images/initial-setup/network.png[alt="Selecting a wireless network."]
+image::images/initial-setup/network.png[alt="Selecting a wireless network.",width="80%"]
 
 如果您的网络需要密码，您可以在此处输入。
 
-image::images/initial-setup/network_password.png[alt="Entering a password for a wireless network."]
-
+image::images/initial-setup/network_password.png[alt="Entering a password for a wireless network.",width="80%"]
 
 === 浏览器
 
 此页面允许您选择Firefox或Chromium作为默认的互联网浏览器。您可以选择是否卸载未设置为默认的浏览器。
 
-image::images/initial-setup/browser.png[alt="The Choose Browser page."]
+image::images/initial-setup/browser.png[alt="The Choose Browser page.",width="80%"]
 
 === Raspberry Pi Connect
 
 此页面可让您启用 xref:../services/connect.adoc[Raspberry Pi Connect]，它提供了无需手动网络配置即可远程访问 Raspberry Pi 的功能。
 
-image::images/initial-setup/connect.png[alt="启用 Raspberry Pi 连接的页面."]
+image::images/initial-setup/connect.png[alt="The Enable Raspberry Pi Connect page.",width="80%"]
 
 [[software-updates]]
 === 更新软件
@@ -84,9 +83,9 @@ NOTE: *国内网络更新起来速度很慢，建议跳过这一步*
 
 如果Raspberry Pi可以访问互联网，此页面可帮助您将操作系统和软件更新到最新版本。在软件更新过程中，如果您在浏览器选择步骤中选择卸载非默认浏览器，初次启动引导程序将会它删除。下载更新可能需要几分钟时间。
 
-image::images/initial-setup/update.png[alt="You can download the latest software updates during the wizard before you boot for the first time."]
+image::images/initial-setup/update.png[alt="You can download the latest software updates during the wizard before you boot for the first time.",width="80%"]
 
-image::images/initial-setup/download.png[alt="You can download the latest software updates during the wizard before you boot for the first time."]
+image::images/initial-setup/download.png[alt="You can download the latest software updates during the wizard before you boot for the first time.",width="80%"]
 
 当您看到指示您的系统是最新的弹出窗口时，单击 **OK** 继续下一步。
 
@@ -94,4 +93,4 @@ image::images/initial-setup/download.png[alt="You can download the latest softwa
 
 在配置向导结束时，单击**Restart**以重新启动Raspberry Pi。Raspberry Pi将应用配置并启动到桌面。
 
-image::images/initial-setup/restart.png[alt="The Setup Complete dialogue prompts to restart your Raspberry Pi."]
+image::images/initial-setup/restart.png[alt="The Setup Complete dialogue prompts to restart your Raspberry Pi.",width="80%"]

@@ -15,7 +15,7 @@ Raspberry Pi 计算模块是旗舰 Raspberry Pi 型号的 **系统模块** 变�
 .Compute Module 5
 image::images/cm5.png[alt="Compute Module 5", width="60%"]
 
-计算模块 5（CM5）将 Raspberry Pi 5 的内部结构（BCM2712 处理器和 2GB、4GB 或 8GB 内存）与可选的 0GB（Lite）、16GB、32GB 或 64GB eMMC 闪存结合在一起。
+计算模块 5（CM5）将 Raspberry Pi 5 的内部结构（BCM2712 处理器和 2GB、4GB、8GB 或 16GB 内存）与可选的 0GB（Lite）、16GB、32GB 或 64GB eMMC 闪存结合在一起。
 
 CM5 采用与 CM4 相同的外形尺寸，具有两个 100 针高密度连接器。
 

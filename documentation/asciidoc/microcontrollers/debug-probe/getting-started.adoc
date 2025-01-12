@@ -4,7 +4,7 @@ image:images/labelled-wiring.jpg[width="100%"]
 
 根据您的设置，有几种方法可以将 Debug Probe 连接到 xref:pico-series.adoc[Pico系列设备]。下面，我们将 Debug Probe 连接到树莓派PicoH，它具有用于SWD的较新的三引脚JST-SH连接器。
 
-video::4RCZBZsfsek[youtube]
+video::4RCZBZsfsek[youtube,width=80%,height=400px]
 
 按照以下方式连接：
 

@@ -4,6 +4,7 @@
 
 bilibili::BV1xS6JYkEZ9[]
 
+
 要开始使用Raspberry Pi，您需要以下配件：
 
 * xref:raspberry-pi.adoc#power-supply[电源]
@@ -52,7 +53,7 @@ bilibili::BV1xS6JYkEZ9[]
 |https://www.raspberrypi.com/products/micro-usb-power-supply/[12.5W Micro USB电源]
 |===
 
-image::images/peripherals/cable-power.png[alt="Plugging a power supply into a Raspberry Pi."]
+image::images/peripherals/cable-power.png[alt="Plugging a power supply into a Raspberry Pi.",width="80%"]
 
 将电源插入标有"POWER IN", "PWR IN"，或 "PWR"的接口。某些Raspberry Pi型号（例如Zero系列）的输出USB接口与电源接口的外形尺寸相同。请务必在Raspberry Pi上使用正确的电源接口！
 
@@ -63,7 +64,7 @@ Raspberry Pi 型号没有板载存储设备，因此必须由您自己提供。�
 
 自 Raspberry Pi 1 Model A+ 以来的所有 Raspberry Pi 消费者型号都有一个 microSD 插槽。当 microSD 插槽中有卡时，Raspberry Pi 会自动从该插槽启动。
 
-image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspberry Pi."]
+image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspberry Pi.",width="80%"]
 
 [[recommended-sd-cards]]
 ==== 推荐的SD卡
@@ -87,14 +88,14 @@ image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspb
 
 您可以使用Raspberry Pi上的任何USB接口连接 https://www.raspberrypi.com/products/raspberry-pi-keyboard-and-hub/[有线键盘] 或USB蓝牙接收器。
 
-image:images/peripherals/cable-key.png[alt="Plugging a keyboard into a Raspberry Pi."]
+image:images/peripherals/cable-key.png[alt="Plugging a keyboard into a Raspberry Pi.",width="80%"]
 
 [[mouse]]
 === 鼠标
 
 您可以使用Raspberry Pi上的任何USB接口连接 https://www.raspberrypi.com/products/raspberry-pi-mouse/[有线鼠标] 或USB蓝牙接收器。
 
-image:images/peripherals/cable-mouse.png[alt="Plugging a mouse into a Raspberry Pi."]
+image:images/peripherals/cable-mouse.png[alt="Plugging a mouse into a Raspberry Pi.",width="80%"]
 
 [[display]]
 === 显示
@@ -134,7 +135,7 @@ NOTE: 没有Raspberry Pi型号支持USB-C视频（DisplayPort alt模式）。
 
 大多数显示器没有 micro 或 mini HDMI 接口。但是，您可以使用 https://www.raspberrypi.com/products/micro-hdmi-to-standard-hdmi-a-cable/[micro-HDMI到HDMI电缆] 或 https://www.raspberrypi.com/products/standard-hdmi-a-male-to-mini-hdmi-c-male-cable/[mini-HDMI到HDMI电缆] 将树莓派上的这些接口连接到任何HDMI显示器。对于不支持HDMI的显示器，请考虑使用适配器，将显示输出从HDMI转换到显示器支持的接口。
 
-image::images/peripherals/cable-hdmi.png[alt="Plugging a micro HDMI cable into a Raspberry Pi."]
+image::images/peripherals/cable-hdmi.png[alt="Plugging a micro HDMI cable into a Raspberry Pi.",width="80%"]
 
 === 音频
 
@@ -147,13 +148,11 @@ image::images/peripherals/cable-hdmi.png[alt="Plugging a micro HDMI cable into a
 
 以下Raspberry Pi型号配备Wi-Fi和蓝牙连接：
 
-* Raspberry Pi 5
-* Raspberry Pi 4
-* Raspberry Pi 3B+
-* Raspberry Pi 3
-* Raspberry Pi Zero W
-* Rsapberry Pi Zero 2 W
+* 自 Raspberry Pi 3 Model B 开始的旗舰机型
+* 所有 Zero W 型号
+* 所有 Pico W 型号
+* 配置无线功能的计算模块（自 CM4 起可用）
 
 "Model B" 后缀表示带有以太网接口的变体；"Model A"表示没有以太网接口。如果您的Raspberry Pi没有以太网接口，您仍然可以使用USB转以太网适配器连接到有线互联网连接。
 
-image::images/peripherals/cable-net.png[alt="Plugging an Ethernet cable into a Raspberry Pi."]
+image::images/peripherals/cable-net.png[alt="Plugging an Ethernet cable into a Raspberry Pi.",width="80%"]

@@ -331,7 +331,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 | 550
 |===
 
-NOTE: 在 Raspberry Pi 5 上无需使用 `hdmi_enable_4kp60`；它默认支持双 4Kp60 显示器。
+NOTE: 从 Raspberry Pi 5、CM5、Pi 500后无需添加 `hdmi_enable_4kp60`，因为默认支持双 4Kp60 显示器。
 
 * 超频需要最新的固件版本。
 * 如果系统超频，最新固件会自动放大电压。手动设置 `over_voltage` 会禁用超频的自动电压缩放。

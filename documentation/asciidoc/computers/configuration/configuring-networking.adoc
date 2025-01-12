@@ -12,7 +12,7 @@ NOTE: 从 Raspberry Pi OS _Bookworm_ 开始，网络管理器是默认的网络�
 
 通过菜单栏右端的网络图标访问网络管理器。如果您使用的是具有内置无线连接的Raspberry Pi，或者如果插入了无线加密狗，请单击此图标以显示可用无线网络列表。如果您看到消息'No APs found - scanning...'，请等待几秒钟，网络管理器应该会找到您的网络。
 
-NOTE: 支持双频无线的树莓派设备（Raspberry Pi 3B+, Raspberry Pi 4, Compute Module 4, Raspberry Pi 400 和 Raspberry Pi 5）会自动禁用网络，直到您分配无线局域网国家。要设置无线局域网国家，请从首选项菜单中打开树莓派配置应用程序，选择 *Localisation* 并从菜单中选择您的国家。
+NOTE: 具有双频无线功能的设备会自动禁用联网功能，直到您分配了一个无线局域网国家。自 Raspberry Pi 3B+ 开始的旗舰机型、自 CM4 开始的计算模块和键盘机型支持双频无线。要设置无线局域网国家，请从首选项菜单打开 Raspberry Pi 配置应用程序，选择 *Localisation*，然后从菜单中选择您所在的国家。
 
 image::images/wifi2.png[wifi2]
 

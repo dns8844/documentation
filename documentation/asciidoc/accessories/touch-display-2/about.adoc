@@ -15,7 +15,7 @@ Touch Display 2使用DSI连接器和GPIO连接器连接到树莓派。树莓派�
 * powered directly by the host Raspberry Pi, requiring no separate power supply
 * supports up to five points of simultaneous multi-touch
 
-Touch Display 2兼容所有型号的树莓派从树莓派1B+开始，除了树莓派零和零2 W，它们缺少DSI连接器。
+Touch Display 2兼容所有型号的树莓派从树莓派1B+开始，除了树莓派Zero系列和键盘系列，它们缺少DSI连接器。
 
 Touch Display 2框包含以下部分（下图中从左到右、从上到下的顺序）：
 

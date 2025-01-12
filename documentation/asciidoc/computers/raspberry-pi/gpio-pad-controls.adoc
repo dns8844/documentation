@@ -7,7 +7,7 @@ GPIO驱动强度并不表示最大电流，而是引脚仍然符合规格的最�
 
 焊盘内部并联了许多驱动器。如果驱动强度设置为低 (`0b000`)，这些驱动器大多为三态，因此不会增加输出电流。如果驱动强度增加，并联的驱动器就会越来越多。下图显示了这种行为。
 
-WARNING: 对于Raspberry Pi 4、Raspberry Pi 400和Compute Module 4，当前级别为图表中所示值的一半。
+WARNING: 对于4-系列产品，当前级别为图表中所示值的一半。
 
 image::images/pi_gpio_drive_strength_diagram.png[GPIO驱动强度图]
 

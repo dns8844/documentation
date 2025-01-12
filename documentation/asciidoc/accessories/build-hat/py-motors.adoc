@@ -6,7 +6,7 @@
 
 将电机连接到Build HAT上的A端口。LPF2连接器需要正确向上插入。如果连接器不容易滑入，请旋转180度，然后重试。
 
-image::images/connect-motor.gif[width="80%"]
+video::images/connect-motor.webm[width="80%"]
 
 
 ==== Work with Motors
@@ -24,11 +24,11 @@ motor_a.run_for_seconds(5)
 
 通过单击播放/运行按钮运行程序。如果这是Raspberry Pi启动后第一次运行Build HAT程序，则在将固件烧录到板上时会有几秒钟的暂停。您应该会看到红色LED熄灭，绿色LED亮起。Python程序的后续执行不需要此暂停。
 
-image::images/blinking-light.gif[width="80%"]
+video::images/blinking-light.webm[width="80%"]
 
 你的马达应该顺时针转5秒钟。
 
-image::images/turning-motor.gif[width="80%"]
+video::images/turning-motor.webm[width="80%"]
 
 更改程序的最后一行并重新运行。
 

@@ -8,7 +8,7 @@
 
 树莓派操作系统预装了许多基本应用程序，因此您可以立即开始使用它们。如果您想利用我们认为有用的其他应用程序，请单击屏幕左上角的树莓图标。从下拉菜单中选择**Preferences > Recommended Software**，您将找到包管理器。您可以在这里免费安装各种推荐软件。
 
-image::images/recommended-software.png[Opening the package manager GUI in Raspberry Pi OS]
+image::images/recommended-software.png[alt="Opening the package manager GUI in Raspberry Pi OS",width="80%"]
 
 例如，如果您计划将Raspberry Pi用作家用计算机，您可能会发现LibreOffice对于编写和编辑文档和电子表格很有用。您还可以通过Universal Access下的屏幕放大镜和Orca屏幕阅读器等应用程序使您的Raspberry Pi更易于访问。
 

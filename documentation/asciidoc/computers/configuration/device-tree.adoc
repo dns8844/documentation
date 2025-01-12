@@ -527,7 +527,11 @@ overlay 映射是固件在启动时加载的文件。它以DTS源代码格式 - 
 };
 ----
 
-每个节点都有一个需要特殊处理的 overlay 的名称。每个节点的属性要么是平台名称，要么是少数特殊指令之一。目前支持的平台有： `bcm2835` （包括所有围绕 BCM2835、BCM2836 和 BCM2837 SoC 构建的树莓派）； `bcm2711` （用于树莓派 4B、400 和 CM4）； `bcm2712` （用于树莓派 5 和 CM5）。
+每个节点都有一个需要特殊处理的overlay的名称。每个节点的属性要么是平台名称，每个节点都有一个需要特殊处理的overlay名称。每个节点的属性要么是平台名称，要么是少数特殊指令之一。overlay ，map支持以下平台名称：
+
+* `bcm2835` 用于所有围绕 BCM2835、BCM2836、BCM2837 和 RP3A0 SoC 构建的 Raspberry Pis
+* 用于 Raspberry Pi 4B、CM4、CM4S 和 Pi 400 的 `bcm2711`
+* 用于 Raspberry Pi 5、CM5 和 Pi 500 的 `bcm2712`
 
 没有值的平台名称（空属性）表示当前 overlay 与平台兼容；例如， `uart5` 与 `bcm2711` 平台兼容。平台的非空值是替代请求 overlay 的替代 overlay 的名称；在BCM2712上使用 `disable-bt` 会加载 `disable-bt-pi5` 。overlay 节点中未包含的任何平台都与该 overlay 不兼容。映射文件中未提及的任何 overlay 都假定与所有平台兼容。
 

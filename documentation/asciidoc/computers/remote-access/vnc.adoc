@@ -29,13 +29,13 @@ TIP: 启用后，您可以在 `/etc/wayvnc/` 访问 WayVNC 配置。
 . 从菜单中选择 *Preferences* > *Raspberry Pi 配置*。
 +
 --
-image::images/raspberry-pi-configuration.png[从系统托盘中的首选项菜单中选择 Raspberry Pi 配置]
+image::images/raspberry-pi-configuration.png[alt="从系统托盘中的首选项菜单中选择 Raspberry Pi 配置",width="80%"]
 --
 . 导航到 *Interfaces* 选项卡。
 . 单击 *VNC* 旁边的单选按钮，使其处于活动位置。
 +
 --
-image::images/vnc-enable.png[在接口选项卡中，单击 VNC 切换到活动位置以启用 VNC。]
+image::images/vnc-enable.png[在接口选项卡中，单击 VNC 切换到活动位置以启用 VNC.",width="80%"]
 --
 . 单击 *OK* 按钮保存配置更改。
 
@@ -72,32 +72,32 @@ $ sudo raspi-config
 . 在 "VNC 服务器" 字段中，输入 Raspberry Pi 的 IP 地址。
 +
 --
-image::images/vnc-tigervnc-enter-ip.png[将 Raspberry Pi 的本地 IP 地址输入 TigerVNC，400]
+image::images/vnc-tigervnc-enter-ip.png[alt="将 Raspberry Pi 的本地 IP 地址输入 TigerVNC",width="60%"]
 --
 . 单击 "Options"按钮。导航至 "Input"选项卡。选中 "无光标时显示点 "旁边的复选框，确保在 TigerVNC 中始终能看到光标。
 +
 --
-image::images/vnc-tigervnc-show-dot.png[TigerVNC 选项，用于始终将光标呈现为点，400]
+image::images/vnc-tigervnc-show-dot.png[alt="TigerVNC 选项，用于始终将光标呈现为点,width="60%"]
 --
 . 单击'连接'按钮以启动与服务器的连接。
     * 如果 TigerVNC 警告您'主机名与服务器证书不匹配'，请单击"Yes"按钮继续。
 +
 --
-image::images/vnc-tigervnc-cert-warning.png[TigerVNC 警告证书不匹配，400]
+image::images/vnc-tigervnc-cert-warning.png[alt="TigerVNC 警告证书不匹配",width="60%"]
 --
 * 如果 TigerVNC 警告您"certificate has been signed by an unknown authority"，请单击'是'按钮为您的 Raspberry Pi 授予例外。
 +
 --
-image::images/vnc-tigervnc-cert-signer-warning.png[TigerVNC 警告证书已由未知机构签名，400]
+image::images/vnc-tigervnc-cert-signer-warning.png[alt="TigerVNC 警告证书已由未知机构签名,width="60%"]
 --
 .当提示输入用户名和密码时，请输入您的凭据。
 +
 --
-image::images/vnc-tigervnc-username-password.png[Entering a username and password to authenticate via TigerVNC,400]
+image::images/vnc-tigervnc-username-password.png[alt="Entering a username and password to authenticate via TigerVNC,width="60%"]
 --
 
 . 点击 "OK"（确定）按钮验证 VNC 服务器。如果凭据正确无误，TigerVNC 将打开一个窗口，其中包含与你在 Raspberry Pi 上的账户相对应的桌面。你应该可以移动鼠标和键盘输入文本并与桌面互动
 +
 --
-image::images/vnc-tigervnc-desktop.png[The desktop of a Raspberry Pi after successfully authenticating with TigerVNC]
+image::images/vnc-tigervnc-desktop.png[alt="The desktop of a Raspberry Pi after successfully authenticating with TigerVNC",width="60%"]
 --

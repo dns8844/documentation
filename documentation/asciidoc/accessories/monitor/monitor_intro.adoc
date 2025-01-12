@@ -1,0 +1,119 @@
+== Raspberry Pi Monitor
+
+https://www.raspberrypi.com/products/raspberry-pi-monitor/[Raspberry Pi Monitor] 是一款15.6"1920×1080p IPS LCD显示屏，可使用HDMI电缆连接到计算机。显示器还需要USB-C电源。对于全亮度和音量范围，这必须是能够提供至少1.5A电流的USB-PD电源。
+
+.树莓派显示器
+image::images/monitor-hero.png[The Raspberry Pi Monitor, width="100%"]
+
+该显示器与所有支持HDMI输出的Raspberry Pi型号兼容。
+
+=== Controls
+
+显示器的背面包括以下控件：
+
+* a button that enters and exits Standby mode (indicated by the ⏻ (power) symbol)
+* buttons that increase and decrease display brightness (indicated by the 🔆 (sun) symbol)
+* buttons that increase and decrease speaker volume (indicated by the 🔈 (speaker) symbol)
+
+=== On screen display messages
+
+屏幕显示器（OSD）可能会显示以下消息：
+
+[cols="1a,6"]
+|===
+| Message | Description
+
+| image::images/no-hdmi.png[No HDMI signal detected]
+| No HDMI signal detected.
+
+| image::images/no-valid-hdmi-signal-standby.png[Standby mode]
+| The monitor will soon enter standby mode to conserve power.
+
+| image::images/not-supported-resolution.png[Unsupported resolution]
+| The output display resolution of the connected device is not supported.
+
+| image::images/power-saving-mode.png[Power saving mode]
+| The monitor is operating in Power Saving mode, with reduced brightness and volume, because the monitor is not connected to a power supply capable of delivering 1.5A of current or greater.
+|===
+
+此外，OSD使用🔆（太阳）符号显示显示亮度变化的信息，使用🔈（扬声器）符号显示扬声器音量变化的信息。亮度和音量都使用0到100的刻度。
+
+TIP: 如果您在显示器无法检测到HDMI信号时尝试退出待机模式，待机按钮下方的红色LED将短暂亮起，但显示器将保持待机模式。
+
+=== Position the Monitor
+
+使用以下方法定位显示器：
+
+* Angle the Monitor on the integrated stand.
+* Mount the Monitor on an arm or stand using the four VESA mount holes on the back of the red rear plastic housing.
++
+IMPORTANT: 使用垫片确保有足够的空间用于显示和电源线出口。
+* Flip the integrated stand fully upwards, towards the top of the monitor. Use the drill hole template to create two mounting points spaced 55mm apart. Hang the Monitor using the slots on the back of the integrated stand.
++
+.打孔模板
+image::images/drill-hole-template.png[Drill hole template, width="40%"]
+
+=== Power the Monitor
+
+Raspberry Pi显示器从5V https://en.wikipedia.org/wiki/USB_hardware#USB_Power_Delivery[USB Power Delivery]（USB-PD）电源供电。许多USB-C电源，包括Raspberry Pi 4和Raspberry Pi 5的官方电源，都支持此标准。
+
+使用通过USB-PD提供至少1.5A电流的电源时，显示器工作在 **全电源模式**。在全电源模式下，您可以使用显示亮度和扬声器音量的全范围（0%-100%）。
+
+当使用_not_通过USB-PD提供至少1.5A电流的电源（包括所有USB-A电源）时，显示器工作在 **省电模式**。省电模式限制最大显示亮度和最大扬声器音量，以确保可靠运行。在省电模式下，您可以使用有限范围（0-50%）的显示亮度和有限范围（0-60%）的扬声器音量。当由树莓派供电时，显示器工作在省电模式，因为树莓派设备无法通过USB-A连接提供1.5A的电流。
+
+要从省电模式切换到全电源模式，请按住 *增加亮度* 按钮3秒钟。
+
+[TIP]
+====
+如果显示器闪烁和关闭，您的USB电源无法提供足够的电流为显示器供电。如果您使用本身由5V/3A电源供电的Raspberry Pi 5或Pi 500为显示器供电，则可能会发生这种情况。尝试以下修复以阻止显示器闪烁和关闭：
+
+* reduce the display brightness and volume (you may have to connect your monitor to another power supply to access the settings)
+* switch to a different power source or cable
+
+====
+
+=== Specification
+
+对角线：15.6"
+
+分辨率：1920×1080
+
+类型：IPS LCD
+
+色域：45%
+
+对比度：800:1
+
+亮度：250cd/m^2^
+
+屏幕涂层：防眩光3H硬度
+
+显示面积：344×193mm
+
+尺寸：237×360×20mm
+
+重量：850g
+
+支持的决议：
+
+* 1920 × 1080p @ 50/60Hz
+* 1280 × 720p @ 50/60Hz
+* 720 × 576p @ 50/60Hz
+* 720 × 480p @ 50/60Hz
+* 640 × 480p @ 50/60Hz
+
+输入：HDMI 1.4；支持DDC-CI
+
+电源输入：USB-C；在5V下需要1.5A/USB-PD才能获得完整的亮度和音量范围
+
+功耗：使用时4.5-6.5W；空闲时<0.1W
+
+扬声器：2×1.2W（立体声）
+
+端口：3.5mm音频插孔
+
+
+=== Mechanical drawing
+
+.机械制图
+image::images/mechanical-drawing.png[Mechanical drawing, width="80%"]

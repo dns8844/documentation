@@ -59,9 +59,9 @@ WARNING: Raspberry Pi 5未通过Gen 3.0速度认证。PCIe Gen 3.0连接可能�
 
 默认情况下，Raspberry Pi 5 使用 Gen 2.0 速度（5 GT/s）。使用以下方法之一来强制使用 Gen 3.0（8 GT/s）：
 
-[tabs%sync]
+[tabs]
 ======
-via `config.txt`::
+`config.txt`::
 +
 连接已通过Gen 2.0速度（5 GT/sec）认证，但您可以强制执行Gen 3.0（10 GT/sec）速度。要启用PCIe Gen 3.0速度，请将以下行添加到 `/boot/firmware/config.txt` ：
 +
@@ -72,7 +72,7 @@ dtparam=pciex1_gen=3
 +
 使用 `sudo reboot` 重新启动您的Raspberry Pi以使这些设置生效。
 
-通过 `config.txt`
+`raspi-config`::
 +
 运行以下命令打开 Raspberry Pi 配置 CLI：
 +

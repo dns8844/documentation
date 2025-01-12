@@ -1,7 +1,7 @@
 [[nvme-ssd-boot]]
 == NVMe SSD启动
 
-NVMe（非易失性存储器）是通过PCIe总线进行外部存储访问的标准。您可以通过 Compute Module 4（CM4）IO板上的PCIe插槽或Raspberry Pi 5连接NVMe驱动器。通过一些额外的配置，您可以从NVMe驱动器启动。
+NVMe（Non-Volatile Memory express）是通过 PCIe 总线访问外部存储的标准。您可以通过计算模块 4 IO 板上的 PCIe 插槽、计算模块 5 IO 板上的 M.2 插槽以及使用 M.2 HAT+ 的 Raspberry Pi 5 连接 NVMe 硬盘。通过一些额外的配置，您可以从 NVMe 驱动器启动。
 
 [[prerequisites]]
 === 先决条件
@@ -24,36 +24,23 @@ brw-rw---- 1 root disk 259, 0 Mar  9 14:58 /dev/nvme0n1
 [[software]]
 ==== 软件
 
-运行以下命令以查看您正在运行的固件：
+首先确保你的设备正在使用最新的软件，运行下面命令升级软件：
 
 [source,console]
 ----
-$ sudo rpi-eeprom-update
+$ sudo apt update && sudo apt full-upgrade
 ----
 
-对于Raspberry Pi 5，您需要在2023年12月6日或更晚发布固件。
+=== Edit the bootloader boot priority
 
-对于CM4，NVMe启动支持于2021年7月推出。您需要自该日期以来发布的以下软件版本：
-
-* bootloader
-* VideoCore固件
-* Raspberry Pi OS Linux内核
-
-最新的Raspberry Pi OS版本拥有您需要的一切。使用 xref:getting-started.adoc#raspberry-pi-imager[Raspberry Pi Imager] 将Raspberry Pi OS安装到您的驱动器上。
-
-[[edit-eeprom-boot-order]]
-=== 编辑EEPROM启动顺序
-
-对于树莓派5，您需要启动树莓派操作系统来编辑启动顺序。您可以从SD卡或USB驱动器启动树莓派。即使您更改启动设备，EEPROM配置也会保持不变，因为EEPROM配置存储在主板本身上。
-
-使用Raspberry Pi配置CLI更新引导加载程序：
+使用树莓派配置工具来更新bootloader：
 
 [source,console]
 ----
 $ sudo raspi-config
 ----
 
-在 `Advanced Options` > `Bootloader Version` 下，选择 `Latest` 。然后，使用 `Finish` 或*Escape*键退出 `raspi-config` 。
+在 `Advanced Options` > `Bootloader Order` 下，指定引导加载程序应首先尝试从 `NVMe` 启动： 。
 
 运行以下命令将固件更新到最新版本：
 
@@ -62,7 +49,7 @@ $ sudo raspi-config
 $ sudo rpi-eeprom-update -a
 ----
 
-然后，使用 `sudo reboot` 重新启动。您的Raspberry Pi 5应该从NVMe启动。
+然后，使用 `sudo reboot` 重新启动。您的Raspberry Pi 应该从NVMe启动。
 
 对于CM4，使用 `rpiboot` 更新引导加载程序。您可以在 https://github.com/raspberrypi/usbboot[USB boot GitHub存储库] 中找到构建 `rpiboot` 和配置IO板以将ROM切换到usbboot模式的说明。
 

@@ -22,7 +22,8 @@ TIP: 在某些情况下，USB 集线器会阻止主机设备识别 Compute 模�
 === 安装 IO 板
 
 首先，物理安装 IO 板。这包括将计算模块和主机设备连接到 IO 板。
-[tabs%sync]
+
+[tabs]
 ======
 Compute Module 5 IO Board::
 +
@@ -54,7 +55,7 @@ Compute Module IO Board
 接下来，让我们在主机设备上设置软件。
 
 TIP: 对于主机设备，我们建议使用运行 64 位 Raspberry Pi OS 的 Raspberry Pi 4 或更新版本。
-[tabs%sync]
+[tabs]
 ======
 Linux::
 +
@@ -126,7 +127,7 @@ $ sudo dd if=raw_os_image.img of=/dev/sdX bs=4MiB
 
 === 从 eMMC 启动
 
-[tabs%sync]
+[tabs]
 ======
 Compute Module 5 IO Board::
 +

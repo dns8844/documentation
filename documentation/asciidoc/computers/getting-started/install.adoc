@@ -24,7 +24,7 @@ Imager支持直接使用 `.img` 格式以及 `.zip` 等格式的镜像。
 === 使用Imager安装
 
 ////
-TODO: Update this video for the new Imager look & flow (video::ntaXWS8Lk34[youtube])
+TODO: Update this video for the new Imager look & flow (video::ntaXWS8Lk34[youtube,width=80%,height=400px])
 ////
 
 您可以通过以下方式安装Imager：
@@ -34,27 +34,26 @@ TODO: Update this video for the new Imager look & flow (video::ntaXWS8Lk34[youtu
 
 安装Imager后，通过单击Raspberry Pi Imager图标或运行 `rpi-Imager` 来启动应用程序。
 
-image::images/imager/welcome.png[alt="Raspberry Pi Imager main window."]
+image::images/imager/welcome.png[alt="Raspberry Pi Imager main window.",width="80%"]
 
-单击**选择设备**并从列表中选择您的Raspberry Pi型号。
+单击 **选择设备** 并从列表中选择您的Raspberry Pi型号。
 
-image::images/imager/choose-model.png[alt="Raspberry Pi model selections in Imager."]
+image::images/imager/choose-model.png[alt="Raspberry Pi model selections in Imager.",width="80%"]
 
 
 接下来，单击**选择OS**并选择要安装的操作系统。Imager始终在列表顶部显示适用于您的型号的Raspberry Pi OS推荐版本。
 
-image::images/imager/choose-os.png[alt="Operating system selections in Imager."]
-
+image::images/imager/choose-os.png[alt="Operating system selections in Imager.",width="80%"]
 
 将您首选的存储介质连接到您的计算机。例如，使用外部或内置SD读卡器插入microSD卡。然后，单击**选择存储**并选择您的存储介质。
 
 警告：如果您有一个以上的存储介质连接到您的计算机，确保选择正确的设备！您通常可以通过大小来识别存储介质。如果您不确定，请断开其他设备，直到找到要安装镜像的设备。
 
-image::images/imager/choose-storage.png[alt="Storage selection options in Imager."]
+image::images/imager/choose-storage.png[alt="Storage selection options in Imager.",width="80%"]
 
-接下来，单击**Next**。
+接下来，单击 **Next**。
 
-image::images/imager/os-customisation-prompt.png[alt="Imager prompt to open OS customisation menu."]
+image::images/imager/os-customisation-prompt.png[alt="Imager prompt to open OS customisation menu.",width="80%"]
 
 在弹出窗口中，Imager会提示您使用自定义配置。我们强烈建议通过自定义配置来配置您的Raspberry Pi。单击**编辑设置**按钮打开 xref:getting-started.adoc#advanced-options[自定义配置]。
 
@@ -82,7 +81,7 @@ image::images/imager/os-customisation-prompt.png[alt="Imager prompt to open OS c
 
 **语言环境设置**选项允许您为Pi定义时区和默认键盘布局。
 
-image::images/imager/os-customisation-general.png[alt="General settings in the OS customisation menu."]
+image::images/imager/os-customisation-general.png[alt="General settings in the OS customisation menu.",width="80%"]
 
 **Services**选项卡包括帮助您远程连接到Raspberry Pi的设置。
 
@@ -92,11 +91,11 @@ image::images/imager/os-customisation-general.png[alt="General settings in the O
 
 * 选择**仅允许公钥身份验证**来预配置您的Raspberry Pi，以便使用您当前使用的计算机的私钥进行无密码公钥SSH身份验证。如果SSH配置中已经有RSA密钥，Imager将使用该公钥。如果没有，您可以单击**运行SSH-keygen**生成公钥/私钥对。Imager将使用新生成的公钥。
 
-image::images/imager/os-customisation-services.png[alt="Services settings in the OS customisation menu."]
+image::images/imager/os-customisation-services.png[alt="Services settings in the OS customisation menu.",width="80%"]
 
 操作系统自定义还包括一个**Options**菜单，允许您在写入期间配置Imager。这些选项允许您在Imager完成验证镜像时播放噪音，验证后自动卸载存储介质，并禁用遥测。
 
-image::images/imager/os-customisation-options.png[alt="Options in the OS customisation menu."]
+image::images/imager/os-customisation-options.png[alt="Options in the OS customisation menu.",width="80%"]
 
 [[write]]
 ==== 烧录
@@ -107,21 +106,21 @@ image::images/imager/os-customisation-options.png[alt="Options in the OS customi
 
 最后，在 "您确定要继续吗？" 弹出以后选择**是**开始将数据写入存储介质。
 
-image::images/imager/are-you-sure.png[alt="Confirming a reimage of a storage device in Imager."]
+image::images/imager/are-you-sure.png[alt="Confirming a reimage of a storage device in Imager.",width="80%"]
 
 如果您看到管理员提示，要求获得读取和写入存储介质的权限，请授予Imager继续的权限。
 
 .刷会视频或者开局游戏。这一般需要几分钟。
-image::images/imager/writing.png[alt="Writing an image to a device in Imager."]
+image::images/imager/writing.png[alt="Writing an image to a device in Imager.",width="80%"]
 
 
-.如果完全不担心烧录镜像时烧录出错，可以点击**取消验证**跳过验证过程。
-image::images/imager/stop-ask-verify.png[alt="Verifying an image on a device in Imager."]
+.如果完全不担心烧录镜像时烧录出错，可以点击 **取消验证** 跳过验证过程。
+image::images/imager/stop-ask-verify.png[alt="Verifying an image on a device in Imager.",width="80%"]
 
 
 当您看到 "写入成功" 弹出窗口时，您的镜像已完全写入并通过验证。您现在已准备好从存储介质启动Raspberry Pi！
 
-image::images/imager/finished.png[alt="The screen Imager shows when it finishes writing an image to a storage device."]
+image::images/imager/finished.png[alt="The screen Imager shows when it finishes writing an image to a storage device.",width="80%"]
 
 接下来，转到 xref:getting-started.adoc#configuration-on-first-boot[第一次引导配置说明] 以配置并运行您的Raspberry Pi。
 
@@ -132,10 +131,10 @@ NOTE: 国内不好用，完全不推荐
 
 网络安装使 Raspberry Pi 能够使用通过网络下载的 Raspberry Pi Imager 版本在存储设备上安装操作系统。有了网络安装，你就可以在 Raspberry Pi 上安装操作系统，无需单独的 SD 卡阅读器，也无需 Raspberry Pi 以外的电脑。你可以在任何兼容的存储设备上运行网络安装，包括 SD 卡和 USB 存储设备。
 
-Network Install仅在Raspberry Pi 4、400和5上运行。如果您的Raspberry Pi运行较旧的引导加载程序，您可能需要 xref:raspberry-pi.adoc#bootloader_update_stable[更新bootloader] 才能使用Network Install。
+网络安装只能在旗舰机型上运行，在Raspberry Pi 4B 和键盘系列无法运。如果您的Raspberry Pi运行较旧的引导加载程序，您可能需要 xref:raspberry-pi.adoc#bootloader_update_stable[更新bootloader] 才能使用Network Install。
 
 ////
-TODO: Update this video for the new Imager look & flow video::b1SYVpM9lto[youtube]
+TODO: Update this video for the new Imager look & flow video::b1SYVpM9lto[youtube,width=80%,height=400px]
 ////
 
 网络安装需要以下内容：
@@ -151,19 +150,19 @@ TODO: Update this video for the new Imager look & flow video::b1SYVpM9lto[youtub
 * 连接键盘
 * 已连接兼容存储设备，如 SD 卡或 USB 存储设备
 
-image::images/network-install-1.png[alt="The Network Install screen."]
+image::images/network-install-1.png[alt="The Network Install screen.",width="80%"]
 
 如果您尚未将Raspberry Pi连接到Internet，请接入网线。
 
-image::images/network-install-2.png[alt="Starting Network Install."]
+image::images/network-install-2.png[alt="Starting Network Install.",width="80%"]
 
 连接到Internet后，您的Raspberry Pi将下载Raspberry Pi安装程序。如果下载失败，您可以重复该过程重试。
 
-image::images/network-install-3.png[alt="Downloading Imager using Network Install."]
+image::images/network-install-3.png[alt="Downloading Imager using Network Install.",width="80%"]
 
 下载完成Raspberry Pi安装程序后，您的Raspberry Pi将自动启动Raspberry Pi Imager。有关运行Raspberry Pi Imager的更多信息，请参阅 xref:getting-started.adoc#installing-the-operating-system[安装操作系统]。
 
-image::images/network-install-4.png[alt="Choose a storage device."]
+image::images/network-install-4.png[alt="Choose a storage device.",width="80%"]
 
 
 有关网络安装配置的更多信息，请参考 xref:raspberry-pi.adoc#http-boot[HTTP启动].

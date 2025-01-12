@@ -61,6 +61,8 @@ Part Number: HM21LB1C2LAE
 Product Name: HAILO-8L AI ACC M.2 B+M KEY MODULE EXT TMP
 ----
 +
+NOTE: AI HAT+ 设备的 `Serial Number`、`Part Number` 和 `Product Name` 可能会显示 `<N/A>`。这是不会影响功能。
++
 此外，您可以运行 `dmesg | grep -i hailo` 来检查内核日志，这应该会产生类似于以下内容的输出：
 +
 ----
@@ -96,13 +98,11 @@ $ rpicam-hello -t 10s
 
 以下演示使用了默认显示预览窗口的 xref:camera_software.adoc#rpicam-hello[`rpicam-hello`]。不过，您也可以使用其他 `rpicam-apps` 代替，包括 xref:camera_software.adoc#rpicam-vid[`rpicam-vid`] 和 xref:camera_software.adoc#rpicam-still[`rpicam-still`] 。您可能需要添加或修改一些命令行选项，以使Demo命令与其他应用程序兼容。
 
-首先，下载演示所需的后处理JSON文件。这些文件确定要运行哪些后处理阶段并配置每个阶段的行为。例如，您可以在目标检测演示中启用、禁用、加强或削弱时间过滤的强度。或者您可以在分割演示中启用或禁用输出蒙版绘制。
-
-要下载整个后处理JSON文件集合，请克隆 `rpicam-apps` 存储库。运行以下命令以仅从存储库克隆最近的提交，从而节省空间：
+首先，运行以下命令安装最新的 `rpicam-apps` 软件包：
 
 [source,console]
 ----
-$ git clone --depth 1 https://github.com/raspberrypi/rpicam-apps.git ~/rpicam-apps
+$ sudo apt update && sudo apt install rpicam-apps
 ----
 
 TIP: 后续部分中提供的命令使用此存储库中的JSON文件。为了便于引用这些文件，此命令在您的主文件夹中创建克隆的 `rpicam-apps` 目录。如果修改此目录的位置，还必须更改下面的demo命令以引用JSON文件的新位置。
@@ -113,7 +113,7 @@ TIP: 后续部分中提供的命令使用此存储库中的JSON文件。为了�
 
 [source,console]
 ----
-$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov6_inference.json --lores-width 640 --lores-height 640
+$ rpicam-hello -t 0 --post-process-file /usr/share/rpi-camera-assets/hailo_yolov6_inference.json
 ----
 
 或者，您可以尝试另一种在性能和效率方面具有不同权衡的模型。
@@ -122,21 +122,21 @@ $ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov6_infere
 
 [source,console]
 ----
-$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov8_inference.json --lores-width 640 --lores-height 640
+$ rpicam-hello -t 0 --post-process-file /usr/share/rpi-camera-assets/hailo_yolov8_inference.json
 ----
 
 要使用YoloX模型运行演示，请运行以下命令：
 
 [source,console]
 ----
-$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolox_inference.json --lores-width 640 --lores-height 640
+$ rpicam-hello -t 0 --post-process-file /usr/share/rpi-camera-assets/hailo_yolox_inference.json
 ----
 
 要使用Yolov5 Person and Face模型运行演示，请运行以下命令：
 
 [source,console]
 ----
-$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov5_personface.json --lores-width 640 --lores-height 640
+$ rpicam-hello -t 0 --post-process-file /usr/share/rpi-camera-assets/hailo_yolov5_personface.json
 ----
 
 ==== Image Segmentation
@@ -145,7 +145,7 @@ $ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov5_person
 
 [source,console]
 ----
-$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov5_segmentation.json --lores-width 640 --lores-height 640 --framerate 20
+$ rpicam-hello -t 0 --post-process-file /usr/share/rpi-camera-assets/hailo_yolov5_segmentation.json --framerate 20
 ----
 
 ==== Pose Estimation
@@ -154,8 +154,50 @@ $ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov5_segmen
 
 [source,console]
 ----
-$ rpicam-hello -t 0 --post-process-file ~/rpicam-apps/assets/hailo_yolov8_pose.json --lores-width 640 --lores-height 640
+$ rpicam-hello -t 0 --post-process-file /usr/share/rpi-camera-assets/hailo_yolov8_pose.json
 ----
+
+=== Alternative Package Versions
+
+如果 Hailo 软件包和设备驱动程序的版本不匹配，AI Kit 和 AI HAT+ 将无法运行。此外，Hailo 的神经网络工具可能需要特定版本才能生成模型文件。如果需要特定版本，请完成以下步骤，安装所有依赖项的正确版本：
+
+. 如果之前使用过 `apt-mark` 来保存任何相关软件包，则可能需要取消保存：
++
+[source,console]
+----
+$ sudo apt-mark unhold hailo-tappas-core hailort hailo-dkms
+----
+
+. 安装所需版本的软件包：
+
+[tabs]
+======
+4.18::
+要安装 4.18 版 Hailo 神经网络工具，请运行以下命令：
++
+[source,console]
+----
+$ sudo apt install hailo-tappas-core=3.29.1 hailort=4.18.0 hailo-dkms=4.18.0-2
+----
++
+[source,console]
+----
+$ sudo apt-mark hold hailo-tappas-core hailort hailo-dkms
+----
+
+4.17::
+要安装 4.17 版 Hailo 神经网络工具，请运行以下命令：
++
+[source,console]
+----
+$ sudo apt install hailo-tappas-core=3.28.2 hailort=4.17.0 hailo-dkms=4.17.0-1
+----
++
+[source,console]
+----
+$ sudo apt-mark hold hailo-tappas-core hailort hailo-dkms
+----
+======
 
 === Further Resources
 

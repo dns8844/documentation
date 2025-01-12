@@ -35,7 +35,7 @@ $ pip install model_compression_toolkit
 
 要转换模型，首先安装转换器工具：
 
-[tabs%sync]
+[tabs]
 ======
 TensorFlow::
 +
@@ -58,7 +58,7 @@ $ pip install imx500-converter[pt]
 
 接下来，转换模型：
 
-[tabs%sync]
+[tabs]
 ======
 TensorFlow::
 +

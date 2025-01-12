@@ -3,7 +3,7 @@
 
 以下 Raspberry Pi 型号使用 EEPROM 启动系统：
 
-* 自 Raspberry Pi 4 起的旗舰机型
+* 自 Raspberry Pi 4B 起的旗舰机型
 * 从 CM4 开始的计算模块型号（包括 CM4S）
 * 自 Pi 400 起带键盘的型号
 
@@ -20,7 +20,7 @@ NOTE: 您可以在 https://github.com/raspberrypi/rpi-eeprom/[rpi-eeprom GitHub�
 
 有多种方法可以更新Raspberry Pi的引导加载程序。
 
-==== 旗舰型号自 Raspberry Pi 4 开始；计算模块自 CM5 开始；键盘型号自 Pi 400 开始
+==== 旗舰型号自 Raspberry Pi 4B 开始；计算模块自 CM5 开始；键盘型号自 Pi 400 开始
 
 Raspberry Pi OS 会自动更新引导加载程序以修复重要错误。要手动更新引导加载器或更改启动顺序，请使用 xref:configuration.adoc#raspi-config[raspi-config]。
 
@@ -70,8 +70,15 @@ image::images/bootloader-storage-select.png[alt="Choose the storage from which y
 
 高级用户可以切换到 `latest` 引导加载程序以获取最新功能。
 
+首先确保你的设备正在使用最新的软件，运行下面命令升级软件：
 运行以下命令启动 `raspi-config`。
 
+[source,console]
+----
+$ sudo apt update && sudo apt full-upgrade
+----
+
+然后使用以下命令打开 `raspi-config`:
 [source,console]
 ----
 $ sudo raspi-config

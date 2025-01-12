@@ -84,22 +84,26 @@ Raspberry Pi4B和Pi3B+上的以太网插孔支持PoE，支持IEEE 802.3af-2003 P
 | 1.6A （如果使用3A电源，则为600mA）
 | 800mA
 
-| Raspberry Pi 400
+| Pi 400
 | 3.0A
 | 1.2A
 | 800mA
 
-| Raspberry Pi Zero
+| Pi 500
+| 5.0A
+| 1.6A (600mA if using a 3A power supply)
+| 800mA
+| Zero
 | 1.2A
 | 仅受PSU、电路板和连接器额定值限制
 | 100mA
 
-| Raspberry Pi Zero W
+| Zero W
 | 1.2A
 | 仅受PSU、电路板和连接器额定值限制。
 | 150mA
 
-| Raspberry Pi Zero 2 W
+| Zero 2 W
 | 2A
 | 仅受PSU、电路板和连接器额定值限制。
 | 350mA

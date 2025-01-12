@@ -1,4 +1,4 @@
-== Raspberry Pi Pico C/{cpp} SDK
+== Raspberry Pi Pico C/C++ SDK
 
 我们的官方C SDK可以从命令行使用，也可以从流行的集成开发环境中使用，如Visual Studio Code、Eclipse和CLion。要开始使用，请下载我们的C/{cpp}SDK和示例，并查看我们的“https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[getting started]”留档。或者有关快速设置，请参阅下一节。
 

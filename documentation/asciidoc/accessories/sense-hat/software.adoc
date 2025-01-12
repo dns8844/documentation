@@ -104,7 +104,7 @@ $ sudo cp RTIMULib.ini /etc
 
 有关该库的完整文档，请访问 https://sense-hat.readthedocs.io/en/latest/[sense-hat.readthedocs.io]。
 
-=== Use the Sense HAT with {cpp}
+=== Use the Sense HAT with C++
 
 https://github.com/RPi-Distro/RTIMULib[RTIMULib]是一个 {cpp} 和Python库，可在嵌入式Linux系统中轻松使用9-dof和10-dof IMU。在 `/etc/RTIMULib.ini`中提供了一个预校准设置文件，`sense-hat`也会复制并使用该文件。附带的示例会在当前工作目录下查找 `RTIMULib.ini`，因此您可能希望将该文件复制到该目录下，以获得更准确的数据。
 

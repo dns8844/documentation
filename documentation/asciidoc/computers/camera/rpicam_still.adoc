@@ -134,6 +134,7 @@ $ rpicam-still --timeout 30000 --timelapse 2000 -o timelapse/image%04d.jpg
 
 您还可以使用 `cron` 自动延时。首先，创建名为 `timelapse.sh` 的脚本，其中包含以下命令。将Raspberry Pi上的 `<username>` 占位符替换为您的用户帐户名称：
 
+[source,bash]
 ----
 #!/bin/bash
 DATE=$(date +"%Y-%m-%d_%H%M")

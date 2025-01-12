@@ -5,7 +5,7 @@ https://www.raspberrypi.com/products/raspberry-pi-touch-display/[Raspberry Pi To
 .树莓派7英寸触控显示屏
 image::images/display.png[The Raspberry Pi 7-inch Touch Display, width="70%"]
 
-触控显示器兼容所有型号的树莓派，除了树莓派零和零2 W，它们缺少DSI连接器。最早的树莓派型号缺乏适当的安装位置，需要额外的安装硬件来安装显示器印刷电路板上的支架。
+触控显示器兼容所有型号的树莓派，除了树莓派zero系列和键盘系列，它们缺少DSI连接器。最早的树莓派型号缺乏适当的安装位置，需要额外的安装硬件来安装显示器印刷电路板上的支架。
 
 该显示器具有以下主要特点：
 

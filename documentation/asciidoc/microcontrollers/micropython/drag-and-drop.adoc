@@ -2,7 +2,7 @@
 
 您可以通过USB将Pico连接到计算机上，然后将文件拖放到其中，这样我们就可以制作一个可下载的UF2文件，让您更轻松地安装MicroPython。
 
-image::images/MicroPython-640x360-v2.gif[]
+video::images/MicroPython.webm[width="80%"]
 
 为您的板下载正确的MicroPython UF2文件：
 

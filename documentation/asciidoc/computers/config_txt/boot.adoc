@@ -13,7 +13,7 @@
 
 NOTE: 不能以这种方式选择削减固件（ `start*cd.elf` 和 `fixup*cd.dat` ）- 系统将无法启动。启用削减固件的唯一方法是指定 `gpu_mem=16` 。削减固件删除了对编解码器、3D和调试日志记录的支持，并将初始早期启动帧缓冲区限制为1080p @16bpp - 尽管KMS可以在稍后阶段用32bpp 4K帧缓冲区替换它，就像任何固件一样。
 
-NOTE: Raspberry Pi 5固件独立于引导加载程序EEPROM中。
+NOTE: Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件独立于引导加载程序EEPROM中。
 
 [[cmdline]]
 === `cmdline` 
@@ -25,7 +25,7 @@ NOTE: Raspberry Pi 5固件独立于引导加载程序EEPROM中。
 
 `kernel` 是引导分区上用于加载内核的替代文件名。Raspberry Pi 1、Zero和Zero W以及Raspberry Pi Compute Module 1的默认值为 `kernel.img` 。Raspberry Pi 2、3、3+和Zero 2 W以及Raspberry Pi Compute Module 3和3+的默认值为 `kernel7.img` 。Raspberry Pi 4和400以及Raspberry Pi Compute Module 4的默认值为 `kernel8.img` ，如果 `arm_64bit` 设置为0，则为 `kernel7l.img` 。
 
-Raspberry Pi 5固件默认加载 `kernel_2712.img` ，因为此映像包含特定于Raspberry Pi 5的优化（例如16K页面大小）。如果此文件不存在，则将加载通用64位内核（ `kernel8.img` ）。
+Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件默认加载 `kernel_2712.img` ，因为此映像包含特定于Raspberry Pi 5的优化（例如16K页面大小）。如果此文件不存在，则将加载通用64位内核（ `kernel8.img` ）。
 
 [[arm_64bit]]
 === `arm_64bit` 
@@ -46,9 +46,10 @@ Raspberry Pi 5固件默认加载 `kernel_2712.img` ，因为此映像包含特�
 以下 Raspberry Pi 型号支持此标记：
 
 * 2B rev 1.2
-* 3
-* 3+
-* 4
+* 3B
+* 3A+
+* 3B+
+* 4B
 * 400
 * 2 W
 * 计算模块 3
@@ -56,7 +57,7 @@ Raspberry Pi 5固件默认加载 `kernel_2712.img` ，因为此映像包含特�
 * 计算模块 4
 * 计算模块 4S
 
-以后的型号，如 Raspberry Pi 5，_仅_ 支持 64 位内核。这些型号不支持此标记。
+从 Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500 以后的型号 _仅_ 支持 64 位内核。这些型号不支持此标记。
 
 
 [[ramfsfile]]
@@ -122,11 +123,11 @@ NOTE: 任何用户指定的操作系统文件都可以通过使用绝对路径�
 
 USB On-The-Go（通常缩写为OTG）是一项功能，允许支持带有适当OTG电缆的USB设备将自己配置为USB主机。在较旧的Raspberry Pi上，一个USB 2控制器用于USB主机和设备模式。
 
-Raspberry Pi4B和Raspberry Pi 400（不是CM4或CM4IO）添加了一个高性能USB 3控制器，通过PCIe连接，以驱动主USB端口。传统的USB 2控制器仍然可以在USB-C电源连接器上用作设备（ `otg_mode=0` ，默认值）。
+旗舰产品从Raspberry Pi 4B 和 键盘系列产品从 Raspberry Pi 400（不是CM4或CM4IO）以后添加了一个高性能USB 3控制器，通过PCIe连接，以驱动主USB端口。传统的USB 2控制器仍然可以在USB-C电源连接器上用作设备（ `otg_mode=0` ，默认值）。
 
-`otg_mode=1` 请求将功能更强大的XHCI USB 2控制器用作该USB-C连接器上的另一个主机控制器。
+`otg_mode=1` 请求将功能更强大的XHCI USB 2控制器用作该USB-C连接器上的可以替换的主机控制器。
 
-NOTE: 由于CM4和CM4IO不包括外部USB 3控制器，Raspberry Pi OS镜像在CM4上设置为 `otg_mode=1` 以获得更好的性能。
+NOTE: Raspberry Pi OS 在 `/boot/firmware/config.txt`中的[CM4]配置中已经默认添加此设置。
 
 [[overlay_prefix]]
 === `overlay_prefix` 
@@ -274,7 +275,7 @@ Default: `0`
 [[program_rpiboot_gpio]]
 ==== `program_rpiboot_gpio`
 
-由于 Raspberry Pi 4B 或 Raspberry Pi 400 上没有专用的 `nRPIBOOT` 跳线，因此必须使用另一个 GPIO，通过将 GPIO 拉低来选择 `RPIBOOT` 模式。从以下选项中选择一个 GPIO：
+计算模块有一个专用的 `nRPIBOOT` 跳线，用于选择 `RPIBOOT` 模式。带有 EEPROM 的旗舰版和键盘版 Raspberry Pi 设备没有专用的 `nRPIBOOT` 跳线。要在旗舰版和键盘版设备上选择 `RPIBOOT` 模式，请将下列 GPIO 引脚之一拉低：
 
 * `2`
 * `4`
@@ -286,6 +287,8 @@ Default: `0`
 该属性不依赖于`secure-boot`，但要确认该 GPIO 配置不会与任何可能在启动期间将 GPIO 拉低的 HAT 冲突。
 
 为了安全起见，只能通过 `RPIBOOT` 对该属性进行编程，因此必须首先使用 `erase_eeprom` 清除引导加载程序 EEPROM。这将导致 BCM2711 ROM 故障切换到 `RPIBOOT` 模式，从而允许设置该选项。
+
+在 BCM2712 上，您也可以通过按住电源按钮并同时连接 USB-C 电源来强制启动 `RPIBOOT` 模式。
 
 Default: `{nbsp}`
 

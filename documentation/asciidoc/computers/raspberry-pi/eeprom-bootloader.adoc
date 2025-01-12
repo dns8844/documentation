@@ -59,11 +59,11 @@ $ sudo -E rpi-eeprom-config --edit
 
 如果 `1` 和 `WAKE_ON_GPIO=0` ，则 `sudo停止` 将关闭所有PMIC输出。这是停止的最低功率状态，但可能会导致某些HAT出现问题，因为5V仍将开启。 `GLOBAL_EN` 必须短路到地才能启动。
 
-Raspberry Pi 400有一个电源按钮，即使处理器关闭也能运行。默认情况下启用此行为，但是， `WAKE_ON_GPIO=2` 可以设置为使用外部GPIO电源按钮而不是电源按钮。
+Raspberry Pi 400有一个指示电源按钮，即使处理器关闭也能运行。默认情况下启用此行为，但是， `WAKE_ON_GPIO=2` 可以设置为使用外部GPIO电源按钮而不是电源按钮。
 
-在Raspberry Pi 5上，这会将PMIC置于 `待机` 模式，所有输出都将关闭。无需设置 `WAKE_ON_GPIO` ，按下 xref:raspberry-pi.adoc#power-button[电源按钮] 将启动设备。
+从Raspberry Pi 5及Pi 500键盘系列开始，这会将PMIC置于 `待机` 模式，所有输出都将关闭。无需设置 `WAKE_ON_GPIO` ，按下 xref:raspberry-pi.adoc#power-button[电源按钮] 将启动设备。
 
-默认值： `0` 
+默认值： 在 CM5 和键盘型号之后的计算模块上为 “1”；否则为 "0
 
 [[BOOT_ORDER]]
 ==== `BOOT_ORDER` 
@@ -402,7 +402,7 @@ MAC_ADDRESS_OTP=0,1
 
 为了检测键盘，网络安装必须初始化USB控制器并枚举设备。这将启动时间增加大约1秒，因此在某些嵌入式应用程序中禁用网络安装可能是有利的。
 
-默认值：Raspberry Pi 4和Raspberry Pi 400上的 `1` ， Compute Module 4 上的 `0` 。
+默认值：Raspberry Pi 4B和Raspberry Pi 400上的 `1` ， Compute Module 4 上的 `0` 。
 
 [[NET_INSTALL_KEYBOARD_WAIT]]
 ==== `NET_INSTALL_KEYBOARD_WAIT` 

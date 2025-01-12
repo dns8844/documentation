@@ -233,7 +233,7 @@ The default state of the `enable_uart` flag depends on which UART is the primary
 earlycon=pl011,0x107d001000,115200n8
 ----
 
-对于Raspberry Pi 4、400 和 Compute Module 4:
+对于Raspberry Pi 4, Compute Module 4, Compute Module 4S, 和 Pi 400:
 
 [source,ini]
 ----
@@ -241,7 +241,7 @@ earlycon=uart8250,mmio32,0xfe215040
 earlycon=pl011,mmio32,0xfe201000
 ----
 
-对于Raspberry Pi 2、Pi 3 和 Compute Module 3:
+对于Raspberry Pi 2, 3, 3+, Zero 2 W, Compute Module 3, 和 Compute Module 3+:
 
 [source,ini]
 ----
@@ -249,7 +249,7 @@ earlycon=uart8250,mmio32,0x3f215040
 earlycon=pl011,mmio32,0x3f201000
 ----
 
-对于Raspberry Pi 1、Pi Zero 和 Compute Module 1:
+对于Raspberry Pi 1, Zero, Zero W, 和 Compute Module 1:
 
 [source,ini]
 ----

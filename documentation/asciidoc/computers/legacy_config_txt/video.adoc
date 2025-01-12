@@ -5,7 +5,7 @@
 [[hdmi-mode]]
 === HDMI模式
 
-NOTE: 由于Raspberry Pi 4和Raspberry Pi 400有两个HDMI端口，一些HDMI命令可以应用于任一端口。您可以使用语法 `<command>:<port>` （其中port为0或1）来指定设置应应用于哪个端口。如果未指定端口，则默认值为0。如果您在不需要端口号的命令上指定端口号，则忽略该端口。有关语法和替代机制的更多详细信息，请参阅文档的 xref:legacy_config_txt.adoc#legacy-conditional-filters[条件部分] 的HDMI部分。
+NOTE: 对于有多个HDMI接口的设备，一些HDMI命令可以应用于任一端口。您可以使用语法 `<command>:<port>` （其中port为0或1）来指定设置应应用于哪个端口。如果未指定端口，则默认值为0。如果您在不需要端口号的命令上指定端口号，则忽略该端口。有关语法和替代机制的更多详细信息，请参阅文档的 xref:legacy_config_txt.adoc#legacy-conditional-filters[条件部分] 的HDMI部分。
 
 [[hdmi_safe]]
 ==== `hdmi_safe` 
@@ -1317,7 +1317,7 @@ NOTE: 并非所有模式都适用于所有型号。
 | 1366x768
 | 60Hz
 | 16:9
-| xref:config_txt.adoc#hdmi-pipeline-for-raspberry-pi-4[NOT on Raspberry Pi 4]
+| xref:legacy_config_txt.adoc#raspberry-pi-4-hdmi-pipeline[NOT on Raspberry Pi 4]
 
 | 82
 | 1920x1080
