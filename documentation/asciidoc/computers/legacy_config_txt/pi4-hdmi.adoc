@@ -1,5 +1,5 @@
-[[legacy-raspberry-pi-4-hdmi-pipeline]]
-== 传统 Raspberry Pi 4 HDMI 管线
+[[raspberry-pi-4-hdmi-pipeline]]
+== Raspberry Pi 4 HDMI
 
 IMPORTANT: 使用VC4 KMS图形驱动程序时，完整的显示管道由Linux管理 - 这包括HDMI输出。这些设置仅适用于传统的FKMS和基于固件的图形驱动程序。
 
