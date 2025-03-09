@@ -9,7 +9,6 @@ Raspberry Pi OS将引导文件存储在SD卡的第一个分区上，使用FAT文
 
 NOTE: 在 _Bookworm_ 之前，树莓派操作系统将引导分区存储在 `/boot/` 。从 _Bookworm_ 开始，引导分区位于 `/boot/firmware/` 。
 
-[[bootcode-bin]]
 === `bootcode.bin` 
 
 引导加载程序，由SoC在引导时加载。它执行一些非常基本的设置，然后加载其中一个 `start*.elf` 文件。
@@ -48,7 +47,6 @@ Raspberry Pi 5 不使用 `elf` 文件。固件独立包含在引导加载程序E
 
 IMPORTANT: Raspberry Pi 5 要求启动分区中有一个非空的 `config.txt` 文件。
 
-[[issue-txt]]
 === `issue.txt` 
 
 基于文本的内务信息，包含发行版的日期和 git commit ID。
@@ -59,7 +57,6 @@ IMPORTANT: Raspberry Pi 5 要求启动分区中有一个非空的 `config.txt` �
 
 从 Bookworm 开始，Raspberry Pi OS 默认包含一个 `initramfs` 文件。要启用初始 ramdisk，请在 xref:config_txt.adoc[`config.txt`] 中使用 xref:config_txt.adoc#auto_initramfs[`auto_initramfs`] 关键字进行配置。
 
-[[ssh-or-ssh-txt]]
 === `ssh` 或 `ssh.txt` 
 
 如果存在该文件，则在启动时启用 SSH。否则 SSH 默认为禁用。文件内容并不重要。即使是空文件也能启用 SSH。
@@ -106,7 +103,6 @@ NOTE: 内容无关紧要。即使是一个空文件也可以使能SSH。
 
 NOTE: 对于运行 32 位内核的系统，`lscpu` 报告的 CPU 架构为 `armv7l`；对于运行 64 位内核的系统，`aarch64` 报告的 CPU 架构为 `armv7l`。`armv7l` 中的 `l`指的是小端 CPU 架构，而不是 `kernel7l.img` 文件名中的 `l` 所表示的 `LPAE`。
 
-[[overlays-folder]]
 === `overlays` 文件夹
 
 包含设备树overlay。这些用于配置各种硬件设备，例如第三方声卡。通过修改 `config.txt` 中的配置选择这些overlay。有关详细信息，请参阅 xref:configuration.adoc#part2[Device Trees, overlays and parameters]。

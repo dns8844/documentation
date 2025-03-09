@@ -1,4 +1,3 @@
-[[getting-help]]
 == 获取帮助
 
 有关 `libcamera` 和 `rpicam-apps` 的进一步帮助，请查看 https://forums.raspberrypi.com/viewforum.php?f=43[树莓派相机论坛]。发帖前：

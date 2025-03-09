@@ -15,7 +15,6 @@
 
 接受1到100之间的MJPEG质量级别。仅适用于以MJPEG格式编码的视频。
 
-[[bitrate]]
 ==== `bitrate` 
 
 别名： `-b` 
@@ -25,7 +24,6 @@
 
 示例： `rpicam-vid -b 10000000 --width 1920 --height 1080 -o test.h264` 
 
-[[intra]]
 ==== `intra` 
 
 别名： `-g` 
@@ -45,7 +43,6 @@
 
 仅适用于以H.264格式编码的视频。
 
-[[level]]
 ==== `level` 
 
 设置H.264级别。接受以下值：
@@ -66,7 +63,6 @@
 * `yuv420` - 输出未压缩的YUV420帧。
 * `libav` - 使用libav后端编码音频和视频（有关详细信息，请参阅 xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`]）
 
-[[save-pts]]
 ==== `save-pts` 
 
 WARNING: Raspberry Pi 5不支持 `save-pts` 选项。改用 `libav` 自动生成容器格式的时间戳。
@@ -132,12 +128,10 @@ $ mkvmerge -o test.mkv --timecodes 0:timestamps.txt test.h264
 
 仅适用于以H.264格式编码的视频。不接受值。
 
-[[listen]]
 ==== `listen` 
 
 在编码视频之前等待传入的客户端连接。用于通过TCP/IP进行网络流传输。不接受值。
 
-[[frames]]
 ==== `frames` 
 
 准确记录指定的帧数。任何非零值都会覆盖 xref:camera_software.adoc#timeout[`timeout`]。接受非零整数。

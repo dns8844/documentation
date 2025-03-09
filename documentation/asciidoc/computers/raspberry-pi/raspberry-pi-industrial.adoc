@@ -3,7 +3,6 @@
 
 Raspberry Pi经常被用作其他产品的一部分。此文档描述了一些可用于使用Raspberry Pi其他功能的额外功能。
 
-[[one-time-programmable-settings]]
 === 一次性可编程设置
 
 [.whitepaper, title="Using the one-time programmable memory on Raspberry Pi single-board computers", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003611-WP/Using-the-One-time-programmable-memory-on-Raspberry-Pi-single-board-computers.pdf]
@@ -87,7 +86,6 @@ $ vcmailbox 0x00030021 20 20 4 3 0 0 0
 
 如果您想将此功能集成到您自己的代码中，您应该能够通过使用vcmailbox.c代码作为示例来实现这一点。
 
-[[locking-otp-on-non-bcm2712-devices]]
 === 在非BCM2712设备上锁定OTP
 
 可以锁定OTP更改以避免它们再次被编辑。
@@ -101,7 +99,6 @@ $ vcmailbox 0x00038021 8 8 0xffffffff 0xaffe0000
 
 一旦锁定，客户OTP值就不能再更改。请注意，此锁定操作是不可逆的。
 
-[[locking-otp-on-bcm2712-devices]]
 === 在BCM2712设备上锁定OTP
 
 可以使用以下命令将客户区域标记为只读。
@@ -113,7 +110,6 @@ $ vcmailbox 0x00030086 4 4 0
 
 OTP 仅在设备重置前锁定，因此每次启动时都需要重新应用 OTP 锁。
 
-[[making-customer-otp-bits-unreadable-on-non-bcm2712-devices]]
 === 使非 BCM2712 设备上的客户 OTP 位不可读
 
 可以完全阻止读取客户 OTP 位。这可以通过使用 OTP 写入邮箱的特殊参数来实现：
@@ -125,7 +121,6 @@ $ vcmailbox 0x00038021 8 8 0xffffffff 0xaffebabe
 
 此操作不太可能对绝大多数用户有用，并且不可逆。
 
-[[customer-mac-addresses-on-bcm2712-devices]]
 === BCM2712 设备上的客户 MAC 地址
 
 在 BCM2712 设备上，以太网、Wi-Fi 和蓝牙 MAC 地址设置在 OTP 内存中。这些值可以随客户值而变化。
@@ -164,7 +159,6 @@ $ vcmailbox 0x00038082 6 6 0x44332211 0x6655
 
 如果客户 MAC 地址被设置为 `ff:ff:ff:ff:ff:ff`，则会被忽略。
 
-[[device-specific-private-key]]
 === 设备专用私钥
 
 使用 Broadcom BCM2712 处理器的设备有 16 行 OTP 数据（512 位），支持文件系统加密。

@@ -3,7 +3,6 @@
 
 NOTE: 已弃用通过用户提供的设备树blob自定义默认引脚配置。
 
-[[device-pins-during-boot-sequence]]
 === 引导过程中的设备引脚
 
 在启动序列期间，GPIO引脚会执行各种操作。
@@ -24,7 +23,6 @@ NOTE: 已弃用通过用户提供的设备树blob自定义默认引脚配置。
 * 延迟外设的启动时间，直至操作完成
 * 添加适当的上拉/下拉电阻器
 
-[[provide-a-custom-device-tree-blob]]
 === 提供自定义设备树blob
 
 为了将设备树源（ `.dts` ）文件编译为设备树blob（ `.dtb` ）文件，必须通过运行 `sudo apt installdevice-tree-compiler` 来安装设备树编译器。然后可以如下使用 `dtc` 命令：
@@ -42,12 +40,10 @@ $ sudo dtc -I dts -O dtb -o /boot/firmware/dt-blob.bin dt-blob.dts
 $ dtc -I dtb -O dts -o dt-blob.dts /boot/firmware/dt-blob.bin
 ----
 
-[[sections-of-the-dt-blob]]
 === `dt-blob` 的部分
 
 dt-blob.bin用于在引导时配置二进制blob（VideoCore）。Linux内核当前未使用它。dt-blob可以配置所有版本的Raspberry Pi（包括Compute Module）以使用替代设置。以下部分在dt-blob中有效：
 
-[[videocore]]
 ==== `videocore` 
 
 本节包含所有VideoCore blob信息。所有后续部分都必须包含在本节中。
@@ -83,7 +79,6 @@ dt-blob.bin用于在引导时配置二进制blob（VideoCore）。Linux内核当
 
 `pin_config` 部分用于配置各个引脚。此部分中的每个项目都必须是命名引脚部分，例如 `pin@p32` ，即GPIO32。还有一个特殊部分 `pin@default` ，其中包含pin_config部分中未具体命名的任何内容的默认设置。
 
-[[pinpinname]]
 ==== `pin@pinname` 
 
 本节可以包含以下项目的任意组合：
@@ -125,7 +120,6 @@ dt-blob.bin用于在引导时配置二进制blob（VideoCore）。Linux内核当
 
 此部分用于将特定VideoCore功能设置为特定引脚。这使用户能够将相机电源使能引脚移动到不同的位置，或移动HDMI热插拔位置：这些是Linux无法控制的。请参阅下面的示例DTS文件。
 
-[[clock-configuration]]
 === 时钟配置
 
 通过这个接口可以改变时钟的配置，不过很难预测结果！时钟系统的配置非常复杂。有五个独立的 PLL，每个 PLL 都有自己的固定（或可变，在 PLLC 的情况下）VCO 频率。然后，每个 VCO 都有若干不同的通道，可以对 VCO 频率进行不同的分频设置。每个时钟目的地都可以配置为来自其中一个时钟通道，不过源到目的地的映射是有限制的，因此并非所有通道都能路由到所有时钟目的地。
@@ -150,7 +144,6 @@ clock_setup {
 
 上述操作将 PLLA 设置为运行于 1.96608GHz 的源 VCO（该 VCO 的限制频率为 600MHz - 2.4GHz），将 APER 通道更改为 /4，并将 GPCLK0 配置为通过 APER 从 PLLA 获取。这将为音频编解码器提供产生 48000 频率范围所需的 12288000Hz 频率。
 
-[[sample-device-tree-source-file]]
 === 示例设备树源文件
 
 固件库包含一个 https://github.com/raspberrypi/firmware/blob/master/extra/dt-blob.dts[master Raspberry Pi blob]，其他固件通常都是从它衍生出来的。

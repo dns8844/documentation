@@ -3,7 +3,6 @@
 
 Samba 是 https://en.wikipedia.org/wiki/Server_Message_Block[服务器消息] (SMB) 网络协议的免费软件重新实现。使用 Samba，您可以在 Windows、macOS 和 Linux 计算机之间共享文件夹。
 
-[[install-samba-on-your-raspberry-pi]]
 === 在您的 Raspberry Pi 上安装 Samba
 
 默认情况下，Raspberry Pi OS 不包含 Samba。要在 Raspberry Pi 上安装 Samba，请运行以下命令，该命令将安装运行 Samba 服务器或客户端所需的所有依赖项：
@@ -14,12 +13,10 @@ $ sudo apt update
 $ sudo apt install samba samba-common-bin smbclient cifs-utils
 ----
 
-[[mount-a-folder-shared-from-windows]]
 === 安装从 Windows 共享的文件夹
 
 首先，您需要在 Windows 设备上共享文件夹。
 
-[[turn-on-sharing]]
 ==== 打开共享
 
 . 右键单击系统托盘，从菜单中选择 *网络和共享中心*。
@@ -28,7 +25,6 @@ $ sudo apt install samba samba-common-bin smbclient cifs-utils
 . 选择 *打开文件和打印机共享*。
 . 单击 *保存* 按钮保存更改。
 
-[[share-the-folder]]
 ==== 共享文件夹
 
 按照以下步骤从 Windows 共享文件夹：
@@ -47,7 +43,6 @@ $ sudo apt install samba samba-common-bin smbclient cifs-utils
 
 现在应该可以共享文件夹了。您可以通过在 `权限` 和 `安全` 页面上更改权限来修改共享文件夹权限。
 
-[[windows-10-sharing-wizard]]
 ==== Windows 10 共享向导
 
 Windows 10 上有一个共享向导，可帮助您完成其中一些步骤。
@@ -61,7 +56,6 @@ Windows 10 上有一个共享向导，可帮助您完成其中一些步骤。
 . 单击 *OK* 按钮。
 . 单击 *Finish* 按钮共享文件夹。
 
-[[mount-the-folder-on-the-raspberry-pi]]
 ==== 在 Raspberry Pi 上安装文件夹
 
 Linux 中的 `安装` 是将文件夹附加到某个位置的过程，因此首先我们需要该位置。
@@ -85,7 +79,6 @@ $ sudo mount.cifs //<hostname or IP address>/<shared windows folder> /home/<user
 $ ls windowshare/
 ----
 
-[[host-is-down-error]]
 ==== "主机已关闭"错误
 
 当 SMB 协议版本不匹配且 Linux Samba 客户端返回误导性错误消息时，会发生此错误。默认情况下，Raspberry Pi OS 使用 2.1 及以上版本，与 Windows 7 及更高版本兼容。较旧的设备（包括某些 NAS）可能需要 1.0 版本。要修复此错误，请在挂载命令后附加一个版本条目（例如 `,vers=1.0` ）：
@@ -122,7 +115,6 @@ $ sudo mount.cifs //IP/share /mnt/point -o user=<uname>,vers=1.0
 | SMBv3.0 协议版本及以上
 |===
 
-[[sharing-a-folder-from-your-raspberry-pi]]
 === 从 Raspberry Pi 共享文件夹
 
 首先，创建一个要共享的文件夹。此示例在当前用户的 `home` 文件夹中创建一个名为 `shared` 的文件夹：

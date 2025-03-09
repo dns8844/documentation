@@ -1,9 +1,7 @@
-[[introduction-to-remote-access]]
 == 远程访问简介
 
 有时您需要在不将其连接到显示器、键盘和鼠标的情况下访问Raspberry Pi。也许Raspberry Pi嵌入在机器人中或安装在不方便的位置。或者您没有备用显示器。
 
-[[remote-control-over-the-local-network]]
 === 远程控制本地网络
 
 要从本地网络上的另一台设备远程控制您的Raspberry Pi，请使用以下服务之一：
@@ -14,12 +12,10 @@
 
 SSH（**S**ecure **SH**ell）提供对Raspberry Pi上的终端会话的安全访问。VNC（**V**irtual **N**etwork **C**omputing）提供对Raspberry Pi桌面屏幕共享的安全访问。您所需要的只是另一台计算机、本地网络和Raspberry Pi的本地 https://en.wikipedia.org/wiki/IP_address[IP地址]。Raspberry Pi Connect安全地共享Raspberry Pi的屏幕，无需确定您的本地IP地址。
 
-[[share-files-between-devices-over-the-local-network]]
 === 通过本地网络在设备之间共享文件
 
 诸如 xref:remote-access.adoc#nfs[NFS]（网络文件系统）、xref:remote-access.adoc#scp[SCP]（安全复制协议）、xref:remote-access.adoc#samba[Samba]和 xref:remote-access.adoc#rsync[`rsync`] 之类的服务使您能够在本地网络上的设备之间共享文件，而无需直接控制远程设备。当您需要从另一台设备访问存储在一台设备上的数据时，这些服务非常有用。
 
-[[remote-control-over-the-internet]]
 === 通过互联网进行远程控制
 
 要从任何连接到Internet的设备远程控制您的Raspberry Pi，您可以：

@@ -1,4 +1,3 @@
-[[localising-your-raspberry-pi]]
 == 本地化您的 Raspberry Pi
 
 您可以使用 xref:configuration.adoc#raspi-config[`raspi-config`] 工具配置 Raspberry Pi 操作系统的用户界面语言、键盘布局和时区。

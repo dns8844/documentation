@@ -1,14 +1,11 @@
-[[configure-screen-blanking]]
 == 配置自动息屏
 
 您可以将 Raspberry Pi 配置为在一段时间不活动后自动息屏。默认情况下，启用自动息屏后，Raspberry Pi OS 会在十分钟不活动后自动息屏。
 
-[[desktop]]
 === 桌面
 
 您可以使用 Raspberry Pi 配置菜单中的 *Screen Blanking* 选项来控制自动息屏。
 
-[[raspberry-pi-configuration]]
 ==== Raspberry Pi 配置
 
 单击菜单栏中的 Raspberry Pi 按钮。导航到 *Preferences* > *Raspberry Pi Configuration*。
@@ -30,12 +27,10 @@ $ sudo raspi-config
 
 使用箭头键导航并使用 *Enter* 键进行选择。选择 `显示选项` > `自动息屏` 。使用箭头键选择 `是` 以启用自动息屏，或选择 `否` 以禁用自动息屏。
 
-[[console]]
 === 控制台
 
 Raspberry Pi Configuration 使用的 `dpms_timeout` 自动息屏配置仅影响桌面会话。在 *控制台模式* 下，当您的 Raspberry Pi 连接到显示器和键盘且只有一个终端用于输入时，请在内核命令行中使用 `consoleblank` 设置。
 
-[[set-console-mode-screen-blanking]]
 ==== 设置控制台模式自动息屏
 
 要更改控制台模式自动息屏配置，请以管理员身份在文本编辑器中打开 `/boot/firmware/cmdline.txt` ：
@@ -54,7 +49,6 @@ $ sudo nano /boot/firmware/cmdline.txt
 $ sudo reboot
 ----
 
-[[view-current-screen-blanking-setting]]
 ==== 查看当前自动息屏设置
 
 您可以使用以下命令显示当前控制台息屏时间（以秒为单位）：

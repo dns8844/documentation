@@ -344,7 +344,6 @@ NOTE: 从 Raspberry Pi 5、CM5、Pi 500后无需添加 `hdmi_enable_4kp60`，因
 
 `force_turbo=1` 会覆盖此行为并强制设置最高频率，即使在ARM内核不忙的情况下也是如此。
 
-[[clocks-relationship]]
 === 时钟关系
 
 [[raspberry-pi-4]]
@@ -353,7 +352,6 @@ GPU内核、CPU、SDRAM和GPU都有自己的PLL，并且可以有不相关的频
 
 要查看树莓派的当前频率（以KHz为单位），请键入： `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq` 。将结果除以1000以找到以MHz为单位的值。请注意，该频率是内核_requested_频率，任何节流（例如在高温下）都可能意味着CPU实际上运行得比报告的要慢。可以使用 `vcgencmd measure_clockarm` 检索实际ARM CPU频率的瞬时测量值。这以赫兹显示。
 
-[[monitoring-core-temperature]]
 === 监测核心温度
 
 [.whitepaper, title="冷却树莓派设备", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003608-WP/Cooling-a-Raspberry-Pi-device.pdf]
@@ -378,7 +376,6 @@ $ cat /sys/class/thermal/thermal_zone0/temp
 
 对于Raspberry Pi 3 Model B+，PCB技术进行了更改，以提供更好的散热和增加的热质量。此外，还引入了软温度限制，目标是最大限度地延长设备在达到85°C的硬限制之前可以 `冲刺` 的时间。当达到软限制时，时钟速度从1.4GHz降低到1.2GHz，工作电压略有降低。这降低了温度上升的速度：我们将1.4GHz的短周期换成1.2GHz的较长周期。默认情况下，软限制为60°C。这可以通过 `config.txt` 中的 `temp_soft_limit` 设置进行更改。
 
-[[monitoring-voltage]]
 === 监控电压
 
 保持电源电压在4.8V以上对可靠性能至关重要。请注意，某些USB充电器/电源的电压可能低至4.2V。这是因为它们通常设计用于为3.7V锂电池充电，而不是为计算机提供5V。

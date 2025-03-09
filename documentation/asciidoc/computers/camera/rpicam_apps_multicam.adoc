@@ -1,4 +1,3 @@
-[[use-multiple-cameras]]
 === 使用多个摄像头
 
 `rpicam-apps` 基本支持多个摄像头。您可以通过以下方式将多个摄像头连接到Raspberry Pi：

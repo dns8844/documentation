@@ -26,7 +26,6 @@ $ rpicam-still --encoding png --output test.png
 
 有关指定图像格式的更多信息，请参阅 xref:camera_software.adoc#encoding[ `encoding` 选项参考]。
 
-[[capture-raw-images]]
 ==== 捕获原始图像
 
 原始图像是由图像传感器直接生成的图像，然后再由图像信号处理器（ISP）或中央处理器进行处理。彩色图像传感器通常使用 Bayer 格式。使用 xref:camera_software.adoc#raw[`raw`] 选项可捕捉原始图像。
@@ -89,7 +88,6 @@ Shutter Speed                   : 1/20
 要找到模拟增益，请将ISO数除以100。
 自动白平衡（AWB）算法确定一个单一的校准光源，该光源始终标为 "D65"。
 
-[[capture-long-exposures]]
 ==== 捕捉长时间曝光
 
 要拍摄长时间曝光的图像，请禁用自动曝光/增益控制 (AEC/AGC) 和自动白平衡 (AWB)。否则，这些算法将迫使用户在收敛时等待若干帧。
@@ -105,12 +103,10 @@ $ rpicam-still -o long_exposure.jpg --shutter 100000000 --gain 1 --awbgains 1,1 
 
 要查找 Raspberry Pi 官方摄像头的最大曝光时间，请参阅 xref:../accessories/camera.adoc#hardware-specification[摄像头硬件规格]。
 
-[[create-a-time-lapse-video]]
 ==== 创建延时视频
 
 要创建延时视频，请定期捕获静止图像，例如一分钟一次，然后使用应用程序将图片拼接成视频。
 
-[[via-rpicam-still-time-lapse-mode]]
 ===== 使用 `rpicam-still` 延时模式
 
 要使用内置的延时模式 `rpicam-still` ，请使用 xref:camera_software.adoc#timelapse[`timelapse`] 选项。此选项接受一个值，该值表示您希望Raspberry Pi在两次捕获之间等待的时间，以毫秒为单位。
@@ -129,7 +125,6 @@ $ mkdir timelapse
 $ rpicam-still --timeout 30000 --timelapse 2000 -o timelapse/image%04d.jpg
 ----
 
-[[via-cron]]
 ===== 通过 `cron` 
 
 您还可以使用 `cron` 自动延时。首先，创建名为 `timelapse.sh` 的脚本，其中包含以下命令。将Raspberry Pi上的 `<username>` 占位符替换为您的用户帐户名称：
@@ -177,7 +172,6 @@ crontab: installing new crontab
 
 TIP: 要停止为延时拍摄图像，请再次运行 `crontab -e` 并从crontab中删除上面的行。
 
-[[stitch-images-together]]
 ===== 将图像拼接在一起
 
 一旦你有了一系列延时照片，你可能想把它们组合成一个视频。使用 `ffmpeg` 在树莓派上执行此操作。

@@ -4,7 +4,6 @@
 自 Raspberry Pi 4 起，Raspberry Pi 旗舰设备开始使用 EEPROM 引导加载程序。
 这些产品与以前产品的主要区别在于，第二级引导加载程序是从 SPI Flash xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[EEPROM] 加载的，而不是以前产品使用的 `bootcode.bin` 文件。
 
-[[first-stage-bootloader]]
 === 第一阶段bootloader
 
 ROM（第一阶段）的引导流程如下：
@@ -26,7 +25,6 @@ ROM（第一阶段）的引导流程如下：
 
 NOTE:  `recovery.bin` 是用于重新刷新bootloader SPI EEPROM映像的最小第二阶段程序。
 
-[[second-stage-bootloader]]
 === 第二阶段bootloader
 
 本节介绍第二阶段bootloader的高级流程。
@@ -72,14 +70,12 @@ NOTE:  `recovery.bin` 是用于重新刷新bootloader SPI EEPROM映像的最小�
  ** Else if 引导模式 == `RPIBOOT` 则
   *** 尝试使用 USB 设备模式从 USB OTG 端口加载固件 - 参见 https://github.com/raspberrypi/usbboot[USB启动]。RPIBOOT模式没有超时。
 
-[[differences-on-raspberry-pi-5]]
 ==== 树莓派5的区别
 
 * 电源按钮用于从 PMIC 的 `STANDBY` 或 `HALT` 而非 `GPIO 3` 唤醒。
 * 固件不加载 `start.elf` ，而是加载 Linux 内核。实际上，引导加载器有一个嵌入版的 `start.elf` 。
 * 连接到 3A 电源时，默认禁用 USB 启动。在 `/boot/firmware/config.txt` 中设置 `usb_max_current_enable=1` 可启用 USB 启动。或者，也可以在 USB 启动失败时单次按下电源按钮，临时启用 `usb_max_current_enable` 并继续启动。但是，如果通过按下电源按钮启用该设置，重启后该设置将不会继续存在。
 
-[[bootloader-updates]]
 === Bootloader更新
 
 如果找到 `pieeprom.upd` 文件，bootloader也可以在固件启动前更新。有关bootloader更新的更多信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-boot-eeprom[bootloader EEPROM] 页面。

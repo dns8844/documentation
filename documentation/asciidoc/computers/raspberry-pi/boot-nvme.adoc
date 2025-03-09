@@ -3,7 +3,6 @@
 
 NVMe（Non-Volatile Memory express）是通过 PCIe 总线访问外部存储的标准。您可以通过计算模块 4 IO 板上的 PCIe 插槽、计算模块 5 IO 板上的 M.2 插槽以及使用 M.2 HAT+ 的 Raspberry Pi 5 连接 NVMe 硬盘。通过一些额外的配置，您可以从 NVMe 驱动器启动。
 
-[[prerequisites]]
 === 先决条件
 
 [[hardware]]
@@ -63,7 +62,6 @@ $ sudo rpi-eeprom-update -a
 EEPROM配置中的 `BOOT_ORDER` 设置控制引导行为。
 对于NVMe引导，使用引导模式 `6` 。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi引导加载程序配置]。
 
-[[example]]
 === 示例
 
 以下是引导加载程序检测到NVMe驱动器时通用异步收发设备输出的示例：

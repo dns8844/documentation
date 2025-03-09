@@ -1,4 +1,3 @@
-[[legacy-gpio-control]]
 == 传统GPIO控制
 （另请参见 xref:config_txt.adoc#gpio-control[config.txt GPIO控制]。）
 

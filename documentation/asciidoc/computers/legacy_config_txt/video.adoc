@@ -2,7 +2,6 @@
 == 旧版视频选项
 （另请参见 xref:config_txt.adoc#video-options[config.txt视频选项]）
 
-[[hdmi-mode]]
 === HDMI模式
 
 NOTE: 对于有多个HDMI接口的设备，一些HDMI命令可以应用于任一端口。您可以使用语法 `<command>:<port>` （其中port为0或1）来指定设置应应用于哪个端口。如果未指定端口，则默认值为0。如果您在不需要端口号的命令上指定端口号，则忽略该端口。有关语法和替代机制的更多详细信息，请参阅文档的 xref:legacy_config_txt.adoc#legacy-conditional-filters[条件部分] 的HDMI部分。
@@ -1442,7 +1441,6 @@ hdmi_timings=<h_active_pixels> <h_sync_polarity> <h_front_porch> <h_sync_pulse> 
 * `3` = `EDID_ContentType_Cinema` , 内容类型影院
 * `4` = `EDID_ContentType_Game` ,，内容类型游戏
 
-[[which-values-are-valid-for-my-monitor]]
 === 哪些值对我的显示器有效？
 
 您的HDMI显示器可能仅支持一组有限的格式。要了解支持哪些格式，请使用以下方法：
@@ -1510,7 +1508,6 @@ hdmi_drive=2
 
 如果您的显示器不支持标准CVT计时，这可能不起作用。
 
-[[composite-video-mode]]
 === 复合视频模式
 
 [[sdtv_mode]]
@@ -1563,7 +1560,6 @@ hdmi_drive=2
 
 将 `sdtv_disable_colourburst` 设置为 `1` 会禁用复合视频输出上的彩色爆发。图片将以单色显示，但可能会看起来更清晰。
 
-[[lcd-displays-and-touchscreens]]
 === LCD显示器和触摸屏
 
 [[display_default_lcd]]
@@ -1668,7 +1664,6 @@ dpi_timings=<h_active_pixels> <h_sync_polarity> <h_front_porch> <h_sync_pulse> <
 |===
 
 
-[[generic-display-options]]
 === 通用显示选项
 
 [[hdmi_force_hotplug]]
@@ -1851,7 +1846,6 @@ NOTE: 通常不推荐此功能：它会降低画质，因为显示器上的所�
 
 使用 `display_rotate` 旋转或翻转屏幕方向。参数与 `display_hdmi_rotate` 相同。
 
-[[other-options]]
 === 其他选项
 
 [[dispmanx_offline]]

@@ -12,7 +12,6 @@ NFS 可能最适合更永久的网络挂载目录，例如 `/home` 目录或经�
 * Linux 文件和目录权限
 * 挂载和卸载文件系统
 
-[[set-up-a-basic-nfs-server]]
 === 设置基本 NFS 服务器
 
 使用以下命令安装所需的软件包：
@@ -125,7 +124,6 @@ rpcbind mountd nfsd statd lockd rquotad : <list of IPv4s>
 $ sudo systemctl restart nfs-kernel-server
 ----
 
-[[configure-an-nfs-client]]
 === 配置 NFS 客户端
 
 现在您的服务器正在运行，您需要设置任何客户端以便能够访问它。首先，安装所需的软件包：
@@ -179,7 +177,6 @@ rpcbind : <NFS server IP address>
 
 其中 `<NFS server IP address>` 是服务器的 IP 地址。
 
-[[configure-a-complex-nfs-server]]
 === 配置复杂的 NFS 服务器
 
 NFS 用户权限基于用户 ID (UID)。客户端上任何用户的 UID 都必须与服务器上的 UID 匹配，用户才能访问。执行此操作的典型方法是：
@@ -191,17 +188,14 @@ NFS 用户权限基于用户 ID (UID)。客户端上任何用户的 UID 都必�
 
 请注意，在主用户具有 root 访问权限的系统上，您必须小心：该用户可以更改系统上的 UID，以允许自己访问任何人的文件。本页假设管理团队是唯一具有 root 访问权限的组，并且他们都受到信任。其他任何内容都代表更高级的配置，这里不再赘述。
 
-[[group-permissions]]
 ==== 组权限
 
 用户的文件访问权限由他们在客户端上的组成员身份决定，而不是服务器上的组成员身份。但是，有一个重要的限制：从客户端传递到服务器的组最多为 16 个，如果用户在客户端上是 16 个以上组的成员，则某些文件或目录可能会意外无法访问。
 
-[[dns-optional-only-if-using-dns]]
 ==== DNS（可选，仅在使用 DNS 时）
 
 将任何客户端名称和 IP 地址添加到 `/etc/hosts` 。 （服务器的 IP 地址应该已经存在。）这样可以确保即使 DNS 发生故障，NFS 仍能正常工作。或者，如果您愿意，也可以依赖 DNS - 这取决于您。
 
-[[nis-optional-only-if-using-nis]]
 ==== NIS（可选，仅在使用 NIS 时）
 
 这适用于使用 NIS 的客户端。否则，您无法使用网络组，并且应该在 `/etc/exports` 中指定单独的 IP 或主机名。请阅读 `man netgroup` 中的 BUGS 部分以获取更多信息。
@@ -241,7 +235,6 @@ rpcbind mountd nfsd statd lockd rquotad : <list of IPs>
 
 其中 `<list of IPs>` 是服务器和所有客户端的 IP 地址列表。由于 `rpcbind` 中的限制，这些必须是 IP 地址。请注意，如果已经设置了 NIS，则只需将这些地址添加到同一行即可。
 
-[[package-installation-and-configuration]]
 ==== 软件包安装和配置
 
 安装必要的软件包：
@@ -283,7 +276,6 @@ $ sudo exportfs -ra
 
 每当修改 `/etc/exports` 时，您都需要运行此命令。
 
-[[restart-services]]
 ==== 重新启动服务
 
 重新启动 `rpcbind` 和 NFS 以使更改生效：
@@ -294,7 +286,6 @@ $ sudo systemctl restart rpcbind
 $ sudo systemctl restart nfs-kernel-server
 ----
 
-[[security-items-to-consider]]
 ==== 需要考虑的安全事项
 
 除了上面讨论的 UID 问题之外，还应注意，攻击者可能会伪装成允许映射共享的机器，这允许他们创建任意 UID 来访问您的文件。一个潜在的解决方案是 IPSec。您可以将所有域成员设置为仅通过 IPSec 相互通信，这将有效地验证您的客户端是否是它所说的那个客户端。

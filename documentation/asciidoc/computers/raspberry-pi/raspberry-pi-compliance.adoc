@@ -1,28 +1,23 @@
-[[product-compliance-and-safety]]
 == 产品合规性和安全性
 
 所有Raspberry Pi产品都经过了广泛的合规性测试。有关详细信息，请参阅 https://pip.raspberrypi.com[产品信息门户]。
 
-[[flammability-rating]]
 === 易燃等级
 
 Raspberry Pi设备中使用的PCB符合UL94-V0。
 
 NOTE: 这仅适用于多氯联苯。
 
-[[raspberry-pi-compliance-support]]
 === 树莓派合规支持
 
 合规性支持计划旨在消除浏览合规性问题的负担，并使公司更容易将新产品带给消费者。它提供了在合规性测试期间为我们的树莓派工作的相同测试工程师的访问权限，将用户与 https://www.ul-certification.com/[UL] 的一个专门团队联系起来，该团队通过他们对树莓派的深入了解来评估和测试用户的产品。
 
 了解有关 https://www.raspberrypi.com/for-industry/integrator-programme/[Raspberry Pi合规支持计划] 的更多信息。
 
-[[powered-by-raspberry-pi]]
 === 由树莓派提供支持
 
 树莓派计划为希望使用树莓派标志的公司提供了一个流程，涵盖了内部有树莓派电脑或silicon的产品，以及树莓派提供的服务。如果你想开始申请，你可以 https://www.raspberrypi.com/trademark-rules/powered-raspberry-pi/[在线] 申请。
 
-[[approved-design-partners]]
 === 认可的设计合作伙伴
 
 我们的 https://www.raspberrypi.com/for-industry/design-partners/[认可设计合作伙伴] 名单提供了一系列我们密切合作和支持的咨询公司，因此他们可以在硬件、软件和机械领域提供付费设计服务。

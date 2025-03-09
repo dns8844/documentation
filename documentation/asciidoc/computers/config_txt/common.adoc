@@ -1,7 +1,5 @@
-[[common-options]]
 == 常用选项
 
-[[common-display-options]]
 === 常用显示选项
 
 ==== `hdmi_enable_4kp60`
@@ -10,7 +8,6 @@ NOTE: 此配置只可用在 Raspberry Pi 4, Compute Module 4, Compute Module 4S,
 
 默认情况下，当连接到 4K 显示器时，某些型号会选择 30Hz 刷新率。使用该选项可选择 60Hz 刷新率。受此设置影响的机型不支持同时在两个微型 HDMI 端口上输出 4Kp60。启用此设置会增加功耗和温度。
 
-[[common-hardware-configuration-options]]
 === 常用硬件配置选项
 
 [[camera_auto_detect]]
@@ -31,7 +28,6 @@ NOTE: 此配置只可用在 Raspberry Pi 4, Compute Module 4, Compute Module 4S,
 
 要禁用，请设置 `display_auto_detect=0`。
 
-[[dtoverlay]]
 ==== `dtoverlay` 
 
 dtoverlay选项请求固件加载一个命名的设备树overlay — 一个可以启用内核对内置和外部硬件支持的配置文件。例如， `dtoverlay=vc4-kms-v3d` 加载一个启用内核图形驱动程序的设备树文件。
@@ -40,7 +36,6 @@ dtoverlay选项请求固件加载一个命名的设备树overlay — 一个可�
 
 有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays and config.txt]。
 
-[[dtparam]]
 ==== `dtparam` 
 
 Raspberry Pis的设备树配置文件支持许多参数，例如启用I2C和SPI接口。许多DT overlay可以通过使用参数进行配置。这两种类型的参数都可以使用 `dtparam` 设置提供。此外，overlay参数可以附加到 `dtoverlay` 选项中，用逗号分隔，但请记住行长限制为98个字符。

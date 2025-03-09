@@ -22,14 +22,12 @@ NET_INSTALL_ENABLED=0
 
 如果启用了安全引导并且没有设置 xref:raspberry-pi.adoc#HTTP_HOST[HTTP_HOST]， `BOOT_ORDER` 中的 HTTP将被忽略。
 
-[[requirements]]
 === 要求
 
 要使用HTTP引导, xref:raspberry-pi.adoc#bootloader_update_stable[update] 到2022年3月10日或更高版本发布的引导加载程序。HTTP启动需要有线以太网连接。
 
 要使用自定义CA证书，请将 xref:raspberry-pi.adoc#bootloader_update_stable[update] 到2024年4月5日或更高版本发布的引导加载程序。只有运行BCM2712 CPU的设备支持自定义CA证书。
 
-[[keys]]
 === Keys
 
 所有 HTTP下载都必须签名。引导加载程序包含默认主机 `fw-download-alias1.raspberrypi.com` 上文件的公钥。此密钥将用于验证网络安装镜像，_除非_您设置 xref:raspberry-pi.adoc#HTTP_HOST[HTTP_HOST]_并且_在EEPROM中包含公钥。这允许您在自己的服务器上托管Raspberry Pi网络安装镜像。
@@ -61,7 +59,6 @@ $ rpi-eeprom-digest -i boot.img -o boot.sig -k myprivkey.pem
 
 最后，将 `boot.img` 和 `boot.sig` 放在网络服务器上，以使用自己签名的网络安装映像。
 
-[[certificates]]
 === 证书
 
 为了安全起见，Network Install使用 HTTPS从Raspberry Pi网站下载操作系统镜像。此功能使用引导加载程序中包含的我们自己的CA根目录来验证主机。

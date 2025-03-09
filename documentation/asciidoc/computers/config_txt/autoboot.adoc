@@ -31,7 +31,6 @@ $ sudo reboot "0 tryboot"
 
 这使得 `tryboot` 切换可以在分区级别而不是文件级别进行，而无需修改A/B分区中的配置文件。
 
-[[example-update-flow-for-ab-booting]]
 === A/B引导的示例更新流程
 
 下面的伪代码展示了假设的操作系统 "更新服务 "如何使用 `autoboot.txt` 中的 `tryboot` 来执行故障安全操作系统升级。

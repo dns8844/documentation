@@ -8,7 +8,6 @@ NOTE: Raspberry Pi OS Lite 未使能自动挂载。
 
 要将存储设备始终挂载到您选择的特定位置，您必须手动挂载它。
 
-[[mounting-a-storage-device]]
 === 安装存储设备
 
 您可以将存储设备挂载到特定的文件夹位置。通常在 `/mnt` 文件夹中执行此操作，例如 `/mnt/mydisk` 。请注意，该文件夹必须为空。
@@ -107,7 +106,6 @@ NOTE: 如果您在Raspberry Pi启动时没有连接存储设备，则需要额�
 
 有关每个Linux命令的更多信息，请参阅使用 `man` 命令的特定手册页。例如， `man fstab` 。
 
-[[unmounting-a-storage-device]]
 === 卸载存储设备
 
 当Raspberry Pi关闭时，系统会负责卸载存储设备，以便安全地拔掉它。如果要手动卸载设备，可以使用以下命令：
@@ -119,7 +117,6 @@ $ sudo umount /mnt/mydisk
 
 如果您收到 'target is busy' 的错误，这意味着存储设备正在使用，无法卸载。如果没有显示错误，您现在可以安全地拔掉设备。
 
-[[dealing-with-target-is-busy]]
 ==== 处理 'target is busy' 
 
 

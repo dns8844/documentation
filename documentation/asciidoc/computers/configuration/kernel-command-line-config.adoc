@@ -19,7 +19,6 @@ $ cat /proc/cmdline
 
 由于 Raspberry Pi 固件会在启动内核前更改命令行，因此该命令的输出将与 `cmdline.txt` 中的内容不完全一致。
 
-[[command-line-options]]
 === 命令行选项
 
 内核命令行参数有很多，其中一些是由内核本身定义的。其他由内核可能正在使用的代码定义，例如 Plymouth splash。

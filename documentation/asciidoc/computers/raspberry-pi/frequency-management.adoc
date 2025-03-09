@@ -9,7 +9,6 @@
 
 Raspberry Pi 4 Model B继续采用与Raspberry Pi 3 Model B+相同的PCB技术，以帮助散发多余的热量。目前没有定义软限制。
 
-[[use-dvfs]]
 === 使用DVFS
 
 NOTE: DVFS的讨论仅适用于4-系列产品（Raspberry Pi 4 Model B、Raspberry Pi 400 和 Compute Module 4，Pi 400）。
@@ -60,7 +59,6 @@ $ vcgencmd measure_temp
 
 由于内置节流功能，因此不需要散热片来防止 SoC 过热损坏。不过，散热片或小型风扇可以减少热节流并提高性能。垂直安装 Raspberry Pi 可获得最佳气流，从而略微改善散热。
 
-[[fan-cases]]
 === 风扇外壳
 
 为确保 Raspberry Pi 的最佳性能，请使用主动冷却解决方案，如风扇。Raspberry Pi 固件可管理所有官方风扇的转速。

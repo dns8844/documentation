@@ -15,7 +15,6 @@ OTP内存大小：
 $ vcgencmd otp_dump
 ----
 
-[[otp-registers-on-non-bcm2712-devices]]
 === 非BCM2712设备上的OTP寄存器
 
 此列表包含寄存器上的公开可用信息。如果此处未定义寄存器或位，则它不是公开的。
@@ -76,7 +75,6 @@ NOTE: 在 BCM2711 上，引导模式由 xref:raspberry-pi.adoc#raspberry-pi-boot
 
 ^1^还包含用于禁用过压、OTP编程和OTP读取的位。
 
-[[otp-registers-on-bcm2712-devices]]
 === BCM2712设备上的OTP寄存器
 
 此列表包含寄存器上的公开可用信息。如果此处未定义寄存器或位，则它不是公开的。

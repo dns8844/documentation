@@ -1,4 +1,3 @@
-[[use-a-proxy-server]]
 == 使用代理服务器
 
 **proxy server** 是客户端设备和互联网之间的中介。
@@ -9,7 +8,6 @@
 * 您的代理服务器的IP地址或主机名和端口
 * 您的代理的用户名和密码（如果需要）
 
-[[configure-your-raspberry-pi]]
 === 配置您的Raspberry Pi
 
 您需要设置三个环境变量（http_proxy、https_proxy 和 no_proxy），以便您的Raspberry Pi知道如何访问代理服务器。

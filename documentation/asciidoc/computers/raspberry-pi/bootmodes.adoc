@@ -3,7 +3,6 @@
 
 树莓派有许多不同的引导阶段。本文档解释了引导模式的工作原理，以及Linux引导支持哪些模式。
 
-[[special-bootcode-bin-only-boot-mode]]
 === 指定 `bootcode.bin` - 仅引导模式
 
 USB主机和以太网引导可以通过基于BCM2837的Raspberry Pi来执行 - 即Raspberry Pi 2B V1.2、Raspberry Pi 3B和Raspberry Pi 3B+（Raspberry Pi 3A+不能网络引导，因为它没有内置的以太网接口）。此外，Raspberry Pi 4之前的所有Raspberry Pi型号都可以使用 `bootcode.bin` 方法来启用USB主机引导。
@@ -16,7 +15,6 @@ NOTE: 自 Raspberry Pi 4 起，旗舰设备不再使用 `bootcode.bin` 文件。
 
 如果您遇到大容量存储设备仍然无法工作的问题，即使有了 `bootcode.bin`，也可以在 SD 卡中添加一个名为 "timeout" 的新文件。这将把等待大容量存储设备初始化的时间延长至六秒。
 
-[[bootcode-bin-uart-enable]]
 === 启用 `bootcode.bin` UART
 
 NOTE: 适用于 Raspberry Pi 4 之前发布的电路板。

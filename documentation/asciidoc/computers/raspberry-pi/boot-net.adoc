@@ -32,7 +32,6 @@
 
 如果您将所有文件放入TFTP目录的根目录，则将从那里访问所有以下文件。
 
-[[debugging-network-boot-mode]]
 === 调试网络启动模式
 
 首先要检查的是OTP位是否正确编程。为此，您需要将 `program_usb_boot_mode=1` 添加到 `config.txt` 并重新启动（使用可以正确启动到Raspberry Pi OS的标准SD卡）。完成此操作后，您应该能够：
@@ -95,7 +94,6 @@ $ sudo tcpdump -i eth0 -w dump.pcap
 
 `Vendor-Option Option 43` 包含回复的重要部分，这必须包含字符串"Raspberry Pi Boot"，由于引导ROM中的bug，您可能需要在字符串末尾添加三个空格。
 
-[[tftp-file-read]]
 ==== TFTP 文件读取
 
 当供应商选项被正确指定时，您将看到一个后续的TFTP RRQ数据包正在发送。RRQ可以通过第一个数据块或错误说找不到文件来回复。在一些情况下，他们甚至收到了第一个数据包，然后Raspberry Pi中止了传输（当检查文件是否存在时会发生这种情况）。下面的示例只有三个数据包：原始读取请求、第一个数据块（总是516字节，包含一个排针和512字节的数据，尽管最后一个块总是小于512字节，可能是零长度）和第三个数据包（包含帧号以匹配数据块中的帧号的确认字符）。
@@ -109,43 +107,36 @@ $ sudo tcpdump -i eth0 -w dump.pcap
     192.168.1.139.49152 > 192.168.1.1.55985: [no cksum] UDP, length 4
 ----
 
-[[known-problems]]
 === 已知问题
 
 以太网启动模式存在许多已知问题。由于启动模式的实现是在芯片本身中，除了使用仅带有 `bootcode.bin` 文件的SD卡之外，没有其他变通方法。
 
-[[dhcp-requests-time-out-after-five-tries]]
 ==== DHCP请求在五次尝试后超时
 
 Raspberry Pi将尝试五次DHCP请求，其间间隔五秒，总共25秒。如果服务器在此期间无法响应，则Raspberry Pi将进入低功耗状态。除了SD卡上的bootcode.bin之外，没有其他解决方法。
 
-[[tftp-server-on-separate-subnet-not-supported]]
 ==== 不支持单独子网上的TFTP服务器
 
 在Raspberry Pi 3 Model B+（BCM2837B0）中修复。
 
-[[dhcp-relay-broken]]
 ==== DHCP中继功能发生故障
 
 DHCP检查还检查跳数值是否为 `1` ，这不会与DHCP中继一起使用。
 
 在Raspberry Pi 3 Model B+中修复。
 
-[[raspberry-pi-boot-string]]
 ==== 树莓派启动字符串
 
 由于计算字符串长度时出错，DHCP回复中的 `Raspberry Pi Boot` 字符串需要额外的三个空格。
 
 在Raspberry Pi 3 Model B+中修复。
 
-[[dhcp-uuid-constant]]
 ==== DHCP UUID 不变
 
 DHCP UUID 设置为常量值。
 
 在Raspberry Pi 3 Model B+中修复；该值设置为32位序列号。
 
-[[arp-check-can-fail-to-respond-in-the-middle-of-tftp-transaction]]
 ==== ARP 检查在 TFTP 事务中间可能无法响应
 
 Raspberry Pi仅在初始化阶段响应ARP请求；一旦它开始传输数据，它将无法继续响应。

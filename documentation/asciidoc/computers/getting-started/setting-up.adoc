@@ -83,14 +83,12 @@ image::images/peripherals/sd-card.png[alt="Inserting a microSD card into a Raspb
 
 其他操作系统有不同的要求。有关容量要求，请查阅操作系统的文档。
 
-[[keyboard]]
 === 键盘
 
 您可以使用Raspberry Pi上的任何USB接口连接 https://www.raspberrypi.com/products/raspberry-pi-keyboard-and-hub/[有线键盘] 或USB蓝牙接收器。
 
 image:images/peripherals/cable-key.png[alt="Plugging a keyboard into a Raspberry Pi.",width="80%"]
 
-[[mouse]]
 === 鼠标
 
 您可以使用Raspberry Pi上的任何USB接口连接 https://www.raspberrypi.com/products/raspberry-pi-mouse/[有线鼠标] 或USB蓝牙接收器。

@@ -1,4 +1,3 @@
-[[use-libcamera-with-qt]]
 === 在Qt中使用 `libcamera` 
 
 Qt是一个流行的应用程序框架和GUI工具包。 `rpicam-apps` 包括一个将Qt用于相机预览窗口的选项。

@@ -1,7 +1,6 @@
 [[post-processing-with-tensorflow-lite]]
 === 使用TensorFlow Lite进行后处理
 
-[[prerequisites]]
 ==== 先决条件
 
 这些阶段需要导出 {cpp} API 的 TensorFlow Lite (TFLite) 库。API 的库。TFLite 不发布这种形式的库，但您可以从 https://lindevs.com/install-precompiled-tensorflow-lite-on-raspberry-pi/[lindevs.com] 下载并安装导出 API 的版本。

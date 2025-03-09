@@ -1,4 +1,3 @@
-[[advanced-rpicam-apps]]
 == 高级  `rpicam-apps` 
 
 [[build-libcamera-and-rpicam-apps]]
@@ -215,7 +214,6 @@ $ rpicam-still --version
 
 输出结果应包括本地 `rpicam-apps` 生成的日期和时间。
 
-[[rpicam-apps-meson-flag-reference]]
 ==== `rpicam-apps` meson标志参考
 
 
@@ -246,7 +244,6 @@ $ rpicam-still --version
 * `disabled` ：禁用该选项
 * `auto` ：如果依赖项可用，则启用该选项
 
-[[building-libepoxy]]
 ==== 构建 `libepoxy` 
 
 通常不需要重建 `libepoxy` ，因为这个库很少更改。但是，如果您确实想从头开始构建它，请按照以下说明操作。

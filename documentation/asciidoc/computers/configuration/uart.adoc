@@ -19,7 +19,6 @@ Raspberry Pi Zero、1、2 和 3 各包含两个 UART，如下所示：
 | mini UART
 |===
 
-[[raspberry-pi-4-and-400]]
 === Raspberry Pi 4 和 400
 
 Raspberry Pi 4 Model B 和 400 有另外四个 PL011，默认情况下处于禁用状态：
@@ -72,7 +71,6 @@ Raspberry Pi 5 有另外四个 PL011，默认情况下处于禁用状态：
 
 Raspberry Pi 5 没有Mini-UART。
 
-[[cm1-cm3-cm3-and-cm4]]
 === CM1、CM3、CM3+ 和 CM4
 
 第一代计算模块以及计算模块 3 和计算模块 3+ 有两个 UART，而计算模块 4 有六个 UART，如上所述。
@@ -90,7 +88,6 @@ dtoverlay=uart1,txd1_pin=32,rxd1_pin=33
 
 在 Raspberry Pi 5 上，主 UART 为调试接头。
 
-[[secondary-uart]]
 === 辅助 UART
 
 辅助 UART 通常不存在于 GPIO 连接器上。默认情况下，辅助 UART 连接到组合无线 LAN/蓝牙控制器的蓝牙侧，在包含此控制器的型号上。
@@ -170,7 +167,6 @@ dtparam=krnbt=off
 
 TIP: 此选项将来可能无法在所有型号上工作。 仅在您的用例没有其他替代方案时才使用此选项。
 
-[[mini-uart-and-cpu-core-frequency]]
 === Mini-UART 和 CPU 核心频率
 
 NOTE: 如果 mini UART 是主 UART 或蓝牙被禁用，则默认情况下会禁用 mini UART。
@@ -209,7 +205,6 @@ The default state of the `enable_uart` flag depends on which UART is the primary
 | 1
 |===
 
-[[disabling-the-linux-serial-console]]
 === 禁用Linux串行控制台
 
 默认情况下，主通用异步收发设备被分配到Linux控制台。如果您希望将主通用异步收发设备用于其他目的，您必须重新配置Raspberry Pi OS。这可以通过使用 xref:configuration.adoc#raspi-config[raspi-config] 来完成：
@@ -221,7 +216,6 @@ The default state of the `enable_uart` flag depends on which UART is the primary
 * 在提示 `Would you like the serial port hardware to be enabled?` 时，回答 "是"
 * 退出 `raspi-config` 并重启 Raspberry Pi 以使更改生效
 
-[[enabling-early-console-for-linux]]
 === 为Linux启用早期控制台
 
 尽管Linux内核在引导过程中相对较早地启动了UART，但在基础设施的一些关键部分启动之后仍然需要很长时间。如果不访问当时的内核日志消息，则很难诊断这些早期阶段的故障。要启用对其中一个UART的 `earlycon` ，可根据哪个 UART 是主 UART，在 `cmdline.txt` 中添加以下选项之一：
@@ -261,7 +255,6 @@ earlycon=pl011,mmio32,0x20201000
 
 NOTE: 选择错误的早期控制台会阻碍Raspberry Pi启动。
 
-[[uarts-and-device-tree]]
 === UART和设备树
 
 各种通用异步收发设备树覆盖定义可以在 https://github.com/raspberrypi/linux[内核GitHub] 中找到。两个最有用的overlay https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm/boot/dts/overlays/disable-bt-overlay.dts[`disable-bt` ] 和 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm/boot/dts/overlays/miniuart-bt-overlay.dts[ `miniuart-bt`]。
@@ -279,7 +272,6 @@ overlay `uart2`、 `uart3`、 `uart4` 和 `uart5` 用于在Raspberry Pi 4上启�
 dtoverlay=disable-bt
 ----
 
-[[pl011-and-mini-uart]]
 === PL011和 mini-UART
 
 PL011 UART和 mini-UART有一些区别。

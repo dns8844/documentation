@@ -1,4 +1,3 @@
-[[use-a-usb-webcam]]
 == 使用 USB 网络摄像头
 
 大多数 Raspberry Pi 设备都有用于相机模块的专用端口。摄像头模块是深受 Raspberry Pi 用户喜爱的高质量、可高度配置的摄像头。

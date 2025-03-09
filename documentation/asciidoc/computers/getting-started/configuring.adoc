@@ -1,4 +1,3 @@
-[[set-up-your-raspberry-pi]]
 == 设置您的树莓派
 
 安装操作系统镜像后，将存储设备连接到Raspberry Pi。
@@ -30,14 +29,12 @@ image::images/peripherals/cable-all.png[alt="Attaching the power supply to a Ras
 
 image::images/initial-setup/start.png[alt="Click Next to get started with configuration.",width="80%"]
 
-[[bluetooth]]
 === 蓝牙
 
 如果您使用的是蓝牙键盘或鼠标，请根据此步骤完成设备配对。Raspberry Pi 将扫描可配对的设备，并连接到为每个项目找到的第一个设备。
 
 此过程适用于内置或外置 USB 蓝牙适配器。如果使用 USB 适配器，请在启动 Raspberry Pi 前将其插入。
 
-[[locale]]
 === 区域设置
 
 此页面可帮助您配置您的国家、语言和时区以及键盘布局。
@@ -53,7 +50,6 @@ image::images/initial-setup/locale.png[alt="Adjust country, language, time zone,
 
 image::images/initial-setup/user.png[alt="Create your username and password.",width="80%"]
 
-[[wi-fi]]
 === Wi-Fi
 
 此页面可帮助您连接到 Wi-Fi 网络。从列表中选择您的网络。
@@ -76,7 +72,6 @@ image::images/initial-setup/browser.png[alt="The Choose Browser page.",width="80
 
 image::images/initial-setup/connect.png[alt="The Enable Raspberry Pi Connect page.",width="80%"]
 
-[[software-updates]]
 === 更新软件
 
 NOTE: *国内网络更新起来速度很慢，建议跳过这一步*

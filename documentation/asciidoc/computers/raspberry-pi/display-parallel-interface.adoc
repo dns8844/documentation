@@ -9,7 +9,6 @@
 
 该接口由 GPU 固件控制，用户可通过指定的 `config.txt` 参数和启用正确的 Linux 设备树overlay对其进行修改。
 
-[[gpio-pins]]
 === GPIO引脚
 
 Raspberry Pi GPIO 第 0 组可选择的备用功能之一是 DPI（显示并行接口），它是一个简单的时钟并行接口（最多 8 位 R、G 和 B；时钟、使能、hsync 和 vsync）。该接口可作为 GPIO Bank 0 上的备用功能 2 (ALT2)：
@@ -332,7 +331,6 @@ h|*27* h|*26* h|*25* h|*24* h|*23* h|*22* h|*21* h|*20* h|*19* h|*18* h|*17* h|*
 |===
 {set:cellbgcolor:!}
 
-[[disable-other-gpio-peripherals]]
 === 禁用其他GPIO外设
 
 必须禁用所有其他使用冲突 GPIO 引脚的 overlay。在 `config.txt` 中，请注意注释掉或关闭任何启用I2C或SPI的 dtparams ：
@@ -343,12 +341,10 @@ dtparam=i2c_arm=off
 dtparam=spi=off
 ----
 
-[[configure-a-display]]
 === 配置显示器
 
 https://en.wikipedia.org/wiki/Direct_Rendering_Manager#Kernel_mode_setting[内核模式设置 (KMS)] 通用显示接口可向任意显示器输出，只要有适当的驱动程序即可。
 
-[[auto-detect]]
 ==== 自动检测
 
 自动检测允许您的Raspberry Pi与显示器连接，而无需手动配置设备树overlay。
@@ -362,7 +358,6 @@ display_auto_detect=1
 用 `0` 代替 `1` 以禁用自动检测。
 在启用自动检测的情况下连接 Raspberry Pi 官方显示屏时，KMS 会自动确定显示屏型号并配置相应的显示屏设置。
 
-[[manually-configure-a-display]]
 ==== 手动配置显示器
 
 NOTE: 在 Raspberry Pi OS  _Bookworm_  或更高版本中，以前用于设置 DPI 的 `config.txt` 中的 `dpi_output_format` 和 `dpi_timings` 已被 `vc4-kms-dpi-generic` overlay 取代。

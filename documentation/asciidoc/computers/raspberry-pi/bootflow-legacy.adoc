@@ -1,4 +1,3 @@
-[[boot-sequence]]
 == 引导顺序
 
 IMPORTANT: 以下启动顺序仅适用于基于 BCM2837 和 BCM2837B0 的 Raspberry Pi 型号。在此之前的型号上，Raspberry Pi 将尝试使用 SD 卡启动，然后使用 xref:raspberry-pi.adoc#usb-device-boot-mode[USB 设备模式启动]。有关 Raspberry Pi 4 和 Raspberry Pi 5 的启动顺序，请参阅 xref:raspberry-pi.adoc#eeprom-boot-flow[EEPROM 启动流程] 部分。

@@ -49,7 +49,6 @@ xref:camera_software.adoc#segment[`segment`] 选项将输出文件分解为片�
 $ rpicam-vid -t 10000 --codec mjpeg --segment 1 -o test%05d.jpeg
 ----
 
-[[capture-high-framerate-video]]
 ==== 捕获高帧率视频
 
 要最大限度地减少高帧率 (> 60fps) 视频的丢帧，请尝试以下配置调整：

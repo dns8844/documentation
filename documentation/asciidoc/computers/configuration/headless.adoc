@@ -11,19 +11,16 @@
 
 WARNING: 根据您使用的 Raspberry Pi 型号和 SD 卡类型，您的 Raspberry Pi 首次启动和连接到无线网络可能需要长达五分钟的时间。
 
-[[connect-to-a-wired-network]]
 === 连接到有线网络
 
 要在首次启动时连接到有线网络，请通过以太网插入headless Raspberry Pi，如果您的Raspberry Pi型号没有网口，请使用以太网适配器。您的Raspberry Pi将自动连接到网络。
 
-[[connect-to-a-wireless-network]]
 === 连接到无线网络
 
 要在 headless Raspberry Pi 中首次启动时配置无线网络访问，请使用 Raspberry Pi Imager 中的高级设置菜单。输入首选无线网络的SSID和密码。您的Raspberry Pi将在首次启动时使用这些凭据连接到网络。某些无线适配器和某些Raspberry Pi板不支持5GHz网络；检查无线模块的文档，以确保与选择的网络兼容。
 
 NOTE: 以前版本的Raspberry Pi OS使用 `wpa_supplicant.conf` 文件，该文件可以放置在引导文件夹中以配置无线网络设置。此功能从 Raspberry Pi OS Bookworm 开始不可用。
 
-[[remote-access]]
 === 远程访问
 
 如果没有键盘或显示器，您需要一种方法来 xref:remote-access.adoc[远程控制] 您的headless Raspberry Pi。首次启动时，唯一可用的选项是SSH。要在新安装的Raspberry Pi OS上启用SSH，请选择以下方法之一：

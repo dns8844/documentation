@@ -45,7 +45,6 @@ $ sudo apt purge arandr
 
 === 手动设置分辨率和旋转
 
-[[determine-display-device-name]]
 ==== 确定显示设备名称
 
 要手动配置分辨率和旋转，需要知道显示设备的名称。要确定设备名称，请运行以下命令显示连接设备的信息：

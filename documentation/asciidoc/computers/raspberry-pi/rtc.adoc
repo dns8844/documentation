@@ -1,4 +1,3 @@
-[[real-time-clock-rtc]]
 == 实时时钟（RTC）
 
 Raspberry Pi 5包括一个RTC模块。这可以通过位于USB-C电源连接器右侧的板上的J5（BAT）连接器由电池供电。
@@ -41,7 +40,6 @@ RTC还提供启动时间，例如在 `dmesg` 中，对于无法访问NTP的用�
 
 NOTE: 即使没有连接到J5连接器的备用电池，RTC仍然可用。
 
-[[add-a-backup-battery]]
 === 添加备用电池
 
 .Lithium-manganese rechargeable RTC battery
@@ -53,7 +51,6 @@ NOTE: 我们不建议将初级（不可充电）锂电池用于RTC。RTC备用�
 
 WARNING: 请勿将锂离子电池用于RTC。
 
-[[enable-battery-charging]]
 === 启用电池充电
 
 RTC配备了一个恒流（3mA）恒压充电器。
@@ -75,7 +72,6 @@ dtparam=rtc_bbat_vchg=3000000
 
 使用 `sudo reboot` 重新启动以使用新的电压设置。检查 `sysfs` 文件以确保充电电压设置正确。
 
-[[disable-battery-charging]]
 === 禁用电池充电
 
 要停止充电，请从 `config.txt` 中删除任何包含 https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L279[`rtc_bbat_vchg`] 的行。

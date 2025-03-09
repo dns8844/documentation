@@ -1,4 +1,3 @@
-[[legacy-overclocking-options]]
 == 传统超频选项
 （另请参见 xref:config_txt.adoc#overclocking-options[config.txt超频选项]。）
 

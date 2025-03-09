@@ -1,4 +1,3 @@
-[[legacy-miscellaneous-options]]
 == 遗留的杂项选项
 
 [[avoid_warnings]]

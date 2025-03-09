@@ -1,4 +1,3 @@
-[[accessibility-options]]
 == 无障碍选项
 
 === 视觉辅助工具

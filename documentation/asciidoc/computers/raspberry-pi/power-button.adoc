@@ -11,19 +11,16 @@ NOTE: 本节仅适用于带有电源按钮的Raspberry Pi型号，例如Raspberr
 
 NOTE: 如果您运行Raspberry Pi Desktop，您可以快速连续按两次电源按钮以关闭。如果您在没有桌面的情况下运行Raspberry Pi OS Lite，请按一次电源按钮以启动关机。
 
-[[restart]]
 === 重启
 
 如果Raspberry Pi板已关闭，但仍连接到电源，请按电源按钮重新启动板。
 
 NOTE: 重置电源管理集成电路（PMIC）也可以重新启动电路板。连接HAT可以重置PMIC。在连接HAT之前，请务必断开设备与电源的连接。
 
-[[hard-shutdown]]
 === 强制关机
 
 要强制硬关机，请按住电源按钮。
 
-[[add-your-own-power-button]]
 === 添加自己的电源按钮
 
 .The J2 jumper

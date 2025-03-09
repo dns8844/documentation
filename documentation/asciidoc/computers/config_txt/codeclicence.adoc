@@ -1,4 +1,3 @@
-[[licence-key-and-codec-options]]
 == 许可证密钥和编解码器选项
 
 通过锁定到 Raspberry Pi 的CPU序列号的 https://codecs.raspberrypi.com/license-keys/[购买许可证]，可以启用Raspberry Pi 3和更早型号上的附加编解码器的硬件解码。

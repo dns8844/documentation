@@ -1,4 +1,3 @@
-[[post-processing-with-opencv]]
 === 使用OpenCV进行后处理
 
 NOTE: 这些阶段需要安装OpenCV。您可能需要 xref:camera_software.adoc#build-libcamera-and-rpicam-apps[重建支持OpenCV的rpicam-apps]。

@@ -1,4 +1,3 @@
-[[libav-options]]
 === `libav` 选项
 
 本节中指定的命令行选项仅适用于 `libav` 视频后端。
@@ -9,7 +8,6 @@
 
 一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会牺牲易读性。
 
-[[libav-format]]
 ==== `libav-format` 
 
 设置 `libav` 输出格式。接受以下值：
@@ -22,7 +20,6 @@
 
 如果不提供此选项，则传递给 xref:camera_software.adoc#output[`output`] 选项的文件扩展名将确定文件格式。
 
-[[libav-audio]]
 ==== `libav-audio` 
 
 启用录音。启用后，您还必须指定 xref:camera_software.adoc#audio-codec[`audio-codec`]。不接受值。
@@ -34,21 +31,18 @@
 
 选择用于输出的音频编解码器。有关可用编解码器的列表，请运行 `ffmpeg-codec` 。
 
-[[audio-bitrate]]
 ==== `audio-bitrate` 
 
 以每秒比特数为单位设置音频编码的比特率。接受数字输入。
 
 示例： `rpicam-vid --codec libav -o test.mp4 --audio_codec mp2 --audio-bitrate 16384` （使用mp2编解码器以16千比特/秒的速度录制音频）
 
-[[audio-samplerate]]
 ==== `audio-samplerate` `音频采样` 
 
 默认值： `0` 
 
 以Hz为单位设置音频采样率。接受数字输入。 `0` 使用输入采样率。
 
-[[audio-device]]
 ==== `audio-device`
 
 选择用于录音的ALSA输入设备。有关可用设备的列表，请运行以下命令：
@@ -67,7 +61,6 @@ Name: alsa_output.usb-GN_Netcom_A_S_Jabra_EVOLVE_LINK_000736B1214E0A-00.analog-s
 Name: alsa_input.usb-GN_Netcom_A_S_Jabra_EVOLVE_LINK_000736B1214E0A-00.mono-fallback
 ----
 
-[[av-sync]]
 ==== `av-sync` 
 
 将音频样本时间戳移动一个以微秒为单位的值。接受正数值和负数值。

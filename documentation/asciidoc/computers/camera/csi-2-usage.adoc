@@ -1,16 +1,13 @@
-[[unicam]]
 == Unicam
 
 树莓派SoC都有两个摄像头接口，支持CSI-2 D-PHY 1.1或紧凑型摄像头端口2（CCP2）源。该接口的代号为 Unicam。Unicam 的第一个实例支持两个CSI-2数据通道，而第二个实例支持四个。每个通道可以以高达1Gbit/s（DDR，因此最大链路频率为500MHz）的速度运行。
 
 Compute Modules 和 Raspberry Pi 5 可从两个外设引出所有通道。Raspberry Pi 5 之前的其他型号只引出了第二个通道到摄像头连接器。
 
-[[software-interfaces]]
 === 软件接口
 
 V4L2软件接口是与Unicam外设通信的唯一方式。过去也有固件和MMAL rawcam组件接口，但不再支持这些。
 
-[[v4l2]]
 ==== V4L2
 
 NOTE: Unicam的V4L2接口仅在使用 `libcamera` 时可用。
@@ -76,7 +73,6 @@ ccp2  |             |
 
 由于子设备驱动程序也是具有标准化API的内核驱动程序，因此第三方可以自由地为他们选择的任何来源编写自己的驱动程序。
 
-[[write-a-third-party-driver]]
 === 写第三方驱动
 
 这是通过Unicam进行接口的推荐方法。
@@ -87,7 +83,6 @@ NOTE: 所有内核驱动程序都在GPLv2许可下获得许可，因此源代码
 
 `bcm2835-unicam` 模块已被编写为尝试适应当前主线Linux内核中所有类型的CSI-2源驱动程序。这些可以大致分为相机传感器和桥接芯片。桥接芯片允许在其他格式和CSI-2之间进行转换。
 
-[[camera-sensors]]
 ==== 相机传感器
 
 相机传感器的传感器驱动程序负责设备的所有配置，通常通过I2C或SPI。与其从头开始编写驱动程序，不如以现有驱动程序为基础并酌情对其进行修改。
@@ -114,7 +109,6 @@ https://github.com/raspberrypi/linux/blob/rpi-6.1.y/drivers/media/i2c/imx219.c[I
 
 6.1版本内核中IMX219的 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/arch/arm/boot/dts/overlays/imx219-overlay.dts[Device Tree overlay] 可在GitHub上获得。
 
-[[bridge-chips]]
 ==== 桥接芯片
 
 这些设备将传入的视频流（例如HDMI或复合）转换为Raspberry Pi CSI-2接收器可以接受的CSI-2流。
@@ -125,14 +119,12 @@ https://github.com/raspberrypi/linux/blob/rpi-6.1.y/drivers/media/i2c/imx219.c[I
 
 在下面的章节中使用 `ioctls` 时， `ioctl` 名称中的 `_S_` 表示它是一个 set 函数，而 `_G_` 是一个 get 函数， `_ENUM_` 枚举一组允许的值。
 
-[[analogue-video-sources]]
 ===== 模拟视频源
 
 模拟视频源使用标准 `ioctls` 检测和设置视频标准。https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-g-std.html[`VIDIOC_G_STD`]、https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-g-std.html[`VIDIOC_S_STD`], https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-enumstd.html[`VIDIOC_ENUMSTD`] 和 https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-querystd.html[`VIDIOC_QUERYSTD`] 可用。
 
 选择错误的标准通常会导致图像损坏。设置标准通常也会设置 V4L2 CAPTURE 队列的分辨率。它不能通过 `VIDIOC_S_FMT` 设置。一般来说，通过 `VIDIOC_QUERYSTD` 请求检测到的标准，然后在流媒体播放前用 `VIDIOC_S_STD` 设置是个好主意。
 
-[[digital-video-sources]]
 ===== 数字视频源
 
 对于数字视频源，例如HDMI，有一组备用调用允许指定所有数字定时参数：https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-g-dv-timings.html[`VIDIOC_G_DV_TIMINGS`], https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-g-dv-timings.html[`VIDIOC_S_DV_TIMINGS`], https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-enum-dv-timings.html[`VIDIOC_ENUM_DV_TIMINGS`] 和 https://www.kernel.org/doc/html/latest/userspace-api/media/v4l/vidioc-query-dv-timings.html[`VIDIOC_QUERY_DV_TIMINGS`]。
@@ -141,7 +133,6 @@ https://github.com/raspberrypi/linux/blob/rpi-6.1.y/drivers/media/i2c/imx219.c[I
 
 根据桥接芯片和驱动程序，可以通过 `VIDIOC_SUBSCRIBE_EVENT` 和 `V4L2_EVENT_SOURCE_CHANGE` 向应用程序报告输入源的变化。
 
-[[currently-supported-devices]]
 ===== 当前支持的设备
 
 Raspberry PiLinux内核目前支持两种桥接芯片：用于模拟视频源的Analog Devices ADV728x-M和用于HDMI源的Toshiba TC358743。

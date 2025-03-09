@@ -1,9 +1,7 @@
-[[stream-video-over-a-network-with-rpicam-apps]]
 == 使用 `rpicam-app` 通过网络流式传输视频
 
 本节介绍来自 `rpicam-vid` 的本机流。您还可以使用 xref:camera_software.adoc#libav-integration-with-rpicam-vid[`libav`] 后端进行网络流。
 
-[[udp]]
 === UDP
 
 要使用Raspberry Pi作为服务器通过UDP流式传输视频，请使用以下命令，将 `<ip-addr>` 占位符替换为客户端或多播地址的IP地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：
@@ -27,7 +25,6 @@ $ vlc udp://@:<port> :demux=h264
 $ ffplay udp://<ip-addr-of-server>:<port> -fflags nobuffer -flags low_delay -framedrop
 ----
 
-[[tcp]]
 === TCP
 
 您还可以通过TCP流式传输视频。要将Raspberry Pi用作服务器：
@@ -51,7 +48,6 @@ $ vlc tcp/h264://<ip-addr-of-server>:<port>
 $ ffplay tcp://<ip-addr-of-server>:<port> -vf "setpts=N/30" -fflags nobuffer -flags low_delay -framedrop
 ----
 
-[[rtsp]]
 === RTSP
 
 要使用VLC使用Raspberry Pi作为服务器通过RTSP流式传输视频，请使用以下命令：
@@ -104,7 +100,6 @@ $ rpicam-vid -t 0 --codec libav --libav-format mpegts --libav-audio -o "tcp://<i
 $ rpicam-vid -t 0 --codec libav --libav-format mpegts --libav-audio  -o "udp://<ip-addr>:<port>"
 ----
 
-[[gstreamer]]
 === GStreamer
 
  https://gstreamer.freedesktop.org/[GStreamer] 是一个用于读取、处理和播放多媒体文件的Linux框架。本节展示如何使用 `rpicam-vid` 通过网络流式传输视频。
@@ -125,7 +120,6 @@ $ gst-launch-1.0 udpsrc address=<ip-addr> port=<port> ! h264parse ! v4l2h264dec 
 
 TIP: 要测试此配置，请在同一设备上的不同终端中运行服务器和客户端命令，使用 `localhost` 作为地址。
 
-[[rtp]]
 ==== RTP
 
 
@@ -149,7 +143,6 @@ $ gst-launch-1.0 udpsrc address=<ip-addr> port=<port> caps=application/x-rtp ! r
 $ gst-launch-1.0 udpsrc address=<ip-addr> port=<port> caps=application/x-rtp ! rtph264depay ! h264parse ! avdec_h264 ! autovideosink
 ----
 
-[[libcamerasrc-gstreamer-element]]
 ==== `libcamerasrc` GStreamer 元素
 
 `libcam` 提供了一个 `libcamasrc` GStreamer元素，可以直接使用它来代替 `rpicam-vid` 。要使用此元素，请在服务器上运行以下命令，将 `<ip-addr>` 占位符替换为客户端或多播地址的IP地址，并将 `<port>` 占位符替换为您要用于流式传输的端口：

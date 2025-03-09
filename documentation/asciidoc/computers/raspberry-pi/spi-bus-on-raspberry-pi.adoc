@@ -16,10 +16,8 @@ Raspberry Pi Zero、1、2和3有三个SPI控制器：
 
  https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf[BCM2835 Arm外设] datasheet中的第10章描述了主控制器。第2.3章描述了辅助控制器。
 
-[[pingpio-mappings]]
 ==== 引脚/GPIO映射
 
-[[spi0]]
 ===== SPI0
 
 [cols="1m,1,1m,1m"]
@@ -79,7 +77,6 @@ a| SPI function a| Broadcom pin name a| Broadcom pin function
 | SPI0_CE1_N
 |===
 
-[[spi1]]
 ===== SPI1
 
 [cols="1m,1,1m,1m"]
@@ -117,7 +114,6 @@ a| SPI function | Header pin | Broadcom pin name | Broadcom pin function
 | SPI1_CE2_N
 |===
 
-[[spi2-compute-modules-only-except-cm4]]
 ===== SPI2（仅 Compute Module ，CM4除外）
 
 [cols="1m,1m,1m"]
@@ -149,7 +145,6 @@ a| SPI function a| Broadcom pin name a| Broadcom pin function
 | SPI2_CE2_N
 |===
 
-[[spi3-bcm2711-only]]
 ===== SPI3（仅限BCM2711）
 
 [cols="1m,1,1m,1m"]
@@ -182,7 +177,6 @@ a| SPI function | Header pin a| Broadcom pin name a| Broadcom pin function
 | SPI3_CE1_N
 |===
 
-[[spi4-bcm2711-only]]
 ===== SPI4（仅限BCM2711）
 
 [cols="1m,1,1m,1m"]
@@ -215,7 +209,6 @@ a| SPI function | Header pin a| Broadcom pin name a| Broadcom pin function
 | SPI4_CE1_N
 |===
 
-[[spi5-bcm2711-only]]
 ===== SPI5（仅限BCM2711）
 
 [cols="1m,1,1m,1m"]
@@ -248,7 +241,6 @@ a| SPI function | Header pin a| Broadcom pin name a| Broadcom pin function
 | SPI5_CE1_N
 |===
 
-[[spi6-bcm2711-only]]
 ===== SPI6（仅限BCM2711）
 
 [cols="1,1,1,1"]
@@ -281,7 +273,6 @@ a| SPI function | Header pin a| Broadcom pin name a| Broadcom pin function
 | SPI6_CE1_N
 |===
 
-[[master-modes]]
 ==== 主模式
 
 信号名称缩写
@@ -294,12 +285,10 @@ MOSI:: master out slave in
 MISO:: master in slave out
 MOMI:: master out master in
 
-[[standard-mode]]
 ===== 标准模式
 
 在标准SPI模式下，外设实现标准的三线串行协议（SCLK、MOSI和MISO）。
 
-[[bidirectional-mode]]
 ===== 双向模式
 
 在双向 SPI 模式中，执行的是相同的 SPI 标准，但数据线（MOMI）只用一根，而不是标准模式中的两根（MISO 和 MOSI）。在这种模式下，MOSI 引脚用作 MOMI 引脚。
@@ -326,7 +315,6 @@ SCLK:: Core Clock / CDIV
 
 有关更多信息，请参阅 <<driver,Linux driver>> 部分。
 
-[[chip-selects]]
 ==== 芯片选择
 
 在 DMA 模式下运行时，与 CS 线的自动置位和置位取消相关的设置和保持时间如下：
@@ -334,7 +322,6 @@ SCLK:: Core Clock / CDIV
 * CS 线将在传输的第一个字节的 msb 之前至少三个核心时钟周期置位。
 * CS 线将在最后一个时钟脉冲的后沿之后不早于一个核心时钟周期置位。
 
-[[spi-software]]
 === SPI 软件
 
 [[driver]]
@@ -374,7 +361,6 @@ SPI_3WIRE:: bidirectional mode, data in and out pin shared
 
 双向模式也称为 3 线模式，由 `spi-bcm2835` 内核模块支持。请注意，在这种模式下，`spi_transfer` 结构的 `tx` 或 `rx` 字段必须是空指针，因为只能进行半双工通信。否则，传输将失败。`spidev_test.c` 源代码没有正确考虑这一点，因此在三线模式下根本无法工作。
 
-[[supported-bits-per-word]]
 ===== 每个字支持的位数
 
 * 8 - 正常
@@ -384,7 +370,6 @@ SPI_3WIRE:: bidirectional mode, data in and out pin shared
 
 所有 SPI 总线都支持中断模式。 SPI0 和 SPI3-6 也支持 DMA 传输。
 
-[[spi-driver-latency]]
 ===== SPI 驱动程序延迟
 
 此 https://forums.raspberrypi.com/viewtopic.php?f=44&t=19489[thread] 讨论了延迟问题。
@@ -418,7 +403,6 @@ $ echo -ne "\x01\x02\x03" > /dev/spidev0.0
 [[troubleshooting-spi-hardware]]
 === 故障排除
 
-[[loopback-test]]
 ==== 环回测试
 
 这可以用来测试SPI发送和接收。在MOSI和MISO之间放一根电线。它不测试CE0和CE1。

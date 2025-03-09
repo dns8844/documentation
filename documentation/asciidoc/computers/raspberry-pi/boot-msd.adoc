@@ -20,12 +20,10 @@ NOTE: 早期版本的 Raspberry Pi 4 可能需要 xref:raspberry-pi.adoc#raspi-c
 NOTE: 早期版本的 Compute Module 4 可能需要 xref:compute-module.adoc#update-the-compute-module-bootloader[bootloader update] 才能从 USB 启动。
 
 
-[[raspberry-pi-3b]]
 === Raspberry Pi 3B+
 
 Raspberry Pi 3B++支持直接使用USB大容量存储启动。
 
-[[raspberry-pi-2b-3a-3b-cm3-cm3-zero-2-w]]
 === Raspberry Pi 2B, 3A+, 3B, CM3, CM3+, Zero 2 W
 
 在 Raspberry Pi 2B v1.2、3A+、3B、Zero 2 W 以及 Compute Module 3 和 3+上，必须首先启用 xref:raspberry-pi.adoc#usb-host-boot-mode[USB主机启动模式]。这允许 USB 大容量存储器启动和 xref:raspberry-pi.adoc#network-booting[网络启动]。
@@ -66,7 +64,6 @@ $ vcgencmd otp_dump | grep 17:
 
 您现在可以像从SD卡启动一样从USB大容量存储设备启动。有关详细信息，请参阅以下部分。
 
-[[booting-from-usb-mass-storage]]
 === 从USB大容量存储启动
 
 xref:getting-started.adoc#installing-the-operating-system[过程] 与SD卡相同 - 只需将USB存储设备镜像为操作系统镜像。
@@ -89,14 +86,12 @@ IMPORTANT: 这 *不* 适用于Raspberry Pi 4 Model B。
 
 如果您无法使用特定的USB设备来启动Raspberry Pi，另一种选择（适用于Raspberry Pi2Bv1.2、3A+、3B和3B+）是使用特殊的 xref:raspberry-pi.adoc#raspberry-pi-boot-modes[`bootcode.bin-only`] 启动模式。Raspberry Pi仍将从SD卡启动，但 `bootcode.bin` 是唯一从中读取的文件。
 
-[[hardware-compatibility]]
 === 硬件兼容性
 
 在尝试从USB大容量存储设备启动之前，建议验证设备在Linux下是否正常工作。使用SD卡启动并插入USB大容量存储设备。这应该显示为可移动驱动器。这对于USB SATA适配器尤其重要，引导加载程序在大容量存储模式下可能支持它，但如果Linux选择 https://en.wikipedia.org/wiki/USB_Attached_SCSI[USB Attached SCSI-UAS]，则会失败。
 
 机械硬盘几乎总是需要一个供电的 USB 集线器。即使看起来一切正常，如果没有供电的 USB 集线器，也可能会遇到间歇性故障。
 
-[[multiple-bootable-drives]]
 === 多个可启动驱动器
 
 在搜索可启动分区时，引导程序会并行扫描所有 USB 大容量存储设备，并选择第一个作出响应的设备。如果引导分区不包含合适的 `start.elf` 文件，则会选择下一个可用设备。  没有根据 USB 拓扑指定启动设备的方法，因为这会减慢启动速度，并增加不必要且难以支持的复杂配置。

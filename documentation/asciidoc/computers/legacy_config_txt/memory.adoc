@@ -1,4 +1,3 @@
-[[legacy-memory-options]]
 == 旧内存选项
 （另请参见 xref:config_txt.adoc#memory-options[config.txt内存选项]）
 

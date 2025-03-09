@@ -7,7 +7,6 @@ NOTE: 从 Raspberry Pi OS _Bookworm_ 开始，网络管理器是默认的网络�
 
 === 连接到无线网络
 
-[[using-the-desktop]]
 ==== 使用桌面
 
 通过菜单栏右端的网络图标访问网络管理器。如果您使用的是具有内置无线连接的Raspberry Pi，或者如果插入了无线加密狗，请单击此图标以显示可用无线网络列表。如果您看到消息'No APs found - scanning...'，请等待几秒钟，网络管理器应该会找到您的网络。
@@ -43,7 +42,6 @@ image::images/network-hidden-authentication.png[隐藏wi-fi网络认证]
 
 NOTE: 本指南应适用于WEP、WPA、WPA2或WPA3网络，但可能不适用于企业网络。
 
-[[enable-wireless-networking]]
 ===== 启用无线网络
 
 重新安装后，您必须指定使用设备的国家/地区。这允许您的设备为5GHz网络选择正确的频段。指定无线LAN国家/地区后，您可以使用Raspberry Pi的内置无线网络模块。
@@ -73,7 +71,6 @@ $ nmcli radio wifi
 $ nmcli radio wifi on
 ----
 
-[[find-networks]]
 ===== 查找网络
 
 要扫描无线网络，请运行以下命令：
@@ -96,7 +93,6 @@ IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS
 
 在"SSID"列中查找您要连接的网络名称。使用SSID和密码连接到网络。
 
-[[connect-to-a-network]]
 ===== 连接网络
 
 运行以下命令配置网络连接，将"<example_ssid>"占位符替换为要配置的网络名称：
@@ -133,7 +129,6 @@ IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS
 
 NOTE: 您可以在 `/etc/NetworkManager/system-connections/` 目录中手动编辑您的连接配置。
 
-[[connect-to-an-unsecured-network]]
 ===== 连接到不安全的网络
 
 如果连接的网络不使用密码，请运行以下命令：
@@ -198,12 +193,10 @@ AUTOCONNECT-PRIORITY  NAME
 * 如果与 "cat" 网络的连接失败，您的设备将尝试连接到 "rabbit" 网络。
 * 如果与 "rabbit" 网络的连接失败，并且您的设备没有检测到其他已知网络，您的设备将尝试连接到 "snake" 网络。
 
-[[configure-dhcp]]
 === 配置DHCP
 
 默认情况下，Raspberry Pi OS会尝试通过DHCP自动配置所有网络接口，如果DHCP失败，则会回退到169.254.0.0/16范围内的自动私有地址。
 
-[[assign-a-static-ip-address]]
 === 设置静态IP地址
 
 要为 Raspberry Pi 分配静态 IP 地址，请在路由器上为它保留一个地址。你的 Raspberry Pi 将继续通过 DHCP 分配地址，但每次收到的地址都是一样的。通过将 Raspberry Pi 的 MAC 地址与 DHCP 服务器中的静态 IP 地址关联，可以分配一个 "固定 "地址。

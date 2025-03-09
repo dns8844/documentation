@@ -1,11 +1,9 @@
-[[set-up-an-apache-web-server]]
 == 设置 Apache web 服务器
 
 Apache 是一款流行的 web 服务器应用程序，您可以将其安装在 Raspberry Pi 上，以允许它提供网页。
 
 Apache 本身可以通过 HTTP 提供 HTML 文件，使用附加模块可以使用脚本语言（如 PHP）提供动态网页。
 
-[[install-apache]]
 === 安装 Apache
 
 首先，通过在终端中输入以下命令来更新可用的软件包：
@@ -22,7 +20,6 @@ sudo apt update
 sudo apt install apache2 -y
 ----
 
-[[test-the-web-server]]
 === 测试 web 服务器
 
 默认情况下，Apache 会将测试 HTML 文件放在 web 文件夹中。当您在 Raspberry Pi 本身上浏览 `+ http://localhost/+` 或从网络上的另一台计算机浏览 `+http://192.168.1.10+` （无论 Raspberry Pi 的 IP 地址是什么）时，将提供此默认网页。要查找 Raspberry Pi 的 IP 地址，请在命令行中输入 `hostname -I` （或阅读有关查找 xref:remote-access.adoc#ip-address[IP 地址] 的更多信息）。
@@ -33,7 +30,6 @@ image::images/apache-it-works.png[Apache 成功消息]
 
 这意味着 Apache 正在运行！
 
-[[change-the-default-web-page]]
 ==== 更改默认网页
 
 此默认网页只是文件系统上的 HTML 文件。它位于 `/var/www/html/index.html` 。
@@ -64,7 +60,6 @@ $ sudo chown <username>: index.html
 
 您现在可以尝试编辑此文件，然后刷新浏览器以查看网页变化。如果您了解 HTML，您可以将自己的 HTML 文件和其他资产放在此目录中，并将它们作为本地网络上的网站提供服务。
 
-[[install-php-for-apache]]
 === 为 Apache 安装 PHP
 
 要允许您的 Apache 服务器处理 PHP 文件，您需要安装最新版本的 PHP 和适用于 Apache 的 PHP 模块。输入以下命令来安装这些内容：

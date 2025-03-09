@@ -3,7 +3,6 @@
 
 现在您的Raspberry Pi已设置好并准备就绪，下一步是什么？
 
-[[recommended-software]]
 === 推荐软件
 
 树莓派操作系统预装了许多基本应用程序，因此您可以立即开始使用它们。如果您想利用我们认为有用的其他应用程序，请单击屏幕左上角的树莓图标。从下拉菜单中选择**Preferences > Recommended Software**，您将找到包管理器。您可以在这里免费安装各种推荐软件。
@@ -12,7 +11,6 @@ image::images/recommended-software.png[alt="Opening the package manager GUI in R
 
 例如，如果您计划将Raspberry Pi用作家用计算机，您可能会发现LibreOffice对于编写和编辑文档和电子表格很有用。您还可以通过Universal Access下的屏幕放大镜和Orca屏幕阅读器等应用程序使您的Raspberry Pi更易于访问。
 
-[[tutorials]]
 === 教程
 
 我们的教程演示了使用新计算机的各种方式。您可以通过学习您兴趣的 https://www.raspberrypi.com/tutorials/[教程] 来学习编码、控制外部设备和构建令人兴奋的新项目。

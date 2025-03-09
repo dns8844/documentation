@@ -1,4 +1,3 @@
-[[image-options]]
 === 图像选项
 
 本节中指定的命令行选项仅适用于静止图像输出。
@@ -15,7 +14,6 @@
 
 设置JPEG质量。接受介于 `1` 和 `100` 之间的值。
 
-[[exif]]
 ==== `exif` 
 
 在JPEG输出文件中保存额外的EXIF标签。仅适用于JPEG输出。由于 `libexif` 库中的限制，许多标签当前（错误地）格式化为ASCII并在终端中打印警告。
@@ -33,7 +31,6 @@
 
 示例： `rpicam-still -t 100000 -o test%d.jpg --timelapse 10000` 每10秒捕获一张图像，持续100秒。
 
-[[framestart]]
 ==== `framestart` 
 
 将在输出文件名中访问的帧计数器的起始值配置为 `%d` 。接受整数起始值。
@@ -56,7 +53,6 @@
 
 使用当前系统 https://en.wikipedia.org/wiki/Unix_time[Unix time] 作为输出文件名。不接受值。
 
-[[restart]]
 ==== `restart` 
 
 默认值： `0` 
@@ -78,7 +74,6 @@
 
 当 xref:camera_software.adoc#timeout[`timeout`] 过期或收到 `SIGUSR1` 时捕获图像。使用 `SIGUSR2` 退出而不捕获。不接受值。
 
-[[thumb]]
 ==== `thumb` 
 
 默认值： `320:240:70` 

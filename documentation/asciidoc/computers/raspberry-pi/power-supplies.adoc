@@ -7,7 +7,6 @@
 
 每个Raspberry Pi消耗的电流取决于连接的外围设备。
 
-[[recommended-power-supplies]]
 === 推荐电源
 
 对于树莓派1、树莓派2和树莓派3，我们推荐 https://www.raspberrypi.com/products/micro-usb-power-supply/[2.5A micro USB电源]。对于树莓派4和树莓派400，我们推荐 https://www.raspberrypi.com/products/type-c-power-supply/[树莓派4的3A USB-C电源]。对于树莓派5，我们推荐 https://www.raspberrypi.com/products/27w-power-supply/[27W USB-C电源]。
@@ -16,7 +15,6 @@ NOTE: 没有Raspberry Pi型号支持USB-PPS。
 
 NOTE: 如果您使用第三方USB-PD多端口电源，则在连接Raspberry Pi时将额外设备插入电源会导致电源和Raspberry Pi之间的重新协商。如果Raspberry Pi通电，则会无缝发生这种情况。如果Raspberry Pi断电，这种重新协商可能会导致Raspberry Pi启动。
 
-[[power-over-ethernet-poe-connector]]
 === 以太网供电（PoE）
 
 .Raspberry Pi 5 PoE header
@@ -28,7 +26,6 @@ Raspberry Pi4B和Pi3B+上的以太网插孔支持PoE，支持IEEE 802.3af-2003 P
 
 所有带有支持 PoE 以太网插孔的 Raspberry Pi 型号都需要一个 HAT 才能通过以太网端口获取电源。对于支持 PoE 的型号，我们推荐使用 https://www.raspberrypi.com/products/poe-hat/[PoE HAT]。对于支持 PoE+ 的型号，我们推荐使用 https://www.raspberrypi.com/products/poe-plus-hat/[PoE+ HAT]。
 
-[[typical-power-requirements]]
 === 典型功率要求
 
 |===
@@ -143,7 +140,6 @@ $ vcgencmd get_config usb_max_current_enable
 Raspberry Pi 4和CM4都使用了许多不同的PMIC器件。所有PMIC都提供额外的功能以及电压供应功能。本文档描述了如何在软件中访问这些功能。
 ****
 
-[[decrease-raspberry-pi-5-wattage-when-turned-off]]
 ==== 关闭时降低Raspberry Pi 5瓦数
 
 默认情况下，Raspberry Pi 5 关机时的功耗约为 1W 至 1.4W。可以通过使用 `sudo rpi-eeprom-config -e` 手动编辑 EEPROM 配置来降低功耗。将设置更改为
@@ -191,7 +187,6 @@ $ vcgencmd pmic_read_adc
 
 你看不到 USB 电流或其他直接连接到 5V 的电流，因为这会绕过 PMIC。你不应该指望它增加到源电源的功率。不过，这对监控内核电压等情况还是很有用的。
 
-[[back-powering]]
 === 反向供电
 
 USB 规范要求 USB 设备不得向上游设备提供电流。如果 USB 设备确实向上游设备提供电流，则称为反向供电。这种情况通常发生在连接了劣质的供电 USB 集线器时，会导致供电 USB 集线器向 Raspberry Pi 主机供电。不建议这样做，因为通过集线器向 Raspberry Pi 供电会绕过 Raspberry Pi 内置的保护电路，使其在电源浪涌时容易受到损坏。

@@ -1,7 +1,5 @@
-[[rpicam-apps-options-reference]]
 == `rpicam-apps` 选项参考
 
-[[common-options]]
 === 常用选项
 
 除非另有说明，否则以下选项适用于所有具有相似或相同语义学的 `rpicam-apps` 。
@@ -10,7 +8,6 @@
 
 一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会降低易读性。
 
-[[help]]
 ==== `help` 
 
 别名： `-h` 
@@ -195,7 +192,6 @@ image::images/focus.jpg[显示焦点测量的图像]
 
 * `rpicam-still -r -o test.jpg --width 2028 --height 1520` 捕获2028×1520分辨率的JPEG。如果与HQ相机一起使用，则使用2×2 像素合并模式，因此原始文件（ `test.dng` ）包含2028×1520原始Bayer图像。
 
-[[viewfinder-width-and-viewfinder-height]]
 ==== `viewfinder-width` 和 `viewfinder-height` 
 
 每个都接受一个数字，定义预览窗口中显示的图像的尺寸（以像素为单位）。不影响预览窗口尺寸，因为图像会调整大小以适应。不影响捕获的静止图像或视频。
@@ -218,7 +214,6 @@ image::images/focus.jpg[显示焦点测量的图像]
 * `2592:1944:10:U` - 2592×1944 分辨率，每像素 10 位，未打包。
 * `3264:2448` - 3264×2448 分辨率。
 
-[[packed-format-details]]
 ===== 打包格式详细信息
 
 打包格式使用较少的像素数据存储空间。
@@ -230,7 +225,6 @@ image::images/focus.jpg[显示焦点测量的图像]
 
 在 Raspberry Pi 5 及更高版本的设备上_，打包格式通过视觉无损压缩方案将像素值压缩为每个像素 8 位（1 个字节）。
 
-[[unpacked-format-details]]
 ===== 解压格式详细信息
 
 
@@ -242,12 +236,10 @@ image::images/focus.jpg[显示焦点测量的图像]
 
 在 Raspberry Pi 5 及更早的设备上，应用程序会在 *least significant end* 应用零填充，因此图像会使用传感器提供的像素深度的全部 16 位动态范围。
 
-[[viewfinder-mode]]
 ==== `viewfinder-mode` 
 
 与 `mode` 选项相同，但它适用于传递到预览窗口的数据。有关详细信息，请参阅 xref:camera_software.adoc#mode[ `mode` 文档]。
 
-[[lores-width-and-lores-height]]
 ==== `lores-width` 和 `lores-height` 
 
 从相机传送第二个分辨率较低的图像流，缩小到指定的尺寸。
@@ -261,12 +253,10 @@ image::images/focus.jpg[显示焦点测量的图像]
 
 与 xref:camera_software.adoc#post-processing-with-rpicam-apps[图像后处理] 结合使用时对图像分析很有用。
 
-[[hflip]]
 ==== `hflip` 
 
 水平翻转图像。不接受值。
 
-[[vflip]]
 ==== `vflip` 
 
 垂直翻转图像。不接受值。
@@ -276,7 +266,6 @@ image::images/focus.jpg[显示焦点测量的图像]
 
 旋转从传感器提取的图像。仅接受值0或180。
 
-[[roi]]
 ==== `roi` 
 
 裁剪从传感器的完整字段中提取的图像。接受四个十进制值，_ranged0到1_，格式如下： `<x>，<y>，<w>， h>` 。这些值中的每一个都代表可用宽度和高度的百分比，作为0到1之间的小数。
@@ -295,7 +284,6 @@ image::images/focus.jpg[显示焦点测量的图像]
 * `rpicam-hello--roi 0.25,0.25,0.5,0.5` 选择从图像中心裁剪的总像素数的一半（跳过X坐标的前25%，跳过Y坐标的前25%，使用总图像宽度的50%，使用总图像高度的50%）。
 * `rpicam-hello--roi 0,0,0.25,0.25` 选择从图像左上角裁剪的总像素数的四分之一（跳过X坐标的前0%，跳过Y坐标的前0%，使用25%的图像宽度，使用25%的图像高度）。
 
-[[hdr]]
 ==== `hdr` 
 
 默认值： `off` 
@@ -310,12 +298,10 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 要检查传感器中的内置 HDR 模式，除了 xref:camera_software.adoc#list-cameras[`list-cameras`] 之外，还需传递此选项。
 
-[[camera-control-options]]
 === 相机控制选项
 
 以下选项控制影响相机画质的图像处理和算法。
 
-[[sharpness]]
 ==== `sharpness` `锐化` 
 
 设置图像清晰度。接受以下光谱的数值：
@@ -325,7 +311,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 * `1.0` 应用默认的锐化量
 * 大于 `1.0` 的值应用额外的锐化
 
-[[contrast]]
 ==== `contrast` `对比度` 
 
 指定图像对比度。接受以下光谱的数值：
@@ -336,7 +321,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 * 大于 `1.0` 的值应用额外的对比度
 
 
-[[brightness]]
 ==== `brightness` `亮度` 
 
 指定图像亮度，作为输出图像中所有像素的偏移量添加。接受以下光谱的数值：
@@ -347,7 +331,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 对于许多用例，更喜欢 xref:camera_software.adoc#ev[`ev`]。
 
-[[saturation]]
 ==== `saturation` `饱和度` 
 
 
@@ -365,7 +348,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 * `0.0` 应用标准目标值
 * `10.0` 适用最大目标值
 
-[[shutter]]
 ==== `shutter` `快门` 
 
 使用快门以_microseconds_指定曝光时间。使用此选项时，增益仍然会有所不同。如果相机以帧速率运行得太快，以至于不允许指定的曝光时间（例如，帧速率为1fps，曝光时间为10000微秒），传感器将使用帧速率允许的最大曝光时间。
@@ -386,7 +368,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 * 任一颜色增益低于1.0，这将导致数字增益稳定在1.0/min（red_gain，blue_gain）。这使应用于任何颜色通道的总数字增益保持在1.0以上，以避免变色伪影。
 * 自动曝光/增益控制（AEC/AGC）更改期间的轻微差异。
 
-[[metering]]
 ==== `metering` `测光` 
 
 默认值： `centre` 
@@ -400,7 +381,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 有关定义自定义计量模式和调整现有计量模式中的区域权重的更多信息，请参阅 https://datasheets.raspberrypi.com/camera/raspberry-pi-camera-guide.pdf[Raspberry Pi相机和lib相机的调整指南]。
 
-[[exposure]]
 ==== `exposure` `曝光` 
 
 设置曝光配置文件。更改曝光配置文件不应影响图像曝光。相反，不同模式会调整增益设置以实现相同的净结果。接受以下值：
@@ -507,7 +487,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 此选项仅适用于某些相机模块。
 
-[[autofocus-speed]]
 ==== `autofocus-speed` `自动对焦速度` 
 
 默认值： `normal` 
@@ -552,7 +531,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 镜头校准不完美，因此同一型号的不同相机模块可能会有所不同。
 
-[[verbose]]
 ==== `verbose` 
 
 别名： `-v` 
@@ -565,7 +543,6 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 * `1` ：正常输出
 * `2` ：详细输出
 
-[[output-file-options]]
 === 输出文件选项
 
 [[output]]
@@ -586,12 +563,10 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 * `rpicam-vid -t 0 --inline -o udp://192.168.1.13:5000` 在端口5000上使用UDP将H.264视频流式传输到网络地址192.168.1.13。
 
-[[wrap]]
 ==== `wrap` `包装` 
 
 设置 xref:camera_software.adoc#output[`输出`] `%d` 指令使用的计数器的最大值。计数器在达到此值后重置为零。接受一个数值。
 
-[[flush]]
 ==== `flush` `刷新` 
 
 帧完成写入后立即将输出文件刷新到磁盘，而不是等待系统处理它。不接受值。

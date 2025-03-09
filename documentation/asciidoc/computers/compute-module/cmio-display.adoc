@@ -1,11 +1,9 @@
-[[attaching-the-official-7-inch-display]]
 == 连接官方 7 英寸显示屏
 
 
 在开始之前，请将系统软件和固件更新到最新版本。
 计算模块大多使用相同的流程，但有时物理差异会迫使特定型号发生变化。
 
-[[connect-a-display-to-disp1]]
 === 将显示器连接到 DISP1
 
 NOTE: Raspberry Pi Zero 摄像头电缆不能用作 RPI-DISPLAY 适配器的替代品。这两根电缆有不同的接线。
@@ -27,7 +25,6 @@ dtoverlay=vc4-kms-dsi-7inch
 ----
 . 使用 `sudo reboot` 重新启动计算模块。您的设备应检测到并开始将输出显示到您的显示器。
 
-[[connect-a-display-to-disp0]]
 === 将显示器连接到 DISP0
 
 要将显示器连接到 DISP0：
@@ -46,7 +43,6 @@ dtoverlay=vc4-kms-dsi-7inch
 ----
 . 使用 `sudo reboot` 重新启动计算模块。您的设备应检测并开始将输出显示到您的显示器。
 
-[[disable-touchscreen]]
 === 禁用触摸屏
 
 触摸屏不需要其他配置。将其连接到您的计算模块，一旦成功检测到，触摸屏元素和显示器都应该可以工作。
@@ -58,7 +54,6 @@ dtoverlay=vc4-kms-dsi-7inch
 disable_touchscreen=1
 ----
 
-[[disable-display]]
 === 禁用显示屏
 
 要在连接时完全忽略显示屏，请将以下行添加到 `/boot/firmware/config.txt` :

@@ -9,7 +9,6 @@
 
 `[all]` 过滤器是最基本的过滤器。它会重置所有先前设置的过滤器，并允许将其下方列出的任何设置应用于所有硬件。通常，在过滤设置组的末尾添加一个 `[all]` 过滤器是个好主意，以避免无意中组合过滤器（见下文）。
 
-[[model-filters]]
 === 型号过滤器
 
 条件型号过滤器根据下表应用。
@@ -158,7 +157,6 @@ cmdline=cmdline_U2422H.txt
 
 NOTE: 此设置在Raspberry Pi 5上不可用。
 
-[[the-serial-number-filter]]
 === 序列号过滤器
 
 有时设置应该只应用于单个特定的Raspberry Pi，即使您将SD卡交换到不同的SD卡。示例包括许可证密钥和超频设置（尽管许可证密钥已经以不同的方式支持SD卡交换）。您还可以使用它来选择不同的显示设置，即使上面的EDID标识是不可能的，只要您不在Raspberry Pi之间交换显示器。例如，如果您的显示器不提供可用的EDID名称，或者如果您使用复合输出（无法从中读取EDID）。
@@ -191,7 +189,6 @@ NOTE: 在某些Raspberry Pi型号上，前8个十六进制数字包含 `0` 以�
 # settings here are applied to all hardware
 ----
 
-[[the-gpio-filter]]
 === GPIO过滤器
 
 您还可以根据GPIO的状态进行过滤。例如：
@@ -208,7 +205,6 @@ NOTE: 在某些Raspberry Pi型号上，前8个十六进制数字包含 `0` 以�
 #这里的设置适用于所有硬件
 ----
 
-[[combining-conditional-filters]]
 === 组合条件过滤器
 
 相同类型的过滤器会相互替换，因此 `[pi2]` 会覆盖 `[pi1]` ，因为两者不可能同时为真。

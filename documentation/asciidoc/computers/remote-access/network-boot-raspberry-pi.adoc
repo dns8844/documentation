@@ -7,7 +7,6 @@
 
 NOTE: 由于可用的网络设备和路由器种类繁多，我们无法保证网络启动适用于任何设备。我们收到报告称，如果您无法使网络启动正常工作，禁用网络上的 STP 帧可能会有所帮助。
 
-[[configure-a-network-boot-client]]
 === 配置网络启动客户端
 
 
@@ -43,7 +42,6 @@ $ sudo nano /boot/firmware/config.txt
 
 删除包含文本 `program_usb_boot_mode=1` 的行。最后，使用 `sudo poweroff` 关闭客户端 Raspberry Pi。
 
-[[raspberry-pi-4-model-b]]
 ==== Raspberry Pi 4 Model B
 
 可以使用 `raspi-config` 工具在 Raspberry Pi 4 上启用网络启动。首先，按如下方式运行 `raspi-config` ：
@@ -62,7 +60,6 @@ $ vcgencmd bootloader_config
 
 有关配置 Raspberry Pi 4 引导加载程序的更多详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[Raspberry Pi 引导加载程序配置]。
 
-[[ethernet-mac-address]]
 === 以太网 MAC 地址
 
 在配置网络启动之前，请记下序列号和 MAC 地址，以便 TFTP/DHCP 服务器可以识别该板。
@@ -83,7 +80,6 @@ $ ethtool -P eth0
 $ grep Serial /proc/cpuinfo | cut -d ' ' -f 2 | cut -c 9-16
 ----
 
-[[configure-a-network-boot-server]]
 === 配置网络启动服务器
 
 将 SD 卡插入服务器 Raspberry Pi，然后启动服务器。客户端 Raspberry Pi 需要一个根文件系统来启动：我们将使用服务器根文件系统的副本并将其放在 `/nfs/client1` 中：
@@ -277,7 +273,6 @@ $ cp -r /boot/firmware/* /tftpboot
 $ sudo systemctl restart dnsmasq
 ----
 
-[[set-up-nfs-root]]
 ==== 设置 NFS 根目录
 
 这现在应该允许您的 Raspberry Pi 客户端尝试启动，直到它尝试加载根文件系统（它没有）。

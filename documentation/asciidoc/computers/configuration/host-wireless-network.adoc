@@ -1,4 +1,3 @@
-[[host-a-wireless-network-on-your-raspberry-pi]]
 == 在 Raspberry Pi 上托管无线网络
 
 Raspberry Pi 可以使用无线模块托管自己的无线网络。如果您通过以太网端口（或第二个无线模块）将 Raspberry Pi 连接到互联网，则连接到无线网络的其他设备可以通过 Raspberry Pi 访问互联网。
@@ -13,7 +12,6 @@ image::images/host-a-network.png[]
 
 NOTE: Raspberry Pi 5、4、3、Zero W 和 Zero 2 W 可以使用内置无线模块托管无线网络。没有内置模块的 Raspberry Pi 型号可使用单独的无线加密狗支持该功能。
 
-[[enable-hotspot]]
 === 启用热点
 
 要在命令行上创建托管无线网络，请运行以下命令，将 `<example-network-name>` 和 `<example-password>` 占位符替换为您自己的值：
@@ -25,7 +23,6 @@ $ sudo nmcli device wifi hotspot ssid <example-network-name> password <example-p
 
 使用另一个无线客户端（例如笔记本电脑或智能手机）连接到网络。查找 SSID 与 `<example-network-name>` 匹配的网络。输入您的网络密码，您应该可以成功连接到网络。如果您的 Raspberry Pi 通过以太网连接或第二个无线适配器访问互联网，您应该能够访问互联网。
 
-[[disable-hotspot]]
 === 禁用热点
 
 要禁用热点网络并恢复使用 Pi 作为无线客户端，请运行以下命令：
@@ -45,7 +42,6 @@ $ sudo nmcli device up wlan0
 
 TIP: 有关连接无线网络的更多信息，请参阅 xref:configuration.adoc#networking[配置网络]。
 
-[[use-your-raspberry-pi-as-a-network-bridge]]
 === 使用 Raspberry Pi 作为网桥
 
 默认情况下，Raspberry Pi 托管的无线网络与通过以太网连接的父网络分开存在。在这种安排下，连接到父网络的设备无法直接与连接到 Raspberry Pi 托管的无线网络的设备通信。如果您希望连接的无线设备能够与父网络上的设备通信，您可以将 Raspberry Pi 配置为 https://en.wikipedia.org/wiki/Network_bridge[网桥]。建立网络桥接后，连接到 Pi 托管无线网络的每个设备都会在父网络中分配一个 IP 地址。

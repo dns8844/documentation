@@ -1,4 +1,3 @@
-[[rpicam-detect]]
 === `rpicam-detect` 
 
 NOTE: Raspberry Pi OS 不包含 `rpicam-detect`。不过，如果您安装了 xref:camera_software.adoc#post-processing-with-tensorflow-lite[已安装 TensorFlow Lite]，则可以构建 `rpicam-detect`。有关详细信息，请参阅 xref:camera_software.adoc#build-libcamera-and-rpicam-apps[`rpicam-apps` 构建说明]。运行 `meson` 时不要忘记传递 `Denable_tflite=enabled`。

@@ -5,7 +5,6 @@
 
 要使用 `scp` ，请查找 Raspberry Pi 的 IP 地址。
 
-[[copy-files-to-your-raspberry-pi]]
 === 将文件复制到您的 Raspberry Pi
 
 要将名为 `myfile.txt` 的文件从您的个人计算机复制到 Raspberry Pi 上的用户主文件夹，请从包含 `myfile.txt` 的目录中运行以下命令，将 `<username>` 占位符替换为您用于登录 Raspberry Pi 的用户名，将 `<pi_ip_address>` 占位符替换为您 Raspberry Pi 的 IP 地址：
@@ -22,7 +21,6 @@ $ scp myfile.txt <username>@<pi_ip_address>:
 $ scp myfile.txt <username>@<pi_ip_address>:project/
 ----
 
-[[copy-files-from-your-raspberry-pi]]
 === 从 Raspberry Pi 复制文件
 
 要将名为 `myfile.txt` 的文件从 Raspberry Pi 上的用户主目录复制到另一台计算机上的当前目录，请运行以下命令：
@@ -32,7 +30,6 @@ $ scp myfile.txt <username>@<pi_ip_address>:project/
 $ scp <username>@<pi_ip_address>:myfile.txt .
 ----
 
-[[copy-multiple-files-with-one-command]]
 === 使用一个命令复制多个文件
 
 要复制多个文件，请在单个命令中列出文件名，并用空格分隔：
@@ -74,7 +71,6 @@ $ scp "my file.txt" <username>@<pi_ip_address>:
 
 ====
 
-[[copy-a-folder]]
 === 复制文件夹
 
 要复制文件夹及其所有内容，请使用以下参数传递文件夹名称： `-r` （递归）标志：

@@ -43,10 +43,8 @@ image::images/sobel_negate.jpg[A negated Sobel filter]
 
 NOTE: 随Raspberry Pi OS提供的 `rpicam-apps` 不包括OpenCV和TensorFlow Lite。因此，某些依赖它们的后处理阶段被禁用。要使用这些阶段，xref:camera_software.adoc#build-libcamera-and-rpicam-apps[重新编译 `rpicam-apps` ]。在运行32位内核的Raspberry Pi 3或4上，使用 `-DENABLE_COMPILE_FLAGS_FOR_TARGET=armv8-neon` 标志进行编译以加快某些阶段的速度。
 
-[[built-in-stages]]
 === 内置阶段
 
-[[negate-stage]]
 ==== `negate` 阶段
 
 此阶段将亮像素变为暗像素，将暗像素变为亮像素。
@@ -74,7 +72,6 @@ $ rpicam-hello --post-process-file negate.json
 .A negated image.
 image::images/negate.jpg[A negated image]
 
-[[hdr-stage]]
 ==== `hdr` 阶段
 
 此阶段强调使用高动态范围（HDR）和动态范围压缩（DRC）的图像中的细节。DRC使用单个图像，而HDR组合多个图像以获得类似的结果。

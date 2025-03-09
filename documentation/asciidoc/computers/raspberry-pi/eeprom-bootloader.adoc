@@ -1,7 +1,6 @@
 [[raspberry-pi-bootloader-configuration]]
 == 树莓派 bootloader 配置
 
-[[editing-the-configuration]]
 === 编辑配置
 
 在编辑 bootloader 配置之前，请使用  xref:os.adoc#update-software[update your system] 获取最新版本的 `rpi-eeprom` 软件包。
@@ -282,7 +281,6 @@ MAC_ADDRESS_OTP=0,1
 
 默认值： `""` 
 
-[[static-ip-address-configuration]]
 ==== 静态IP地址配置
 
 如果TFTP_IP并设置了以下选项，则跳过DHCP并应用静态IP配置。如果TFTP服务器与客户端位于同一子网上，则可以省略GATEWay。
@@ -422,7 +420,6 @@ NOTE: 测试表明键盘和SHIFT检测至少需要750毫秒。
 
 NOTE: NETCONSOLE 会阻塞，直到以太网链接建立或超时。超时值为 `DHCP_TIMEOUT`，但除非请求网络启动，否则不会尝试 DHCP。
 
-[[format]]
 ===== 格式
 
 更多信息，请参阅 https://wiki.archlinux.org/index.php/Netconsole[Netconsole 文档]。

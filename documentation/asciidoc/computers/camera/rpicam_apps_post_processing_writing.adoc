@@ -1,9 +1,7 @@
-[[write-your-own-post-processing-stages]]
 === 编写自己的后处理阶段
 
 使用 `rpicam-apps` 后处理框架，用户可以创建自己的自定义后处理阶段。您甚至可以包含来自OpenCV和TensorFlow Lite的算法和例程。
 
-[[basic-post-processing-stages]]
 ==== 基本后处理阶段
 
 要创建自己的后处理阶段，请从 `PostProcessingStage` 类派生一个新类。
@@ -38,7 +36,6 @@
 
 另一个例子，请参见 https://github.com/raspberrypi/rpicam-apps/blob/main/post_processing_stages/sobel_cv_stage.cpp[`sobel_cv_stage.cpp`]，它仅在几行OpenCV函数中实现了Sobel过滤器。
 
-[[tensorflow-lite-stages]]
 ==== TensorFlow Lite阶段
 
 对于使用TensorFlow Lite（TFLite）的阶段，从 `TfStage` 类派生一个新类。

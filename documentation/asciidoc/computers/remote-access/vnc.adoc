@@ -14,14 +14,12 @@ Raspberry Pi OS 包括 https://github.com/any1/wayvnc[wayvnc]。这提供了一�
 
 在 Raspberry Pi 上使用 VNC 之前，您必须启用 VNC 服务器。
 
-[[enable-the-vnc-server]]
 === 启用 VNC 服务器
 
 Raspberry Pi OS 支持以图形方式和命令行方式启用 VNC 服务器。
 
 TIP: 启用后，您可以在 `/etc/wayvnc/` 访问 WayVNC 配置。
 
-[[enable-vnc-server-graphically]]
 ==== 以图形方式启用 VNC 服务器
 
 . 启动 Raspberry Pi 上的图形桌面。
@@ -55,7 +53,6 @@ $ sudo raspi-config
 . 按 `Enter` 返回菜单。按 `Esc` 键退出 `raspi-config` 。
 
 
-[[connect-to-a-vnc-server]]
 === 连接到 VNC 服务器
 
 要连接到您的 Raspberry Pi，您需要以下设备：

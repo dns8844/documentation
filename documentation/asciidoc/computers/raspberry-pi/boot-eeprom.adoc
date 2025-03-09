@@ -148,7 +148,6 @@ $ rpi-eeprom-config
 $ rpi-eeprom-config pieeprom.bin
 ----
 
-[[editing-the-current-bootloader-configuration]]
 ==== 编辑当前引导加载程序配置
 
 以下命令将当前引导加载程序配置加载到文本编辑器中。当编辑器关闭时， `rpi-eeprom-config` 将更新后的配置应用于最新可用的引导加载程序版本，并使用 `rpi-eeprom-update` 在系统重新启动时安排更新：
@@ -163,7 +162,6 @@ $ sudo reboot
 
 编辑器由 `EDITOR` 环境变量选择。
 
-[[applying-a-saved-configuration]]
 ==== 应用保存的配置
 
 以下命令将 `boot.conf` 应用于最新可用的引导加载程序镜像，并使用 `rpi-eeprom-update` 在系统重新启动时安排更新。
@@ -195,7 +193,6 @@ $ sudo systemctl unmask rpi-eeprom-update
 
 NOTE: 如果设置了 xref:raspberry-pi.adoc#FREEZE_VERSION[FREEZE_VERSION] bootloader配置，则更新服务将跳过任何自动更新。如果安装了多个操作系统或交换SD卡，则无需单独禁用更新服务。
 
-[[rpi-eeprom-update]]
 ==== `rpi-eeprom-update` 
 
 Raspberry Pi OS使用 `rpi-EEPROM-update` 脚本来实现 <<automaticupdates，automatic update>> 服务。该脚本还可交互运行或封装，以创建自定义引导程序更新服务。
@@ -255,12 +252,10 @@ $ rpi-eeprom-update -h
 
 由于发布状态字符串只是一个子目录名称，因此可以创建您自己的发布流，例如固定版本或自定义网络启动配置。
 
-[[changing-the-bootloader-release]]
 ==== 更改引导加载程序版本
 
 NOTE: 您可以通过编辑 `/etc/default/rpi-eeprom-update` 文件并将 `FIRMWARE_RELEASE_STATUS` 条目更改为适当的流来更改更新期间要使用的发布流。
 
-[[updating-the-bootloader-configuration-in-an-bootloader-image-file]]
 ==== 更新引导加载程序镜像文件中的引导加载程序配置
 
 以下命令将 `pieeprom.bin` 中的引导加载程序配置替换为 `boot.conf` 并将新镜像写入 `new.bin` ：
@@ -276,7 +271,6 @@ $ rpi-eeprom-config --config boot.conf --out new.bin pieeprom.bin
 
 另见 xref:raspberry-pi.adoc#eeprom-boot-flow[EEPROM bootflow]
 
-[[bootloader-update-files]]
 ==== 引导加载程序更新文件
 
 [cols="1,1"]
@@ -311,7 +305,6 @@ $ rpi-eeprom-config --config boot.conf --out new.bin pieeprom.bin
 
 有关 `rpi-eeprom-update` 配置文件的更多信息，请参阅 `rpi-eeprom-update -h` 。
 
-[[eeprom-write-protect]]
 ==== EEPROM写保护
 
 引导加载程序和 VLI EEPROM 都支持硬件写保护。 请参阅 xref:config_txt.adoc#eeprom_write_protect[`eeprom_write_protect`] 选项，了解如何在烧录 EEPROM 时启用硬件写保护。

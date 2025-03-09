@@ -60,19 +60,16 @@ Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件默认加载 `kernel_
 从 Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500 以后的型号 _仅_ 支持 64 位内核。这些型号不支持此标记。
 
 
-[[ramfsfile]]
 === `ramfsfile` 
 
 `ramfsfile` 是要加载的 `ramfs` 的引导分区上的可选文件名。
 
 NOTE: 较新的固件支持加载多个 `ramfs` 文件。您应该用逗号分隔多个文件名，注意不要超过80个字符的行长限制。所有加载的文件都在内存中连接起来，并被视为单个 `ramfs` blob。更多信息在 https://forums.raspberrypi.com/viewtopic.php?f=63&t=10532[论坛上]。
 
-[[ramfsaddr]]
 === `ramfsaddr` 
 
 `ramfsaddr` 是应该加载 `ramfsfile` 的内存地址。
 
-[[initramfs]]
 === `initramfs` 
 
 `initramfs` 命令同时指定了 ramfs 文件名*和*内存地址。它在一个参数中同时执行 `ramfsfile` 和 `ramfsaddr` 的操作。地址也可以是 `followkernel` （或 `0` ），以便将其放在内核映像之后的内存中。示例值如下 `initramfs initramf.gz 0x00800000` 或 `initramfs init.gz followkernel`。与 `ramfsfile` 一样，较新的固件允许通过逗号分隔多个文件名来加载多个文件。

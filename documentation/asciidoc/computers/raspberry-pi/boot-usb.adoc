@@ -1,4 +1,3 @@
-[[usb-boot-modes]]
 == USB启动模式
 
 USB 有两种不同的启动模式：

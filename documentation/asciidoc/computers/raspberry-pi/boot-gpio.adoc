@@ -16,10 +16,8 @@ program_gpio_bootmode=n
 
 启用GPIO启动模式后，Raspberry Pi将不再启动。您必须拉起至少一个启动模式GPIO引脚才能让Raspberry Pi启动。
 
-[[pin-assignments]]
 === 引脚分配
 
-[[raspberry-pi-3b-and-compute-module-3]]
 ==== Raspberry Pi 3B 和 Compute Module 3
 
 [cols="^,^,^"]
@@ -49,7 +47,6 @@ program_gpio_bootmode=n
 
 上表中的USB同时选择USB设备启动模式和USB主机启动模式。为了使用USB启动模式，必须在OTP内存中启用它。有关详细信息，请参阅 xref:raspberry-pi.adoc#usb-device-boot-mode[USB设备启动] 和 xref:raspberry-pi.adoc#usb-host-boot-mode[USB主机启动]。
 
-[[later-raspberry-pi-3b-bcm2837b0-with-the-metal-lid-raspberry-pi-3a-3b-and-compute-module-3]]
 ==== 后来的 Raspberry Pi 3B（带金属盖的 BCM2837B0）、Raspberry Pi 3A+、3B+ 和Compute Module 3+
 
 [cols="^,^,^"]

@@ -7,7 +7,6 @@
 
 要查找Raspberry Pi的本地IP地址，请使用以下方法之一。
 
-[[desktop]]
 === 桌面
 
 将鼠标悬停在系统托盘中的网络图标上，将出现一个工具提示。此工具提示显示您当前连接的网络名称和您的IP地址。
@@ -24,12 +23,10 @@ image::images/network-tooltip.png[显示Wi-Fi网络名称和IP地址的网络管
 $ hostname -I
 ----
 
-[[boot-output]]
 === 引导输出
 
 如果您在Raspberry Pi中使用显示器并且引导到命令行而不是桌面，则引导顺序会将您的IP地址作为登录提示之前的最后几条输出消息之一。
 
-[[network-manager]]
 === 网络管理器
 
 您可以使用内置的Network Manager CLI（ `nmcli` ）访问有关您的网络的详细信息。运行以下命令：
@@ -120,7 +117,6 @@ PING raspberrypi.local (192.168.1.131): 56 data bytes
 
 TIP: 如果您使用Raspberry Pi Configuration、 `raspi-config` 或 `/etc/hostname` 更改Raspberry Pi的系统主机名，Avahi会更新 `.local` 的mDNS地址。如果您不记得Raspberry Pi的主机名，您可以在其他设备上安装Avahi，然后使用 https://linux.die.net/man/1/avahi-browse[`avahi-Browse`] 浏览本地网络上的所有主机和服务。
 
-[[check-your-routers-list-of-devices]]
 === 检查路由器的设备列表
 
 在web浏览器中，导航到路由器的IP地址。然后，使用您的凭据登录。
@@ -131,7 +127,6 @@ TIP: 您的路由器的IP地址通常是 `http://192.168.1.1` ，但并非总是
 
 TIP: 如果您使用电线将Raspberry Pi连接到网络，请尝试过滤列表中的有线设备。可供选择的设备应该更少。
 
-[[find-devices-with-nmap]]
 === 使用 `nmap` 查找设备
 
 Network Mapper命令（ `nmap` ）是用于网络发现的免费开源工具。它适用于Linux、macOS和Windows。
@@ -172,7 +167,6 @@ Nmap done: 256 IP addresses (4 hosts up) scanned in 2.41 seconds
 
 上面的输出显示主机名为raspberrypi的设备的IP地址为192.168.1.8。
 
-[[find-devices-with-a-smartphone-app]]
 === 使用智能手机应用程序查找设备
 
 Fing 应用程序是一款免费的智能手机网络扫描仪。它适用于 https://play.google.com/store/apps/details?id=com.overlook.android.fing[Android] 和 https://itunes.apple.com/gb/app/fing-network-scanner/id430921107?mt=8[iOS]。

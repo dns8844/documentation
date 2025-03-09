@@ -1,9 +1,7 @@
-[[utilities]]
 == 实用程序
 
 Raspberry Pi OS中预装了几个有用的命令行实用程序。
 
-[[kmsprint]]
 === kmsprint
 
 `kmsprint` 工具可用于列出连接到Raspberry Pi的显示器支持的显示模式。使用 `kmsprint` 查看连接到Raspberry Pi的显示器的详细信息，使用 `kmsprint-m` 查看每个显示器支持的所有显示模式的列表。您可以在 https://github.com/tomba/kmsxx[Github] 上找到 `kmsprint` 实用程序的源代码。
@@ -13,7 +11,6 @@ Raspberry Pi OS中预装了几个有用的命令行实用程序。
 
 `sudo vclog --msg` 会打印信息日志，而 `sudo vclog --assert` 则会打印断言日志。
 
-[[vcgencmd]]
 === `vcgencmd`
 
 `vcgencmd` 工具用于从Raspberry Pi上的 VideoCore GPU 输出信息。您可以在GitHub上找到 https://github.com/raspberrypi/utils/tree/master/vcgencmd[vcgencmd] 源代码。

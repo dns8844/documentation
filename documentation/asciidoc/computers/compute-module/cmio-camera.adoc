@@ -3,7 +3,6 @@
 
 计算模块有两个CSI-2相机接口：CAM1和CAM0。本节介绍如何使用带有计算模块I/O板的CAM1和CAM0接口将一个或两个Raspberry Pi相机连接到计算模块。
 
-[[update-your-system]]
 === 更新你的系统
 
 在配置摄像头之前，请参阅：xref:../computers/raspberry-pi.adoc#update-the-bootloader-configuration[确保您的 Raspberry Pi 固件是最新的]：
@@ -14,7 +13,6 @@ $ sudo apt update
 $ sudo apt full-upgrade
 ----
 
-[[connect-one-camera]]
 === 连接一个摄像头
 
 要将单个相机连接到计算模块，请完成以下步骤：
@@ -93,7 +91,6 @@ $ rpicam-hello --list
 ----
 您应该在输出中看到您的相机型号，由上表中的驱动程序指令引用。
 
-[[connect-two-cameras]]
 === 连接两个摄像头
 
 要将两个摄像头连接到计算模块，请完成以下步骤：
@@ -164,7 +161,6 @@ rpicam-hello --list
 
 Raspberry Pi OS包含 `libcamera` 库，可帮助您使用Raspberry Pi拍摄图像。
 
-[[take-a-picture]]
 ==== 拍张照片
 
 使用以下命令立即拍照并将其保存到使用 `MMDDhhmmss` 日期格式作为文件名的PNG编码文件中：
@@ -177,7 +173,6 @@ rpicam-still --datetime -e png
 使用 `-t` 选项添加以毫秒为单位的延迟。
 使用 `--width` 和 `--height` 选项指定图像的宽度和高度。
 
-[[take-a-video]]
 ==== 拍个视频
 
 使用以下命令立即开始录制10秒长的视频并将其保存到带有名为 `video.h264` 的h264编解码器的文件中：
@@ -187,7 +182,6 @@ rpicam-still --datetime -e png
 rpicam-vid -t 10000 -o video.h264
 ----
 
-[[specify-which-camera-to-use]]
 ==== 指定使用哪个相机
 
 默认情况下，"libcamera "总是使用"--list-cameras "列表中索引为 "0 "的摄像机。
@@ -230,7 +224,6 @@ $ rpicam-hello --camera 1
 ----
 
 
-[[i2c-mapping-of-gpio-pins]]
 === GPIO引脚的I2C映射
 
 默认情况下，所提供的摄像头驱动程序假定 CAM1 使用 `i2c-10` ，CAM0 使用 `i2c-0` 。计算模块 I/O 板将以下 GPIO 引脚映射到 `i2c-10` 和 `i2c-0` ：
@@ -283,7 +276,6 @@ dtoverlay=cm-swap-i2c0
 |===
 
 
-[[gpio-pins-for-shutdown]]
 ==== 用于关机的GPIO引脚
 
 对于相机关机，Device Tree 使用由 `cam1_reg` 和 `cam0_reg` 覆盖分配的引脚。

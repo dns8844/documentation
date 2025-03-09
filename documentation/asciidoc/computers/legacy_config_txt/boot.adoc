@@ -1,4 +1,3 @@
-[[legacy-boot-options]]
 == 旧版引导选项
 （另请参见 xref:config_txt.adoc#boot-options[config.txt Boot Options]。）
 
@@ -33,7 +32,6 @@ WARNING: 此设置已弃用。请改用 `arm_64bit` 来启用64位内核。
 
 设置特定于板的控制位。
 
-[[armstub]]
 === `armstub` 
 
 `armstub` 是引导分区中加载 ARM 存根的文件名。默认 ARM 存根存储在固件中，并根据 Raspberry Pi 型号和各种设置自动选择。

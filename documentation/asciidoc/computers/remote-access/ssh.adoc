@@ -3,7 +3,6 @@
 
 您可以使用 SSH 协议从同一网络上的另一台计算机远程访问 Raspberry Pi 的终端。
 
-[[enable-the-ssh-server]]
 === 启用 SSH 服务器
 
 默认情况下，Raspberry Pi OS 禁用 SSH 服务器。通过以下方式之一启用 SSH：
@@ -52,7 +51,6 @@ $ sudo reboot
 ----
 ======
 
-[[connect-to-an-ssh-server]]
 === 连接到 SSH 服务器
 
 在您的计算机上打开一个终端窗口并输入以下命令，将 `<ip address>` 占位符替换为 xref:remote-access.adoc#ip-address[您尝试连接的 Raspberry Pi 的 IP 地址]，并将 `<username>` 替换为您的用户名：
@@ -77,7 +75,6 @@ $ ssh <username>@<ip address>
 
 NOTE: 如果您收到 `connection timed out` 错误，则可能是您输入了错误的 Raspberry Pi IP 地址。请查看 xref:remote-access.adoc#ip-address[Raspberry Pi 的 IP 地址]。
 
-[[forward-x11-over-ssh]]
 ==== 通过 SSH 转发 X11
 
 NOTE: 在 Raspberry Pi 4 和 5 上，Raspberry Pi OS Bookworm 默认使用 Wayland 窗口服务器。如果您使用 X 窗口服务器，则只能转发 X11。要通过 X11 启用窗口转发，请在 Raspberry Pi 配置中将桌面切换到 X 窗口服务器。
@@ -103,7 +100,6 @@ $ geany &
 
 要远程访问您的 Raspberry Pi 而无需每次连接时都提供密码，请使用 SSH 密钥对。
 
-[[preconfigure-an-os-image-with-raspberry-pi-imager]]
 ==== 使用 Raspberry Pi Imager 预配置操作系统镜像
 
 使用 Raspberry Pi Imager 配置启动映像时，您可以预配置 SSH 密钥。您可以生成新的 SSH 密钥对或现有的 SSH 密钥。
@@ -112,12 +108,10 @@ $ geany &
 . 在 *OS Customisation* 步骤中，导航到 *Services* 选项卡并勾选 *启用 SSH* 复选框。
 . 选择 *仅允许公钥身份验证* 单选按钮。如果您已经在 `~/.ssh/id_rsa.pub` 中存储了 SSH 公钥，Imager 会自动使用该公钥预填充文本框。如果 Imager 找不到 SSH 公钥，您可以单击 *RUN SSH-KEYGEN* 按钮来生成新的密钥对。
 
-[[manually-configure-an-ssh-key]]
 ==== 手动配置 SSH 密钥
 
 如果您已经安装了 Raspberry Pi OS，则可以更新现有配置以使用 SSH 密钥身份验证。
 
-[[check-for-existing-ssh-public-keys]]
 ==== 检查是否存在现有的 SSH 公钥
 
 要检查用于远程连接到 Raspberry Pi 的计算机上是否存在现有的 SSH 公钥，请运行以下命令：
@@ -129,7 +123,6 @@ $ ls ~/.ssh
 
 如果你看到名为 `id_ed25519.pub`、 `id_rsa.pub` 或 `id_dsa.pub` 的文件，说明你已经有了 SSH 密钥。跳过 SSH 密钥对生成，继续 xref:remote-access.adoc#add-ssh-key-identity[将 SSH 密钥添加到 SSH Identity 列表中]。
 
-[[generate-new-ssh-keypair]]
 ==== 生成新的SSH密钥对
 
 TIP: 本指南提供了生成新RSA密钥的说明。为了提高安全性，您可以改为生成 http://ed25519.cr.yp.to/[Ed25519] 密钥。当引用您的公钥和私钥文件名以使用Ed25519密钥时，将 `-t ed25519` 传递给 `ssh-keygen` 并将 `rsa` 替换为 `ed25519` 。
@@ -192,7 +185,6 @@ $ ssh-copy-id <username>@<ip address>
 出现提示时，在Raspberry Pi上输入您的用户帐户的密码。
 您现在无需输入密码即可连接到Raspberry Pi。
 
-[[manually-copy-a-public-key-to-your-raspberry-pi]]
 ==== 手动将公钥复制到您的Raspberry Pi
 
 如果您的操作系统不支持 `ssh-cop-id` ，您可以使用 xref:remote-access.adoc#scp[`scp`] 复制您的公钥： 。

@@ -1,7 +1,6 @@
 [[video-options]]
 == 视频选项
 
-[[hdmi-mode]]
 === HDMI模式
 
 要控制 HDMI 设置，请使用 `cmdline.txt` 中的 xref:configuration.adoc#set-resolution-and-rotation[屏幕配置实用程序] 或 xref:configuration.adoc#set-the-kms-display-mode[KMS 视频设置]。
@@ -22,7 +21,6 @@ CEA 和 DMT标准中只有一种不兼容的模式：DMT模式81、1366x768@60Hz
 
 从 Raspberry Pi 5 开始的旗舰机型、从 CM5 开始的计算模块机型以及从 Pi 500 开始的键盘机型也在每个时钟周期输出 2 个像素。这些型号对奇数时序有特殊处理，可以直接处理这些模式
 
-[[composite-video-mode]]
 === 复合视频模式
 
 复合视频输出可以在每个型号的Raspberry Pi计算机上找到：
@@ -93,7 +91,6 @@ vc4.tv_norm=<video_mode>
 * `PAL60`
 * `SECAM`
 
-[[lcd-displays-and-touchscreens]]
 === LCD显示器和触摸屏
 
 [[ignore_lcd]]
@@ -108,7 +105,6 @@ vc4.tv_norm=<video_mode>
 
 `disable_touchscreen=1` 禁用官方Raspberry Pi Touch Display的触摸屏组件。
 
-[[generic-display-options]]
 === 通用显示选项
 
 [[disable_fw_kms_setup]]
