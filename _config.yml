@@ -17,8 +17,9 @@ title: Raspberry Pi Documentation
 description: >- # this means to ignore newlines until "baseurl:"
   Raspberry Pi Documentation.
 baseurl: "/documentation" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://raspberrypi.dns8844.cn/" # the base hostname & protocol for your site, e.g. http://example.com
 githuburl: "https://github.com/dns8844/documentation/"
+mainsite: ""
 githubbranch: master
 githubbranch_edit: devlop-zh
 
