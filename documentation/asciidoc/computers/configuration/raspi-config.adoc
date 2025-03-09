@@ -271,7 +271,7 @@ $ sudo raspi-config nonint do_wifi_ssid_passphrase <ssid> <passphrase> [hidden] 
 
 `<hidden>` 选项表示SSID的可见性。如果网络广播打开的SSID，则通过 `0` 或省略该选项。如果您的SSID被隐藏，则通过 `1`。默认为 `0`。
 
-`<plain>` 选项指示您是否打算以明文形式传递密码。如果您的密码包含空格或特殊字符（如 `!`），则必须传递 `0` 并在密码周围使用引号。否则，您可以传递 `1` 或省略该选项。默认为 `1`。要传递此选项，您必须为 `<hidden>` 指定一个值。
+`<plain>`选项表示是否用额外的引号来封装给定的口令。大多数用户可以忽略该选项：作为一个实现细节，`raspi-config` 可能需要在将口令传递给系统其他部分之前添加引号，`<plain>` 值为`0` 表示已经存在引号。如果值为 `1`，则表示不存在引号，实施时应根据需要添加引号。默认值为 `1`。要传递此选项，必须指定 `<hidden>` 的值。
 
 例如，运行以下命令连接到：
 
@@ -293,7 +293,12 @@ $ sudo raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase 1
 +
 [source,console]
 ----
-$ sudo raspi-config nonint do_wifi_ssid_passphrase myssid "my passphrase" 0 0
+$ sudo raspi-config nonint do_wifi_ssid_passphrase myssid 'my passphrase'
+----
+* 名为 `myssid` 的非隐藏网络，并使用口令 `mypassphrase`，在口令中已额外添加了引号：
+[source,console]
+----
+$ sudo raspi-config nonint do_wifi_ssid_passphrase myssid '"mypassphrase"' 0 0
 ----
 
 ==== Audio

@@ -2,6 +2,10 @@
 
 下面的说明描述了如何在Raspberry Pi AI相机上运行预打包的MobileNet SSD和PoseNet神经网络模型。
 
+=== Hardware setup
+
+将摄像头安装到你的 Pi5 请参考 xref:../accessories/camera.adoc#install-a-raspberry-pi-camera[安装树莓派摄像头].
+
 === Prerequisites
 
 这些说明假定您使用的是连接到Raspberry Pi 4 Model B或Raspberry Pi 5板上的AI相机。稍作改动后，您可以在其他带有相机连接器的Raspberry Pi型号上遵循这些说明，包括Raspberry Pi Zero 2 W和Raspberry Pi 3 Model B+。

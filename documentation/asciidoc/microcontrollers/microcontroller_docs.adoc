@@ -26,7 +26,7 @@ https://datasheets.raspberrypi.com/pico/pico-2-datasheet.pdf[Raspberry Pi Pico 2
 
 https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf[Raspberry Pi Pico Datasheet]:: 基于RP2040的微控制器板
 
-https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico]:: C/{cpp}开发与树莓派Pico和其他基于RP2040的微控制器板
+https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Getting started with Raspberry Pi Pico-series Microcontrollers]:: C/{cpp}开发与树莓派Pico系列和其他基于RP2040的微控制器板
 
 === Raspberry Pi Pico 2 W
 

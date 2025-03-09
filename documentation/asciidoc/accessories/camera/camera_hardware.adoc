@@ -43,13 +43,17 @@ WARNING: 相机对静电很敏感。在处理PCB之前自己接地。如果你�
 
 === Connect the Camera
 
-柔性电缆插入Raspberry Pi上标有CAMERA的连接器，该连接器位于以太网和HDMI端口之间。电缆必须在银色触点面向HDMI端口的情况下插入。要打开连接器，请向上拉动连接器顶部的凸片，然后朝向以太网端口。柔性电缆应牢固地插入连接器，注意不要以太锐角弯曲柔性电缆。要关闭连接器，请将连接器顶部推向HDMI端口并向下推，同时将柔性电缆固定到位。
+柔性电缆插入 Raspberry Pi 上标有 CAMERA 的连接器，该连接器位于以太网和 HDMI 端口之间。插入电缆时，银色触点必须朝向 HDMI 端口。要打开连接器，将连接器顶部的卡扣向上拉，然后拉向以太网端口。应将柔性电缆牢固地插入连接器，注意不要将柔性电缆弯曲得太厉害。要关闭连接器，请将连接器顶部向下推，远离以太网端口，同时将柔性电缆固定到位。
+
+下面的视频展示了如何在 Raspberry Pi 1 上连接原装摄像头：
 
 我们制作了一个视频来说明连接相机的过程。以下视频展示了如何在原始树莓派1上连接原始相机。所有带有相机连接器的树莓派板的原理都是一样的，尽管树莓派5和所有树莓派零型号都需要 https://www.raspberrypi.com/products/camera-cable/[different camera cable]。
 
 video::GImeVqHQzsE[youtube]
 
-根据型号的不同，相机可能会带有一小块半透明的蓝色塑料薄膜覆盖镜头。这只是为了在邮寄给您时保护镜头，需要通过轻轻剥离来移除。
+虽然 Raspberry Pi 5 和所有 Raspberry Pi Zero 型号都需要使用 https://www.raspberrypi.com/products/camera-cable/[不同的摄像头连接线]，但所有带摄像头连接器的 Raspberry Pi 板都使用相同的安装方法。
+
+有些摄像头的镜头上可能会覆盖一小块半透明的蓝色塑料薄膜。这只是为了在运输过程中保护镜头。要撕下它，请轻轻剥离。
 
 NOTE: 在将推荐的 https://datasheets.raspberrypi.com/hq-camera/cs-mount-lens-guide.pdf[6mm] 和 https://datasheets.raspberrypi.com/hq-camera/c-mount-lens-guide.pdf[16mm] 镜头安装到HQ相机周围有额外的留档。
 

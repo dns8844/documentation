@@ -851,7 +851,7 @@ ALSA 不会阻止其编解码器和其他组件在使用中被卸载。如果删
 
 除非另有说明，否则每个属性都存储为 32 位整数。
 
-`boot-mode`:: 用于加载内核的启动模式。参见 xref:raspberry-pi.adoc#BOOT_ORDER[BOOT_ORDER]。
+`boot-mode`:: 用于加载内核的启动模式。从此查看 xref:raspberry-pi.adoc#BOOT_ORDER[BOOT_ORDER] 支持的值。
 
 `partition`:: 启动时使用的分区号。如果加载的是 `boot.img` ramdisk，则指的是内存盘加载的分区，而不是内存盘中的分区号。
 
