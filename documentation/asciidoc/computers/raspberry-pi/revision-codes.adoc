@@ -874,7 +874,6 @@ NOTE: 此列表并非详尽-可能有未在此表中使用的代码。有关使�
 | 1.0
 | 8GB
 | Sony UK
-
 |===
 
 [[using-revision-codes-for-board-identification]]
