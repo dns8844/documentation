@@ -1,7 +1,5 @@
-
-== RP1
-
 [[about-rp1]]
+== RP1
 
 .Architecture 
 image::images/rp1.jpg[alt="Architecture diagram of the RP1",width="70%"]

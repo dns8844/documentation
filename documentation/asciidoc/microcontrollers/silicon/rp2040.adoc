@@ -1,4 +1,3 @@
-[[rp2040]]
 == RP2040
 
 RP2040是由Raspberry Pi设计的微控制器。
@@ -7,7 +6,7 @@ image::images/rp2040.jpg[]
 
 无论您使用的是 xref:pico-series.adoc#pico-1-technical-specification[Raspberry Pi Pico 1]，还是其他基于 RP2040 的微控制器板，这里都有入门所需的一切。您可以在 Raspberry Pi Pico 上找到 xref:c_sdk.adoc#sdk-setup[C/{cpp}] 或 xref:micropython.adoc#what-is-micropython[MicroPython] 的入门支持，以及使用 RP2040 的其他电路板的资源链接。还有 Raspberry Pi Pico 微控制器板和我们的 RP2040 微控制器芯片的技术文档链接。
 
-=== Why is the chip called RP2040?
+=== 为什么这个芯片叫做 RP2040?
 
 RP2040 的后缀数字来源于以下内容、
 
@@ -68,7 +67,6 @@ RP2040采用现代40nm工艺节点制造，提供高性能、低动态功耗
 * Download https://datasheets.raspberrypi.com/rp2040/Minimal-KiCAD.zip[Minimal Viable Board] Design Files (KiCad)
 * Download https://datasheets.raspberrypi.com/rp2040/VGA-KiCAD.zip[VGA Carrier Board] Design Files (KiCad)
 
-[[rp2040]]
 == 基于 RP2040 的板卡
 
 xref:pico-series.adoc#pico-1-family[Raspberry Pi Pico 1] 由Raspberry Pi设计，既是开发板，也是参考设计，是一系列基于RP2040的板。
