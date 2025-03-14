@@ -1,5 +1,5 @@
 [[m2-hat-plus]]
-== About
+== 简介
 
 .Raspberry Pi M.2 HAT+
 image::images/m2-hat-plus.jpg[width="80%"]
@@ -13,7 +13,7 @@ M.2 HAT+使用Raspberry Pi的 https://datasheets.raspberrypi.com/hat/hat-plus-sp
 随附的螺纹垫片提供了充足的空间来安装M.2 HAT+下方的Raspberry Pi Active Cooler。
 
 M.2 HAT+ _只能_ 与 https://www.raspberrypi.com/products/raspberry-pi-5-case/[用于 Raspberry Pi 5 的 Raspberry Pi 机箱] 兼容，_前提是去掉盖子和附带的风扇_。
-== Features
+== 特点
 
 * 单通道 PCIe 2.0 接口（500 MB/s 峰值传输速率）
 * 支持使用 M.2 M 键边缘连接器的设备
@@ -28,7 +28,7 @@ M.2 HAT+ _只能_ 与 https://www.raspberrypi.com/products/raspberry-pi-5-case/[
  ** 8 个螺钉
  ** 1 个滚花双凸缘驱动器连接螺钉，用于固定和支持 M.2 外围设备
 [[m2-hat-plus-installation]]
-== Install
+== 安装
 
 要使用Raspberry Pi M.2 HAT+，您需要：
 
@@ -109,7 +109,7 @@ image::images/m2-hat-plus-installation-07.png[width="60%"]
 
 WARNING: 在从M.2插槽连接或断开设备之前，请务必断开Raspberry Pi的电源。
 
-== Boot from NVMe
+== 从NVMe启动
 
 要从连接到M.2 HAT+的NVMe驱动器启动，请完成以下步骤：
 
@@ -121,19 +121,19 @@ WARNING: 在从M.2插槽连接或断开设备之前，请务必断开Raspberry P
 
 有关详细信息，请参阅 xref:../computers/raspberry-pi.adoc#nvme-ssd-boot[NVMe boot]。
 
-== Enable PCIe Gen 3
+== 使能 PCIe Gen 3
 
 WARNING: Raspberry Pi 5未通过Gen 3.0速度认证。PCIe Gen 3.0连接可能不稳定。
 
 要启用PCIe Gen 3速度，请按照 xref:../computers/raspberry-pi.adoc#pcie-gen-3-0[使能 PCIe Gen 3.0] 的说明进行操作。
 
-== Schematics
+== 原理图
 
 . Raspberry Pi M.2 HAT+的示意图
 image::images/m2-hat-plus-schematics.png[width="80%"]
 
 原理图也可作为 https://datasheets.raspberrypi.com/m2-hat-plus/raspberry-pi-m2-hat-plus-schematics.pdf[PDF] 提供。
 
-== Product brief
+== 产品信息
 
 有关M.2 HAT+的更多信息，包括机械规格和操作环境限制，请参阅 https://datasheets.raspberrypi.com/m2-hat-plus/raspberry-pi-m2-hat-plus-product-brief.pdf[产品简介]。

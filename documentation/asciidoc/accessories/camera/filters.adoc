@@ -1,4 +1,4 @@
-== Camera Filters
+== 相机滤光片
 
 一些传输特性可用于相机模块3以及HQ和GS相机。
 
@@ -24,22 +24,23 @@ image::images/hq.png[HQ Camera Transmission Graph without IR-Cut filter,width="6
 image::images/gs.png[GS Camera Transmission Graph without IR-Cut filter,width="65%"]
 
 
-=== HQ and GS Cameras
+=== HQ 和 GS Cameras
 
 HQ和GS相机使用Hoya CM500红外滤光片。其透射特性如下图所示。
 
 image::images/hoyacm500.png[CM500 Transmission Graph,width="65%"]
 
-== IR Filter
+== 红外滤光片
 
-高品质相机和全局快门相机都包含一个红外滤光片，以降低相机对红外光的敏感性并帮助户外照片看起来更自然。但是，您可以删除过滤器以：
+高品质相机和全局快门相机都包含一个红外滤光片，以降低相机对红外光的敏感性并帮助户外照片看起来更自然。但是，您可以删除滤光片以：
 
 * Enhance colours in certain types of photography, such as images of plants, water, and the sky
 * Provide night vision in a location that is illuminated with infrared light
 
-=== Filter Removal
+[[filter-removal]]
+=== 移除滤光片
 
-WARNING: *此过程不可逆转：* 过滤器在吊起和更换时会损坏，虽然IR过滤器约为1.1毫米厚，但在移除时可能会破裂。*产品保修将失效*。
+WARNING: *此过程不可逆转：* 滤光片在吊起和更换时会损坏，虽然IR滤光片约为1.1毫米厚，但在移除时可能会破裂。*产品保修将失效*。
 
 您可以从HQ和GS相机上移除滤镜。HQ相机显示在下面的演示中。
 
@@ -57,15 +58,15 @@ image:images/FLATLAY_small.jpg[width="65%"]
 . 将镜头朝上，将支架放在平坦的表面上。
 +
 image:images/SOLVENT_small.jpg[width="65%"]
-. 为了尽量减少损坏过滤器的风险，请使用笔尖或类似的软塑料物品，仅在玻璃与铝连接的边缘向下推过滤器。胶水会露出缝隙，过滤器会从镜头支架上脱落。
+. 为了尽量减少损坏滤光片的风险，请使用笔尖或类似的软塑料物品，仅在玻璃与铝连接的边缘向下推滤光片。胶水会露出缝隙，滤光片会从镜头支架上脱落。
 +
 image:images/REMOVE_FILTER_small.jpg[width="65%"]
-. 鉴于更换镜头会导致传感器暴露在外，此时您可以贴上透明过滤器（例如OHP塑料），以最大限度地减少灰尘进入传感器腔的机会。
+. 鉴于更换镜头会导致传感器暴露在外，此时您可以贴上透明滤光片（例如OHP塑料），以最大限度地减少灰尘进入传感器腔的机会。
 . 更换电路板上的主外壳。请务必将外壳与垫圈重新对齐，垫圈仍留在电路板上。
 . 先涂上尼龙垫圈，防止损坏电路板。
 . 接下来，安装钢垫圈，防止损坏尼龙垫圈。拧下两个六角锁键。只要垫圈按正确的顺序安装，就不需要拧得很紧。
 +
 image:images/FILTER_OFF_small.jpg[width="65%"]
 
-NOTE: 不太可能可以将过滤器粘回原位并使设备恢复正常光学相机的功能。
+NOTE: 不太可能可以将滤光片粘回原位并使设备恢复正常光学相机的功能。
 

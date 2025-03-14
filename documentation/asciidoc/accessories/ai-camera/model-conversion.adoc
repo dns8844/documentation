@@ -1,4 +1,4 @@
-== Model deployment
+== 模型部署
 
 要将新的神经网络模型部署到Raspberry Pi AI相机，请完成以下步骤：
 
@@ -9,13 +9,13 @@
 
 前三个步骤通常会在功能更强大的计算机（例如台式机或服务器）上执行。您必须在Raspberry Pi上运行最后的打包步骤。
 
-=== Model creation
+=== 创建模型
 
 神经网络模型的创建超出了本指南的范围。可以重用现有模型，也可以使用TensorFlow或PyTorch等流行框架创建新模型。
 
 有关更多信息，请参阅官方 https://developer.aitrios.sony-semicon.com/en/raspberrypi-ai-camera[AITRIOS开发网站]。
 
-=== Quantisation and compression
+=== 量化和压缩
 
 使用Sony的模型压缩工具包对模型进行量化和压缩。要安装工具包，请运行以下命令：
 
@@ -31,7 +31,7 @@ $ pip install model_compression_toolkit
 * Keras (TensorFlow)
 * ONNX (PyTorch)
 
-=== Conversion
+=== 转换
 
 要转换模型，首先安装转换器工具：
 
@@ -81,7 +81,7 @@ $ imxconv-pt -i <compressed ONNX model> -o <output folder>
 
 有关模型转换过程的更多信息，请参阅官方 https://developer.aitrios.sony-semicon.com/en/raspberrypi-ai-camera/documentation/imx500-converter[索尼 IMX500 转换器文档资料]。
 
-=== Packaging
+=== 打包
 
 重要提示：您必须在Raspberry Pi上运行此步骤。
 

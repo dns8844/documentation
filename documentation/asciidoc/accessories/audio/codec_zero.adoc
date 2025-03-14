@@ -1,4 +1,4 @@
-=== Raspberry Pi Codec Zero
+=== Raspberry Pi 零编码器
 
 Raspberry Pi Codec Zero是一款Raspberry Pi Zero大小的音频HAT。它在Raspberry Pi和Codec Zero的板载Dialog Semchi DA7212编解码器之间提供双向数字音频信号（I2S）。Codec Zero支持一系列输入和输出设备。
 

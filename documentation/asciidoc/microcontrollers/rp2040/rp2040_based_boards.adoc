@@ -1,30 +1,30 @@
 == RP2040-based Boards
 
-Designed by Raspberry Pi as both a development board, and as a reference design, the xref:raspberry-pi-pico.adoc[Raspberry Pi Pico] series is a family of RP2040-based boards. The Pico family currently consists of Raspberry Pi Pico (far left), Pico H (left), Pico W (right), and Pico WH (far right).
+xref:raspberry-pi-pico.adoc[Raspberry Pi Pico] 系列由 Raspberry Pi 设计，既是开发板，也是参考设计，是基于 RP2040 的电路板系列。Pico 系列目前包括 Raspberry Pi Pico（最左）、Pico H（左）、Pico W（右）和 Pico WH（最右）。
 
 image::images/pico_family.jpg[width="75%"]
 
-The design files for Raspberry Pi Pico and Pico W are available openly, with no limitations. 
+Raspberry Pi Pico 和 Pico W 的设计文件可以公开获取，没有任何限制。 
 
 * Download https://datasheets.raspberrypi.com/pico/RPi-Pico-R3-PUBLIC-20200119.zip[Design Files] for Raspberry Pi Pico (Cadence Allegro)
 * Download https://datasheets.raspberrypi.com/picow/RPi-PicoW-PUBLIC-20220607.zip[Design Files] for Raspberry Pi Pico W (Cadence Allegro)
 
-Permission to use, copy, modify, and/or distribute this design for any purpose with or without fee is hereby granted.
+特此授权使用、复制、修改和/或分发本外观设计，无论是否收费。
 
-THE DESIGN IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS DESIGN INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS DESIGN.
+本设计按 `原样`提供，作者对本设计不作任何保证，包括对适销性和适用性的所有默示保证。在任何情况下，作者均不对因使用或执行本外观设计而造成的或与之有关的任何特殊、直接、间接或后果性损害，或因使用、数据或利润损失而造成的任何损害承担责任，无论是合同诉讼、疏忽还是其他侵权行为。
 
-=== Other Boards
+=== 其他电路板
 
-You can find discussions around third-party RP2040-based boards on the https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi forums].
+您可以在 https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi 论坛] 上找到有关基于 RP2040 的第三方电路板的讨论。
 
 ==== USB PIDs
 
-Many RP2040-based devices use Raspberry Pi's USB Vendor ID and Product ID combination. If you build a third-party board based on RP2040, you may require a unique USB Product ID (PID).
+许多基于 RP2040 的设备使用 Raspberry Pi 的 USB 供应商 ID 和产品 ID 组合。如果您构建基于 RP2040 的第三方电路板，您可能需要一个唯一的 USB 产品 ID (PID)。
 
-You might need a unique USB PID if you need to provide a custom driver for Windows users.
+如果需要为 Windows 用户提供定制驱动程序，则可能需要唯一的 USB PID。
 
-USB-IF have given Raspberry Pi permission to license USB product ID values for its Vendor ID (`0x2E8A`) for common silicon components used with RP2040.
+USB-IF 已允许 Raspberry Pi 为其供应商 ID (`0x2E8A`) 授权 USB 产品 ID 值，用于 RP2040 的常用硅组件。
 
-To reserve a USB PID associated with Raspberry Pi's vendor ID, follow the instructions in the https://github.com/raspberrypi/usb-pid[Raspberry Pi USB PID git repository].
+要保留与 Raspberry Pi 供应商 ID 相关联的 USB PID，请按照 https://github.com/raspberrypi/usb-pid[Raspberry Pi USB PID git 仓库]中的说明操作。
 
-NOTE: If you use the standard RP2040 PID, you can use the `iManufacturer`, `iProduct`, and `iSerial` strings to uniquely identify your device.
+NOTE:：如果使用标准 RP2040 PID，则可以使用 `iManufacturer`、`iProduct`和 `iSerial` 字符串来唯一标识您的设备。

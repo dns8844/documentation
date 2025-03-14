@@ -1,4 +1,4 @@
-== About
+== 简介
 
 .插入Raspberry Pi 5的Raspberry Pi SD卡
 image::images/sd-hero.jpg[width="80%"]
@@ -15,7 +15,8 @@ Raspberry Pi SD卡有以下尺寸可供选择：
 * 64GB
 * 128GB
 
-== Specifications
+[[specifications]]
+== 规格
 
 .一张128GB树莓派SD卡
 image::images/sd-cards.png[width="80%"]

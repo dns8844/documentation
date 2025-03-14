@@ -1,7 +1,8 @@
-== Welcome to RP2040
+[[welcome-to-rp2040]]
+== 欢迎使用 RP2040
 
-Welcome to RP2040, a microcontroller designed here at Raspberry Pi. 
+欢迎使用 RP2040，这是 Raspberry Pi 设计的一款微控制器。
 
 image::images/rp2040.jpg[]
 
-Whether you have a xref:raspberry-pi-pico.adoc#technical-specification[Raspberry Pi Pico] or another RP2040-based microcontroller board, everything you need to get started is here. You'll find support for getting started with xref:c_sdk.adoc#sdk-setup[C/{cpp}] or xref:micropython.adoc#what-is-micropython[MicroPython] on Raspberry Pi Pico, and links to resources for other boards that use RP2040. There are also links to the technical documentation for both the Raspberry Pi Pico microcontroller board and our RP2040 microcontroller chip.
+无论您使用的是 xref:raspberry-pi-pico.adoc#technical-specification[Raspberry Pi Pico]，还是其他基于 RP2040 的微控制器板，这里都有入门所需的一切。您可以在 Raspberry Pi Pico 上找到 xref:c_sdk.adoc#sdk-setup[C/{cpp}] 或 xref:micropython.adoc#what-is-micropython[MicroPython] 的入门支持，以及使用 RP2040 的其他电路板的资源链接。还有 Raspberry Pi Pico 微控制器板和我们的 RP2040 微控制器芯片的技术文档链接。

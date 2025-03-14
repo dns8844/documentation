@@ -1,4 +1,5 @@
-== Legacy Support
+[[legacy-support]]
+== 早期支持
 
 WARNING: 这些说明仅适用于原始Raspberry Pi、型号A和B板。要识别原始Raspberry Pi，请检查GPIO接头连接器。只有原始型号有26针GPIO接头；后续型号有40针。
 

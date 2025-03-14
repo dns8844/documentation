@@ -1,4 +1,5 @@
-== Configuration
+[[configuration]]
+== 配置
 
 所有Raspberry Pi音频板都包含预编程的EEPROM。Raspberry Pi音频板设计为即插即用；Raspberry Pi OS能够自动检测和配置自身。在Raspberry Pi OS中，右键单击屏幕右上角的音频设置将允许您在板载音频设置和HAT音频设置之间切换：
 
@@ -29,13 +30,13 @@ $ sudo reboot
 
 另外，可以直接在树莓派的 microSD 卡上的 `/boot/firmware/config.txt` 文件进行编辑，方法是将卡插入到您常用的计算机中。使用默认的文件管理器，打开卡上的 `/boot/firmware/` 分区，使用合适的文本编辑器编辑 `config.txt` 文件，然后保存文件，弹出 microSD 卡并重新插入回您的树莓派。
 
-=== Attach the HAT
+=== 安装HAT
 
 Raspberry Pi音频板连接到Raspberry Pi的40针接头。它们设计为使用随附的电路板支架和螺丝支持Raspberry Pi。Raspberry Pi音频板无需焊接即可正常操作，除非您使用特定连接器的硬接线连接，例如DAC Pro上的XLR（外部线路返回）连接。
 
 提供了所有必要的安装硬件，包括垫片、螺钉和连接器。在添加音频板之前，PCB垫片应拧在Raspberry Pi上，仅用手指紧。然后，剩余的螺钉应从上面拧入垫片。
 
-=== Hardware versions
+=== 硬件版本
 
 有多个版本的音频卡。您的特定版本决定了配置所需的操作。较旧的IQaudIO品牌板有黑色PCB。较新的Raspberry Pi品牌板有绿色PCB。这些板在电路上是等效的，但具有不同的EEPROM内容。
 
@@ -61,7 +62,7 @@ dtoverlay=rpi-dacpro
 dtoverlay=rpi-digiampplus
 ----
 
-=== Extra Codec Zero configuration
+=== 额外编解码器零配置
 
 树莓派Codec Zero板使用Dialog半导体DA7212编解码器。这允许
 从内置MEMS麦克风、立体声唱机插座（AUX

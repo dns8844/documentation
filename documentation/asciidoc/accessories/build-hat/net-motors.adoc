@@ -16,7 +16,7 @@ train.SetBias(0.2);
 
 创建电机时的默认值为功率限制0.7，偏置0.3。
 
-==== Passive Motors
+==== 无源电机
 
 .火车电机，https://www.bricklink.com/v2/catalog/catalogitem.page?S=88011-1&name=Train%20Motor&category=%5BPower%20Functions%5D%5BPowered%20Up%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/train-motor.png[Train motor,width="60%"]
@@ -51,7 +51,7 @@ train.Stop();
 
 NOTE: 列车启动后，您可以调整速度，电机将相应调整。
 
-==== Active Motors
+==== 主动电机
 
 .活动电机，https://www.bricklink.com/v2/catalog/catalogitem.page?S=88014-1&name=Technic%20XL%20Motor&category=%5BPower%20Functions%5D%5BPowered%20Up%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/active-motor.png[Active motor,width="60%"]

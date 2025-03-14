@@ -1,12 +1,12 @@
-== Getting started
+== 入门
 
 下面的说明描述了如何在Raspberry Pi AI相机上运行预打包的MobileNet SSD和PoseNet神经网络模型。
 
-=== Hardware setup
+=== 硬件安装
 
 将摄像头安装到你的 Pi5 请参考 xref:../accessories/camera.adoc#install-a-raspberry-pi-camera[安装树莓派摄像头].
 
-=== Prerequisites
+=== 前提条件
 
 这些说明假定您使用的是连接到Raspberry Pi 4 Model B或Raspberry Pi 5板上的AI相机。稍作改动后，您可以在其他带有相机连接器的Raspberry Pi型号上遵循这些说明，包括Raspberry Pi Zero 2 W和Raspberry Pi 3 Model B+。
 
@@ -17,7 +17,7 @@
 $ sudo apt update && sudo apt full-upgrade
 ----
 
-=== Install the IMX500 firmware
+=== 安装 IMX500 固件
 
 AI相机必须在启动期间将运行时固件下载到IMX500传感器上。要将这些固件文件安装到您的Raspberry Pi上，请运行以下命令：
 
@@ -35,7 +35,7 @@ $ sudo apt install imx500-all
 
 NOTE: IMX500内核设备驱动程序在相机启动时加载所有固件文件。如果之前没有缓存神经网络模型固件，这可能需要几分钟时间。下面的演示在控制台上显示一个进度条来指示固件加载进度。
 
-=== Reboot
+=== 重启
 
 现在您已经满足q了前提条件，请重新启动Raspberry Pi：
 
@@ -44,7 +44,7 @@ NOTE: IMX500内核设备驱动程序在相机启动时加载所有固件文件�
 $ sudo reboot
 ----
 
-== Run example applications
+== 运行示例程序
 
 更新所有系统包并安装固件文件后，我们就可以开始运行一些示例应用程序了。如前所述，树莓派AI相机与 `libcamera`、`rpicam-apps` 和 `Picamera2` 完全集成。
 
@@ -54,7 +54,7 @@ xref:../computers/camera_software.adoc#rpicam-apps[`rpicam-apps` 相机应用程
 
 此页面上的示例使用位于 `/usr/share/rpicam-assets/` 中的后处理JSON文件。
 
-==== Object detection
+==== 对象检测
 
 MobileNet SSD神经网络执行基本目标检测，为找到的每个对象提供边界框和置信度值。`imx500_mobilenet_ssd.json` 包含使用MobileNet SSD神经网络的IMX500目标检测后处理阶段的配置参数。
 
@@ -89,9 +89,9 @@ $ rpicam-vid -t 10s -o output.264 --post-process-file /usr/share/rpi-camera-asse
 
 该网络的原始推理输出数据可能非常嘈杂，因此此阶段还预先进行了一些时间过滤并应用滞后。要禁用此过滤，请删除 `temporal_filter` 配置块。
 
-==== Pose estimation
+==== 姿态预测
 
-PoseNet神经网络执行位姿估计，标记与关节和四肢相关的身体上的关键点。`imx500_posenet.json` 包含使用PoseNet神经网络的IMX500位姿估计后处理阶段的配置参数。
+PoseNet神经网络执行姿态预测，标记与关节和四肢相关的身体上的关键点。`imx500_posenet.json` 包含使用PoseNet神经网络的IMX500姿态预测后处理阶段的配置参数。
 
 `imx500_posenet.json` 声明了一个包含两个阶段的后处理管道：
 

@@ -1,9 +1,9 @@
-== Internal Temperature Sensor
+== 内部温度传感器
 
-The internal temperature sensor in the RP2040 package is a low-resolution sensor that needs to be user-calibrated to be useful to any degree of accuracy. 
+RP2040 封装中的内部温度传感器是一种低分辨率传感器，需要经过用户校准才能达到一定的精度。
 
-A crucial part of accurately determining the temperature measured is knowing the ADC VREF voltage. The conversion formula means that small errors in the ADC VREF voltage can give quite large discrepancies in temperature calculated. The RP2040 doesn't have an internal Fixed Voltage Reference which can be used to determine VREF voltage so VREF voltage needs to be measured manually - with the caveat it could change - or an external Fixed Voltage Reference needs to be provided.
+准确确定所测温度的关键是了解 ADC VREF 电压。转换公式意味着 ADC VREF 电压的微小误差都会导致计算出的温度出现相当大的差异。RP2040 没有可用于确定 VREF 电压的内部固定电压基准，因此需要手动测量 VREF 电压（注意它可能会发生变化）或提供外部固定电压基准。
 
-NOTE: The RP2040 sensor voltage falls as temperature rises.
+NOTE:RP2040 传感器电压会随着温度升高而下降。
 
-See Chapter 4, section 4.9.5 of the https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf[RP2040 Datasheet] for further details of the internal temperature sensor.
+有关内部温度传感器的更多详情，请参阅 https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf[RP2040 Datasheet] 第 4 章第 4.9.5 节。

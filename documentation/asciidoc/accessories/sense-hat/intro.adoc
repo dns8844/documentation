@@ -1,4 +1,4 @@
-== About
+== 简介
 
 https://www.raspberrypi.com/products/sense-hat/[Raspberry Pi Sense HAT] 是一款附加板，可为您的Raspberry Pi提供一系列传感功能。板载传感器允许您监控压力、湿度、温度、颜色、方向和运动。8×8 RGB LED矩阵允许您可视化来自传感器的数据。五按钮操纵杆允许用户与您的项目进行交互。
 

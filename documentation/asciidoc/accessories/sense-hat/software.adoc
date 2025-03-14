@@ -1,4 +1,4 @@
-== Install
+== 安装
 
 为了正常工作，Sense HAT需要：
 
@@ -29,7 +29,7 @@ $ sudo apt install sense-hat
 $ sudo reboot
 ----
 
-== Calibrate
+== 校准
 
 安装必要的软件并运行校准程序，如下所示：
 
@@ -94,11 +94,12 @@ $ rm ~/.config/sense_hat/RTIMULib.ini
 $ sudo cp RTIMULib.ini /etc
 ----
 
-== Getting started
+== 入门指南
 
 安装后，可在 `/usr/src/sense-hat/examples` 下找到示例代码。
 
-=== Use the Sense HAT with Python
+[[use-the-sense-hat-with-python]]
+=== 在 Python 中使用 Sense HAT
 
 `sense-hat` 是官方支持的 Sense HAT 库；它提供了对所有板载传感器和 LED 矩阵的访问。
 
@@ -112,9 +113,10 @@ RTIMULibDrive11 示例已预编译，可帮助确保一切按预期运行。运�
 
 注意：C/{cpp} 示例可通过在相应目录下运行 `make` 进行编译。
 
-== Troubleshooting
+[[troubleshooting]]
+== 故障分析
 
-=== Read and write EEPROM data
+=== 读写EEPROM数据
 
 这些步骤仅供调试之用。
 
@@ -145,7 +147,7 @@ $ cd hats/eepromutils
 $ make
 ----
 
-==== Read
+==== 读
 
 要读取 EEPROM 数据，请运行以下命令：
 
@@ -154,7 +156,7 @@ $ make
 $ sudo ./eepflash.sh -f=sense_read.eep -t=24c32 -r
 ----
 
-==== Write
+==== 写
 
 NOTE: 此操作不会损坏 Raspberry Pi 或 Sense HAT，但如果发生错误，Raspberry Pi 可能无法自动检测 HAT。
 

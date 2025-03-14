@@ -1,5 +1,5 @@
 [[create-a-raspberry-pi-id]]
-== Create a Raspberry Pi ID
+== 创建一个 Raspberry Pi 账户
 
 要使用Raspberry Pi服务，您必须首先创建一个 https://id.raspberrypi.com[Raspberry Pi ID]。
 

@@ -1,6 +1,6 @@
-== Getting started
+== 入门
 
-=== Create a toy chatter box
+=== 创建一个玩具聊天箱
 
 作为Raspberry Pi Audio Boards可以做什么的示例，让我们来看看玩具聊天盒的创建。它的板载麦克风、可编程按钮和扬声器驱动程序使Codec Zero成为此应用程序的理想选择。
 
@@ -8,7 +8,7 @@ image::images/Chatter_Box.jpg[width="80%"]
 
 按下按钮时会播放一段随机预先录制的五秒音频剪辑。按住十秒后，会发出通知性的打嗝声，之后会录制一段新的五秒剪辑。按住按钮超过20秒会播放第二次打嗝声，然后擦除所有以前的录音。
 
-=== Hardware and wiring
+=== 硬件及接线
 
 对于这个项目，任何小型无源扬声器都应该足够了。我们正在使用一个可用的 https://shop.pimoroni.com/products/3-speaker-4-3w?variant=380549926[扬声器], 它能在 4Ω 下处理 5W 功率。我们还使用了一个发光的瞬时按钮和一个激光切割盒来放置所有元件，但这两者都是完全可选的。本示例只需使用 Codec Zero 的板载按钮即可，该按钮已预先连接到 GPIO 27。(或者，您也可以使用任何瞬时按钮，如现有的 https://shop.pimoroni.com/products/mini-arcade-buttons?variant=40377171274[按钮]。)
 
@@ -16,13 +16,13 @@ image::images/Chatterbox_Labels.png[width="80%"]
 
 使用小平头螺丝刀将扬声器连接到螺丝端子。对于额外的按钮，请将按钮线直接焊接到Codec Zero焊盘，如有必要，使用GPIO引脚27和接地作为开关，+3.3V和接地作为LED。
 
-=== Set up your Raspberry Pi
+=== 设置Raspberry Pi
 
 在此示例中，我们使用的是Raspberry Pi OS Lite。有关更多详细信息，请参阅我们关于 xref:../computers/getting-started.adoc#installing-the-operating-system[安装 Raspberry Pi 操作系统] 的指南。
 
 确保在继续之前更新操作系统，并按照Codec Zero配置提供的说明进行操作，包括启用板载麦克风和扬声器输出的命令。
 
-=== Program your Raspberry Pi
+=== 在Raspberry Pi上编程
 
 在Raspberry Pi上打开一个shell（例如通过SSH连接）并运行以下命令来创建我们的Python脚本：
 
@@ -126,13 +126,14 @@ $ crontab -e
 
 按 *Ctrl X*，然后按 *Y*，然后按 *Enter* 保存，然后使用 `sudo reboot` 重新启动设备。
 
-=== Use the toy chatter box
+=== 使用玩具聊天箱
 
 最后一步是确保一切都按预期运行。按下按钮并在听到打嗝时释放它。录音现在将开始一段五秒钟的时间。一旦您释放了按钮，请再次短暂按下它以听到录音。根据需要重复此过程多次，您的声音将随机播放。您可以通过按住按钮删除所有录音，在第一次打嗝和录音过程中保持按下按钮，并在至少20秒后释放它，此时您将听到另一个打嗝声，确认录音已被删除。
 
 video::BjXERzu8nS0[youtube]
 
-=== Next steps
+[[next-steps]]
+=== 下一步
 
 升级！升级一个项目总是很有趣的，所以为什么不添加一些额外的功能，比如录音时会发光的发光二极管呢？这个项目拥有制作你自己的 https://aiyprojects.withgoogle.com/[Google intelligent speaker system] 版本所需的所有部件，或者你可能想考虑构建第二个设备，用于创建一对对讲机，能够通过SSH通过网络传输音频文件。
 

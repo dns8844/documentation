@@ -1,4 +1,5 @@
-== Introduction
+[[introduction]]
+== 介绍
 
 Raspberry Pi Connect提供从世界任何地方安全访问您的Raspberry Pi。
 

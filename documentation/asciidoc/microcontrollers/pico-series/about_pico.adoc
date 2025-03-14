@@ -12,7 +12,7 @@ Pico系列设备根据产品分为 **系列**。
 * Pico 2
 * Pico 2 W
 
-== Pico 2 family
+== Pico 2 系列
 
 image::images/pico-2.png[width="75%"]
 
@@ -39,7 +39,7 @@ Raspberry Pi Pico 2是一款具有灵活数字接口的低成本、高性能微�
 
 NOTE: 两块电路板都有一个三引脚串行线调试（SWD）接头。然而，带有接头的Pico 2将其分解为一个小的键控 https://datasheets.raspberrypi.com/debug/debug-connector-specification.pdf[3-pin connector]，而Pico在电路板边缘附近有三个蜂窝通孔引脚。
 
-==== Pinout and design files
+==== Pinout 和设计文件
 
 image::images/pico-2-r4-pinout.svg[]
 
@@ -76,7 +76,7 @@ IRQ都在RP2350上共享一个引脚。只有当SPI事务未进行时，才适�
 
 除了 https://github.com/bluekitchen/btstack/blob/master/LICENSE[standard BTstack licensing] terms, a https://github.com/raspberrypi/pico-sdk/blob/master/src/rp2_common/pico_btstack/LICENSE.RP[supplemental licence] 涵盖商业使用的BTstack与树莓派Pico 2 W.
 
-==== Pinout and design files
+==== Pinout 和设计文件
 
 image::images/pico2w-pinout.svg[]
 
@@ -86,7 +86,8 @@ image::images/pico2w-pinout.svg[]
 //*下载 https://datasheets.raspberrypi.com/Pico2w/RPi-PicoW-PUBLIC-20220607.zip[Design Files] (Cadence Allegro)
 //*下载 https://datasheets.raspberrypi.com/Pico2w/PicoW-step.zip[STEP File]
 
-== Pico 1 family
+[[pico-1-family]]
+== Pico 1 系列
 
 image::images/pico-1s.png[width="75%"]
 
@@ -114,7 +115,7 @@ Raspberry PiPico是一款具有灵活数字接口的低成本、高性能微控�
 
 NOTE: 两块电路板都有一个三引脚串行线调试（SWD）接头。然而，PicoH将其分解成一个小的键控 https://datasheets.raspberrypi.com/debug/debug-connector-specification.pdf[3-pin connector]，而Pico有三个蜂窝通孔引脚，靠近电路板边缘。
 
-==== Pinout and design files
+==== Pinout 和设计文件
 
 image::images/pico-pinout.svg[]
 
@@ -154,7 +155,7 @@ IRQ都在RP2040上共享一个引脚。只有当SPI事务未进行时，才适�
 
 除了 https://github.com/bluekitchen/btstack/blob/master/LICENSE[standard BTstack licensing] terms, a https://github.com/raspberrypi/pico-sdk/blob/master/src/rp2_common/pico_btstack/LICENSE.RP[supplemental licence] 涵盖商业用途的BTstack与树莓派PicoW或树莓派PicoWH。
 
-==== Pinout and design files
+==== Pinout 和设计文件
 
 image::images/picow-pinout.svg[]
 

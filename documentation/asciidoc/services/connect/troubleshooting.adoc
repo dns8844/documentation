@@ -1,6 +1,7 @@
-== Troubleshooting
+[[troubleshooting]]
+== 问题分析
 
-=== Known issues
+=== 已知问题
 
 * 屏幕共享仅支持共享 Raspberry Pi 的单个主显示屏。当 Raspberry Pi 连接到多个 HDMI 屏幕时，Connect 有时会共享副屏幕的内容。你可以右键单击桌面，在 **Desktop Preferences...** 中更改任务栏的位置来解决这个问题。
 
@@ -31,9 +32,9 @@ $ sudo apt install --only-upgrade rpi-connect-lite
 Replacing globally-enabled rpi-connect services with user-enabled ones...
 ----
 
-=== Common issues
+=== 常见问题
 
-==== Screen sharing not available
+==== 无法使用共享屏幕
 
 如果 Connect 提示屏幕共享不可用，则表明不符合屏幕共享支持的一个或多个要求。为帮助调试问题，`rpi-connect` 和 `rpi-connect-lite` 包含`doctor`命令。使用 `rpi-connect doctor` 找出屏幕共享的问题。
 
@@ -92,7 +93,7 @@ Connect作为用户级服务运行，因此只有当登录到服务的用户有�
 
 对于屏幕共享，Connect只能共享现有的图形桌面会话：它不会创建全新的会话。必须已经有一个桌面会话正在进行中。要在启动时自动启动此类会话，请通过 `` raspi-config `` 的系统选项启用桌面自动登录。
 
-==== Networking and firewall issues
+==== 网络及防火墙问题
 
 Connect通常在设备之间进行通信，而无需更改网络或防火墙。但是，特别严格的网络有时会阻止Connect通信。为了帮助调试此类网络的问题，`rpi-connect` 和 `rpi-connect-lite` 包含 `rpi-connect doctor` 命令。`rpi-connect doctor` 运行一系列测试来检查Connect通信在您的网络上是否正常运行。
 
@@ -133,7 +134,7 @@ Screen sharing is supported by this version of rpi-connect
 ** turn2.raspberrypi.com
 ** turn3.raspberrypi.com
 
-=== View Connect status
+=== 查看 Connect 状态
 
 要查看Connect服务的当前状态，请运行以下命令：
 
@@ -154,7 +155,7 @@ Remote shell: allowed (0 sessions active)
 
 如果您看到包括“Raspberry Pi Connect未运行，请运行rpi-connect on”在内的输出，请运行 `rpi-connect on` 以启动Connect。
 
-=== Enable enhanced logging
+=== 启用增强型日志记录
 
 您可以为 `rpi-connect` 及其专用WayVNC服务器启用调试日志记录，以详细了解Raspberry Pi上的本地操作。
 
@@ -212,7 +213,7 @@ NOTE: 您需要两行以 `ExecStart=` 开头的配置行。
 $ rpi-connect restart
 ----
 
-=== View Connect logs
+=== 查看 Connect 日志
 
 要查看Connect服务及其专用WayVNC服务器的日志，请运行以下命令：
 

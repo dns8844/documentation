@@ -1,5 +1,6 @@
 :figure-caption!:
-== About the Camera Modules
+[[about-the-camera-modules]]
+== 简介 the Camera Modules
 
 现在有几种官方的 Raspberry Pi 摄像头模块。最初的 500 万像素型号是 2013 年发布的 https://www.raspberrypi.com/news/camera-board-available-for-sale/[发布]，随后是 2016 年发布的 https://www.raspberrypi.com/news/new-8-megapixel-camera-board-sale-25/[发布]的 800 万像素 https://www.raspberrypi.com/products/camera-module-v2/[摄像头模块 2]。最新的相机型号是 1200 万像素的 https://raspberrypi.com/products/camera-module-3/[相机模块 3]，于 2023 年 https://www.raspberrypi.com/news/new-autofocus-camera-modules/[发布]。树莓派已不再提供最初的 500 万像素设备。
 
@@ -37,11 +38,12 @@ NOTE: 所有带有CSI接口的Raspberry Pi计算机都可以使用Raspberry Pi�
 
 NOTE: 全局快门相机的图像传感器有一个6.3毫米的对角线主动感应区域，大小与树莓派的HQ相机相似。但是，像素更大，可以收集更多的光。大像素尺寸和低像素数在机器视觉应用中很有价值；传感器产生的像素越多，实时处理图像就越困难。为了解决这个问题，许多应用缩小和裁剪图像。这对于全局快门相机和适当的镜头放大率来说是不必要的，其中较低的分辨率和大像素尺寸意味着可以本地捕获图像。
 
-== Install a Raspberry Pi camera
+[[install-a-raspberry-pi-camera]]
+== 安装Raspberry Pi 相机
 
 WARNING: 相机对静电很敏感。在处理PCB之前自己接地。如果你没有接地带，使用水槽水龙头或类似的东西就足够了。
 
-=== Connect the Camera
+=== 连接相机
 
 柔性电缆插入 Raspberry Pi 上标有 CAMERA 的连接器，该连接器位于以太网和 HDMI 端口之间。插入电缆时，银色触点必须朝向 HDMI 端口。要打开连接器，将连接器顶部的卡扣向上拉，然后拉向以太网端口。应将柔性电缆牢固地插入连接器，注意不要将柔性电缆弯曲得太厉害。要关闭连接器，请将连接器顶部向下推，远离以太网端口，同时将柔性电缆固定到位。
 
@@ -57,13 +59,14 @@ video::GImeVqHQzsE[youtube]
 
 NOTE: 在将推荐的 https://datasheets.raspberrypi.com/hq-camera/cs-mount-lens-guide.pdf[6mm] 和 https://datasheets.raspberrypi.com/hq-camera/c-mount-lens-guide.pdf[16mm] 镜头安装到HQ相机周围有额外的留档。
 
-=== Prepare the Software
+=== 软件准备
 
 在继续之前，我们建议确保您的内核、GPU固件和应用程序都是最新的。请按照 xref:../computers/os.adoc#update-software[保持最新操作系统] 上的说明进行操作。
 
 然后，请按照 xref:../computers/camera_software.adoc#rpicam-apps[`rpicam-apps`], 和 https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf[Picamera2 Python 库] 的相关设置说明进行操作。
 
-== Hardware Specification
+[[hardware-specification]]
+== 硬件规格
 
 |===
 |  | Camera Module v1 | Camera Module v2 | Camera Module 3 | Camera Module 3 Wide | HQ Camera | AI Camera | GS Camera
@@ -242,7 +245,7 @@ NOTE: 在将推荐的 https://datasheets.raspberrypi.com/hq-camera/cs-mount-lens
 
 NOTE: 有 https://github.com/raspberrypi/libcamera/issues/43[some evidence] to suggest that the Camera Module 3 may emit RFI at a harmonic of the CSI clock rate. This RFI is in a range to interfere with GPS L1 frequencies (1575 MHz). Please see the https://github.com/raspberrypi/libcamera/issues/43[thread on Github] 详细信息和建议的解决方法。
 
-=== Mechanical Drawings
+=== 机械图纸
 
 可用的机械图纸；
 
@@ -258,7 +261,7 @@ https://datasheets.raspberrypi.com/gs-camera/gs-camera-mechanical-drawing.pdf[PD
 
 NOTE: 相机模块3的 板尺寸和安装孔位置与相机模块2相同。但是，由于传感器模块尺寸和位置的变化，它在机械上与树莓派零壳的相机盖不兼容。
 
-=== Schematics
+=== 原理图
 
 .树莓派CSI相机连接器示意图。
 image:images/RPi-S5-conn.png[相机连接器, width="65%"]

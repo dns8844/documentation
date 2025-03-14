@@ -21,7 +21,7 @@ audio and left and right ground.
 | *P10* | Alternative 5V input, powering Raspberry Pi in parallel.
 |===
 
-==== Optional XLR Board
+==== 可选 XLR 板
 
 Pi-DAC PRO公开了可选XLR板使用的6引脚标头，以提供由Pi的USB/以太网端口上方的XLR插座公开的差分/平衡输出。
 

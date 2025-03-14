@@ -6,7 +6,7 @@
         "url": "https://pip.raspberrypi.com/"
     },
     {
-        "title": "Datasheets",
+        "title": "数据手册",
         "description": "PDF 文档",
         "imagepath": "/images/full-sized/Datasheets.png",
         "url": "https://datasheets.raspberrypi.com"

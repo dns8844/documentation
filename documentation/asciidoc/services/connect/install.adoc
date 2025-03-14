@@ -1,5 +1,5 @@
 [[install-connect]]
-== Install
+== 安装
 
 如果您的Raspberry Pi OS版本中尚未安装Connect，请打开终端窗口。运行以下命令来更新您的系统和软件包：
 
@@ -29,7 +29,7 @@ $ rpi-connect on
 
 image::images/turn-on-connect.png[width="80%"]
 
-=== Connect Lite
+=== 远程shell
 
 我们分发了Connect的替代 *Lite* 变体，它仅支持远程shell访问，无法进行屏幕共享。
 
@@ -51,7 +51,7 @@ xref:connect.adoc#enable-remote-shell-at-all-times[Enable user-lingering] 使您
 
 TIP: Lite命令使用与Connect完整版相同的 `rpi-connect` 名称。`rpi-connect-lite` 只是一个包名称。
 
-=== Manually start and stop Connect
+=== 手动启动和停止连接
 
 要从命令行启动Connect，请运行以下命令：
 

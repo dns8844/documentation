@@ -1,4 +1,4 @@
-== Getting Started with your Keyboard
+== 键盘入门
 
 我们的官方键盘包括三个主机USB端口，用于连接外部设备，例如USB鼠标、USB驱动器和其他USB控制的设备。
 
@@ -6,7 +6,7 @@
 
 image::images/back-of-keyboard.png[width="80%"]
 
-=== Keyboard Features
+=== 键盘功能
 
 Raspberry Pi键盘有三个锁定键：`Num Lock`、`Caps Lock` 和 `Scroll Lock`。右上角有三个LED指示启用了哪些锁。
 

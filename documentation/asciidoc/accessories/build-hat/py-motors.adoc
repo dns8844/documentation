@@ -1,15 +1,15 @@
-=== Use Motors from Python
+=== 使用来自 Python 的电机
 
 有 xref:build-hat.adoc#device-compatibility[a number of motors] 与Build HAT一起使用。
 
-==== Connect a Motor
+==== 连接电机
 
 将电机连接到Build HAT上的A端口。LPF2连接器需要正确向上插入。如果连接器不容易滑入，请旋转180度，然后重试。
 
 video::images/connect-motor.webm[width="80%"]
 
 
-==== Work with Motors
+==== 电机工作
 
 启动 https://thonny.org/[Thonny IDE]。添加以下程序代码：
 

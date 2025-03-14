@@ -1,5 +1,5 @@
 [[link-connect]]
-== Link a Raspberry Pi device with a Connect account
+== 将 Raspberry Pi 设备与 Connect 账户连接起来
 
 现在您已经在Raspberry Pi设备上安装并启动了Connect，您必须将您的设备与您的Connect帐户相关联。
 
@@ -34,7 +34,7 @@ Complete sign in by visiting https://connect.raspberrypi.com/verify/XXXX-XXXX
 访问任何设备上的验证URL并使用您的Raspberry Pi ID登录以将您的设备与您的Connect帐户链接。
 ======
 
-=== Finish linking your Raspberry Pi
+=== 完成连接 Raspberry Pi
 
 身份验证后，为您的设备分配一个名称。选择唯一标识设备的名称。单击 **Create device and sign in** 按钮继续。
 
@@ -50,11 +50,11 @@ WARNING: 如果您收到一封电子邮件，显示您不认识的设备已登�
 
 TIP: Connect使用您的设备序列号签署通信。在设备之间交换SD卡会使您退出Connect。
 
-== Access your Raspberry Pi device
+== 访问您的 Raspberry Pi 设备
 
 现在您的设备出现在Connect仪表板上，您可以仅使用浏览器从任何地方访问您的设备。Connect提供多种方式与您的设备远程交互。
 
-=== Screen sharing
+=== 屏幕共享
 
 Connect包括在浏览器中共享设备屏幕的功能。使用以下说明共享设备屏幕。
 
@@ -84,13 +84,13 @@ image::images/screen-sharing-in-progress.png[width="80%"]
 
 image::images/screen-sharing-notification.png[width="80%"]
 
-==== Stop screen sharing
+==== 停止屏幕共享
 
 要关闭屏幕共享会话，请单击桌面上方的**Disconnect**按钮。
 
 image::images/screen-sharing-ended.png[width="80%"]
 
-==== Disallow screen sharing
+==== 禁止屏幕共享
 
 要关闭屏幕共享，请单击菜单栏中的连接图标并取消选择 **允许屏幕共享(Allow Screen Sharing)**。您的设备仍登录到连接，但您将无法从连接仪表板创建屏幕共享会话。
 
@@ -117,7 +117,7 @@ image::images/screen-sharing-disabled.png[width="80%"]
 $ rpi-connect vnc on
 ----
 
-=== Remote shell
+=== 远程 shell
 
 Connect包括从浏览器启动在您的设备上运行的shell的能力。使用以下说明访问远程shell。
 
@@ -149,13 +149,13 @@ image::images/remote-shell-notification.png[width="80%"]
 
 TIP: `CONNECT_TTY` 环境变量表示会话使用Connect提供的远程shell。
 
-==== End your remote shell session
+==== 结束远程 shell 会话
 
 要关闭远程shell会话，请运行 `exit` 命令或关闭窗口。
 
 image::images/remote-shell-ended.png[width="80%"]
 
-==== Disallow remote shell access
+==== 禁止远程 shell 访问
 
 要关闭远程shell访问，请单击菜单栏中的连接图标并取消选择 **允许远程shell访问(*Allow Remote Shell Access)**。您的设备仍登录到连接，但您将无法从连接仪表板创建远程shell会话。
 
@@ -182,7 +182,8 @@ image::images/remote-shell-disabled.png[width="80%"]
 $ rpi-connect shell on
 ----
 
-== Enable remote shell at all times
+[[enable-remote-shell-at-all-times]]
+== 始终启用远程 shell
 
 Connect作为用户级服务运行，而不是以root身份运行。因此，Connect仅在您的用户帐户当前登录到您的设备时才有效。如果您在禁用自动登录的情况下重新启动，这可能会使您的设备无法访问。即使您没有登录到设备，要继续运行Connect，请启用 **user-lingering**。从您的用户帐户运行以下命令以启用user-lingering：
 
@@ -193,7 +194,8 @@ $ loginctl enable-linger
 
 TIP: 我们建议在所有无显示器Raspberry Pi OS Lite设置上启用用户逗留，以防止您的设备在远程重启后变得无法访问。
 
-== Manage devices
+[[manage-devices]]
+== 管理设备
 
 Connect仪表板列出了与您的Connect帐户链接的所有设备，并向您展示了访问它们的各种方式。
 
@@ -205,7 +207,7 @@ image::images/device.png[width="80%"]
 
 从连接中删除设备会自动使您退出设备上的连接。菜单栏中的连接图标变为灰色，菜单仅提供 **登录…(Sign In...)** 选项。
 
-== Update
+== 更新
 
 要更新到最新版本的Connect，请运行以下命令：
 
@@ -217,7 +219,7 @@ $ sudo apt install --only-upgrade rpi-connect
 
 TIP: 如果您安装了Connect Lite，请在上述命令中将 `rpi-connect` 替换为 `rpi-connect-lite`。
 
-== Disconnect a device from Connect
+== 断开连接设备
 
 在您的设备上运行以下命令以注销您的Raspberry Pi ID，这将在连接屏幕上禁用您的设备：
 
@@ -230,7 +232,7 @@ $ rpi-connect signout
 
 TIP: 要从您的Connect帐户中完全删除设备，xref:connect.adoc#manage-devices[从控制台中移除]。
 
-== Uninstall
+== 卸载
 
 运行以下命令从设备中停止和删除Connect：
 

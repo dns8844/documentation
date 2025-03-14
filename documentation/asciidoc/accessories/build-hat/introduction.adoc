@@ -1,5 +1,5 @@
 [[about-build-hat]]
-== About
+== 简介
 
 https://raspberrypi.com/products/build-hat[Raspberry Pi Build HAT] 是一个附加板，可连接到树莓派的40针GPIO接头，该接头是与乐高®教育合作设计的，可通过树莓派计算机轻松控制乐高®Technic™电机和传感器。
 

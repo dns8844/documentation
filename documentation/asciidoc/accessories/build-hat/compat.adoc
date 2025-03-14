@@ -1,4 +1,5 @@
-== Device Compatibility
+[[device-compatibility]]
+== 设备兼容性
 
 Build HAT 库支持SPIKE™产品组合中包含的所有乐高®技术™设备，以及乐高®头脑风暴机器人发明家套件和其他使用PoweredUp连接器的设备。
 

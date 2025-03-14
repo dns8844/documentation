@@ -1,5 +1,5 @@
 [[ai-camera]]
-== About
+== 简介
 
 树莓派人工智能相机使用索尼IMX500成像传感器为所有相机应用程序提供低延迟、高性能的人工智能功能。与 xref:../computers/camera_software.adoc[Raspberry Pi's camera software stack] 的紧密集成允许用户以最小的努力部署自己的神经网络模型。
 

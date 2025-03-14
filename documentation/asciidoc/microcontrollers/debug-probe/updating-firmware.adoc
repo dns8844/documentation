@@ -1,4 +1,4 @@
-== Updating the firmware on the Debug Probe
+== 在Debug Probe上更新固件
 
 Debug Probe 的固件可作为Raspberry Pi分发的UF2文件获得。
 

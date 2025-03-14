@@ -1,4 +1,5 @@
-== External Trigger on the GS Camera
+[[external-trigger-on-the-gs-camera]]
+== GS 摄像机外部触发器
 
 全局快门（GS）摄像机可以通过板上的外部触发器（板上表示为XTR）连接进行脉冲外部触发。多个摄像机可以连接到同一个脉冲，从而允许另一种方式同步两个摄像机。
 
@@ -6,7 +7,7 @@
 
 image::images/external_trigger.jpg[alt="Image showing pulse format",width="80%"]
 
-=== Preparation
+=== 前提准备
 
 WARNING: 此修改包括移除SMD焊接部分。除非您认为自己有能力完成此修改，否则不应尝试此修改。焊接到相机板时，请移除塑料后盖，以免损坏它。
 
@@ -32,7 +33,7 @@ $ echo 1 > /sys/module/imx296/parameters/trigger_mode
 $ exit
 ----
 
-==== Raspberry Pi Pico MicroPython Code
+==== Raspberry Pi Pico MicroPython 代码
 
 [source,python]
 ----
@@ -55,7 +56,7 @@ pwm.duty_u16(int((1 - (shutter - 14) / frame_length) * 65535))
 
 NOTE: 在此示例中，引脚28连接到GS相机板上的XTR接触点。
 
-=== Operation
+=== 运行
 
 运行Pico上的代码，并设置相机运行：
 

@@ -1,12 +1,12 @@
-== Software Utilities
+== 软件实用程序
 
-=== What is on your Pico-series device?
+=== 您的Pico系列设备上有什么?
 
 如果您不确定 Raspberry Pi Pico 系列设备中的编程内容，并且程序是使用 Pico C/{cpp} SDK 构建的，那么它通常会在二进制文件中嵌入名称和有用信息。SDK构建的程序，它通常会在二进制文件中嵌入名称和其他有用信息。您可以使用 https://github.com/raspberrypi/picotool[Picotool] 命令行实用程序查找这些详细信息。我们的 “https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[入门] 文档中提供了有关如何使用 Picotool 的完整说明。
 
 * 访问 https://github.com/raspberrypi/picotool[Picotool Github repository].
 
-=== Debugging using another Pico-series device
+=== 使用另一个 Pico 系列设备进行调
 
 您可以使用一个Pico系列设备来调试另一个Pico系列设备。这可以通过 `debugprobe` 实现，XXX2 是一个允许Pico充当USB→SWD和通用异步收发设备转换器的应用程序。
 
@@ -22,9 +22,9 @@
 
 TIP: 有关如何使用调试器的说明，请参阅 https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf[Pico 系列微控制器入门指南]。
 
-=== Resetting Flash memory
+=== 重置Flash
 
 对于Pico系列设备，BOOTSEL模式存在于RP2040或RP2350芯片内的只读存储器中，不会被意外覆盖。无论如何，如果您在插入Pico时按住BOOTSEL按钮，它将显示为一个驱动器，您可以将新的UF2文件拖到该驱动器上。没有办法通过软件砖块电路板。但是，在某些情况下，您可能希望确保闪存为空。当Pico处于大容量存储模式时，您可以通过将特殊的UF2二进制文件拖放到Pico上来做到这一点。
 
-* 现在 https://datasheets.raspberrypi.com/soft/flash_nuke.uf2[UF2 file]
+* 下载 https://datasheets.raspberrypi.com/soft/flash_nuke.uf2[UF2 file]
 * 查看 https://github.com/raspberrypi/pico-examples/blob/master/flash/nuke/nuke.c[Github] 上的代码

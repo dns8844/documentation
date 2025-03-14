@@ -1,4 +1,4 @@
-== Features
+== 功能
 
 Sense HAT具有8×8 RGB LED矩阵和五键操纵杆，并包括以下传感器：
 
@@ -16,7 +16,7 @@ Sense HAT和Sense HAT V2的原理图和机械图纸可供下载。
 * https://datasheets.raspberrypi.com/sense-hat/sense-hat-v2-schematics.pdf[Sense HAT V2 原理图].
 * https://datasheets.raspberrypi.com/sense-hat/sense-hat-mechanical-drawing.pdf[Sense HAT 机械图纸].
 
-=== LED matrix
+=== LED 矩阵
 
 LED矩阵是ID为 `RPi-Sense FB` 的RGB565 https://www.kernel.org/doc/Documentation/fb/framebuffer.txt[framebuffer]。可以将适当的设备节点写入标准文件或mmap-ed。包含的蛇示例显示了如何访问帧缓冲区。
 

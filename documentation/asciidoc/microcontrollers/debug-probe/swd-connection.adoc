@@ -1,8 +1,8 @@
-== Serial Wire Debug (SWD)
+== 串口调试 (SWD)
 
 串行线调试（SWD）是JTAG四针或五针调试接口标准的两针接口（https://developer.arm.com/documentation/101761/1-0/Debug-and-trace-interface/Serial-Wire-Debug-signals[SWDIO and SWCLK]）替代品。
 
-=== Uploading new programs to your Pico
+=== 上传新程序到Pico
 
 Pico Debug Probe 允许通过SWD端口和OpenOCD加载二进制文件：每次将新二进制文件推送到Pico时，您不需要拔掉BOOTSEL按钮再按住按钮。使用Debug Probe上传新文件无需额外操作。
 
@@ -15,7 +15,7 @@ $ sudo openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "adapter speed
 
 NOTE: 当您使用Debug Probe上传二进制文件时，使用的是文件的ELF版本，而不是您在拖放时使用的UF2文件。
 
-=== Debugging with SWD
+=== 使用SWD调试
 
 它还允许您在服务器模式下使用 `openocd`，并连接GDB，从而为您提供断点和“正确”调试。
 

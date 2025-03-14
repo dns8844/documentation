@@ -1,4 +1,4 @@
-== Serial connections
+== 连接串口
 
 确保 Debug Probe 已连接到Raspberry PiPico的通用异步收发设备引脚。
 

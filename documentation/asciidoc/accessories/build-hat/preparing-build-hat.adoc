@@ -1,4 +1,4 @@
-== Prepare your Build HAT
+== 准备 Build HAT
 
 NOTE: 在开始使用 Raspberry Pi Build HAT 之前，你应该 xref:../computers/getting-started.adoc#setting-up-your-raspberry-pi[设置] 你的 Raspberry Pi，xref:../computers/getting-started.adoc#installing-the-operating-system[install] 使用 https://www.raspberrypi.com/downloads/[Raspberry Pi Imager] 安装最新版本的操作系统。
 
@@ -6,7 +6,7 @@ NOTE: 在开始使用 Raspberry Pi Build HAT 之前，你应该 xref:../computer
 
 video::images/fitting-build-hat.webm[width="80%"]
 
-=== Access the GPIO Pins
+=== 连接 GPIO 引脚
 
 如果要访问Raspberry Pi的GPIO引脚，可以添加可选的高接头并使用15 mm垫片。
 
@@ -27,7 +27,7 @@ image::images/tall-headers.png[width="80%"]
 |===
 
 
-=== Set up your Raspberry Pi
+=== 设置Raspberry Pi
 
 启动Raspberry Pi后，通过单击Raspberry菜单按钮打开Raspberry Pi配置工具，然后选择“首选项(Preferences)”，然后选择“Raspberry Pi配置”。
 
@@ -35,7 +35,7 @@ image::images/tall-headers.png[width="80%"]
 
 image::images/setting-up.png[width="50%"]
 
-==== Use your Raspberry Pi headless
+==== 使用无显示器的Raspberry Pi
 
 如果您正在无显示器运行Raspberry Pi并使用 `raspi-config`，请从第一个菜单中选择“接口选项”。
 
@@ -59,7 +59,7 @@ image::images/raspi-config-5.png[width="70%"]
 
 如果您进行了任何更改，此时需要重新启动。
 
-=== Power the Build HAT
+=== Build HAT连接电源
 
 连接外部电源——建议使用 https://raspberrypi.com/products/build-hat-power-supply[official Raspberry Pi Build HAT power supply]——但是任何能够通过DC 5521中心正极筒形连接器（5.5毫米×2.1毫米×11毫米）提供48W的可靠+8V±10%电源都将为Build HAT供电。除非您使用的是键盘系列，否则您也不需要将额外的USB电源连接到Raspberry Pi。
 

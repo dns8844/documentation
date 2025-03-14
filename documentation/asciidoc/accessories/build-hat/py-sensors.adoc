@@ -1,8 +1,8 @@
-=== Use Sensors from Python
+=== 使用 Python 中的传感器
 
 有一个与Build HAT一起使用的 xref:build-hat.adoc#device-compatibility[大范围传感器]。
 
-==== Work with Sensors
+==== 使用传感器工作
 
 将颜色传感器连接到Build HAT上的端口B，将力传感器连接到端口C。
 

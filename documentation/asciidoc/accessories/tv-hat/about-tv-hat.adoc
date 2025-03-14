@@ -1,5 +1,5 @@
 [[tv-hat]]
-== About
+== 简介
 
 .树莓派TV HAT
 image::images/tv-hat.jpg[width="80%"]
@@ -15,7 +15,7 @@ Raspberry Pi TV HAT允许您在Raspberry Pi上使用板载DVB-T和DVB-T2调谐�
 ** DVB-T2: 1.7MHz, 5MHz, 6MHz, 7MHz, 8MHz
 ** DVB-T：5MHz、6MHz、7MHz、8MHz
 
-== About DVB-T
+== 简介 DVB-T
 
 WARNING: TV HAT不支持ATSC，这是北美使用的数字电视标准。
 
@@ -25,7 +25,7 @@ WARNING: TV HAT不支持ATSC，这是北美使用的数字电视标准。
 image::images/dvbt-map.png[width="80%"]
 
 [[tv-hat-installation]]
-== Install
+== 安装
 
 按照我们的 xref:../computers/getting-started.adoc[入门] 文档，使用最新版本的树莓派操作系统设置树莓派。
 
@@ -71,7 +71,7 @@ Found services: 172
 
 NOTE: `tvheadend` 是由许多应用程序支持，如TvhClientiOS，这将从树莓派播放电视。
 
-== Mechanical Drawing
+== 机械图
 
 .树莓派TV HAT
 image::images/mechanical.png[]

@@ -1,6 +1,6 @@
 include::ai-kit/about.adoc[]
 
-== Product brief
+== 产品简介
 
 有关AI套件的更多信息，包括机械规格和操作环境限制，请参阅 https://datasheets.raspberrypi.com/ai-kit/raspberry-pi-ai-kit-product-brief.pdf[产品简介]。
 

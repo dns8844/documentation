@@ -85,38 +85,38 @@
             "default_tab": "no",
             "subitems": [
                 {
-                    "title": "SD Cards",
-                    "description": "Raspberry Pi's official SD cards",
+                    "title": "SD卡",
+                    "description": "树莓派官方SD卡",
                     "image": "full-sized/sd-card.png",
                     "subpath": "sd-cards.adoc"
                 },
                 {
-                    "title": "SSDs",
-                    "description": "Raspberry Pi's official Solid State Drives",
+                    "title": "SSD硬盘",
+                    "description": "树莓派官方固态硬盘",
                     "image": "full-sized/ssds.png",
                     "subpath": "ssds.adoc"
                 },
                 {
-                    "title": "SSD Kit",
-                    "description": "Storage for your Raspberry Pi",
+                    "title": "SSD套件",
+                    "description": "Raspberry Pi 的存储设备",
                     "image": "full-sized/ssd-kit.png",
                     "subpath": "ssd-kit.adoc"
                 },
                 {
                     "title": "M.2 HAT+",
-                    "description": "Connect storage to your Raspberry Pi via PCIe",
+                    "description": "通过 PCIe 将硬盘连接至 Raspberry Pi",
                     "image": "full-sized/m2-hat-plus.png",
                     "subpath": "m2-hat-plus.adoc"
                 },
                 {
-                    "title": "Touch Display 2",
-                    "description": "The Raspberry Pi Touch Display 2",
+                    "title": "二代触摸屏",
+                    "description": "树莓派官方二代触摸屏",
                     "image": "full-sized/Touch-Display-2.png",
                     "subpath": "touch-display-2.adoc"
                 },
                 {
-                    "title": "Monitor",
-                    "description": "The Raspberry Pi Monitor",
+                    "title": "显示器",
+                    "description": "树莓派显示器",
                     "image": "full-sized/monitor.png",
                     "subpath": "monitor.adoc"
                 },
@@ -139,8 +139,8 @@
                     "subpath": "keyboard-and-mouse.adoc"
                 },
                 {
-                    "title": "USB Hub",
-                    "description": "官方 Raspberry Pi USB hub",
+                    "title": "USB扩展坞",
+                    "description": "官方 Raspberry Pi USB 扩展坞",
                     "image": "full-sized/usb-3-hub.png",
                     "subpath": "usb-3-hub.adoc"
                 },
@@ -151,13 +151,13 @@
                     "subpath": "build-hat.adoc"
                 },
                 {
-                    "title": "Sense HAT",
+                    "title": "传感器扩展板",
                     "description": "监控和可视化传感器数据",
                     "image": "full-sized/Sense-HAT.png",
                     "subpath": "sense-hat.adoc"
                 },
                 {
-                    "title": "AI Kit",
+                    "title": "AI套件",
                     "description": "通过 M.2 连接到 Raspberry Pi 的 NPU",
                     "image": "full-sized/ai-kit.png",
                     "subpath": "ai-kit.adoc"
@@ -169,7 +169,7 @@
                     "subpath": "ai-hat-plus.adoc"
                 },
                 {
-                    "title": "Raspberry Pi Audio",
+                    "title": "音频",
                     "description": "用 Raspberry Pi 实现高清音频",
                     "image": "full-sized/Audio-HATs.png",
                     "subpath": "audio.adoc"
@@ -201,7 +201,7 @@
             ]
         },
         {
-            "title": "Microcontrollers",
+            "title": "微控制器",
             "path": "microcontrollers",
             "subitems": [
                 {
@@ -211,44 +211,44 @@
                     "subpath": "silicon.adoc"
                 },
                 {
-                    "title": "Pico-series Microcontrollers",
+                    "title": "Pico系列微控制器",
                     "description": "Raspberry Pi Pico 系列设备支持",
                     "image": "full-sized/pico-series.png",
                     "subpath": "pico-series.adoc"
                 },
                 {
-                    "title": "Raspberry Pi Debug Probe",
-                    "description": "Supports Arm Serial Wire Debug (SWD), and acts as a UART bridge",
+                    "title": "Raspberry Pi 调试器",
+                    "description": "支持 Arm 串行线调试 (SWD)，并充当 UART 桥接器",
                     "image": "full-sized/Debug-Probe.png",
                     "subpath": "debug-probe.adoc"
                 },		
                 {
                     "title": "MicroPython",
-                    "description": "Getting started with MicroPython",
+                    "description": "入门 MicroPython",
                     "image": "full-sized/MP.png",
                     "subpath": "micropython.adoc"
                 },
                 {
-                    "title": "The C/C++ SDK",
-                    "description": "Getting started with the C/C++ SDK",
+                    "title": "C/C++ SDK",
+                    "description": "入门 C/C++ SDK",
                     "image": "full-sized/C-and-CPP.png",
                     "subpath": "c_sdk.adoc"
                 }
             ]
         },
         {
-            "title": "Services",
+            "title": "服务",
             "path": "services",
             "subitems": [
                 {
-                    "title": "Raspberry Pi ID",
-                    "description": "Our identity service",
+                    "title": "树莓派账户",
+                    "description": "身份识别服务",
                     "image": "full-sized/Raspberry-Pi-ID.png",
                     "subpath": "id.adoc"
                 },
                 {
-                    "title": "Raspberry Pi Connect (Beta)",
-                    "description": "Connect to your Raspberry Pi from your browser",
+                    "title": "Raspberry Pi Connect (测试版)",
+                    "description": "通过浏览器连接 Raspberry Pi",
                     "image": "full-sized/Connect-BIG.png",
                     "subpath": "connect.adoc"
                 }

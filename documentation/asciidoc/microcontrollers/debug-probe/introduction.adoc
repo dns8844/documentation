@@ -1,4 +1,4 @@
-== About the Debug Probe
+== 关于 Debug Probe
 
 image::images/debug-probe.jpg[width="100%"]
 
@@ -14,7 +14,7 @@ NOTE: 有关Raspberry Pi三针debug连接器的更多信息，请参阅 https://
 
 这使得在缺少GPIO标头的Windows、macOS和Linux等平台上使用Raspberry PiPico可以轻松地直接连接到Pico的串行通用异步收发设备或SWD端口。
 
-=== The Debug Probe
+=== Debug Probe
 
 probe在3.3V标称I/O电压下工作。
 

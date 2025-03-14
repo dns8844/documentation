@@ -1,4 +1,5 @@
-== Enable Two-factor authentication
+[[enable-two-factor-authentication]]
+== 启用双重验证
 
 与大多数现代Web服务一样，Raspberry Pi ID支持使用 https://en.wikipedia.org/wiki/Time-based_one-time_password[time-based one-time password]（TOTP）的双重验证（2FA）。
 
@@ -8,11 +9,11 @@
 
 TIP: 树莓派ID支持macOS和iOSiCloud钥匙串集成，右键点击二维码获取Mac或iPhone的"设置校验码(Set up verification code)"选项。
 
-=== Install a 2FA application
+=== 安装 2FA 应用程序
 
 首先，将生成TOTP的应用程序下载到您的手机。安装任何2FA应用程序，如 https://authy.com/[Authy] 或Google Authenticator。
 
-=== Enable 2FA
+=== 启用 2FA
 
 要启用2FA，请在登录到 https://id.raspberrypi.com[Raspberry Pi ID] 时单击 **双重身份验证(Two-factor authentication)** 选项。
 

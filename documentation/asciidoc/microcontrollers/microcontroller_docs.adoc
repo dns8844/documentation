@@ -1,15 +1,17 @@
 //包含在silicon. adoc和Pico-系列.adoc中
 
-== Documentation
+== 文档
 
 Pico系列和其他树莓派microcontroller-based板的文档。
 
+[[rp2350]]
 === RP2350
 
 https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf[RP2350 Datasheet]:: 树莓派的微控制器
 
 https://datasheets.raspberrypi.com/rp2350/hardware-design-with-rp2350.pdf[Hardware design with RP2350]:: 使用RP2350微控制器构建电路板和产品
 
+[[rp2040]]
 === RP2040
 
 https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf[RP2040 Datasheet]:: 树莓派的微控制器
@@ -40,7 +42,7 @@ https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf[Raspberry Pi Pico 
 
 https://datasheets.raspberrypi.com/picow/connecting-to-the-internet-with-pico-w.pdf[Connecting to the Internet with Raspberry Pi Pico W-series]:: 使用C/{cpp}或MicroPython在线获取Raspberry PiPicoW系列设备
 
-=== Software Development
+=== 软件开发工具
 
 用于在RP2040微控制器上开发C/{cpp}的 https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf[Raspberry Pi Pico C/{cpp} SDK]:: 库和工具
 

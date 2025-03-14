@@ -1,4 +1,4 @@
-== About
+== 简介
 
 .512GB树莓派SSD
 image::images/ssd.png[width="80%"]
@@ -13,7 +13,8 @@ Raspberry Pi SSD有以下尺寸可供选择：
 
 要将SSD与Raspberry Pi一起使用，您需要与Raspberry Pi 5兼容的M.2适配器，例如 xref:../accessories/m2-hat-plus.adoc[Raspberry Pi M.2 HAT+]。
 
-== Specifications
+[[specifications]]
+== 规格
 
 Raspberry Pi SSD符合PCIe Gen 3。
 

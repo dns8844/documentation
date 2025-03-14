@@ -1,4 +1,4 @@
-== Schematics
+== 原理图
 
 Debug Probe 的原理图和机械图可供选择：
 

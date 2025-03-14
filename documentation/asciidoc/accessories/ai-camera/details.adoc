@@ -1,7 +1,7 @@
 
-== Under the hood
+== 内部机制
 
-=== Overview
+=== 概述
 
 Raspberry Pi AI相机的工作方式与传统的基于AI的相机图像处理系统不同，如下图所示：
 
@@ -19,7 +19,7 @@ image::images/imx500-comparison.svg[Traditional versus IMX500 AI camera systems]
 
 输出张量(Output Tensors):: 由神经网络执行的推理结果。输出的精确数量和形状取决于神经网络。应用程序代码必须了解如何处理张量。
 
-=== System architecture
+=== 系统架构
 
 下图显示了在我们使用Raspberry Pi AI相机模块硬件（红色）进行成像/推理用例期间使用的各种相机软件组件（绿色）：
 
@@ -27,7 +27,7 @@ image::images/imx500-block-diagram.svg[IMX500 block diagram]
 
 在启动时，IMX500传感器模块加载固件以运行特定的神经网络模型，在流式传输期间，IMX500 _同时_ 生成图像流和推理流，此推理流保存神经网络模型的输入和输出，也称为输入/输出 **张量(tensors)**。
 
-=== Device drivers
+=== 设备驱动
 
 在最低级别，IMX500传感器内核驱动程序通过I2C总线配置相机模块。CSI2驱动程序（Pi 5上的 `CFE`，所有其他Pi平台上的 `Unicam`）设置接收器将图像数据流写入帧缓冲区，以及嵌入数据和推理数据流写入内存中的另一个缓冲区。
 

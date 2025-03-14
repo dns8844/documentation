@@ -1,3 +1,4 @@
+[[technical-specification]]
 == Technical Specification
 
 RP2040 is the debut microcontroller from Raspberry Pi. It brings our signature values of high performance, low cost,

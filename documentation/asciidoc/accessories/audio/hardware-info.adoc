@@ -1,4 +1,4 @@
-== Hardware information
+== 硬件信息
 
 硬件信息：
 
@@ -17,7 +17,7 @@ CTBP9350/2AO。
 * Codec Zero 上使用的扬声器端子可接受 14~26 AWG 的导线。
 直径（最大为 1.6mm 的电线）。
 
-=== GPIO usage 
+=== GPIO 用法
 
 Raspberry Pi音频板利用GPIO接头上的多个引脚
 为了成功操作。其中一些引脚仅供电路板使用，并且
@@ -48,7 +48,7 @@ DAC PRO、DAC{plus} 和 DigiAMP{plus} 可重新显示 Raspberry Pi 信号，从�
 image::images/pin_out_new.jpg[width="80%"]
 
 
-=== Saving AlsaMixer settings
+=== 保存 AlsaMixer 设置
 
 要存储AlsaMixer设置，请在命令行添加以下内容：
 
@@ -73,7 +73,7 @@ $ sudo alsactl store -f /home/<username>/usecase.state
 $ sudo alsactl restore -f /home/<username>/usecase.state
 ----
 
-=== MPD-based audio with volume control
+=== 带音量控制的 MPD 音频
 
 要允许基于Music Player Daemon（MPD）的音频软件控制音频板的内置音量，文件
 `/etc/mpd.conf` 可能需要更改以支持正确的AlsaMixer名称。

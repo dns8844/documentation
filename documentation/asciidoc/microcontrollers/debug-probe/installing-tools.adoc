@@ -1,8 +1,8 @@
-== Install tools
+== 安装工具
 
 要使用 Debug Probe，请安装以下工具。
 
-=== Install OpenOCD
+=== 安装OpenOCD
 
 您需要安装OpenOCD。
 
@@ -15,7 +15,7 @@ $ sudo apt install openocd
 
 要运行OpenOCD，请在终端中使用 `openocd` 命令。
 
-==== Install OpenOCD on macOS
+==== 在macOS上安装OpenOCD
 
 首先，安装 https://brew.sh/[Homebrew] 包管理器：
 
@@ -33,7 +33,7 @@ $ brew install openocd
 
 要运行OpenOCD，请在终端中使用 `openocd` 命令。
 
-=== Install GDB
+=== 安装GDB
 
 我们还需要安装GNU调试器（GDB）。
 
@@ -46,6 +46,7 @@ $ brew install openocd
 $ sudo apt install gdb-multiarch
 ----
 
+[[macos]]
 ==== macOS
 
 运行以下命令安装 `gdb`：

@@ -1,4 +1,4 @@
-== About
+== 简介
 
 .树莓派5的树莓派保护套
 image::images/bumper.jpg[width="80%"]
@@ -8,7 +8,7 @@ image::images/bumper.jpg[width="80%"]
 
 保护套仅与Raspberry Pi 5兼容。
 
-== Assembly instructions
+== 装配说明
 
 .组装保护套
 image::images/assembly.png[width="80%"]

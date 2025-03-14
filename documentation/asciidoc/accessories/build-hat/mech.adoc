@@ -1,4 +1,4 @@
-== Mechanical Drawings
+== 机械图纸
 
 Raspberry Pi Build HAT的机械绘图。
 

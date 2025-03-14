@@ -1,3 +1,4 @@
+[[what-is-micropython]]
 == What is MicroPython?
 
 MicroPython是Python 3编程语言的完整实现，直接在Raspberry PiPico等嵌入式硬件上运行。您可以通过USB串行和内置文件系统获得交互式提示（REPL）以立即执行命令。MicroPython的Pico端口包括用于访问低级芯片特定硬件的模块。

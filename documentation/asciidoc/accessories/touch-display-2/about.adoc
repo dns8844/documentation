@@ -1,4 +1,4 @@
-== About
+== 简介
 
 https://www.raspberrypi.com/products/touch-display-2/[Raspberry Pi Touch Display 2] 是一款纵向触摸屏LCD显示屏，专为平板电脑、娱乐系统和信息仪表板等交互式项目而设计。
 
@@ -7,7 +7,8 @@ image::images/touch-display-2-hero.jpg[width="80%"]
 
 Touch Display 2使用DSI连接器和GPIO连接器连接到树莓派。树莓派操作系统为触摸屏驱动程序提供了对五指多点触控和屏幕键盘的支持，无需连接键盘或鼠标即可提供完整的功能。
 
-== Specifications
+[[specifications]]
+== 规格
 
 * 1280×720px resolution, 24-bit RGB display
 * 155×88mm active area
@@ -28,7 +29,7 @@ Touch Display 2框包含以下部分（下图中从左到右、从上到下的�
 .Touch Display 2盒中包含的零件
 image::images/touch-display-2-whats-in-the-booooox.jpg["Parts included in the Touch Display 2 box", width="80%"]
 
-== Install
+== 安装
 
 .连接并安装到Touch Display 2的Raspberry Pi 5
 image::images/touch-display-2-installation-diagram.png["A Raspberry Pi 5 connected and mounted to the Touch Display 2", width="80%"]
@@ -61,7 +62,7 @@ TIP: 如果引脚6不可用，您可以使用任何其他开放的 `GND` 引脚�
 .. 将螺丝插入四角支架并拧紧，直到您的Raspberry Pi安全。
 . 将您的Raspberry Pi重新连接到电源。初始化Touch Display 2连接并开始显示到屏幕最多可能需要一分钟。
 
-=== Use an on-screen keyboard
+=== 使用屏幕键盘
 
 树莓派操作系统_ Bookworm_ 和更高版本默认包括Squeekboard屏幕键盘。当连接触摸显示器时，屏幕键盘应该在可以输入文本时自动显示，在不可能输入文本时自动隐藏。
 
@@ -71,11 +72,11 @@ TIP: 如果引脚6不可用，您可以使用任何其他开放的 `GND` 引脚�
 
 在 _Bookworm_ 之前的Raspberry Pi OS版本中，请改用 `matchbox-keyboard`。如果您使用wayfire桌面合成器，请改用 `wvkbd`。
 
-=== Change screen orientation
+=== 更改屏幕方向
 
 如果您想物理旋转显示器，或将其安装在特定位置，请从 **首选项** 菜单中选择 **屏幕配置**。右键单击布局编辑器中的触摸显示矩形（可能是DSI-1），选择 **方向**，然后选择适合您需求的最佳选项。
 
-==== Rotate screen without a desktop
+==== 无桌面旋转屏幕
 
 要在缺少桌面环境的设备上设置屏幕方向，请编辑 `/boot/firmware/cmdline.txt` 配置文件以将方向传递给系统。将以下条目添加到 `cmdline.txt` 的末尾：
 
@@ -95,7 +96,7 @@ video=DSI-1:720x1280@60,rotate=<rotation-value>
 
 NOTE: 无法使用 `cmdline.txt` 将DSI显示器与HDMI显示器分开旋转。当您同时使用DSI和HDMI时，它们使用相同的旋转值。
 
-==== Touch Display 2 device tree option reference
+==== 触摸显示屏 2 设备树选项参考
 
 `vc4-kms-dsi-ili9881-7inch` overlay支持以下选项：
 

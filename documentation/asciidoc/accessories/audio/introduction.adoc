@@ -1,10 +1,10 @@
-== Overview
+== 概述
 
 Raspberry Pi音频板为您现有的高保真或基于Raspberry Pi的设备和项目带来高质量的音频。我们提供四种不同的顶部附加硬件（HAT）选项，适用于使用40针GPIO接头的任何Raspberry Pi。
 
 每个板卡都有特定的用途和一组功能。我们的DAC PRO、DAC{plus}和DigiAMP{plus}板卡提供最高音频质量的播放，支持高达HD音频（192kHz）；而Codec Zero支持高达HD音频（96kHz），并包括一个内置麦克风，非常适合紧凑型项目。
 
-=== Features at a glance
+=== 功能一览
 
 [cols="2,1,1,1,1,1,1,1,1,1"]
 |===

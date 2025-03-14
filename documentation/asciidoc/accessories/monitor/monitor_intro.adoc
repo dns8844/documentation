@@ -1,4 +1,4 @@
-== Raspberry Pi Monitor
+== Raspberry Pi 显示器
 
 https://www.raspberrypi.com/products/raspberry-pi-monitor/[Raspberry Pi Monitor] 是一款15.6"1920×1080p IPS LCD显示屏，可使用HDMI电缆连接到计算机。显示器还需要USB-C电源。对于全亮度和音量范围，这必须是能够提供至少1.5A电流的USB-PD电源。
 
@@ -7,15 +7,15 @@ image::images/monitor-hero.png[The Raspberry Pi Monitor, width="100%"]
 
 该显示器与所有支持HDMI输出的Raspberry Pi型号兼容。
 
-=== Controls
+=== 控件
 
 显示器的背面包括以下控件：
 
-* a button that enters and exits Standby mode (indicated by the ⏻ (power) symbol)
-* buttons that increase and decrease display brightness (indicated by the 🔆 (sun) symbol)
-* buttons that increase and decrease speaker volume (indicated by the 🔈 (speaker) symbol)
+* 进入和退出待机模式的按钮（由 ⏻（电源）符号表示）
+* 增加和减少显示亮度的按钮（由 🔆（太阳）符号表示）
+* 增加和减少扬声器音量的按钮（由 🔈（扬声器）符号表示
 
-=== On screen display messages
+=== 屏幕显示信息
 
 屏幕显示器（OSD）可能会显示以下消息：
 
@@ -40,7 +40,7 @@ image::images/monitor-hero.png[The Raspberry Pi Monitor, width="100%"]
 
 TIP: 如果您在显示器无法检测到HDMI信号时尝试退出待机模式，待机按钮下方的红色LED将短暂亮起，但显示器将保持待机模式。
 
-=== Position the Monitor
+=== 显示器安放
 
 使用以下方法定位显示器：
 
@@ -53,7 +53,7 @@ IMPORTANT: 使用垫片确保有足够的空间用于显示和电源线出口。
 .打孔模板
 image::images/drill-hole-template.png[Drill hole template, width="40%"]
 
-=== Power the Monitor
+=== 屏幕上电
 
 Raspberry Pi显示器从5V https://en.wikipedia.org/wiki/USB_hardware#USB_Power_Delivery[USB Power Delivery]（USB-PD）电源供电。许多USB-C电源，包括Raspberry Pi 4和Raspberry Pi 5的官方电源，都支持此标准。
 
@@ -72,7 +72,7 @@ Raspberry Pi显示器从5V https://en.wikipedia.org/wiki/USB_hardware#USB_Power_
 
 ====
 
-=== Specification
+=== 规格
 
 对角线：15.6"
 
@@ -113,7 +113,7 @@ Raspberry Pi显示器从5V https://en.wikipedia.org/wiki/USB_hardware#USB_Power_
 端口：3.5mm音频插孔
 
 
-=== Mechanical drawing
+=== 机械制图
 
 .机械制图
 image::images/mechanical-drawing.png[Mechanical drawing, width="80%"]

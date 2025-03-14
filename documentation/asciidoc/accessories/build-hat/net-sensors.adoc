@@ -32,12 +32,12 @@ void ButtonPropertyEvent(object? sender, PropertyChangedEventArgs e)
 }
 ----
 
-==== Passive Light
+==== 被动光源
 
-.无源光，https://www.bricklink.com/v2/catalog/catalogitem.page?P=22168c01&name=Electric，%20Light%20Unit%20Powered%20Up%20Attachment和category=%5BElectric，%20Light%20&%20Sound%5D#T=C&C=11[图片来自Bricklink]
+.被动光源，https://www.bricklink.com/v2/catalog/catalogitem.page?P=22168c01&name=Electric，%20Light%20Unit%20Powered%20Up%20Attachment和category=%5BElectric，%20Light%20&%20Sound%5D#T=C&C=11[图片来自Bricklink]
 image::images/passive-light.png[Passive light, width="60%"]
 
-被动灯是火车灯。它们可以打开，你可以控制它们的亮度。
+被动光源是火车灯。它们可以打开，你可以控制它们的亮度。
 
 [source,csharp]
 ----
@@ -53,7 +53,7 @@ Thread.Sleep(2000);
 light.Off()
 ----
 
-==== Active Sensor
+==== 主动传感器
 
 有源传感器类是所有有源传感器继承的通用类，包括有源电机。它们包含一组关于它们如何连接到Build HAT、模式、详细的Combi模式、硬件、软件版本和一个名为 `ValueAsString` 的特定属性的属性。字符串形式的值包含作为字符串集合的最后一个测量值。测量值像 `P0C0: +23 -42 0` 一样到达，枚举将包含 `P0C0:`、`+23`、`-42` 和 `0`。这是这样做的，所以如果你使用高级模式并管理自己的Combi模式和命令，你将能够获得测量值。
 
@@ -61,7 +61,7 @@ light.Off()
 
 `CombiModes` 属性中列出了可以在Combi模式中组合的模式。当您设置其中一种模式时，传感器的属性将自动更新。
 
-==== WeDo Tilt Sensor
+==== WeDo 倾斜传感器
 
 .WeDo倾斜传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?S=45305-1&name=WeDo%202.0%20Tilt%20Sensor&category=%5BEducational%20&%20Dacta%5D%5BWeDo%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/wedo-tilt.png[WeDo Tilt sensor, width="60%"]
@@ -84,7 +84,7 @@ while(!console.KeyAvailable)
 }
 ----
 
-==== WeDoDistance Sensor
+==== WeDoDistance 传感器
 
 .WeDo距离传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?S=45304-1&name=WeDo%202.0%20Motion%20Sensor&category=%5BEducational%20&%20Dacta%5D%5BWeDo%5D#T=S&O={%22icOnly%22:0}[图片来自Bricklink]
 image::images/wedo-distance.png[WeDo Distance sensor, width="60%"]
@@ -103,7 +103,7 @@ while(!console.KeyAvailable)
 }
 ----
 
-==== SPIKE Prime Force Sensor
+==== SPIKE Prime 力传感器
 
 .力传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?P=37312c01&name=Electric%20Sensor，%20Force%20-%20Spike%20Prime和category=%5BElectric%5D#T=C&C=11[图片来自Bricklink]
 image::images/spike-force.png[spike force sensor, width="60%"]
@@ -154,7 +154,7 @@ Span<LedColor> col = stackalloc LedColor[9] { LedColor.White, LedColor.White, Le
 matrix.DisplayColorPerPixel(brg, col);
 ----
 
-==== SPIKE Prime Colour Sensor and Colour and Distance Sensor
+==== SPIKE Prime 颜色传感器和颜色与距离传感器
 
 SPIKE颜色传感器：
 
@@ -193,7 +193,7 @@ while (!Console.KeyAvailable)
 
 NOTE: 为了更好的测量，不建议以非常快速的方式更改测量模式，颜色集成可能无法以正确的方式完成。这个例子为您提供了使用传感器可以做什么的全部光谱。此外，这个类不实现连续测量模式。您可以使用 `SelectModeAndRead` 功能通过高级模式设置一个，并使用您想要的特定模式。重要的是要理解更改模式或设置新模式将停止以前的模式。
 
-==== SPIKE Prime Ultrasonic Distance Sensor
+==== SPIKE Prime 超声波距离传感器
 
 .距离传感器，https://www.bricklink.com/v2/catalog/catalogitem.page?P=37316c01&name=Electric%20Sensor，%20Distance%20-%20Spike%20Prime和category=%5BElectric%5D#T=C&C=11[图片来自Bricklink]
 image::images/spike-distance.png[Spike distance sensor, width="60%"]

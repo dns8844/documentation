@@ -1,10 +1,11 @@
-== Synchronous Captures
+== 同步捕获
 
 HQ相机和全局快门相机都支持同步捕获。
 利用XVS引脚（垂直同步）允许一台相机在开始帧捕捉时脉冲。
 然后，另一台摄像机可以监听此同步脉冲，并与另一台摄像机同时捕获一帧。
 
-=== Using the HQ Camera
+[[using-the-hq-camera]]
+=== 使用 HQ Camera
 
 为了正确操作，两台摄像机都需要XVS线路上的1.65V上拉电压，该电压由通过Raspberry Pi上的3.3V和GND引脚的电位分压器创建。
 
@@ -16,7 +17,7 @@ image::images/synchronous_camera_wiring.jpg[alt="Image showing potential divider
 
 将XVS线连接到1.65V电位分压器上拉。
 
-==== Boot up both Raspberry Pis
+==== 启动两个 Raspberry Pis
 
 文件 `/sys/module/imx477/parameters/trigger_mode` 确定哪些板输出脉冲，或等待接收脉冲（源和接收器）。
 此参数只能在超级用户模式下更改。
@@ -58,7 +59,7 @@ $ rpicam-vid --frames 300 --qt-preview -o source.h264
 
 NOTE: 当源处于空闲状态时，需要潜在的分频器将XVS引脚拉至高电平。这可确保在启动时不会创建或丢失帧。初始化时源从低到高，这可能会触发假帧。
 
-=== Use the GS Camera
+=== 使用 GS Camera
 
 NOTE: 全局快门（GS）相机也可以在同步模式下操作。但是，源相机将记录一个额外的帧。确保两个相机捕获相同数量的帧的一个更好的替代方法是使用 xref:camera.adoc#external-trigger-on-the-gs-camera[外部触发方式]。
 
@@ -74,7 +75,7 @@ NOTE: 全局快门（GS）相机也可以在同步模式下操作。但是，源
 
 在您希望充当水槽的板上，将MAS焊盘的两半焊接在一起。这告诉传感器充当水槽，并将等待信号以捕获帧。
 
-==== Boot up source and sink
+==== 启动信号源和接收器
 
 运行以下命令启动接收器：
 

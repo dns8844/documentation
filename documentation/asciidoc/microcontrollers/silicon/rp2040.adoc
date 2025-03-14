@@ -1,3 +1,4 @@
+[[rp2040]]
 == RP2040
 
 RP2040是由Raspberry Pi设计的微控制器。
@@ -17,6 +18,7 @@ image::images/rp2040_explanation.svg[width=640]
 . floor(log2(RAM / 16k))
 . floor(log2(nonvolatile / 16k))，如果没有板载非易失性存储器，则为 0
 
+[[technical-specification]]
 === Technical Specification
 
 RP2040是树莓派的首款微控制器。它带来了我们高性能、低成本、
@@ -66,7 +68,8 @@ RP2040采用现代40nm工艺节点制造，提供高性能、低动态功耗
 * Download https://datasheets.raspberrypi.com/rp2040/Minimal-KiCAD.zip[Minimal Viable Board] Design Files (KiCad)
 * Download https://datasheets.raspberrypi.com/rp2040/VGA-KiCAD.zip[VGA Carrier Board] Design Files (KiCad)
 
-=== RP2040-based Boards
+=[[rp2040]]
+== RP2040-based Boards
 
 xref:pico-series.adoc#pico-1-family[Raspberry Pi Pico 1] 由Raspberry Pi设计，既是开发板，也是参考设计，是一系列基于RP2040的板。
 

@@ -1,6 +1,6 @@
-== Use the Build HAT from Python
+== 从 Python 使用 Build HAT
 
-=== Install the Build HAT Python Library
+=== 安装 Build HAT Python 库
 
 要安装Build HAT Python库，请打开终端窗口并运行以下命令：
 

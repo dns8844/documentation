@@ -1,18 +1,18 @@
-== Updating your firmware
+== 更新固件
 
 Raspberry Pi Audio Boards使用EEPROM，其中包含主机Raspberry Pi设备在启动时用于选择适当驱动程序的信息。这些信息在制造过程中被编程到EEPROM中。在某些情况下，最终用户可能希望更新EEPROM内容：这可以从命令行完成。
 
 IMPORTANT: 在继续之前，请将在Raspberry Pi上运行的Raspberry Pi OS版本更新到最新版本。
 
-=== The EEPROM write-protect link
+=== EEPROM 写保护功能
 
-在编程过程中，您需要用电线连接红色框中显示的两个焊盘，以拉下EEPROM写保护链接。
+在编程过程中，您需要用电线连接红色框中显示的两个焊盘，以拉下EEPROM写保护功能。
 
 image::images/write_protect_tabs.jpg[width="80%"]
 
 NOTE: 在某些情况下，两个焊盘可能已经安装了一个0Ω电阻器来桥接写保护链路，如上面的Codec Zero板图片所示。
 
-=== Program the EEPROM
+=== 烧录EEPROM
 
 一旦写保护线被拉下，就可以对EEPROM进行编程。
 

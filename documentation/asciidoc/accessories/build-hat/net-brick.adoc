@@ -27,7 +27,7 @@ using Brick brick = new("/dev/serial0");
 
 在这种情况下，当到达程序结束时，您的砖块将被自动处理。
 
-==== Display Build HAT information
+==== 显示 Build HAT 信息
 
 您可以收集各种软件版本、签名和输入电压：
 
@@ -41,7 +41,7 @@ Console.WriteLine($"Vin = {brick.InputVoltage.Volts} V");
 
 NOTE: 输入电压在启动时只读取一次，之后不会再次读取。
 
-==== Getting sensors and motors details
+==== 获取传感器和电机详细信息
 
 功能 `GetSensorType`、`GetSensor` 将允许您检索有关连接传感器的任何信息。
 
@@ -68,7 +68,7 @@ else
 
 `ActiveSensor` 有一个高级属性和功能的集合，允许理解传感器的每个元素。也可以从砖块中调用原始函数。这将允许您选择特定模式并进行高级场景。虽然这是可能的，但电机和传感器类已经创建，让您的生活更轻松。
 
-==== Events
+==== 事件
 
 大多数传感器在其特殊属性上实现事件。您可以简单地订阅 `PropertyChanged` 和 `PropertyUpdated`。更改后的值将在值更改时触发，而更新后的值将在属性成功更新时触发。根据使用的模式，一些属性可能一直在后台更新，而另一些属性偶尔会更新。
 
@@ -102,7 +102,7 @@ void MotorPropertyEvent(object? sender, PropertyChangedEventArgs e)
 }
 ----
 
-==== Wait for initialization
+==== 等待初始化
 
 brick可能需要很长时间才能初始化。已实现等待连接传感器。
 

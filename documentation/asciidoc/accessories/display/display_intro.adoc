@@ -1,4 +1,4 @@
-== Raspberry Pi Touch Display
+== Raspberry Pi 触摸屏
 
 https://www.raspberrypi.com/products/raspberry-pi-touch-display/[Raspberry Pi Touch Display] 是一款LCD显示器，使用DSI连接器和GPIO连接器连接到Raspberry Pi。
 
@@ -30,7 +30,7 @@ image::images/display.png[The Raspberry Pi 7-inch Touch Display, width="70%"]
 * 可视区域 154.08 × 85.92 毫米
 
 
-=== Mount the Touch Display
+=== 安装触摸屏
 
 您可以使用Raspberry Pi的支架将其安装到触控显示器的背面，然后连接适当的电缆。如果有可用的机箱，您也可以将触控显示器安装在单独的机箱中。连接保持不变，但因为机箱的不同，您可能需要更长的电缆。
 
@@ -43,11 +43,11 @@ image::images/GPIO_power-500x333.jpg[Image of Raspberry Pi connected to the Touc
 
 NOTE: 触摸显示器的  https://datasheets.raspberrypi.com/display/7-inch-display-mechanical-drawing.pdf[机械图] 可以下载。
 
-=== Power the Touch Display
+=== 启动触摸屏
 
 我们建议使用Raspberry Pi的GPIO为触控显示器供电。或者，您可以使用单独的微型USB电源直接为显示器供电。
 
-==== Power from a Raspberry Pi
+==== 使用树莓派供电
 
 要使用Raspberry Pi为Touch Display供电，您需要在 xref:../computers/raspberry-pi.adoc#gpio[Raspberry Pi GPIO] 上的5V和 `GND` 引脚以及显示器上的5V和 `GND` 引脚之间连接两根跳线，如下图所示。
 
@@ -65,7 +65,7 @@ image::images/pi_plugs.png[Illustration of Raspberry Pi headers, width="40%"]
 
 NOTE: 要识别原始Raspberry Pi，请检查GPIO排针。只有原始型号有26针GPIO排针；后续型号有40针。
 
-==== Power from a micro USB supply
+==== 使用micro USB电源供电
 
 如果您不想使用Raspberry Pi为触控显示器供电，可以改用微型USB电源。我们建议使用 https://www.raspberrypi.com/products/micro-usb-power-supply/[Raspberry Pi 12.5W 电源] 以确保显示器按预期运行。
 
@@ -73,7 +73,7 @@ NOTE: 要识别原始Raspberry Pi，请检查GPIO排针。只有原始型号有2
 
 WARNING: 使用微型USB电缆为显示器供电时，请将其安装在机箱内，以在使用过程中阻止访问显示器的PCB。
 
-=== Use an on-screen keyboard
+=== 使用虚拟键盘
 
 树莓派操作系统_Bookworm_和更高版本默认包括Squeekboard屏幕键盘。当连接触摸显示器时，屏幕键盘应该在可以输入文本时自动显示，在不可能输入文本时自动隐藏。
 
@@ -83,13 +83,13 @@ WARNING: 使用微型USB电缆为显示器供电时，请将其安装在机箱�
 
 在_Bookworm_之前的Raspberry Pi OS版本中，请改用 `matchbox-keyboard`。如果您使用wayfire桌面合成器，请改用 `wvkbd`。
 
-=== Change screen orientation
+=== 旋转屏幕
 
 如果您想物理旋转显示器，或将其安装在特定位置，请从 **首选项** 菜单中选择 **屏幕配置**。右键单击布局编辑器中的触摸显示矩形（可能是DSI-1），选择 **方向**，然后选择适合您需求的最佳选项。
 
 image::images/display-rotation.png[Screenshot of orientation options in screen configuration, width="80%"]
 
-==== Rotate screen without a desktop
+==== 无图像桌面旋转屏幕
 
 要在缺少桌面环境的设备上设置屏幕方向，请编辑 `/boot/firmware/cmdline.txt` 配置文件以将方向传递给系统。将以下行添加到 `cmdline.txt`：
 
@@ -109,7 +109,7 @@ video=DSI-1:800x480@60,rotate=<rotation-value>
 
 NOTE: 使用 `cmdline.txt` 无法将DSI显示器与HDMI显示器分开旋转。当您同时使用DSI和HDMI时，它们共享相同的旋转值。
 
-==== Rotate touch input
+==== 旋转触摸
 
 WARNING: 通过设备树旋转触摸输入可能会导致与您的输入库发生冲突。只要有可能，请在输入库或桌面中配置触摸事件旋转。
 
@@ -127,7 +127,7 @@ dtoverlay=vc4-kms-dsi-7inch,invx,invy
 display_auto_detect=1
 ----
 
-==== Touch Display device tree option reference
+==== 触摸显示设备树选项参考
 
 `vc4-kms-dsi-7inch` overlay支持以下选项：
 
