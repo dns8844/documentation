@@ -19,7 +19,7 @@ image::images/rp2350_explanation.svg[width=640]
 . floor(log2(nonvolatile / 128KB)) 或 0（如果没有板载非易失性存储器
 
 [[technical-specification]]
-=== Technical Specification
+=== 产品规格
 
 RP2350是一款来自Raspberry Pi的高性能、安全、低成本、易于使用的微控制器。
 
@@ -56,12 +56,12 @@ RP2350具有全面的安全架构，围绕Arm TrustZone for Cortex-M构建，包
 * SHA-256 加速
 * 硬件真随机数生成器 (TRNG)
 
-==== Architecture Switching
+==== 架构切换
 
 RP2350包括一对开放硬件Hazard3 RISC-V内核，可以在启动时替换Cortex-M33内核。我们的引导ROM甚至可以自动检测已构建第二阶段二进制文件的架构，并将芯片重新启动到适当的模式。芯片的所有功能，除了少数安全功能和双精度浮点加速器，都可以在RISC-V模式下使用。
 
-=[[rp2350]]
-== RP2350-based Boards
+[[rp2350]]
+== 基于 RP2350 的板卡
 
 xref:pico-series.adoc#pico-2-technical-specification[Raspberry Pi Pico 2] 由Raspberry Pi设计，既是开发板，也是参考设计，基于RP2350。
 
@@ -69,7 +69,7 @@ xref:pico-series.adoc#pico-2-technical-specification[Raspberry Pi Pico 2] 由Ras
 
 本设计按“原样”提供，作者不承担与本设计有关的所有保证，包括对适销性和适用性的所有暗示保证。在任何情况下，作者均不对因使用、数据或利润损失而导致的任何特殊、直接、间接或后果性损害或任何损害负责，无论是由于合同、疏忽或其他侵权行为，还是与使用或执行本设计有关。
 
-==== Other Boards
+==== 其他板卡
 
 您可以在 https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi forums] 上找到关于基于第三方RP2350的板的讨论。
 
