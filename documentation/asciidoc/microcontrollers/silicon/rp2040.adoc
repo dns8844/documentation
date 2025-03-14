@@ -19,7 +19,7 @@ image::images/rp2040_explanation.svg[width=640]
 . floor(log2(nonvolatile / 16k))，如果没有板载非易失性存储器，则为 0
 
 [[technical-specification]]
-=== Technical Specification
+=== 产品规格
 
 RP2040是树莓派的首款微控制器。它带来了我们高性能、低成本、
 和易于使用的微控制器空间。
@@ -68,8 +68,8 @@ RP2040采用现代40nm工艺节点制造，提供高性能、低动态功耗
 * Download https://datasheets.raspberrypi.com/rp2040/Minimal-KiCAD.zip[Minimal Viable Board] Design Files (KiCad)
 * Download https://datasheets.raspberrypi.com/rp2040/VGA-KiCAD.zip[VGA Carrier Board] Design Files (KiCad)
 
-=[[rp2040]]
-== RP2040-based Boards
+[[rp2040]]
+== 基于 RP2040 的板卡
 
 xref:pico-series.adoc#pico-1-family[Raspberry Pi Pico 1] 由Raspberry Pi设计，既是开发板，也是参考设计，是一系列基于RP2040的板。
 
@@ -82,7 +82,7 @@ Raspberry Pi Pico 和 Pico W的设计文件是公开的，没有限制。
 
 本设计按“原样”提供，作者不承担与本设计有关的所有保证，包括对适销性和适用性的所有暗示保证。在任何情况下，作者均不对因使用、数据或利润损失而导致的任何特殊、直接、间接或后果性损害或任何损害负责，无论是由于合同、疏忽或其他侵权行为，还是与使用或执行本设计有关。
 
-==== Other Boards
+==== 其他板卡
 
 您可以在 https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi forums] 上找到关于基于第三方RP2040的板的讨论。
 
@@ -98,7 +98,7 @@ USB-IF已授予Raspberry Pi许可其供应商ID（`0x2E8A`）的USB产品ID值�
 
 NOTE: 如果您使用标准RP2040 PID，您可以使用 `iManufacturer`、`iProduct` 和 `iSerial` 字符串来唯一标识您的设备。
 
-=== Internal Temperature Sensor
+=== 内部温度传感器
 
 RP2040封装中的内部温度传感器是一种低分辨率传感器，需要用户校准才能达到任何精度。
 

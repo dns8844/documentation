@@ -7,7 +7,7 @@ image::images/rp2350.png[]
 
 无论您使用的是 xref:pico-series.adoc#pico-2-technical-specification[Raspberry Pi Pico 2]，还是其他基于 RP2350 的微控制器板，这里都有入门所需的一切。您可以在 Raspberry Pi Pico 2 上找到 xref:c_sdk.adoc#sdk-setup[C/{cpp}] 或 xref:micropython.adoc#what-is-micropython[MicroPython] 的入门支持，以及使用 RP2350 的其他板的资源链接。还有 Raspberry Pi Pico 2 微控制器板和我们的 RP2350 微控制器芯片的技术文档链接。
 
-=== Why is the chip called RP2350?
+=== 为什么这个芯片叫做 RP2350?
 
 RP2350 的后缀数字来源于以下内容、
 
@@ -47,7 +47,7 @@ RP2350采用现代40nm工艺节点制造，提供高性能、低动态功耗和�
 ** USB 1.1 控制器和 PHY，支持主机和设备
 ** 3 个可编程 IO (PIO) 块，共 12 个状态机
 
-==== Security
+==== 安全性
 
 RP2350具有全面的安全架构，围绕Arm TrustZone for Cortex-M构建，包括以下功能：
 
