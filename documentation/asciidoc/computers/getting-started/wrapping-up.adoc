@@ -13,7 +13,7 @@ image::images/recommended-software.png[alt="Opening the package manager GUI in R
 
 === 教程
 
-我们的教程演示了使用新计算机的各种方式。您可以通过学习您兴趣的 https://www.raspberrypi.com/tutorials/[教程] 来学习编码、控制外部设备和构建令人兴奋的新项目。
+我们的教程演示了使用新计算机的各种方式。您可以通过学习您感兴趣的 https://www.raspberrypi.com/tutorials/[教程] 来学习编码、控制外部设备和构建令人兴奋的新项目。
 
 [[support]]
 === 支持

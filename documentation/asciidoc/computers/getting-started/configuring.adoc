@@ -22,7 +22,7 @@ image::images/peripherals/cable-all.png[alt="Attaching the power supply to a Ras
 如果您的Raspberry Pi没有在5分钟内启动，请检查状态LED。如果它在闪烁，请参阅 xref:configuration.adoc#led-warning-flash-codes[LED闪烁含义以获取更多信息] 。如果您的Pi无法启动，请尝试以下步骤：
 
 * 如果您使用SD卡以外的引导设备，请尝试从SD卡引导
-* xref:getting-started.adoc#installing-the-operating-system[re-image your SD card]; 请务必在Imager中完成后续验证步骤
+* xref:getting-started.adoc#installing-the-operating-system[重新烧录你的SD卡]; 请务必在Imager中完成后续验证步骤
 * xref:raspberry-pi.adoc#bootloader_update_stable[更新bootloader程序] 在您的树莓派，然后 xref:getting-started.adoc#installing-the-operating-system[重新烧录SD卡]
 
 如果您选择跳过Imager中的自定义操作系统配置，您的Raspberry Pi将在首次启动时运行配置向导。您需要一个显示器和键盘来完成配置，鼠标是可选的。
