@@ -1,7 +1,7 @@
 [[update-software]]
 == 更新软件
 
-始终将 Raspberry Pi 上运行的软件更新到最新版本。这将确保您的设备免受 https://cve.mitre.org/index.html[漏洞] 的威胁，并确保您获得最新的错误修复。
+及时将 Raspberry Pi 上运行的软件更新到最新版本。这将确保您的设备免受 https://cve.mitre.org/index.html[漏洞] 的威胁，并确保您获得最新的错误修复。
 
 === 使用 APT 管理软件包
 
@@ -32,7 +32,7 @@ TIP: 与 Debian 不同，Raspberry Pi OS 正在持续开发中。因此，软件
 [[search-for-software]]
 ==== 搜索软件
 
-要搜索存档软件包，请向 `apt-cache search` 传递搜索关键字：
+要搜索存档软件包，请使用 `apt-cache search` 搜索关键字：
 
 [source,console]
 ----
@@ -128,7 +128,7 @@ TIP: 要完全删除软件包的所有痕迹，包括配置文件，请使用 `p
 $ df -h
 ----
 
-`apt` 将下载的软件包 (`.deb`) 文件存储在 `/var/cache/apt/archives` 中。在安装过程中，`apt` 会下载这些软件包，然后将软件包中的文件复制到正确的安装位置。根据所安装软件的不同，软件包文件可能会占用大量空间。要删除任何残留的软件包文件，请运行以下命令：
+`apt` 将下载的软件包 (`.deb`) 文件存储在 `/var/cache/apt/archives` 中。在安装过程中，`apt` 会下载这些软件包，然后将软件包中的文件复制到正确的安装位置。根据所安装软件的不同，软件包文件可能会占用大量空间。要删除所有残留的软件包文件，请运行以下命令：
 
 [source,console]
 ----
@@ -138,9 +138,9 @@ $ sudo apt clean
 [[upgrade-your-operating-system-to-a-new-major-version]]
 === 将操作系统升级到新的主要版本
 
-WARNING: 在尝试主要版本升级之前，请先进行备份。
+WARNING: 在尝试系统版本升级之前，请先进行备份。
 
-要在 Raspberry Pi 上将操作系统升级到新的主要版本，请将新版本映像到第二张 SD 卡上。使用 USB SD 读卡器或网络存储设备将当前安装的文件和配置复制到新的 SD 卡上。然后，将新的 SD 卡插入 Raspberry Pi 的插槽并启动。
+要在 Raspberry Pi 上将操作系统升级到最新版本，请将新版本镜像烧录到第二张 SD 卡上。使用 USB SD 读卡器或网络存储设备将当前安装的文件和配置复制到新的 SD 卡上。然后再插入新的SD卡启动。
 
 [[rpi-update]]
 === 升级固件
@@ -153,7 +153,7 @@ WARNING: 不保证预发布版本的软件可以正常工作。除非得到 Rasp
 
 `rpi-update` 会下载最新预发布版本的 Linux 内核、其匹配模块、设备树文件和最新版本的 VideoCore 固件。然后将这些文件安装到现有的 Raspberry Pi OS 安装中。
 
-rpi-update` 使用的所有源数据都来自 https://github.com/raspberrypi/rpi-firmware[`rpi-firmware` 资源库]。该版本库包含 https://github.com/raspberrypi/firmware[官方固件版本库]中数据的子集。
+`rpi-update` 使用的所有源数据都来自 https://github.com/raspberrypi/rpi-firmware[`rpi-firmware` 资源库]。该版本库包含 https://github.com/raspberrypi/firmware[官方固件版本库] 中数据的子集。
 
 以根用户身份运行 `rpi-update` 启动更新。更新完成后，重启 Raspberry Pi 以使更改生效：
 
