@@ -4,7 +4,7 @@ Raspberry Pi OS中预装了几个有用的命令行实用程序。
 
 === kmsprint
 
-`kmsprint` 工具可用于列出连接到Raspberry Pi的显示器支持的显示模式。使用 `kmsprint` 查看连接到Raspberry Pi的显示器的详细信息，使用 `kmsprint-m` 查看每个显示器支持的所有显示模式的列表。您可以在 https://github.com/tomba/kmsxx[Github] 上找到 `kmsprint` 实用程序的源代码。
+`kmsprint` 工具可用于列出连接到Raspberry Pi的显示器支持的显示模式。使用 `kmsprint` 查看连接到Raspberry Pi的显示器的详细信息，使用 `kmsprint-m` 查看每个显示器支持的所有显示模式的列表。您可以在 https://github.com/tomba/kmsxx[Github] 上找到 `kmsprint` 的源代码。
 === `vclog`
 
 `vclog` 可从 Arm 上运行的 Linux 中显示来自 VideoCore GPU 的日志信息。它需要以 root 用户身份运行。
@@ -146,7 +146,7 @@ Raspberry Pi OS中预装了几个有用的命令行实用程序。
 
 ==== `otp_dump`
 
-显示 SoC 内部 OTP（一次性可编程）存储器的内容。这些内容为 32 位值，索引范围从 8 到 64。详情请参阅 xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP 位页面]。
+显示 SoC 内部 OTP（一次性可编程）存储器的内容。这些内容为 32 位值，索引范围从 8 到 64。详情请参阅 xref:raspberry-pi.adoc#otp-register-and-bit-definitions[OTP 位介绍]。
 
 [[getconfig]]
 ==== `get_config [configuration item|int|str]`
