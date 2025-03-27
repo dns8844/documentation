@@ -2,7 +2,7 @@
 
 Raspberry Pi 操作系统预装了 Python 3。干扰系统 Python 安装会给操作系统带来问题。安装第三方 Python 库时，请务必使用正确的软件包管理工具。
 
-在 Linux 上，您可以通过两种方式安装 `python` 依赖项：
+在 Linux 上，您可以通过两种方式安装 `python` 依赖：
 
 * 使用 `apt` 安装预配置的系统包
 * 使用 `pip` 在虚拟环境中使用 Python 的依赖关系管理器安装库。
@@ -21,7 +21,7 @@ IMPORTANT: 从 Raspberry Pi OS _Bookworm_ 开始，您只能使用 `pip` 安装�
 $ sudo apt install python3-build-hat
 ----
 
-要查找使用 `apt` 发布的 Python 软件包，请使用 xref:os.adoc#search-for-software[`apt search`]。在大多数情况下，Python 软件包使用前缀 `python-` 或 `python3-`：例如，你可以用 `python3-numpy` 这个名字找到 `numpy` 软件包。
+要查找使用 `apt` 发布的 Python 软件包，请使用 xref:os.adoc#search-for-software[`apt search`] 。在大多数情况下，Python 软件包使用前缀 `python-` 或 `python3-`：例如，你可以用 `python3-numpy` 这个名字找到 `numpy` 软件包。
 
 === 使用 `pip` 安装 Python 库
 
@@ -52,13 +52,13 @@ error: externally-managed-environment
 
   For more information visit http://rptl.io/venv
 
-NOTE: 如果您认为这是一个错误，请联系您的 Python 安装或操作系统发行提供商。您可以通过 --break-system-packages 来覆盖此选项，但这有可能破坏您的 Python 安装或操作系统。
+NOTE: 如果您认为这是一个错误，请联系您的 Python 安装或操作系统发行提供商。您可以通过 --break-system-packages 来覆盖此选项，但这有可能导致您的 Python 安装过程或操作系统出现异常。
 提示：详细规范请参见 PEP 668。
 ----
 
 长期以来，Python 用户一直在处理操作系统软件包管理器（如 `apt`）与 Python 特定的软件包管理工具（如 `pip`）之间的冲突。这些冲突包括 Python级 API 的不兼容性和文件所有权的冲突。
 
-从 Raspberry Pi OS _Bookworm_ 开始，通过 `pip` 安装的软件包 _必须安装到 Python 虚拟环境_ (``venv``)。虚拟环境是一个容器，您可以在其中安全地安装第三方模块，这样它们就不会干扰您的系统 Python。
+从 Raspberry Pi OS _Bookworm_ 开始，通过 `pip` 安装的软件包 _必须安装到 Python 虚拟环境_ (`venv`)。虚拟环境是一个容器，您可以在其中安全地安装第三方模块，这样它们就不会干扰您的系统 Python。
 
 [[use-pip-with-virtual-environments]]
 ==== 在虚拟环境中使用 pip
@@ -67,7 +67,7 @@ NOTE: 如果您认为这是一个错误，请联系您的 Python 安装或操作
 
 [tabs]
 ======
-per-project environments::
+单个项目虚拟环境::
 +
 许多用户为每个Python项目创建单独的虚拟环境。在每个项目的根文件夹中找到虚拟环境，通常使用 `env` 之类的共享名称。从每个项目的根文件夹中运行以下命令以创建虚拟环境配置文件夹：
 +
@@ -101,7 +101,7 @@ $ source env/bin/activate
 +
 您可以为您的用户帐户创建一个虚拟环境，而不是为每个Python项目创建一个虚拟环境。**在运行任何Python代码之前激活该虚拟环境。**这种方法对于跨项目共享许多库的工作流来说更方便。
 +
-在整个用户帐户中为多个项目创建虚拟环境时，请考虑在主目录中定位虚拟环境配置文件。默认情况下，将配置存储在 https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments[folder whose name begins with a period] 中以隐藏文件夹，防止它弄乱主文件夹。
+在整个用户帐户中为多个项目创建虚拟环境时，请考虑在主目录中定位虚拟环境配置文件。默认情况下，将配置存储在 https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory#Unix_and_Unix-like_environments[以点开头命名的文件夹] 中来隐藏文件夹，防止它弄乱主文件夹。
 +
 使用以下命令在当前用户主目录的隐藏文件夹中创建虚拟环境：
 +
@@ -132,7 +132,7 @@ $ source ~/.env/bin/activate
 ----
 ======
 
-===== Create a virtual environment
+===== 进入虚拟环境
 
 运行以下命令创建虚拟环境配置文件夹，将 `<env-name>` 替换为您希望用于虚拟环境的名称（例如 `env`）：
 
