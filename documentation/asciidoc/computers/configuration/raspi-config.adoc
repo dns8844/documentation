@@ -106,7 +106,7 @@ NOTE: 运行Wayland时不可用。
 
 启用或禁用远程终端访问您的树莓派使用SSH。
 
-SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。SSH默认禁用。有关SSH的更多信息，请参阅 xref:remote-access.adoc#ssh[SSH documentation]。
+SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。SSH默认禁用。有关SSH的更多信息，请参阅 xref:remote-access.adoc#ssh[SSH 文档]。
 
 [[rpi-connect]]
 ==== RPi Connect
@@ -147,7 +147,7 @@ SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。SSH默�
 [[overclock]]
 ==== Overclock
 
-如果您的Raspberry Pi型号允许，请对CPU进行超频。即使在同一型号中，各个Raspberry Pi设备之间的超频潜力也会有所不同。超频过高可能会导致不稳定。
+如果您的Raspberry Pi型号允许超频，可以对CPU进行超频。即使在同一型号中，各个Raspberry Pi设备之间的超频潜力也会有所不同。超频过高可能会导致不稳定。
 
 WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。在启动期间按住 *Shift* 键以暂时禁用超频。
 
@@ -215,19 +215,18 @@ WARNING: 没有确认步骤。选择该选项立即开始分区扩展。
 
 ==== Bootloader version
 
-在Raspberry Pi 4及更高版本上，切换到最新的引导ROM软件。或者，如果最新版本导致问题，您可以恢复出厂默认值。
+在Raspberry Pi 4及更高版本上，切换到最新的引导ROM软件。或者，如果最新版本Bootloader导致出现问题，您可以恢复出厂默认值。
 
 ==== Wayland
 
-在X11和Wayland后端之间切换，并选择一个窗口管理器。由于Raspberry Pi OS_Bookworm_，所有Raspberry Pi型号默认使用labwc运行Wayland。
+在X11和Wayland后端之间切换，并选择一个窗口管理器。由于Raspberry Pi OS _Bookworm_，所有Raspberry Pi型号默认使用labwc运行Wayland。
 
-要在树莓派4运行早于_Bookworm_的树莓派操作系统版本之前在树莓派模型上使用Wayland，请将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt`。
+要使用树莓派4运行 _Bookworm_ 之前版本的树莓派系统上使用Wayland，请将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt`。
 
 ==== Audio config
 
-在PulseAudio和PipeWire音频后端之间切换。在树莓派书虫之前，树莓派操作系统使用PulseAudio。
+在PulseAudio和PipeWire音频后端之间切换。在 _Bookworm_ 版本之前，树莓派操作系统使用PulseAudio。
 
-[[update]]
 === Update
 
 将此工具更新到最新版本。
@@ -252,7 +251,7 @@ WARNING: 没有确认步骤。选择该选项立即开始分区扩展。
 $ sudo raspi-config nonint <command> <arguments> [optional-argument]
 ----
 
-NOTE: `0` 和 `1` 的含义因选项而异。在将值传递给选项之前，请始终检查留档。
+NOTE: `0` 和 `1` 的含义因选项而异。在将值传递给选项之前，请始终查阅文档。
 
 [[raspi-config-cli-commands]]
 
@@ -267,11 +266,11 @@ NOTE: `0` 和 `1` 的含义因选项而异。在将值传递给选项之前，�
 $ sudo raspi-config nonint do_wifi_ssid_passphrase <ssid> <passphrase> [hidden] [plain]
 ----
 
-如果需要，传递无线网络名称（SSID）和密码。以下标志是可选的：
+如果需要写入无线网络名称（SSID）和密码。以下标志是可选的：
 
 `<hidden>` 选项表示SSID的可见性。如果网络广播打开的SSID，则通过 `0` 或省略该选项。如果您的SSID被隐藏，则通过 `1`。默认为 `0`。
 
-`<plain>`选项表示是否用额外的引号来封装给定的口令。大多数用户可以忽略该选项：作为一个实现细节，`raspi-config` 可能需要在将口令传递给系统其他部分之前添加引号，`<plain>` 值为`0` 表示已经存在引号。如果值为 `1`，则表示不存在引号，实施时应根据需要添加引号。默认值为 `1`。要传递此选项，必须指定 `<hidden>` 的值。
+`<plain>` 选项表示是否用额外的引号来封装给定的口令。大多数用户可以忽略该选项：作为一个实现细节，`raspi-config` 可能需要在将口令传递给系统其他部分之前添加引号，`<plain>` 值为 `0` 表示已经存在引号。如果值为 `1`，则表示不存在引号，实施时应根据需要添加引号。默认值为 `1`。要传递此选项，必须指定 `<hidden>` 的值。
 
 例如，运行以下命令连接到：
 
@@ -303,7 +302,7 @@ $ sudo raspi-config nonint do_wifi_ssid_passphrase myssid '"mypassphrase"' 0 0
 
 ==== Audio
 
-指定音频输出目的地。
+指定音频输出。
 
 [source,console]
 ----
@@ -323,7 +322,7 @@ $ sudo raspi-config nonint do_audio <N>
 
 更改您的密码。
 
-有关详细信息，请参阅 xref:configuration.adoc#change-user-password[Change a user's password]。
+有关详细信息，请参阅 xref:configuration.adoc#change-user-password[修改用户密码]。
 
 [source,console]
 ----
@@ -362,7 +361,7 @@ $ sudo raspi-config nonint do_boot_behaviour <B1/B2/B3/B4>
 
 ==== Network at boot
 
-在让引导继续之前等待网络连接。
+配置引导继续之前是否需要等待网络连接。
 
 [source,console]
 ----
@@ -386,7 +385,7 @@ $ sudo raspi-config nonint do_boot_splash <0/1>
 
 ==== Power LED
 
-如果您的Raspberry Pi型号允许，请更改电源LED的行为。
+如果您的Raspberry Pi型号支持此功能，可以修改电源LED的行为。
 
 [source,console]
 ----
@@ -484,7 +483,7 @@ $ sudo raspi-config nonint do_composite <0/1>
 
 启用或禁用远程终端访问您的树莓派使用SSH。
 
-SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。有关SSH的更多信息，请参阅 xref:remote-access.adoc#ssh[SSH documentation]。
+SSH允许您从另一台计算机远程访问Raspberry Pi的命令行。有关SSH的更多信息，请参阅 xref:remote-access.adoc#ssh[SSH 文档]。
 
 [source,console]
 ----
@@ -509,7 +508,7 @@ $ sudo raspi-config nonint do_rpi_connect <0/1>
 [[VNC-nonint]]
 ==== VNC
 
-启用或禁用虚拟网络计算（VNC）服务器。有关VNC的更多信息，请参阅 xref:remote-access.adoc#vnc[VNC documentation]。
+启用或禁用虚拟网络计算（VNC）服务器。有关VNC的更多信息，请参阅 xref:remote-access.adoc#vnc[VNC 文档]。
 
 [source,console]
 ----
@@ -601,9 +600,9 @@ $ sudo raspi-config nonint do_rgpio <0/1>
 [[overclock-nonint]]
 ==== Overclock
 
-如果您的Raspberry Pi型号允许，请对CPU进行超频。即使在同一型号中，各个Raspberry Pi设备之间的超频潜力也会有所不同。超频过高可能会导致不稳定。
+如果您的Raspberry Pi型号允许，可以对CPU进行超频。即使在同一型号中，各个Raspberry Pi设备之间的超频潜力也会有所不同。超频过高可能会导致不稳定。
 
-WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。启动时按住*Shift*键可暂时禁用超频。
+WARNING: *超频可能会缩短Raspberry Pi的使用寿命。* 如果超频到一定程度会导致系统不稳定，请尝试更适度的超频。启动时按住 *Shift* 键可暂时禁用超频。
 
 [source,console]
 ----
@@ -654,7 +653,7 @@ $ sudo raspi-config nonint do_fan <0/1> [gpio] [onTemp]
 
 `gpio` 默认为 `14`。
 
-`onTemp` 默认为 `80`**摄氏度**。
+`onTemp` 默认为 `80` **摄氏度**。
 
 [[localisation-options-nonint]]
 === Localisation options
@@ -669,7 +668,7 @@ $ sudo raspi-config nonint do_fan <0/1> [gpio] [onTemp]
 $ sudo raspi-config nonint do_change_locale <locale>
 ----
 
-有关可能的 `<locale>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
+有关 `<locale>` 可选值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
 
 [[change-timezone-nonint]]
 ==== Time zone
@@ -681,7 +680,7 @@ $ sudo raspi-config nonint do_change_locale <locale>
 $ sudo raspi-config nonint do_change_timezone <timezone>
 ----
 
-有关可能的 `<timezone>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
+有关 `<timezone>` 可选值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
 
 [[change-keyboard-layout-nonint]]
 ==== Keyboard
@@ -693,7 +692,7 @@ $ sudo raspi-config nonint do_change_timezone <timezone>
 $ sudo raspi-config nonint do_configure_keyboard <keymap>
 ----
 
-有关可能的 `<keymap>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
+有关 `<keymap>` 可选值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
 
 ==== WLAN country
 
@@ -704,13 +703,13 @@ $ sudo raspi-config nonint do_configure_keyboard <keymap>
 $ sudo raspi-config nonint do_wifi_country <country>
 ----
 
-有关可能的 `<country>` 值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
+有关 `<country>` 可选值的完整列表，请参阅此选项的交互式 `raspi-config` 版本中使用的缩写。
 
 [[advanced-options-nonint]]
 === Advanced options
 
 
-WARNING: 对高级选项的更改可能会阻止您的Raspberry Pi按预期工作。除非Raspberry Pi工程师指示，否则避免配置高级选项。
+WARNING: 对高级选项的更改可能会导致您的Raspberry Pi无法按照预期工作。除非Raspberry Pi工程师指示，否则避免配置高级选项。
 
 [[expand-filesystem-nonint]]
 ==== Expand filesystem
@@ -747,7 +746,7 @@ $ sudo raspi-config nonint do_proxy <SCHEMES> <ADDRESS>
 
 ==== Boot order
 
-在Raspberry Pi 4及更高版本上，指定在没有SD卡的情况下是从USB还是网络引导。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader configuration] 部分。
+在Raspberry Pi 4及更高版本上，指定在没有SD卡的情况下是从USB还是网络引导。有关详细信息，请参阅 xref:raspberry-pi.adoc#raspberry-pi-bootloader-configuration[bootloader 配置] 部分。
 
 [source,console]
 ----
@@ -776,7 +775,7 @@ $ sudo raspi-config nonint do_boot_rom <E1/E2>
 
 在X11和Wayland后端之间切换，并选择一个窗口管理器。由于Raspberry Pi OS_Bookworm_，所有Raspberry Pi型号默认使用labwc窗口管理器运行Wayland。
 
-要在树莓派4运行早于_Bookworm_的树莓派操作系统版本之前在树莓派模型上使用Wayland，请将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt`。
+要使用树莓派4运行 _Bookworm_ 之前版本的树莓派系统上使用Wayland，请将 `wayland=on` 添加到 `/boot/firmware/cmdline.txt`。
 
 [source,console]
 ----
