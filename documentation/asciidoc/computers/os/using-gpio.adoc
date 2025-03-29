@@ -1,6 +1,6 @@
-== 从 Python 使用 GPIO
+== 使用 Python 控制 GPIO
 
-使用 https://gpiozero.readthedocs.io/[GPIO Zero] 库可以轻松地用 Python 控制 GPIO 设备。该库在 https://gpiozero.readthedocs.io/[gpiozero.readthedocs.io] 上有全面的文档说明。
+使用 https://gpiozero.readthedocs.io/[GPIO Zero] 库可以轻松地用 Python 控制 GPIO 引脚。该库在 https://gpiozero.readthedocs.io/[gpiozero.readthedocs.io] 上有全面的文档说明。
 
 有关 GPIO 硬件的信息，请参阅 xref:../computers/raspberry-pi.adoc#gpio[GPIO 硬件]。
 
