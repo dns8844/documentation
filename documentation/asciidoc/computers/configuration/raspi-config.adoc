@@ -242,7 +242,7 @@ WARNING: 没有确认步骤。选择该选项立即开始分区扩展。
 退出 `raspi-config`。如有必要，`raspi-config` 会在您退出时要求您重新启动。第一次实施更改时，重新启动以确保您的更改生效。
 
 [[raspi-config-cli]]
-== non-interactive `raspi-config`
+== 无需交互的 `raspi-config`
 
 `raspi-config` 工具还支持非交互式选项和标志，它们完全在命令行上更改选项，而无需视觉组件。Raspberry Pi型号之间的可用选项可能不同。
 
