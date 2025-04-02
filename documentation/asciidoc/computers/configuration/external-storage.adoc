@@ -1,16 +1,16 @@
-== 外部存储
+== 外部存储设备相关操作
 
 您可以将外部硬盘、SSD或U盘连接到Raspberry Pi上的任何USB端口，然后挂载文件系统以访问存储在其上的数据。
 
-默认情况下，您的Raspberry Pi会在 `/media/pi/<HARD-DRIVE-LABEL>` 位置自动挂载一些流行的文件系统，例如FAT、NTFS和HFS+。
+默认情况下，您的Raspberry Pi会在 `/media/pi/<HARD-DRIVE-LABEL>` 位置自动挂载一些主流的文件系统，例如FAT、NTFS和HFS+。
 
 NOTE: Raspberry Pi OS Lite 未使能自动挂载。
 
-要将存储设备始终挂载到您选择的特定位置，您必须手动挂载它。
+要将存储设备始终挂载到您选择的指定位置，您必须手动挂载它。
 
 === 安装存储设备
 
-您可以将存储设备挂载到特定的文件夹位置。通常在 `/mnt` 文件夹中执行此操作，例如 `/mnt/mydisk` 。请注意，该文件夹必须为空。
+您可以将存储设备挂载到指定的文件夹位置。通常在 `/mnt` 文件夹中执行此操作，例如 `/mnt/mydisk` 。请注意，该文件夹必须为空。
 
 将存储设备插入Raspberry Pi上的USB端口，并使用以下命令列出Raspberry Pi上的所有磁盘分区：
 
@@ -81,7 +81,7 @@ $ ls /mnt/mydisk
 $ sudo blkid
 ----
 
-从列表中找到磁盘分区并记下UUID。（例如， `5C24-1453` 。）使用命令行编辑器（如nano）打开 fstab 文件：
+从列表中找到磁盘分区并记下UUID。（例如，`5C24-1453` 。）使用命令行编辑器（如nano）打开 fstab 文件：
 
 [source,console]
 ----
@@ -96,7 +96,7 @@ UUID=5C24-1453 /mnt/mydisk fstype defaults,auto,users,rw,nofail 0 0
 ----
 
 
-将 `fstype` 替换为您在执行上述步骤时找到的文件系统类型，例如： `ntfs` 。
+将 `fstype` 替换为您在执行上述步骤时找到的文件系统类型，例如：`ntfs` 。
 
 如果文件系统类型是FAT或NTFS，请在 `nofail` 之后添加， umask=000` -这将允许所有用户对存储设备上的每个文件进行完全读/写访问。
 
@@ -104,7 +104,7 @@ UUID=5C24-1453 /mnt/mydisk fstype defaults,auto,users,rw,nofail 0 0
 
 NOTE: 如果您在Raspberry Pi启动时没有连接存储设备，则需要额外的90秒才能启动。您可以通过在 `nofail` 之后立即添加 `x-system.device-timeout=30` 来缩短时间。这会将超时更改为30秒，这表示系统在放弃尝试挂载磁盘之前只会等待30秒。
 
-有关每个Linux命令的更多信息，请参阅使用 `man` 命令的特定手册页。例如， `man fstab` 。
+有关每个Linux命令的更多信息，请参阅使用 `man` 命令的指定手册页。例如， `man fstab` 。
 
 === 卸载存储设备
 
