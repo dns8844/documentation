@@ -1,7 +1,7 @@
 [[networking]]
 == 配置网络
 
-Raspberry Pi OS提供了用于设置无线连接的图形用户交互界面（GUI），Raspberry Pi OS Lite和headless机器的用户可以通过 https://networkmanager.dev/docs/api/latest/nmcli.html[`nmcli`] 从命令行设置无线网络。
+Raspberry Pi OS提供了用于设置无线连接的图形用户交互界面（GUI），Raspberry Pi OS Lite 和 headless 设备的用户可以通过 https://networkmanager.dev/docs/api/latest/nmcli.html[`nmcli`] 从命令行设置无线网络。
 
 NOTE: 从 Raspberry Pi OS _Bookworm_ 开始，网络管理器是默认的网络配置工具。早期版本的 Raspberry Pi OS 使用 `dhcpd` 和其他工具进行网络配置。
 
@@ -9,13 +9,13 @@ NOTE: 从 Raspberry Pi OS _Bookworm_ 开始，网络管理器是默认的网络�
 
 ==== 使用桌面
 
-通过菜单栏右端的网络图标访问网络管理器。如果您使用的是具有内置无线连接的Raspberry Pi，或者如果插入了无线加密狗，请单击此图标以显示可用无线网络列表。如果您看到消息'No APs found - scanning...'，请等待几秒钟，网络管理器应该会找到您的网络。
+通过菜单栏右端的网络图标访问网络管理器。如果您使用的是具有内置无线连接的Raspberry Pi，或者如果插入了无线加密狗，请单击此图标以显示可用无线网络列表。如果您看到消息 'No APs found - scanning...'，请等待几秒钟，网络管理器应该会找到您的网络。
 
 NOTE: 具有双频无线功能的设备会自动禁用联网功能，直到您分配了一个无线局域网国家。自 Raspberry Pi 3B+ 开始的旗舰机型、自 CM4 开始的计算模块和键盘机型支持双频无线。要设置无线局域网国家，请从首选项菜单打开 Raspberry Pi 配置应用程序，选择 *Localisation*，然后从菜单中选择您所在的国家。
 
 image::images/wifi2.png[wifi2]
 
-右侧的图标显示网络是否安全，并给出信号强度的指示。单击您要连接的网络。如果网络是安全的，一个对话框将提示您输入网络键：
+右侧的图标显示网络是否安全，并给出信号强度的指示。单击您要连接的网络。如果网络是安全的，一个对话框将提示您输入密码：
 
 image::images/key.png[key]
 
@@ -25,7 +25,6 @@ image::images/key.png[key]
 ===== 连接到隐藏网络
 
 要使用隐藏网络，请导航至网络菜单中的 *高级选项* > *连接到隐藏的 Wi-Fi 网络*：
-To use a hidden network, navigate to *Advanced options* > *Connect to a hidden Wi-Fi network* in the network menu:
 
 image::images/network-hidden.png[高级选项中的连接到隐藏的wi-fi网络选项]
 
@@ -46,7 +45,7 @@ NOTE: 本指南应适用于WEP、WPA、WPA2或WPA3网络，但可能不适用于
 
 重新安装后，您必须指定使用设备的国家/地区。这允许您的设备为5GHz网络选择正确的频段。指定无线LAN国家/地区后，您可以使用Raspberry Pi的内置无线网络模块。
 
-为此，请使用命令行 `raspi-config` 工具设置您的无线LAN国家/地区。运行以下命令：
+为此，请使用命令行 `raspi-config` 工具设置您的无线网络国家/地区。运行以下命令：
 
 [source,console]
 ----
@@ -91,11 +90,11 @@ IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS
 ----
 
 
-在"SSID"列中查找您要连接的网络名称。使用SSID和密码连接到网络。
+在 "SSID" 列中查找您要连接的网络名称。使用SSID和密码连接到网络。
 
 ===== 连接网络
 
-运行以下命令配置网络连接，将"<example_ssid>"占位符替换为要配置的网络名称：
+运行以下命令配置网络连接，将 "<example_ssid>" 占位符替换为要配置的网络名称：
 
 [source,console]
 ----
@@ -125,7 +124,7 @@ IN-USE  BSSID              SSID            MODE   CHAN  RATE        SIGNAL  BARS
         B4:2A:0E:64:BD:BE  Example         Infra  6     195 Mbit/s  37      **    WPA1 WPA2
 ----
 
-检查"IN-USE"列中的星号 ( `*` ) ；它应该与连接上的网络SSID出现在同一行中。
+检查 "IN-USE" 列中的星号 ( `*` ) ；它应该与连接上的网络SSID出现在同一行中。
 
 NOTE: 您可以在 `/etc/NetworkManager/system-connections/` 目录中手动编辑您的连接配置。
 
@@ -199,4 +198,4 @@ AUTOCONNECT-PRIORITY  NAME
 
 === 设置静态IP地址
 
-要为 Raspberry Pi 分配静态 IP 地址，请在路由器上为它保留一个地址。你的 Raspberry Pi 将继续通过 DHCP 分配地址，但每次收到的地址都是一样的。通过将 Raspberry Pi 的 MAC 地址与 DHCP 服务器中的静态 IP 地址关联，可以分配一个 "固定 "地址。
+要为 Raspberry Pi 分配静态 IP 地址，请在路由器上为它保留一个地址。你的 Raspberry Pi 将继续通过 DHCP 分配地址，但每次收到的地址都是一样的。通过将 Raspberry Pi 的 MAC 地址与 DHCP 服务器中的静态 IP 地址关联，可以分配一个 "固定" 地址。
