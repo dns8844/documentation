@@ -31,11 +31,11 @@ $ cat /proc/cmdline
 * `console=serial0,115200`
 * `console=tty1`
 
-`root`:: 定义根文件系统的位置，例如 `root=/dev/mmcblk0p2` 表示多媒体卡块 0 分区 2。
+`root`:: 定义根文件系统的位置，例如 `root=/dev/mmcblk0p2` 表示 mmcblk0 分区 2。
 
 `rootfstype`:: 定义 rootfs 使用的文件系统类型，例如 `rootfstype=ext4`。
 
-`quiet`:: 将内核日志的默认级别设置为 `KERN_WARNING`，这样在启动过程中，除了非常严重的日志信息外，所有日志信息都会被抑制。
+`quiet`:: 将内核日志的默认级别设置为 `KERN_WARNING`，这样在启动过程中，除了非常严重的日志信息外，所有日志信息都会被丢弃。
 
 [[set-the-kms-display-mode]]
 ===== 设置KMS显示模式
@@ -51,7 +51,7 @@ $ cat /proc/cmdline
 video=HDMI-A-1:1920x1080M@60
 ----
 
-此外，还可以按照标准 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/Documentation/fb/modedb.rst[Linux 帧缓冲器文档]中的说明添加旋转和反射参数。下面的示例定义了一个名为 `HDMI-A-1` 的显示器，分辨率为 1080p，刷新率为 60Hz，可旋转 90 度，沿X 轴反转：
+此外，还可以按照标准 https://github.com/raspberrypi/linux/blob/rpi-6.1.y/Documentation/fb/modedb.rst[Linux 帧缓冲器文档] 中的说明添加旋转和反射参数。下面的示例定义了一个名为 `HDMI-A-1` 的显示器，分辨率为 1080p，刷新率为 60Hz，可旋转 90 度，沿X 轴反转：
 
 [source,bash]
 ----
