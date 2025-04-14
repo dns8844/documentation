@@ -1,34 +1,34 @@
 == 保护您的树莓派
 
-在这里，我们描述了一些提高Raspberry Pi安全性的常用方法。
+在这里，我们介绍了一些提高Raspberry Pi安全性的常用方法。
 
 [[change-user-password]]
 === 更改用户密码
 
 以 `sudo` 为前缀的命令以超级用户身份运行。默认情况下，超级用户不需要密码。不过，您可以要求所有以 `sudo` 运行的命令都输入密码，从而提高 Raspberry Pi 的安全性。
 
-要强制 `sudo` 需要密码，请为您的用户帐户编辑 `nopasswd` sudoers文件，将文件名中的 `<username>` 占位符替换为您的用户名：
+要设置 `sudo` 需要密码，请为您的用户帐户编辑 `nopasswd` sudoers文件，将文件名中的 `<username>` 占位符替换为您的用户名：
 
 [source,console]
 ----
 $ sudo visudo /etc/sudoers.d/010_<username>-nopasswd
 ----
 
-将 `<username>` 条目更改为以下内容，将 `<username>` 替换为您的用户名：
+将 `<username>` 行更改为以下内容，并将 `<username>` 替换为您的用户名：
 
 [source,bash]
 ----
 <username> ALL=(ALL) PASSWD: ALL
 ----
 
-保存文件。您的新首选项应立即生效。
+保存文件。您的新配置应立即生效。
 
 === 更新树莓派操作系统
 
-只有最新的操作系统发行版才包含所有最新的安全修复。请始终将您的设备 xref:os.adoc#update-software[updated] 保持在 Raspberry Pi OS 的最新版本。
+只有最新的操作系统发行版才包含所有最新的安全修复。请及时将您的设备 xref:os.adoc#update-software[更新到] Raspberry Pi OS 的最新版本。
 
 === 自动更新 SSH 服务器
-如果您使用SSH连接到Raspberry Pi，则值得添加专门更新SSH服务器的 `cron` 作业。以下命令可能作为每日 `cron` 作业运行，可确保您立即获得最新的SSH安全修复，独立于正常的更新过程。
+如果您使用SSH连接到Raspberry Pi，则值得添加专门更新SSH服务器的 `cron` 作业。以下命令可能作为每日 `cron` 任务运行，可确保您立即获得最新关于SSH安全修复，独立于正常的更新过程。
 
 [source,console]
 ----
@@ -55,7 +55,7 @@ $ sudo nano /etc/ssh/sshd_config
 AllowUsers alice bob
 ----
 
-您还可以使用 `DenyUsers` 来专门阻止某些用户名登录：
+您还可以使用 `DenyUsers` 来专门禁止某些用户名登录：
 
 [source,bash]
 ----
@@ -146,9 +146,9 @@ $ sudo ufw limit ssh/tcp
 $ sudo ufw deny from 192.168.2.1 port 30
 ----
 
-=== 安装  `fail2ban` 
+=== 安装 `fail2ban` 
 
-当把 Raspberry Pi 用作服务器时，你必须设置防火墙以允许服务器流量。http://www.fail2ban.org[Fail2ban] 可以帮助确保服务器安全。Fail2ban 会检查日志文件并检查可疑活动，如多次暴力登录尝试。它能帮你省去手动检查日志文件，然后更新防火墙（通过 `iptables` ）来阻止入侵尝试的麻烦。
+当把 Raspberry Pi 用作服务器时，你必须设置防火墙以允许服务器流量通过。http://www.fail2ban.org[Fail2ban] 可以帮助确保服务器安全。Fail2ban 会检查日志文件并检查可疑活动，如多次暴力登录尝试。它能帮你省去手动检查日志文件，然后更新防火墙（通过 `iptables` ）来阻止入侵尝试的麻烦。
 
 要安装 `fail2ban`，请运行以下命令：
 
