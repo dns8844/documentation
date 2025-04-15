@@ -1,29 +1,29 @@
 [[setting-up-a-headless-raspberry-pi]]
-== 设置headless树莓派
+== 设置无显示界面的树莓派
 
-**headless** Raspberry Pi在没有显示器、键盘或鼠标的情况下运行。要运行headless Raspberry Pi，您需要一种从另一台计算机访问它的方法。要远程访问您的Raspberry Pi，您需要将Raspberry Pi连接到网络，并通过该网络访问Raspberry Pi。
+**无显示界面的** Raspberry Pi在没有显示器、键盘或鼠标的情况下运行。要运行无显示界面的 Raspberry Pi，您需要一种从另一台计算机访问它的方法。要远程访问您的Raspberry Pi，您需要将Raspberry Pi连接到网络，并通过该网络访问Raspberry Pi。
 
 要将Raspberry Pi连接到网络，您可以通过以太网将设备插入有线连接或连接无线网络。
 
 要通过该网络访问您的Raspberry Pi，请使用SSH。通过SSH连接后，如果您喜欢图形桌面环境，可以使用 `raspi-config` 来使能 xref:remote-access.adoc#vnc[VNC]。
 
-如果您从头开始设置Raspberry Pi，请在 xref:getting-started.adoc#installing-the-operating-system[imaging process] 期间设置无线网络和SSH。如果您已经设置了Raspberry Pi，则可以使用 `raspi-config` 配置SSH。
+如果您从零开始设置Raspberry Pi，请在 xref:getting-started.adoc#installing-the-operating-system[烧录] 期间设置无线网络和SSH。如果您已经设置了Raspberry Pi，则可以使用 `raspi-config` 配置SSH。
 
 WARNING: 根据您使用的 Raspberry Pi 型号和 SD 卡类型，您的 Raspberry Pi 首次启动和连接到无线网络可能需要长达五分钟的时间。
 
 === 连接到有线网络
 
-要在首次启动时连接到有线网络，请通过以太网插入headless Raspberry Pi，如果您的Raspberry Pi型号没有网口，请使用以太网适配器。您的Raspberry Pi将自动连接到网络。
+要在首次启动时连接到有线网络，请给无显示界面的 Raspberry Pi插入网线，如果您的Raspberry Pi型号没有网口，请使用以太网适配器。您的Raspberry Pi将自动连接到网络。
 
 === 连接到无线网络
 
-要在 headless Raspberry Pi 中首次启动时配置无线网络访问，请使用 Raspberry Pi Imager 中的高级设置菜单。输入首选无线网络的SSID和密码。您的Raspberry Pi将在首次启动时使用这些凭据连接到网络。某些无线适配器和某些Raspberry Pi板不支持5GHz网络；检查无线模块的文档，以确保与选择的网络兼容。
+要在无显示界面的 Raspberry Pi 中首次启动时配置无线网络访问，请使用 Raspberry Pi Imager 中的高级设置菜单。输入无线网络的SSID和密码。您的Raspberry Pi将在首次启动时使用这些凭据连接到网络。某些无线适配器和某些Raspberry Pi板不支持5GHz网络；检查无线模块的文档，以确保与选择的网络兼容。
 
 NOTE: 以前版本的Raspberry Pi OS使用 `wpa_supplicant.conf` 文件，该文件可以放置在引导文件夹中以配置无线网络设置。此功能从 Raspberry Pi OS Bookworm 开始不可用。
 
 === 远程访问
 
-如果没有键盘或显示器，您需要一种方法来 xref:remote-access.adoc[远程控制] 您的headless Raspberry Pi。首次启动时，唯一可用的选项是SSH。要在新安装的Raspberry Pi OS上启用SSH，请选择以下方法之一：
+如果没有键盘或显示器，您需要一种方法来 xref:remote-access.adoc[远程控制] 无显示界面的 Raspberry Pi。首次启动时，唯一可用的选项是SSH。要在新安装的Raspberry Pi OS上启用SSH，请选择以下方法之一：
 
 * 在 Raspberry Pi Imager 的操作系统自定义菜单中启用SSH，然后输入用户名和密码
 * 在 SD 卡第一个分区（标为 `bootfs`）的根目录下创建名为 `ssh` 的文件，然后按照下面部分的说明使用 `userconf.txt` 手动配置用户
@@ -37,7 +37,7 @@ NOTE: 以前版本的Raspberry Pi OS使用 `wpa_supplicant.conf` 文件，该文
 
 此文件应包含一行文本，由 `<username>：<password>` 组成：您想要的用户名，后跟冒号，后跟您想要使用的密码的 *加密* 表示。
 
-NOTE:  `<username>` 只能包含小写字母、数字和连字符，并且必须以字母开头。它不能超过31个字符。
+NOTE: `<username>` 只能包含小写字母、数字和连字符，并且必须以字母开头。它不能超过31个字符。
 
 要生成加密密码，请在另一台计算机上使用 https://www.openssl.org[OpenSSL]。打开终端并输入以下内容：
 
