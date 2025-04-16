@@ -27,7 +27,7 @@ Raspberry Pi 4和5不使用bootcode.bin。它已被 xref:raspberry-pi.adoc#raspb
 
 `start4.elf` , `start4x.elf` , `start4db.elf` 和 `start4cd.elf` 是特定于Raspberry Pi 4系列（Model 4B, Pi 400, Compute Module 4 和 Compute Module 4S）的同功能固件文件。
 
-有关如何使用这些文件的详细信息，请参阅 xref:config_txt.adoc#boot-options[ `config.txt` 文档].
+有关如何使用这些文件的详细信息，请参阅 xref:config_txt.adoc#boot-options[config.txt文档].
 
 Raspberry Pi 5 不使用 `elf` 文件。固件独立包含在引导加载程序EEPROM中。
 
@@ -93,15 +93,15 @@ NOTE: 内容无关紧要。即使是一个空文件也可以使能SSH。
 |  `kernel8.img` 
 | BCM2837、BCM2711、BCM2712
 | Pi Zero 2 W, Pi 2 (后续版本), Pi 3, CM3, Pi 3+, CM3+, Pi 4, CM4, CM4S, Pi 400, CM5, Pi 5, Pi 500
-| xref:config_txt.adoc#boot-options[64位内核]。带有BCM2836的Raspberry Pi 2不支持64位内核。
+| xref:config_txt.adoc#boot-options[64位内核]。使用BCM2836的Raspberry Pi 2不支持64位内核。
 
 |  `kernel_2712.img` 
 | BCM2712
 | Pi 5, CM5, Pi 500
-| Pi 5优化的 xref:config_txt.adoc#boot-options[64-bit kernel]。
+| Pi 5优化的 xref:config_txt.adoc#boot-options[64位内核]。
 |===
 
-NOTE: 对于运行 32 位内核的系统，`lscpu` 报告的 CPU 架构为 `armv7l`；对于运行 64 位内核的系统，`aarch64` 报告的 CPU 架构为 `armv7l`。`armv7l` 中的 `l`指的是小端 CPU 架构，而不是 `kernel7l.img` 文件名中的 `l` 所表示的 `LPAE`。
+NOTE: 对于运行 32 位内核的系统，`lscpu` 报告的 CPU 架构为 `armv7l`；对于运行 64 位内核的系统，`aarch64` 报告的 CPU 架构为 `armv7l`。`armv7l` 中的 `l` 指的是小端 CPU 架构，而不是 `kernel7l.img` 文件名中的 `l` 所表示的 `LPAE`。
 
 === `overlays` 文件夹
 
