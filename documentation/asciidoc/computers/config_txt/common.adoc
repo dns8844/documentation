@@ -4,20 +4,20 @@
 
 ==== `hdmi_enable_4kp60`
 
-NOTE: 此配置只可用在 Raspberry Pi 4, Compute Module 4, Compute Module 4S, 和 Pi 400.
+NOTE: 此配置只在 Raspberry Pi 4, Compute Module 4, Compute Module 4S, 和 Pi 400上使用.
 
-默认情况下，当连接到 4K 显示器时，某些型号会选择 30Hz 刷新率。使用该选项可选择 60Hz 刷新率。受此设置影响的机型不支持同时在两个微型 HDMI 端口上输出 4Kp60。启用此设置会增加功耗和温度。
+默认情况下，当连接到 4K 显示器时，某些型号会选择 30Hz 刷新率。使用该选项可选择 60Hz 刷新率。受此设置影响的机型不支持同时在两个Micro HDMI 端口上输出 4Kp60。此外启用此设置会增加功耗和温度。
 
 === 常用硬件配置选项
 
 [[camera_auto_detect]]
 ==== `camera_auto_detect` 
 
-默认情况下，Raspberry Pi OS 在 `/boot/firmware/config.txt`中包含一行启用此设置的内容。
+默认情况下，Raspberry Pi OS 在 `/boot/firmware/config.txt` 中包含一行启用此设置的内容。
 
 启用后，固件将自动为识别到的 CSI 摄像头加载设备树。
 
-要禁用，请设置 `camera_auto_detect=0`。
+要禁用此功能，请设置 `camera_auto_detect=0`。
 
 [[display_auto_detect]]
 ==== `display_auto_detect` 
@@ -26,21 +26,21 @@ NOTE: 此配置只可用在 Raspberry Pi 4, Compute Module 4, Compute Module 4S,
 
 启用后，固件将自动为识别到的 DSI 显示器加载设备树。
 
-要禁用，请设置 `display_auto_detect=0`。
+要禁用此功能，请设置 `display_auto_detect=0`。
 
 ==== `dtoverlay` 
 
 dtoverlay选项请求固件加载一个命名的设备树overlay — 一个可以启用内核对内置和外部硬件支持的配置文件。例如， `dtoverlay=vc4-kms-v3d` 加载一个启用内核图形驱动程序的设备树文件。
 
-作为一种特殊情况，如果不带值调用 - `dtoverlay=` - 该选项将标记覆盖参数列表的结束。如果在任何其他 `dtoverlay` 或 `dtparam` 设置之前使用，它会阻止加载任何HAT overlay。
+作为一种特殊情况，如果不带值调用 - `dtoverlay=` - 该选项将标记 overlay 参数列表的结束。如果在所有其他 `dtoverlay` 或 `dtparam` 设置之前使用，它会阻止加载任何 HAT overlay。
 
-有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays and config.txt]。
+有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays 和 config.txt]。
 
 ==== `dtparam` 
 
-Raspberry Pis的设备树配置文件支持许多参数，例如启用I2C和SPI接口。许多DT overlay可以通过使用参数进行配置。这两种类型的参数都可以使用 `dtparam` 设置提供。此外，overlay参数可以附加到 `dtoverlay` 选项中，用逗号分隔，但请记住行长限制为98个字符。
+Raspberry Pi 的设备树配置文件支持许多参数，例如启用I2C和SPI接口。许多DT overlay可以通过使用参数进行配置。这两种类型的参数都可以使用 `dtparam` 设置。此外，overlay参数可以附加到 `dtoverlay` 选项中，用逗号分隔，但请记住行长限制为98个字符。
 
-有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays and config.txt]。
+有关更多详细信息，请参阅 xref:configuration.adoc#part3.1[DTBs, overlays 和 config.txt]。
 
 ==== `arm_boost`
 
@@ -50,7 +50,7 @@ Raspberry Pis的设备树配置文件支持许多参数，例如启用I2C和SPI�
 
 某些 Raspberry Pi 设备为 SoC 电压轨配备了第二个开关模式电源。启用后，默认的涡轮模式时钟频率将从 1.5GHz 增至 1.8GHz。
 
-要禁用，请设置 `arm_boost=0`。
+要禁用此配置，请设置 `arm_boost=0`。
 
 ==== `power_force_3v3_pwm`
 

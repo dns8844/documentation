@@ -1,4 +1,4 @@
-== 板载模拟音频（3.5mm插孔）
+== 板载模拟音频（3.5mm耳机插孔）
 
 板载音频输出使用配置选项来更改模拟音频的驱动方式，以及是否启用某些固件功能。
 
@@ -9,7 +9,7 @@
 
 `audio_pwm_mode=2` （默认值）使用高级调制方案选择高质量模拟音频。
 
-NOTE: 此选项使用更多GPU计算资源，并且可能会干扰某些模型上的某些用例。
+NOTE: 此选项使用更多GPU计算资源，并且可能会干扰某些型号上的某些功能。
 
 [[disable_audio_dither]]
 === `disable_audio_dither` 
@@ -30,7 +30,7 @@ NOTE: 此选项使用更多GPU计算资源，并且可能会干扰某些模型�
 
 默认情况下，所有具有HDMI输出的Raspberry Pi型号都启用HDMI音频输出。
 
-要禁用 HDMI 音频输出，请在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中的 `dtoverlay=vc4-kms-v3d` 行末尾添加 `,noaudio` ：
+要禁用 HDMI 音频输出，请在 xref:../computers/config_txt.adoc#what-is-config-txt[/boot/firmware/config.txt] 中的 `dtoverlay=vc4-kms-v3d` 行末尾添加 `,noaudio` ：
 
 [source,ini]
 ----
