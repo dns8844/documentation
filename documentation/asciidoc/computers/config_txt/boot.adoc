@@ -4,16 +4,16 @@
 [[start_file-fixup_file]]
 === `start_file` ，`fixup_file` 
 
-这些选项指定在引导之前传输到VideoCore GPU的固件文件。
+这些选项指定在引导步骤前传输到 VideoCore GPU 的固件文件。
 
-`start_file` 指定要使用的VideoCore固件文件。
-`fixup_file` 指定用于修复start_file中使用的内存位置以匹配GPU内存拆分的文件。
+`start_file` 指定要使用的 VideoCore 固件文件。
+`fixup_file` 指定用于修改 start_file 中使用的内存位置以匹配GPU内存拆分的文件。
 
-`start_file` 和 `fixup_file` 是匹配的一对 - 使用不匹配的文件导致板子无法启动。这是一个高级选项，因此我们建议您使用 `start_x` 和 `start_debug` 而不是此选项。
+`start_file` 和 `fixup_file` 是匹配的一对，使用不匹配的文件导致板子无法启动。这是一个高级选项，因此我们建议您使用 `start_x` 和 `start_debug` 而不是此选项。
 
-NOTE: 不能以这种方式选择削减固件（ `start*cd.elf` 和 `fixup*cd.dat` ）- 系统将无法启动。启用削减固件的唯一方法是指定 `gpu_mem=16` 。削减固件删除了对编解码器、3D和调试日志记录的支持，并将初始早期启动帧缓冲区限制为1080p @16bpp - 尽管KMS可以在稍后阶段用32bpp 4K帧缓冲区替换它，就像任何固件一样。
+NOTE: 不能以这种方式选择裁剪固件（ `start*cd.elf` 和 `fixup*cd.dat` ）- 系统将无法启动。启用裁剪固件的唯一方法是指定 `gpu_mem=16` 。裁剪固件删除了对编解码器、3D和调试日志记录的支持，并将初始早期启动帧缓冲区限制为1080p @16bpp - 尽管KMS可以在稍后阶段用32bpp 4K帧缓冲区替换它，就像任何固件一样。
 
-NOTE: Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件独立于引导加载程序EEPROM中。
+NOTE: Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件独立存储在引导加载程序EEPROM中。
 
 [[cmdline]]
 === `cmdline` 
@@ -23,9 +23,9 @@ NOTE: Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件独立于引导
 [[kernel]]
 === `kernel` 
 
-`kernel` 是引导分区上用于加载内核的替代文件名。Raspberry Pi 1、Zero和Zero W以及Raspberry Pi Compute Module 1的默认值为 `kernel.img` 。Raspberry Pi 2、3、3+和Zero 2 W以及Raspberry Pi Compute Module 3和3+的默认值为 `kernel7.img` 。Raspberry Pi 4和400以及Raspberry Pi Compute Module 4的默认值为 `kernel8.img` ，如果 `arm_64bit` 设置为0，则为 `kernel7l.img` 。
+`kernel` 是引导分区上用于加载内核的替代文件名。Raspberry Pi 1、Zero 和 Zero W 以及Raspberry Pi Compute Module 1 的默认值为 `kernel.img` 。Raspberry Pi 2、3、3+ 和 Zero 2 W 以及 Raspberry Pi Compute Module 3 和 3+ 的默认值为 `kernel7.img` 。Raspberry Pi 4 和 400 以及 Raspberry Pi Compute Module 4的默认值为 `kernel8.img` ，如果设置 `arm_64bit` 为 0，则使用 `kernel7l.img` 。
 
-Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件默认加载 `kernel_2712.img` ，因为此映像包含特定于Raspberry Pi 5的优化（例如16K页面大小）。如果此文件不存在，则将加载通用64位内核（ `kernel8.img` ）。
+Raspberry Pi 5, Compute Module 5, 和 Raspberry Pi 500 固件默认加载 `kernel_2712.img` ，因为此内核包含特定于 Raspberry Pi 5 的优化（例如16K页面大小）。如果此文件不存在，则将加载通用64位内核（ `kernel8.img` ）。
 
 [[arm_64bit]]
 === `arm_64bit` 
@@ -52,13 +52,12 @@ Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500固件默认加载 `kernel_
 * 4B
 * 400
 * 2 W
-* 计算模块 3
-* 计算模块 3+
-* 计算模块 4
-* 计算模块 4S
+* Compute Module 3
+* Compute Module 3+
+* Compute Module 4
+* Compute Module 4S
 
-从 Raspberry Pi 5, Compute Module 5, 和Raspberry Pi 500 以后的型号 _仅_ 支持 64 位内核。这些型号不支持此标记。
-
+从 Raspberry Pi 5, Compute Module 5, 和 Raspberry Pi 500 以后的型号 _仅_ 支持 64 位内核。这些型号不支持此标记。
 
 === `ramfsfile` 
 
@@ -72,7 +71,7 @@ NOTE: 较新的固件支持加载多个 `ramfs` 文件。您应该用逗号分�
 
 === `initramfs` 
 
-`initramfs` 命令同时指定了 ramfs 文件名*和*内存地址。它在一个参数中同时执行 `ramfsfile` 和 `ramfsaddr` 的操作。地址也可以是 `followkernel` （或 `0` ），以便将其放在内核映像之后的内存中。示例值如下 `initramfs initramf.gz 0x00800000` 或 `initramfs init.gz followkernel`。与 `ramfsfile` 一样，较新的固件允许通过逗号分隔多个文件名来加载多个文件。
+`initramfs` 命令同时指定了 ramfs 文件名 *和* 内存地址。它在一个参数中同时执行 `ramfsfile` 和 `ramfsaddr` 的操作。地址也可以是 `followkernel` （或 `0` ），以便将其放在内核映像之后的内存中。示例值如下 `initramfs initramf.gz 0x00800000` 或 `initramfs init.gz followkernel`。与 `ramfsfile` 一样，较新的固件允许通过逗号分隔多个文件名来加载多个文件。
 
 NOTE: 此选项使用与所有其他选项不同的语法，您不应在此处使用 `=` 字符。
 
@@ -84,7 +83,7 @@ NOTE: 此选项使用与所有其他选项不同的语法，您不应在此处�
 [[disable_poe_fan]]
 === `disable_poe_fan` 
 
-默认情况下，即使没有连接 PoE HAT，也会在启动时对 I2C 总线进行探测。将该选项设置为 1 将禁止通过 I2C（ID_SD 和 ID_SC）引脚控制 PoE HAT 风扇。如果不打算使用 PoE HAT，这将有助于缩短启动时间。
+默认情况下，即使没有连接 PoE HAT，也会在启动时对 I2C 总线进行探测。将该选项设置为 1 将禁止通过 I2C（ID_SD 和 ID_SC）引脚控制 PoE HAT 风扇。如果不使用 PoE HAT，这将有助于缩短启动时间。
 
 [[disable_splash]]
 === `disable_splash` 
@@ -104,9 +103,9 @@ NOTE: 此选项使用与所有其他选项不同的语法，您不应在此处�
 [[os_prefix]]
 === `os_prefix` 
 
-`os_prefix` 是一个可选设置，允许在同一卡上安装的多个版本的内核和设备树文件之间进行选择。操作系统文件 "指的是内核、initramfs、cmdline.txt、.dtbs 和 overlays。前缀通常是目录名，但也可以是文件名的一部分，如 "test-"。因此，目录前缀必须包括尾部的 `/` 字符。
+`os_prefix` 是一个可选设置，允许在同一卡上安装的多个版本的内核和设备树文件之间进行选择。操作系统文件指的是内核、initramfs、cmdline.txt、.dtbs 和 overlays。前缀通常是目录名，但也可以是文件名的一部分，如 "test-"。因此，目录前缀必须包括尾部的 `/` 字符。
 
-为了减少系统无法启动的可能性，固件首先测试提供的前缀值的可行性 — 除非在新位置/名称处可以找到指定的内核和.dtb，否则前缀将被忽略（设置为""）。这种可行性测试的一个特殊情况应用于覆盖，如果 `+${os_prefix}${overlay_prefix}+` 存在，它只会从 `+${os_prefix}${overlay_prefix}README+` 加载（其中<<overlay_prefix， `overlay_prefix` >>的默认值是 `覆盖/` ），否则它会忽略 `os_prefix` 并将覆盖视为共享。
+为了降低系统无法启动的可能性，固件首先测试提供的前缀值的可行性 — 除非在新位置/名称处可以找到指定的内核和.dtb，否则前缀将被忽略（设置为""）。这种可行性测试的一个特殊情况应用于覆盖，如果 `+${os_prefix}${overlay_prefix}+` 存在，它只会从 `+${os_prefix}${overlay_prefix}README+` 加载（其中<<overlay_prefix， `overlay_prefix` >>的默认值是 `overlay/` ），否则它会忽略 `os_prefix` 并将覆盖视为共享。
 
 （固件在检查前缀时检查密钥文件而不是目录的存在的原因有两个：前缀可能不是目录，并且并非所有引导方法都支持测试目录的存在。）
 
@@ -120,7 +119,7 @@ NOTE: 任何用户指定的操作系统文件都可以通过使用绝对路径�
 
 USB On-The-Go（通常缩写为OTG）是一项功能，允许支持带有适当OTG电缆的USB设备将自己配置为USB主机。在较旧的Raspberry Pi上，一个USB 2控制器用于USB主机和设备模式。
 
-旗舰产品从Raspberry Pi 4B 和 键盘系列产品从 Raspberry Pi 400（不是CM4或CM4IO）以后添加了一个高性能USB 3控制器，通过PCIe连接，以驱动主USB端口。传统的USB 2控制器仍然可以在USB-C电源连接器上用作设备（ `otg_mode=0` ，默认值）。
+旗舰产品从Raspberry Pi 4B 和 键盘系列产品 从 Raspberry Pi 400（不是CM4或CM4IO）以后添加了一个高性能USB 3控制器，通过PCIe连接，以驱动主USB端口。传统的USB 2控制器仍然可以在USB-C电源连接器上用作设备（ `otg_mode=0` ，默认值）。
 
 `otg_mode=1` 请求将功能更强大的XHCI USB 2控制器用作该USB-C连接器上的可以替换的主机控制器。
 
@@ -129,7 +128,7 @@ NOTE: Raspberry Pi OS 在 `/boot/firmware/config.txt`中的[CM4]配置中已经�
 [[overlay_prefix]]
 === `overlay_prefix` 
 
-指定加载overlays的子目录/前缀，默认为 `overlays/` （注意尾部的 `/` ）。如果与 <<os_prefix,`os_prefix`>> 结合使用， `os_prefix` 将位于 `overlay_prefix` 之前，例如， `dtoverlay=disable-bt` 将尝试加载 `+${os_prefix}${overlay_prefix}disable-bt.dtbo+` 。
+指定加载overlays的子目录/前缀，默认为 `overlays/` （注意尾部的 `/` ）。如果与 <<os_prefix,`os_prefix`>> 结合使用， `os_prefix` 将在 `overlay_prefix` 之前，例如， `dtoverlay=disable-bt` 将尝试加载 `+${os_prefix}${overlay_prefix}disable-bt.dtbo+` 。
 
 NOTE:  除非存在 `+${os_prefix}${overlay_prefix}README+` ，否则overlays将与主操作系统共享（即忽略 `os_prefix` ）。
 
@@ -162,7 +161,7 @@ Default: `0`
 
 位 0 (0x1) 表示 .elf 文件是定制固件。这将禁用任何兼容性检查（例如，是否支持 USB MSD 启动），并在启动可执行文件前重置 PCIe。
 
-与 Raspberry Pi 5 无关，因为没有 `start.elf` 文件。
+与 Raspberry Pi 5 无关，因为它没有 `start.elf` 文件。
 
 Default: `0x0`
 
@@ -170,7 +169,7 @@ Default: `0x0`
 ==== `enable_rp1_uart`
 
 设置为 `1` 时，固件会将 RP1 UART0 初始化为 115200bps，并且在启动操作系统前不会复位 RP1（可使用 `pciex4_reset=1` 单独配置）。
-这使得在早期启动代码（例如在裸机调试期间）中更容易在 40 针针座上获得 UART 输出。
+这使得在早期启动代码（例如在裸机调试期间）中更容易在 40 针上获得 UART 输出。
 
 Default: `0x0`
 
@@ -206,12 +205,12 @@ Default: `0`
 
 该选项必须与控制 EEPROM `写状态寄存器` 更新的 EEPROM `/WP` 引脚结合使用。 除非同时配置了 `写入状态寄存器`，否则将 `/WP` 拉低（CM4 的 `EEPROM_nWP` 或 Raspberry Pi 4 的 `TP5`）不会对 EEPROM 进行写保护。
 
-详情请参见 https://www.winbond.com/resource-files/w25x40cl_f%2020140325.pdf[Winbond W25x40cl] 或 https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q16JV[Winbond W25Q16JV] datasheet。
+详情请参见 https://www.winbond.com/resource-files/w25x40cl_f%2020140325.pdf[Winbond W25x40cl] 或 https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q16JV[Winbond W25Q16JV] 数据手册。
 
 `recovery.bin` 的 `config.txt` 中的 `eeprom_write_protect` 设置。
 
 |===
-| Value | Description
+| 值 | 描述
 
 | 1
 | 配置写保护区域以覆盖整个 EEPROM。
@@ -244,16 +243,16 @@ Default: `1`
 
 Default: `1`
 
-=== Secure Boot configuration properties
+=== 安全引导配置属性
 
 [.whitepaper, title="如何使用 Raspberry Pi 安全启动", subtitle="", link=https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-003466-WP/Boot-Security-Howto.pdf]
 ****
-本白皮书介绍如何在基于 Raspberry Pi 4 的设备上实现安全启动。有关我们实现安全启动实施方法的概述，请参阅 https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-004651-WP/Raspberry-Pi-4-Boot-Security.pdf[Raspberry Pi 4 Boot Security] 白皮书。安全启动系统适用于基于  `buildroot` 的操作系统镜像；不建议或不支持将其用于 Raspberry Pi OS。
+本白皮书介绍如何在基于 Raspberry Pi 4 的设备上实现安全启动。有关我们实现安全启动实施方法的概述，请参阅 https://pip.raspberrypi.com/categories/685-whitepapers-app-notes/documents/RP-004651-WP/Raspberry-Pi-4-Boot-Security.pdf[Raspberry Pi 4 安全启动] 白皮书。安全启动系统适用于基于  `buildroot` 的操作系统镜像；不建议或不支持将其用于 Raspberry Pi OS。
 ****
 
-下面的 `config.txt` 属性用于对 `secure-boot` OTP 设置进行编程。这些更改是不可逆的，只能在刷新引导加载程序 EEPROM 映像时通过 `RPIBOOT` 进行编程。这可确保 "安全启动 "无法通过远程或意外插入过期 SD 卡映像进行设置。
+下面的 `config.txt` 属性用于对 `secure-boot` OTP 设置进行编程。这些更改是不可逆的，只能在刷新引导加载程序 EEPROM 映像时通过 `RPIBOOT` 进行编程。这可确保 "安全启动" 无法通过远程或意外插入过期 SD 卡映像进行设置。
 
-有关启用 `secure-boot` 的更多信息，请参阅 https://github.com/raspberrypi/usbboot[USBBOOT] repo 中的 https://github.com/raspberrypi/usbboot/blob/master/Readme.md#secure-boot[Secure Boot readme] 和 https://github.com/raspberrypi/usbboot/blob/master/secure-boot-example/README.md[Secure Boot tutorial]。
+有关启用 `secure-boot` 的更多信息，请参阅 https://github.com/raspberrypi/usbboot[USBBOOT] 库中的 https://github.com/raspberrypi/usbboot/blob/master/Readme.md#secure-boot[安全启动须知] 和 https://github.com/raspberrypi/usbboot/blob/master/secure-boot-example/README.md[安全启动指引]。
 
 [[program_pubkey]]
 ==== `program_pubkey`
@@ -272,7 +271,7 @@ Default: `0`
 [[program_rpiboot_gpio]]
 ==== `program_rpiboot_gpio`
 
-计算模块有一个专用的 `nRPIBOOT` 跳线，用于选择 `RPIBOOT` 模式。带有 EEPROM 的旗舰版和键盘版 Raspberry Pi 设备没有专用的 `nRPIBOOT` 跳线。要在旗舰版和键盘版设备上选择 `RPIBOOT` 模式，请将下列 GPIO 引脚之一拉低：
+Compute Module有一个专用的 `nRPIBOOT` 跳线，用于选择 `RPIBOOT` 模式。带有 EEPROM 的旗舰版和键盘版 Raspberry Pi 设备没有专用的 `nRPIBOOT` 跳线。要在旗舰版和键盘版设备上选择 `RPIBOOT` 模式，请将下列 GPIO 引脚之一拉低：
 
 * `2`
 * `4`
