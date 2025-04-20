@@ -110,7 +110,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 
 [cols="m,^,^,^,^,^,^,^,^,^,^"]
 |===
-| Option | Pi 0/W | Pi1 | Pi2 | Pi3 | Pi3A+/Pi3B+ | CM4 & Pi4B <= R1.3 | Pi4B R1.4 | Pi 400 | Pi Zero 2 W | Pi 5
+| 选项 | Pi 0/W | Pi1 | Pi2 | Pi3 | Pi3A+/Pi3B+ | CM4 & Pi4B <= R1.3 | Pi4B R1.4 | Pi 400 | Pi Zero 2 W | Pi 5
 
 | arm_freq
 | 1000
@@ -286,7 +286,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 
 [cols="m,^"]
 |===
-| Option | Default
+| 选项 | 默认值
 
 | initial_turbo
 | 0 (seconds)
@@ -321,7 +321,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 系统空闲时的最小核心频率必须足够快，以支持显示器的最高像素时钟（忽略消隐）。因此，如果显示模式为4Kp60， `core_freq` 将被提升到500 MHz以上。
 
 |===
-| Display option | Max `core_freq` 
+| 视频选项 | `core_freq` 最大值 
 
 | Default
 | 500
