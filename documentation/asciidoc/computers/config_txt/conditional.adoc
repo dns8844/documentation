@@ -14,7 +14,7 @@
 条件型号过滤器根据下表应用。
 
 |===
-| Filter | Applicable model(s)
+| 过滤器 | 对应型号
 
 |  `[pi1]` 
 | Model 1A, Model 1B, Model 1A+, Model 1B+, Compute Module 1
@@ -184,9 +184,9 @@ NOTE: 在某些Raspberry Pi型号上，前8个十六进制数字包含 `0` 以�
 [source,ini]
 ----
 [0x12345678]
-# settings here are applied only to the Raspberry Pi with this serial
+# 此处的设置仅适用于使用此串行接口的 Raspberry Pi
 [all]
-# settings here are applied to all hardware
+# 这里的设置适用于所有硬件
 ----
 
 === GPIO过滤器
