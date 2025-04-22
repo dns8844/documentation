@@ -7,7 +7,7 @@
 设置 `enable_jtag_gpio=1` 会为GPIO引脚22-27选择Alt4模式，并设置一些内部SoC连接，为Arm CPU启用JTAG接口。它适用于所有型号的树莓派。
 
 |===
-| Pin # | Function
+| 引脚 # | 功能
 
 | GPIO22
 | ARM_TRST

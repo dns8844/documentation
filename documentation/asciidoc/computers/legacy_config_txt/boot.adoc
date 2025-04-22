@@ -1,5 +1,5 @@
 == 旧版引导选项
-（另请参见 xref:config_txt.adoc#boot-options[config.txt Boot Options]。）
+（另请参见 xref:config_txt.adoc#boot-options[config.txt 引导选项]。）
 
 [[start_x-start_debug]]
 === `start_x` , `start_debug` 
