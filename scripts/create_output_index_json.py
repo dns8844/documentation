@@ -69,4 +69,4 @@ if __name__ == "__main__":
             print("WARNING: no default_tab set in {} so index page will look odd".format(input_json))
 
         with(open(output_json, 'w')) as output_fh:
-            json.dump(data, output_fh, indent=4, ensure_ascii=False)
+            json.dump(data, output_fh, indent=4)

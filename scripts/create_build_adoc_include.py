@@ -38,7 +38,7 @@ if __name__ == "__main__":
         template_vars = {
             'github_edit_link': os.path.join(site_config['githuburl'], 'blob', site_config['githubbranch_edit'], src_adoc)
         }
-        edit_text = re.sub(r'{{\s*([\u4e00-\u9fff\w]+)\s*}}', lambda m: template_vars[m.group(1)], edit_template)
+        edit_text = re.sub(r'{{\s*(\w+)\s*}}', lambda m: template_vars[m.group(1)], edit_template)
 
     with open(src_adoc) as in_fh:
         new_contents = ''
