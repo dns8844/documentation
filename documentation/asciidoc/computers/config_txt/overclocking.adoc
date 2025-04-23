@@ -1,108 +1,107 @@
 [[overclocking-options]]
 == 超频选项
 
-内核有一个 https://www.kernel.org/doc/html/latest/admin-guide/pm/cpufreq.html[CPUFreq]驱动程序，默认情况下启用省电调速器，当安装 xref:configuration.adoc#raspi-config[raspi-config] 时，在启动过程中切换为按需调速器。使用按需调速器后，CPU 频率将随处理器负载而变化。您可以使用 `*_min` 配置选项调整最小值，或通过应用静态缩放调速器（powersave 或 performance）或 `force_turbo=1` 来禁用动态时钟。
+内核有一个名为 https://www.kernel.org/doc/html/latest/admin-guide/pm/cpufreq.html[CPUFreq] 驱动程序，默认情况下启用节能调速器，当安装 xref:configuration.adoc#raspi-config[raspi-config] 时，在启动过程中切换为按需调速器。使用按需调速器后，CPU 频率将随处理器负载而变化。您可以使用 `*_min` 配置选项调整最小值，或通过应用静态缩放调速器（powersave 或 performance）或 `force_turbo=1` 来禁用动态时钟。
 
 当 SoC 达到 `temp_limit`（见下文）（默认值为 85°C）时，超频和过压将在运行时被禁用，以降低 SoC 的发热量。Raspberry Pi 1 和 Raspberry Pi 2 应该不会达到这一上限，但 Raspberry Pi 3 及更新版本则更有可能达到这一上限。当检测到电压不足时，超频和过压也会被禁用。
 
 NOTE: 更多信息 xref:raspberry-pi.adoc#frequency-management-and-thermal-control[参见频率管理和热控制部分]。
 
-WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi-config`]所用值以外的值，可能会在 SoC 内设置一个永久位。这样就有可能检测到你的 Raspberry Pi 曾经超频。当 `force_turbo` 设置为 `1`，并且任何 `over_voltage_*` 选项设置为 `0` 以上时，超频位就会设置。更多信息，请参阅 https://www.raspberrypi.com/news/introducing-turbo-mode-up-to-50-more-performance-for-free/[关于 Turbo 模式的博文]。
+WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi-config`] 所用值以外的值，可能会在 SoC 内设置一个永久位。这样就有可能检测到你的 Raspberry Pi 曾经超频。当 `force_turbo` 设置为 `1`，并且任何 `over_voltage_*` 选项设置为 `0` 以上时，超频位就会设置。更多信息，请参阅 https://www.raspberrypi.com/news/introducing-turbo-mode-up-to-50-more-performance-for-free/[关于 Turbo 模式的博文]。
 
 [[overclocking]]
 === 超频
 
 [cols="1m,3"]
 |===
-| Option | Description
+| 选项 | 描述
 
 | arm_freq
-| Frequency of the ARM CPU in MHz.
+| ARM CPU 的频率，单位为MHz.
 
 | arm_boost
-| Increases `arm_freq` to the highest supported frequency for the board-type and firmware. Set to `1` to enable.
+| 将 `arm_boost` 增加到型号和固件的最高支持频率. 设置为 `1` 表示使能.
 
 | gpu_freq
-| Sets `core_freq`, `h264_freq`, `isp_freq`, `v3d_freq` and `hevc_freq` together.
+| 同时设置 `core_freq`, `h264_freq`, `isp_freq`, `v3d_freq` 和 `hevc_freq` .
 
 | core_freq
-| Frequency of the GPU processor core in MHz. Influences CPU performance because it drives the L2 cache and memory bus; the L2 cache benefits only Raspberry Pi Zero/Raspberry Pi Zero W/Raspberry Pi 1; and there is a small benefit for SDRAM on Raspberry Pi 2 and Raspberry Pi 3. See section below for use on Raspberry Pi 4.
+| GPU 处理器内核的频率（MHz）。影响 CPU 性能，因为它驱动二级缓存和内存总线；二级缓存仅对 Raspberry Pi Zero/Raspberry Pi Zero W/Raspberry Pi 1 有利；SDRAM 对 Raspberry Pi 2 和 Raspberry Pi 3 有微小的好处。有关在 Raspberry Pi 4 上的使用，请参阅下面的章节。
 
 | h264_freq
-| Frequency of the hardware video block in MHz; individual override of the `gpu_freq` setting.
+| 硬件视频块的频率（MHz）；可单独覆盖 `gpu_freq` 设置。
 
 | isp_freq
-| Frequency of the image sensor pipeline block in MHz; individual override of the `gpu_freq` setting.
+| 图像传感器流水线块的频率（MHz）；可单独覆盖 `gpu_freq` 设置。
 
 | v3d_freq
-| Frequency of the 3D block in MHz; individual override of the `gpu_freq` setting. On Raspberry Pi 5, V3D is independent of `core_freq`, `isp_freq`  and `hevc_freq`.
+| 3D 块的频率（以 MHz 为单位）；可单独覆盖 `gpu_freq` 设置。在 Raspberry Pi 5 上，V3D 独立于 `core_freq`、 `isp_freq` 和 `hevc_freq`。
 
 | hevc_freq
-| Frequency of the High Efficiency Video Codec block in MHz; individual override of the `gpu_freq` setting. Raspberry Pi 4 only.
+| 高效视频编解码器块的频率（MHz）；可单独覆盖 “gpu_freq ”设置。仅限 Raspberry Pi 4。
 
 | sdram_freq
-| Frequency of the SDRAM in MHz. SDRAM overclocking on Raspberry Pi 4 or newer is not supported.
+| SDRAM 频率（MHz）。Raspberry Pi 4 或更新版本不支持 SDRAM 超频。
 
 | over_voltage
-| CPU/GPU core upper voltage limit. The value should be in the range [-16,8] which equates to the range [0.95V,1.55V] ([0.8,1.4V] on Raspberry Pi 1) with 0.025V steps. In other words, specifying -16 will give 0.95V (0.8V on Raspberry Pi 1) as the maximum CPU/GPU core voltage, and specifying 8 will allow up to 1.55V (1.4V on Raspberry Pi 1). For defaults, see the table below. Values above 6 are only allowed when `force_turbo=1` is specified: this sets the warranty bit if `over_voltage_*` > `0` is also set.
+| CPU/GPU 内核电压上限。该值的范围应为 [-16,8]，相当于 [0.95V,1.55V]（Raspberry Pi 1 为 [0.8,1.4V]），步长为 0.025V。换句话说，指定 -16 时，CPU/GPU 内核电压上限为 0.95V（Raspberry Pi 1 为 0.8V）；指定 8 时，CPU/GPU 内核电压上限为 1.55V（Raspberry Pi 1 为 1.4V）。有关默认值，请参见下表。只有指定了 `force_turbo=1` 时，才允许电压值超过 6：如果同时设置了 `over_voltage_*` > `0`，则会设置warranty bit。
 
 | over_voltage_sdram
-| Sets `over_voltage_sdram_c`, `over_voltage_sdram_i`, and `over_voltage_sdram_p` together.
+| 同时设置 `over_voltage_sdram_c`、`over_voltage_sdram_i` 和 `over_voltage_sdram_p`。
 
 | over_voltage_sdram_c
-| SDRAM controller voltage adjustment. [-16,8] equates to [0.8V,1.4V] with 0.025V steps. Not supported on Raspberry Pi 4 or later devices.
+| SDRAM 控制器电压调整。[-16,8]相当于[0.8V,1.4V]，步长为 0.025V。不支持 Raspberry Pi 4 或更高版本设备。
 
 | over_voltage_sdram_i
-| SDRAM I/O voltage adjustment. [-16,8] equates to [0.8V,1.4V] with 0.025V steps. Not supported on Raspberry Pi 4 or later devices.
+| SDRAM I/O 电压调整。[-16,8]相当于[0.8V,1.4V]，步长为 0.025V。不支持 Raspberry Pi 4 或更高版本设备。
 
 | over_voltage_sdram_p
-| SDRAM phy voltage adjustment. [-16,8] equates to [0.8V,1.4V] with 0.025V steps. Not supported on Raspberry Pi 4 or later devices.
+| SDRAM phy 电压调整。[-16,8]相当于[0.8V,1.4V]，步长为 0.025V。不支持 Raspberry Pi 4 或更高版本设备。
  
 | force_turbo
-| Forces turbo mode frequencies even when the ARM cores are not busy. Enabling this may set the warranty bit if `over_voltage_*` is also set.
+| 即使 ARM 内核不忙，也会强制使用涡轮模式频率。如果同时设置了`over_voltage_*`，则启用此功能可能会设置保证位。
 
 | initial_turbo
-| Enables https://forums.raspberrypi.com/viewtopic.php?f=29&t=6201&start=425#p180099[turbo mode from boot] for the given value in seconds, or until `cpufreq` sets a frequency. The maximum value is `60`. The November 2024 firmware update made the following changes:
+| 启用 https://forums.raspberrypi.com/viewtopic.php?f=29&t=6201&start=425#p180099[启动时的涡轮增压模式]，持续时间为给定值（以秒为单位），或直到 `cpufreq` 设置频率。最大值为 `60`。2024 年 11 月的固件更新做出了以下更改：
 
-* changed the default from `0` to `60` to reduce boot time
-* switched the kernel CPU performance governor from `powersave` to `ondemand`
-
+* 将默认值从 `0` 改为 `60`，以缩短启动时间
+* 将内核 CPU 性能管理器从 `powersave` 改为 `ondemand`
 
 | arm_freq_min
-| Minimum value of `arm_freq` used for dynamic frequency clocking. Note that reducing this value below the default does not result in any significant power savings, and is not currently supported.
+| 用于动态频率时钟的 `arm_freq` 最小值。请注意，将该值降至默认值以下并不会显著降低功耗，目前也不支持该功能
 
 | core_freq_min
-| Minimum value of `core_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `core_freq` 最小值。
 
 | gpu_freq_min
-| Minimum value of `gpu_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `gpu_freq` 最小值。
 
 | h264_freq_min
-| Minimum value of `h264_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `h264_freq` 最小值。
 
 | isp_freq_min
-| Minimum value of `isp_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `isp_freq` 最小值。
 
 | v3d_freq_min
-| Minimum value of `v3d_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `v3d_freq` 最小值。
 
 | hevc_freq_min
-| Minimum value of `hevc_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `hevc_freq` 最小值。
 
 | sdram_freq_min
-| Minimum value of `sdram_freq` used for dynamic frequency clocking.
+| 用于动态频率时钟的 `sdram_freq` 最小值。
 
 | over_voltage_min
-| Minimum value of `over_voltage` used for dynamic frequency clocking. The value should be in the range [-16,8] which equates to the range [0.8V,1.4V] with 0.025V steps. In other words, specifying -16 will give 0.8V as the CPU/GPU core idle voltage, and specifying 8 will give a minimum of 1.4V. This setting is deprecated on Raspberry Pi 4 and Raspberry Pi 5.
+| 用于动态频率时钟的 `over_voltage` 的最小值。该值应在 [-16,8] 范围内，相当于 [0.8V,1.4V]，步进为 0.025V。换句话说，指定 -16 时，CPU/GPU 内核空闲电压为 0.8V，指定 8 时，最低电压为 1.4V。此设置在 Raspberry Pi 4 和 Raspberry Pi 5 上已被弃用。
 
 | over_voltage_delta
-| On Raspberry Pi 4 and Raspberry Pi 5 the over_voltage_delta parameter adds the given offset in microvolts to the number calculated by the DVFS algorithm.
+| 在 Raspberry Pi 4 和 Raspberry Pi 5 上，over_voltage_delta 参数将以微伏为单位的给定偏移量添加到 DVFS 算法计算的数值中。
 
 | temp_limit
-| Overheat protection. This sets the clocks and voltages to default when the SoC reaches this value in degree Celsius. Values over 85 are clamped to 85.
+| 过热保护。当 SoC 达到该值（摄氏度）时，会将时钟和电压设置为默认值。超过 85 的值会被箝位到 85。
 
 | temp_soft_limit
-| *3A+/3B+ only*. CPU speed throttle control. This sets the temperature at which the CPU clock speed throttling system activates. At this temperature, the clock speed is reduced from 1400MHz to 1200MHz.  Defaults to `60`, can be raised to a maximum of `70`, but this may cause instability.
+| *仅限 3A+/3B+*。CPU 速度节流控制。该选项设置 CPU 时钟速度节流系统启动时的温度。在此温度下，时钟速度将从 1400MHz 降至 1200MHz。 默认设置为 `60`，最大可升至 `70`，但可能会导致不稳定。
 |===
 
 
@@ -111,7 +110,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 
 [cols="m,^,^,^,^,^,^,^,^,^,^"]
 |===
-| Option | Pi 0/W | Pi1 | Pi2 | Pi3 | Pi3A+/Pi3B+ | CM4 & Pi4B <= R1.3 | Pi4B R1.4 | Pi 400 | Pi Zero 2 W | Pi 5
+| 选项 | Pi 0/W | Pi1 | Pi2 | Pi3 | Pi3A+/Pi3B+ | CM4 & Pi4B <= R1.3 | Pi4B R1.4 | Pi 400 | Pi Zero 2 W | Pi 5
 
 | arm_freq
 | 1000
@@ -287,7 +286,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 
 [cols="m,^"]
 |===
-| Option | Default
+| 选项 | 默认值
 
 | initial_turbo
 | 0 (seconds)
@@ -322,7 +321,7 @@ WARNING: 将任何超频参数设置为 xref:configuration.adoc#overclock[`raspi
 系统空闲时的最小核心频率必须足够快，以支持显示器的最高像素时钟（忽略消隐）。因此，如果显示模式为4Kp60， `core_freq` 将被提升到500 MHz以上。
 
 |===
-| Display option | Max `core_freq` 
+| 视频选项 | `core_freq` 最大值 
 
 | Default
 | 500
