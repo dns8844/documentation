@@ -1,2 +1,2 @@
 [.edit-link]
-在 {{ github_edit_link }}[GitHub] 上修改
+Edit this {{ github_edit_link }}[on GitHub]

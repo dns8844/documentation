@@ -13,15 +13,15 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 树莓派中文文档
+title: Raspberry Pi Documentation
 description: >- # this means to ignore newlines until "baseurl:"
-  树莓派中文文档.
+  Raspberry Pi Documentation.
 baseurl: "/documentation" # the subpath of your site, e.g. /blog
-url: "http://raspberrypi.dns8844.cn/" # the base hostname & protocol for your site, e.g. http://example.com
-githuburl: "https://github.com/dns8844/documentation/"
-mainsite: "http://raspberrypi.dns8844.cn/"
+url: "https://www.raspberrypi.com/documentation" # the base hostname & protocol for your site, e.g. http://example.com
+githuburl: "https://github.com/raspberrypi/documentation/"
+mainsite: https://raspberrypi.com/
 githubbranch: master
-githubbranch_edit: devlop-zh
+githubbranch_edit: develop
 
 # Build settings
 theme: minima

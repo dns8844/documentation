@@ -202,4 +202,4 @@ def expand(string, vars, local_vars={}):
         if var == '$':
             return '$'
         return local_vars.get(var, vars.get(var, ''))
-    return re.sub(r'\$(\$|[\u4e00-\u9fff\w]*)', exp, string)
+    return re.sub(r'\$(\$|\w*)', exp, string)

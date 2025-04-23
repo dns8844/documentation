@@ -16,17 +16,16 @@ file_headings = dict()
 def heading_to_anchor(filepath, heading, anchor):
     if anchor is None:
         # The replace(' -- ', '') is needed because AsciiDoc transforms ' -- ' to '&#8201;&#8212;&#8201;' (narrow-space, em-dash, narrow-space) which then collapses down to '' when calculating the anchor
-        anchor = re.sub(r'\-+', '-', re.sub(r'[^-^\u4e00-\u9fa5^\w]', '', heading.lower().replace(' -- ', '').replace(' ', '-').replace('.', '-')))
+        anchor = re.sub(r'\-+', '-', re.sub(r'[^-\w]', '', heading.lower().replace(' -- ', '').replace(' ', '-').replace('.', '-')))
+        # remove any context tags that slipped into the anchor
         anchor = re.sub(r'(strong-classcontexttag-)(rp\d+)(rp\d+strong)', '\\2', anchor)
     if filepath not in file_headings:
         file_headings[filepath] = set()
     proposed_anchor = anchor
-
     num = 1 # this isn't a logic bug, the first duplicate anchor gets suffixed with "-2"
     while proposed_anchor in file_headings[filepath]:
         num += 1
         proposed_anchor = '{}-{}'.format(anchor, num)
-        # print(f"{proposed_anchor} = ' - '.format({anchor}, {num})")        
     file_headings[filepath].add(proposed_anchor)
     return proposed_anchor
 
@@ -134,13 +133,13 @@ if __name__ == "__main__":
                                         newlevel = len(m.group(1))
                                         # Need to compute anchors for *every* header (updates file_headings)
                                         heading = strip_adoc(m.group(2))
+                                        heading = re.sub(r"(\[\.contexttag )(\S+)(\]\*\S+\*)", "<strong class=\"contexttag \\2\">\\2</strong>", heading)
                                         anchor = heading_to_anchor(top_level_file, heading, header_id)
                                         if anchor in available_anchors[fullpath]:
                                             raise Exception("Anchor {} appears twice in {}".format(anchor, fullpath))
                                         available_anchors[fullpath].add(anchor)
                                         if min_level <= newlevel <= max_level and not last_line_was_discrete:
                                             entry = {'heading': heading, 'anchor': anchor}
-                                            # print(anchor,heading)
                                             if newlevel > level:
                                                 nav[-1]['sections'][-1]['subsections'] = []
                                             level = newlevel
@@ -170,4 +169,4 @@ if __name__ == "__main__":
                             raise Exception("{} has an internal-link to {}#{} but that anchor doesn't exist. Available anchors: {}".format(filepath, adjusted_url, linkinfo['anchor'], ', '.join(sorted(available_anchors[adjusted_url]))))
 
         with open(output_json, 'w') as out_fh:
-            json.dump(output_data, out_fh, indent=4, ensure_ascii=False)
+            json.dump(output_data, out_fh, indent=4)

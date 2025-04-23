@@ -23,7 +23,6 @@ group :jekyll_plugins do
   gem 'jekyll-asciidoc'
   gem 'asciidoctor'
   gem 'asciidoctor-tabs', ">= 1.0.0.beta.6"
-  gem 'asciidoctor-bilibili'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
