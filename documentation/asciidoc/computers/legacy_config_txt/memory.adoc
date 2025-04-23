@@ -8,7 +8,7 @@ NOTE: Raspberry Pi 5 不会代表操作系统分配 GPU 内存，因此以下设
 
 指定为GPU独占使用预留多少内存（以兆字节为单位）：剩余内存分配给Arm CPU供操作系统使用。对于内存小于1GB的Raspberry Pi，默认值为 `64` ；对于内存为1GB或更多的Raspberry Pi，默认值为 `76` 。
 
-IMPORTANT: 与x86机器上的GPU不同，增加内存可以提高3D性能，VideoCore的架构意味着*分配超过必要内存不会提高3D性能*，这样做实际上会损害性能。
+IMPORTANT: 与x86机器上的GPU不同，增加内存可以提高3D性能，VideoCore的架构意味着 *分配超过必要内存不会提高3D性能*，这样做实际上会损害性能。
 
 为确保Linux的最佳性能，您应该将 `gpu_mem` 设置为尽可能低的值。如果特定图形功能无法正常工作，请尝试增加 `gpu_mem` 的值，同时注意下面显示的推荐最大值。
 
@@ -19,7 +19,7 @@ IMPORTANT: 与x86机器上的GPU不同，增加内存可以提高3D性能，Vide
 建议的最大值如下：
 
 |===
-| total RAM | `gpu_mem` recommended maximum
+| 总 RAM | `gpu_mem` 推荐最大值
 
 | 256MB
 |  `128` 
@@ -27,8 +27,8 @@ IMPORTANT: 与x86机器上的GPU不同，增加内存可以提高3D性能，Vide
 | 512MB
 |  `384` 
 
-| 1GB or greater
-| `512` , `76` on the Raspberry Pi 4
+| 1GB 或更大
+| 在Raspberry Pi 4上配置 `512` , `76` 
 |===
 
 IMPORTANT: 树莓派操作系统上的相机堆栈（libcamera）使用LinuxCMA内存来分配缓冲区，而不是GPU内存，因此增加GPU内存大小没有好处。
