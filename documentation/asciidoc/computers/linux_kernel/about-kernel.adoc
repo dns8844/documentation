@@ -1,8 +1,8 @@
 [[kernel]]
 == 简介
 
-Raspberry Pi 内核是 https://github.com/raspberrypi/linux[托管在 GitHub 上]；更新滞后于上游 https://github.com/torvalds/linux[Linux内核]。上游内核持续更新，而 Raspberry Pi 则将 Linux 内核的**长期版本**整合到 Raspberry Pi 内核中。我们在 https://github.com/raspberrypi/firmware/[raspberrypi/firmware]中为每个长期发布的 Linux 内核生成一个 `next` 分支。经过广泛的测试和讨论后，我们会将每个 `next` 分支合并到我们版本库的主分支中。
+Raspberry Pi 内核是 https://github.com/raspberrypi/linux[托管在 GitHub 上]；更新滞后于上游 https://github.com/torvalds/linux[Linux内核]。上游内核持续更新，而 Raspberry Pi 则将 Linux 内核的 **长期版本** 整合到 Raspberry Pi 内核中。我们在 https://github.com/raspberrypi/firmware/[raspberrypi/firmware]中为每个长期发布的 Linux 内核生成一个 `next` 分支。经过广泛的测试和讨论后，我们会将每个 `next` 分支合并到我们版本库的主分支中。
 
 == 更新
 
-通常的树莓派操作系统 xref:os.adoc#update-software[update process] 会自动将内核更新到最新的稳定版本。如果你想尝试最新的不稳定测试内核，可以 xref:os.adoc#rpi-update[手动更新]。
+通常的树莓派操作系统 xref:os.adoc#update-software[更新程序] 会自动将内核更新到最新的稳定版本。如果你想尝试最新的不稳定测试内核，可以 xref:os.adoc#rpi-update[手动更新]。

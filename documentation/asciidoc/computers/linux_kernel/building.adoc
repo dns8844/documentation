@@ -1,7 +1,7 @@
 [[building]]
 == 构建内核
 
-操作系统随附的默认编译器和链接器被配置为构建在该操作系统上运行的可执行文件。 **原生编译** 使用这些默认编译器和链接器。**交叉编译** 是为运行编译过程的目标之外的目标编译代码的过程。
+操作系统预装的默认编译器和链接器被配置为构建在该操作系统上运行的可执行文件。 **原生编译** 使用这些默认编译器和链接器。**交叉编译** 是为运行编译过程的目标之外的目标编译代码的过程。
 
 Raspberry Pi 内核的交叉编译允许你从 32 位操作系统构建 64 位内核，反之亦然。或者，你也可以从 Raspberry Pi 以外的设备交叉编译 32 位或 64 位 Raspberry Pi 内核。
 
@@ -37,7 +37,7 @@ $ git clone --depth=1 https://github.com/raspberrypi/linux
 $ git clone --depth=1 --branch <branch> https://github.com/raspberrypi/linux
 ----
 
-有关可用分支的完整列表，请参阅 https://github.com/raspberrypi/linux [the Raspberry Pi kernel repository]。
+有关可用分支的完整列表，请查看 https://github.com/raspberrypi/linux[树莓派内核库]。
 ====
 
 现在你有了内核源代码，请通过 xref:linux_kernel.adoc#natively-build-a-kernel[本机] 或 xref:linux_kernel.adoc#cross-compile-the-kernel[交叉编译] 构建一个新内核。
@@ -66,7 +66,7 @@ $ sudo apt install bc bison flex libssl-dev make
 
 [cols="8,<.^20a,60a"]
 |===
-| Architecture | Model | Command
+| 架构 | 型号 | 命令
 
 .12+^.^| 64-bit
 | Raspberry Pi 3
@@ -148,9 +148,9 @@ $ make bcm2711_defconfig
 [[native-customisation]]
 ==== 使用 `LOCALVERSION` 自定义内核版本
 
-为防止内核覆盖 `/lib/modules` 中的现有模块，并在 `uname` 输出中说明运行的是自己的内核，请调整 `LOCALVERSION`。
+为防止内核覆盖 `/lib/modules` 中的现有模块，并在 `uname` 输出中说明运行的是自己的内核，请修改 `LOCALVERSION`。
 
-要调整 `LOCALVERSION`，请修改 `.config` 中的以下一行：
+要修改 `LOCALVERSION`，请修改 `.config` 中此行：
 [source,ini]
 ----
 CONFIG_LOCALVERSION="-v7l-MY_CUSTOM_KERNEL"
@@ -177,7 +177,7 @@ $ make -j6 Image.gz modules dtbs
 $ make -j6 zImage modules dtbs
 ----
 
-提示：在多核 Raspberry Pi 型号上， `make -j<n>` 选项可在不同内核之间分配工作。这会大大加快编译速度。运行 `nproc` 查看你有多少个处理器；我们建议使用处理器数量 1.5 倍的数字。
+提示：在多核 Raspberry Pi 型号上， `make -j<n>` 选项可在不同内核之间分配工作。这会大大加快编译速度。运行 `nproc` 查看你有多少个处理器；我们建议使用处理器乘以 1.5。
 
 [[native-install]]
 ==== 安装内核
@@ -195,7 +195,7 @@ TIP: 如果不想在运行此命令的 Raspberry Pi 上安装刚编译好的内�
 
 安装 64 位内核：
 
-* 运行以下命令创建当前内核的备份镜像，安装新的内核镜像、覆盖层、README，并卸载分区：
+* 运行以下命令创建当前内核的备份镜像，安装新的内核镜像、overlays、README，并卸载分区：
 +
 [source,console]
 ----
@@ -228,7 +228,7 @@ $ sudo cp arch/arm/boot/dts/*.dtb /boot/firmware/
 ----
 $ sudo cp arch/arm/boot/dts/broadcom/*.dtb /boot/firmware/
 ----
-. 最后，复制覆盖层和 README：
+. 最后，复制 overlays 和 README：
 +
 [source,console]
 ----
@@ -298,7 +298,7 @@ $ sudo apt install crossbuild-essential-armhf
 
 [cols="8,<.^20a,60a"]
 |===
-| Target Architecture | Target Model | Command
+| 目标架构 | 目标产品 | 命令
 
 .10+^.^| 64-bit
 | Raspberry Pi 3
@@ -370,16 +370,16 @@ $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcm2711_defconfig
 [[cross-compiled-customisation]]
 ==== 使用 `LOCALVERSION` 自定义内核版本
 
-为防止内核覆盖 `/lib/modules` 中的现有模块，并在 `uname` 输出中说明运行的是自己的内核，请调整 `LOCALVERSION`。
+为防止内核覆盖 `/lib/modules` 中的现有模块，并在 `uname` 输出中表明运行的是自己的内核，请调整 `LOCALVERSION` 内容。
 
-要调整 `LOCALVERSION`，请修改 `.config` 中的以下一行：
+要修改 `LOCALVERSION`，请修改 `.config` 中的此行：
 
 [source,ini]
 ----
 CONFIG_LOCALVERSION="-v7l-MY_CUSTOM_KERNEL"
 ----
 
-TIP: 你也可以在 *General setup* > *Local version - append to kernel release* 中使用 `menuconfig` 以图形方式更改这一设置。有关  `menuconfig` 的更多信息，请参阅 xref:linux_kernel.adoc#configure-the-kernel[内核配置说明]。
+TIP: 你也可以在 *General setup* > *Local version - append to kernel release* 中使用 `menuconfig` 以图形方式更改这一设置。有关 `menuconfig` 的更多信息，请参阅 xref:linux_kernel.adoc#configure-the-kernel[内核配置说明]。
 
 [[cross-compiled-build]]
 ==== Build
@@ -450,7 +450,7 @@ TIP: 在多核设备上， `make -j<n>` 选项可在各核之间分配工作。�
 
 安装 64 位内核：
 
-* 运行以下命令创建当前内核的备份镜像，安装新的内核镜像、覆盖层、README，并卸载分区：
+* 运行以下命令创建当前内核的备份镜像，安装新的内核镜像、overlays、README，并卸载分区：
 +
 [source,console]
 ----
@@ -486,7 +486,7 @@ $ sudo cp arch/arm/boot/dts/*.dtb mnt/boot/
 ----
 $ sudo cp arch/arm/boot/dts/broadcom/*.dtb mnt/boot/
 ----
-. 最后，安装覆盖层和 README，并卸载分区：
+. 最后，安装overlays和 README，并卸载分区：
 +
 [source,console]
 ----
@@ -508,5 +508,5 @@ $ sudo umount mnt/root
 kernel=kernel-myconfig.img
 ----
 
-将此方法与自定义的 `LOCALVERSION` 相结合，可将自定义内核与系统管理的原版内核映像分开。有了这种安排，当你的内核无法启动时，你就可以迅速恢复到原版内核。
+将此方法与自定义的 `LOCALVERSION` 相结合，可将自定义内核与系统管理的原版内核映像分开。有了这种方法，当你的内核无法启动时，你就可以迅速恢复到原版内核。
 ====
