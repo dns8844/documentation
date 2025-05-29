@@ -214,7 +214,7 @@ TIP: 上面的命令假定您以前从未授权任何密钥访问您的Raspberry
 
 出现提示时，在Raspberry Pi上输入您的用户帐户的密码。
 
-然后，_onRaspberryPi_，配置 `authorized_keys` 文件的权限：
+然后在树莓派上，配置 `authorized_keys` 文件的权限：
 
 [source,console]
 ----
