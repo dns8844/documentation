@@ -20,10 +20,10 @@
 +
 要在全新安装的 Raspberry Pi OS 上配置 SSH：
 +
-. 按照 xref:../computers/getting-started.adoc#raspberry-pi-imager[Install with Imager] 指南中的说明操作。
-. 在**操作系统自定义**步骤中，导航至**服务**选项卡。
-. 勾选**启用 SSH**复选框。
-. 选择**密码验证**，使用与实际使用 Raspberry Pi 时相同的用户名和密码登录。选择 **Allow public-key authentication only** 以 xref:remote-access.adoc#configure-ssh-without-a-password[配置 SSH 密钥] 进行无密码登录。
+. 按照 xref:../computers/getting-started.adoc#raspberry-pi-imager[安装Imager] 指南中的说明操作。
+. 在 **操作系统自定义** 步骤中，导航至 **服务** 选项卡。
+. 勾选 **启用 SSH** 复选框。
+. 选择 **密码验证**，使用与实际使用 Raspberry Pi 时相同的用户名和密码登录。选择 **Allow public-key authentication only** 以 xref:remote-access.adoc#configure-ssh-without-a-password[配置 SSH 密钥] 进行无密码登录。
 
 
 从终端使能SSH::
@@ -203,7 +203,7 @@ $ mkdir .ssh
 $ chmod 700 .ssh
 ----
 
-_On您通常的computer_，使用 `scp` 将您的公钥复制到Raspberry Pi上名为 `.ssh/authorized_keys` 的文件中：
+在您通常的设备上，使用 `scp` 将您的公钥复制到Raspberry Pi上名为 `.ssh/authorized_keys` 的文件中：
 
 [source,console]
 ----

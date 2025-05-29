@@ -1,7 +1,7 @@
 [[vnc]]
 == 使用 VNC 共享屏幕
 
-有时，使用设备进行物理操作并不方便。虚拟网络计算 (VNC) 允许您从另一台设备控制一台设备的桌面。
+有时，使用设备进行物理操作并不方便。VNC 允许您从另一台设备控制设备的桌面。
 
 VNC 依赖于客户端和服务器。客户端运行在可以进行物理交互的设备上，例如个人笔记本电脑、台式机、平板电脑或手机。服务器运行在 Raspberry Pi 上。
 使用 VNC 时，客户端向服务器发送键盘和鼠标事件。服务器在 Raspberry Pi 上执行这些事件，并向客户端返回屏幕更新。
@@ -10,7 +10,7 @@ VNC 依赖于客户端和服务器。客户端运行在可以进行物理交互�
 
 VNC 客户端在窗口中显示您的 Raspberry Pi 的桌面。您可以像在 Raspberry Pi 上工作一样与桌面交互。
 
-Raspberry Pi OS 包括 https://github.com/any1/wayvnc[wayvnc]。这提供了一个 VNC 服务器，您可以在设备首选项中启用它。
+Raspberry Pi OS 集成了 https://github.com/any1/wayvnc[wayvnc]。这提供了一个 VNC 服务器，您可以在设备首选项中启用它。
 
 在 Raspberry Pi 上使用 VNC 之前，您必须启用 VNC 服务器。
 
@@ -30,7 +30,7 @@ TIP: 启用后，您可以在 `/etc/wayvnc/` 访问 WayVNC 配置。
 image::images/raspberry-pi-configuration.png[alt="从系统托盘中的首选项菜单中选择 Raspberry Pi 配置",width="80%"]
 --
 . 导航到 *Interfaces* 选项卡。
-. 单击 *VNC* 旁边的单选按钮，使其处于活动位置。
+. 单击 *VNC* 旁边的单选按钮，启动此功能。
 +
 --
 image::images/vnc-enable.png[在接口选项卡中，单击 VNC 切换到活动位置以启用 VNC.",width="80%"]
@@ -41,7 +41,7 @@ image::images/vnc-enable.png[在接口选项卡中，单击 VNC 切换到活动�
 
 使用 xref:configuration.adoc#raspi-config[raspi-config] 在命令行上启用 VNC 服务器。
 
-. 使用以下命令打开'raspi-config'：
+. 使用以下命令打开 `raspi-config`：
 +
 [source,console]
 ----
@@ -63,7 +63,7 @@ $ sudo raspi-config
 
 如果您不知道设备的 IP 地址，请参阅 xref:remote-access.adoc#ip-address[我们关于查找 IP 地址的说明]。
 
-. 下载 https://tigervnc.org/[TigerVNC]。您可以从 https://github.com/TigerVNC/tigervnc/releases[其 GitHub 存储库的发布页面] 安装最新版本。单击最新版本中的链接，找到适合您平台的二进制文件。Windows 用户应下载 `exe` ；macOS 用户应下载 `dmg` ；Linux 用户应安装 `jar` 。
+. 下载 https://tigervnc.org/[TigerVNC]。您可以从 https://github.com/TigerVNC/tigervnc/releases[其 GitHub 存储库的发布页面] 安装最新版本。单击最新版本中的链接，找到适合您平台的二进制文件。Windows 用户应下载 `exe`、macOS 用户应下载 `dmg`、Linux 用户应安装 `jar` 。
 
 . 在您的客户端设备上，启动 TigerVNC。在 macOS 和 Windows 上，您可以双击二进制文件。在 Linux 上，使用 `sudo apt install default-jre` 安装 java，然后运行 `java -jar VncViewer-<version>.jar` ，将 `<version>` 占位符替换为您下载的版本。
 . 在 "VNC 服务器" 字段中，输入 Raspberry Pi 的 IP 地址。
@@ -71,18 +71,18 @@ $ sudo raspi-config
 --
 image::images/vnc-tigervnc-enter-ip.png[alt="将 Raspberry Pi 的本地 IP 地址输入 TigerVNC",width="60%"]
 --
-. 单击 "Options"按钮。导航至 "Input"选项卡。选中 "无光标时显示点 "旁边的复选框，确保在 TigerVNC 中始终能看到光标。
+. 单击 "Options" 按钮。导航至 "Input" 选项卡。选中 "无光标时显示点" 旁边的复选框，确保在 TigerVNC 中始终能看到光标。
 +
 --
 image::images/vnc-tigervnc-show-dot.png[alt="TigerVNC 选项，用于始终将光标呈现为点,width="60%"]
 --
-. 单击'连接'按钮以启动与服务器的连接。
-    * 如果 TigerVNC 警告您'主机名与服务器证书不匹配'，请单击"Yes"按钮继续。
+. 单击 '连接' 按钮以启动与服务器的连接。
+    * 如果 TigerVNC 警告您 '主机名与服务器证书不匹配'，请单击 "Yes" 按钮继续。
 +
 --
 image::images/vnc-tigervnc-cert-warning.png[alt="TigerVNC 警告证书不匹配",width="60%"]
 --
-* 如果 TigerVNC 警告您"certificate has been signed by an unknown authority"，请单击'是'按钮为您的 Raspberry Pi 授予例外。
+* 如果 TigerVNC 警告您"certificate has been signed by an unknown authority"，请单击 '是' 按钮为您的 Raspberry Pi 授予权限。
 +
 --
 image::images/vnc-tigervnc-cert-signer-warning.png[alt="TigerVNC 警告证书已由未知机构签名,width="60%"]

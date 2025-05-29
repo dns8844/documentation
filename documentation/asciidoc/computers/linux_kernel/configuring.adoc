@@ -1,13 +1,13 @@
 [[configure-the-kernel]]
 == 配置内核
 
-The Linux kernel is highly configurable. Advanced users may wish to modify the default configuration to customise it to their needs, such as enabling a new or experimental network protocol, or enabling support for new hardware.
+Linux内核是高度可配置的。高级用户可能希望修改默认配置，以根据其需求将其自定义，例如启用新的或实验性的网络协议，或启用对新硬件的支持
 
 配置通常通过 `make menuconfig` 界面完成。另外，您也可以手动修改 `.config` 文件，但这可能比较困难。
 
 === 准备配置
 
- `menuconfig` 工具需要 `ncurses` 开发环境头文件才能正常编译。要安装这些头文件，请运行以下命令：
+`menuconfig` 工具需要 `ncurses` 开发环境头文件才能正常编译。要安装这些头文件，请运行以下命令：
 
 [source,console]
 ----
@@ -18,7 +18,7 @@ $ sudo apt install libncurses5-dev
 
 === `menuconfig`
 
-设置好一切后，就可以编译并运行 `menuconfig` 实用程序，具体操作如下：
+设置好一切后，就可以编译并运行 `menuconfig` 程序，具体操作如下：
 
 [source,console]
 ----
@@ -43,12 +43,12 @@ $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 
 * 要按方向导航，请使用 *方向键*。
 * 要进入子菜单（用 `+--->+` 表示），请按 *Enter* 键
-* 要上一级或退出，按两次 *Escape* 键
+* 要上一级或退出，按两次 *Esc* 键
 * 要切换二进制选项的状态，按 *空格键*。
 * 选择多选选项的状态，按 *Enter* 键打开子菜单，按 *方向键* 浏览子菜单，再按 *Enter* 键选择状态
 * 要获得选项或菜单的帮助，请按 *H* 键
 
-简短编译后，`menuconfig` 会显示一个子菜单列表，其中包含所有可以配置的选项。选项很多，请慢慢阅读。第一次尝试时，不要轻易启用或禁用大量选项；这样很容易破坏配置，所以要从小处着手，熟悉配置和编译过程。
+经过编译后，`menuconfig` 会显示一个子菜单列表，其中包含所有可以配置的选项。选项很多，请慢慢阅读。第一次尝试时，不要轻易启用或禁用大量选项；这样很容易破坏配置，所以要从小处着手，熟悉配置和编译过程。
 
 === 保存更改
 

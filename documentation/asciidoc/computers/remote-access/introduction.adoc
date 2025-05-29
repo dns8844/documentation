@@ -14,11 +14,11 @@ SSH（**S**ecure **SH**ell）提供对Raspberry Pi上的终端会话的安全访
 
 === 通过本地网络在设备之间共享文件
 
-诸如 xref:remote-access.adoc#nfs[NFS]（网络文件系统）、xref:remote-access.adoc#scp[SCP]（安全复制协议）、xref:remote-access.adoc#samba[Samba]和 xref:remote-access.adoc#rsync[`rsync`] 之类的服务使您能够在本地网络上的设备之间共享文件，而无需直接控制远程设备。当您需要从另一台设备访问存储在一台设备上的数据时，这些服务非常有用。
+诸如 xref:remote-access.adoc#nfs[NFS]（网络文件系统）、xref:remote-access.adoc#scp[SCP]（安全复制协议）、xref:remote-access.adoc#samba[Samba] 和 xref:remote-access.adoc#rsync[rsync] 之类的服务使您能够在本地网络上的设备之间共享文件，而无需直接控制远程设备。当您需要从另一台设备访问存储在一台设备上的数据时，这些服务非常有用。
 
 === 通过互联网进行远程控制
 
 要从任何连接到Internet的设备远程控制您的Raspberry Pi，您可以：
 
-* 通过开放互联网、VPN 或使用外部服务（如 RealVNC 的云 https://www.realvnc.com/download/viewer/[VNC Viewer]）在 Raspberry Pi 上公开 xref:remote-access.adoc#ssh[SSH] 或 xref:remote-access.adoc#vnc[VNC]。
+* 通过开放互联网、VPN 或使用外部服务（如 RealVNC 的 https://www.realvnc.com/download/viewer/[VNC Viewer]）在 Raspberry Pi 上公开 xref:remote-access.adoc#ssh[SSH] 或 xref:remote-access.adoc#vnc[VNC]。
 * 使用 xref:remote-access.adoc#raspberry-pi-connect[Raspberry Pi Connect]，这是 Raspberry Pi 提供的免费屏幕共享和远程 shell 服务。

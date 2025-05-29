@@ -3,7 +3,7 @@
 
 从另一台机器连接到Raspberry Pi的大多数方法都需要您知道Raspberry Pi的本地IP地址。
 
-连接到局域网的任何设备都被分配了一个IP地址。为了使用 xref:remote-access.adoc#ssh[SSH]或 xref:remote-access.adoc#vnc[VNC] 从另一台机器连接到您的Raspberry Pi，您需要知道Raspberry Pi的IP地址。如果您连接了显示器，这很容易，并且有许多方法可以从网络上的另一台机器远程找到它。
+连接到局域网的任何设备都被分配了一个IP地址。为了使用 xref:remote-access.adoc#ssh[SSH] 或 xref:remote-access.adoc#vnc[VNC] 从另一台机器连接到您的Raspberry Pi，您需要知道Raspberry Pi的IP地址。如果您连接了显示器，这很容易，并且有许多方法可以从网络上的另一台机器远程找到它。
 
 要查找Raspberry Pi的本地IP地址，请使用以下方法之一。
 
@@ -87,16 +87,16 @@ IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
 ----
 
-此命令输出有关Raspberry Pi上可访问的各种网络接口的信息。检查 `GENERAL.TYPE` 行以查看每个块描述的网络接口类型。例如，"ethernet"是您设备上的以太网端口，"wifi"是指某些设备内置的Wi-Fi芯片。您将根据设备访问互联网的方式查看不同的输出块以找到您的IP地址：
+此命令输出有关Raspberry Pi上可访问的各种网络接口的信息。检查 `GENERAL.TYPE` 行以查看每个块描述的网络接口类型。例如，"ethernet" 是您设备上的以太网端口，"wifi" 是指某些设备内置的Wi-Fi芯片。您将根据设备访问互联网的方式查看不同的输出块以找到您的IP地址：
 
-* 如果您的设备使用Wi-Fi连接到互联网，请检查"wifi"部分
-* 如果您的设备使用以太网端口连接到互联网，请检查"ethernet"部分
+* 如果您的设备使用Wi-Fi连接到互联网，请检查 "wifi" 部分
+* 如果您的设备使用以太网端口连接到互联网，请检查 "ethernet" 部分
 
 
-在上面的示例中，Raspberry Pi使用Wi-Fi访问互联网。检查 `GENERAL.TYPE` 字段读取"wifi"的部分以查找IP地址。在这种情况下，您可以使用 `IP4.ADDRESS[1]` 字段中的IPv4地址访问此设备： `192.168.1.42` 。
+在上面的示例中，Raspberry Pi使用Wi-Fi访问互联网。检查 `GENERAL.TYPE` 字段读取 "wifi" 的部分以查找IP地址。在这种情况下，您可以使用 `IP4.ADDRESS[1]` 字段中的IPv4地址访问此设备： `192.168.1.42` 。
 
 [[resolve-raspberrypi-local-with-mdns]]
-=== 使用mDNS解析 `raspberrypi.local` 
+=== 使用mDNS解析 `raspberrypi.local`
 
 Raspberry Pi OS支持多播DNS作为Avahi服务的一部分。
 
@@ -129,7 +129,7 @@ TIP: 如果您使用电线将Raspberry Pi连接到网络，请尝试过滤列表
 
 === 使用 `nmap` 查找设备
 
-Network Mapper命令（ `nmap` ）是用于网络发现的免费开源工具。它适用于Linux、macOS和Windows。
+Network Mapper命令（ `nmap` ）是用于网络发现的免费开源工具。它适用于Linux、macOS 和 Windows。
 
 * 要在 *Linux* 上安装，请安装 `nmap` 包，例如 `sudo apt install nmap` 。
 * 要在 *macOS* 或 *Windows* 上安装，请参阅 http://nmap.org/download.html[nmap.org下载页面]。
@@ -140,7 +140,7 @@ Network Mapper命令（ `nmap` ）是用于网络发现的免费开源工具。�
 * 在 *macOS* 上，转到 *系统设置* > *网络*，选择您的活动网络连接，然后单击 *详细信息…* 按钮
 * 在 *Windows* 上，转到控制面板，然后在 *网络和共享中心* 下，单击 *查看网络连接*，选择您的活动网络连接，然后单击 *查看此连接的状态*
 
-接下来，扫描整个 **子网** 以查找其他设备。大多数本地网络使用IPv4，它使用四个数字，每个IP地址的值在1到255之间。您子网上的设备都使用相同的前三个数字。例如，如果您的IP地址是 `192.168.1.5` ，其他设备将使用 `192.168.1.2`、 `192.168.1.6` 和 `192.168.1.200` 等地址。要使用 `nmap` 扫描此子网，请传递字符串 `192.168.1.0/24` ，该字符串涵盖子网范围 `192.168.1.0` 到 `192.168.1.255` 。使用 `-sn` 标志对整个子网范围运行**ping扫描**：
+接下来，扫描整个 **子网** 以查找其他设备。大多数本地网络使用IPv4，它使用四个数字，每个IP地址的值在1到255之间。您子网上的设备都使用相同的前三个数字。例如，如果您的IP地址是 `192.168.1.5` ，其他设备将使用 `192.168.1.2`、 `192.168.1.6` 和 `192.168.1.200` 等地址。要使用 `nmap` 扫描此子网，请填入字符串 `192.168.1.0/24` ，该字符串涵盖子网范围 `192.168.1.0` 到 `192.168.1.255` 。使用 `-sn` 标志对整个子网范围运行 **ping扫描**：
 
 [source,console]
 ----
