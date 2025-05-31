@@ -6,7 +6,7 @@
 在配置 `rsync` 之前，请确定以下值：
 
 * `<pi_ip_address>` ：您的Raspberry Pi的本地IP地址：请参阅 xref:remote-access.adoc#ip-address[查找您的Raspberry Pi的IP地址] 了解更多信息
-* <pi_username>：用于登录树莓派的用户名
+* `<pi_username>`：用于登录树莓派的用户名
 * `<pi_folder_name>` ：您要从Raspberry Pi上复制文件的文件夹名称
 * `<pc_folder_name>` ：您要在个人计算机上同步的文件夹的名称
 

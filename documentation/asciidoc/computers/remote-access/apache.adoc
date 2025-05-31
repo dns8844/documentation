@@ -1,6 +1,6 @@
 == 设置 Apache web 服务器
 
-Apache 是一款流行的 web 服务器应用程序，您可以将其安装在 Raspberry Pi 上，以允许它提供网页。
+Apache 是一款流行的 web 服务器应用程序，您可以将其安装在 Raspberry Pi 上，以提供网页。
 
 Apache 本身可以通过 HTTP 提供 HTML 文件，使用附加模块可以使用脚本语言（如 PHP）提供动态网页。
 

@@ -238,7 +238,7 @@ image::images/focus.jpg[显示焦点测量的图像]
 
 ==== `viewfinder-mode` 
 
-与 `mode` 选项相同，但它适用于传递到预览窗口的数据。有关详细信息，请参阅 xref:camera_software.adoc#mode[ `mode` 文档]。
+与 `mode` 选项相同，但它适用于传递到预览窗口的数据。有关详细信息，请参阅 xref:camera_software.adoc#mode[`mode` 文档]。
 
 ==== `lores-width` 和 `lores-height` 
 
@@ -468,7 +468,7 @@ Raspberry Pi 5及更高版本的设备具有板载HDR模式。
 
 指定自动对焦模式。接受以下值：
 
-* `default` ：将相机置于连续自动对焦模式，除非 xref:camera_software.adoc#lens-position[`lens-position` ]或 xref:camera_software.adoc#autofocus-on-capture[ `autofocus-on-capture`] 将模式改成手动
+* `default` ：将相机置于连续自动对焦模式，除非 xref:camera_software.adoc#lens-position[`lens-position`] 或 xref:camera_software.adoc#autofocus-on-capture[ `autofocus-on-capture`] 将模式改成手动
 * `manual` ：根本不会移动镜头，除非手动配置 xref:camera_software.adoc#lens-position[`lens-position`]
 * `auto` ：仅在相机启动时或拍摄前移动镜头进行自动对焦扫描，如果还使用了 xref:camera_software.adoc#autofocus-on-capture[`autofocus-on-capture`]
 * `continuous` ：随着场景的变化自动调整镜头位置

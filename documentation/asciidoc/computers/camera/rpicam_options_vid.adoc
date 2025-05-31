@@ -3,7 +3,7 @@
 
 本节中指定的命令行选项仅适用于视频输出。
 
-要将以下选项之一传递给应用程序，请在选项名称前加上 `--` .如果选项需要值，请在选项名称后立即传递该值，并用单个空格分隔。如果值包含空格，请将值用引号括起来。
+要将以下选项之一传递给应用程序，请在选项名称前加上 `--`, 如果选项需要值，请在选项名称后立即传递该值，并用单个空格分隔。如果值包含空格，请将值用引号括起来。
 
 一些选项有速记别名，例如 `-h` 而不是 `--help` 。使用这些速记别名而不是完整的选项名称可以节省空间和时间，但会牺牲易读性。
 
@@ -100,7 +100,7 @@ $ mkvmerge -o test.mkv --timecodes 0:timestamps.txt test.h264
 * `record` ：从启用视频输出开始。
 * `pause` ：从禁用视频输出开始。
 
-将此选项与 xref:camera_software.adoc#keypress[`keypress` ] 或 xref:camera_software.adoc#signal[ `signal`] 配合使用，可在两种状态之间切换。
+将此选项与 xref:camera_software.adoc#keypress[`keypress`] 或 xref:camera_software.adoc#signal[`signal`] 配合使用，可在两种状态之间切换。
 
 [[split]]
 ==== `split` 
@@ -124,7 +124,7 @@ $ mkvmerge -o test.mkv --timecodes 0:timestamps.txt test.h264
 [[inline]]
 ==== `inline` 
 
-在每个 Iframe（帧内）写入序列头。这可以帮助客户端从视频中的任意点解码视频序列，而不只是从开头解码。建议与 xref:camera_software.adoc#segment[`segment` ]、xref:camera_software.adoc#split[`split`]、xref:camera_software.adoc#circular[ `circular`] 和流媒体选项一起使用。
+在每个 Iframe（帧内）写入序列头。这可以帮助客户端从视频中的任意点解码视频序列，而不只是从开头解码。建议与 [`segment`](http://raspberry.dns8844.cn/documentation/computers/camera_software.html#segment)、[`split`](http://raspberry.dns8844.cn/documentation/computers/camera_software.html#split)、[`circular`](http://raspberry.dns8844.cn/documentation/computers/camera_software.html#circular) 和流媒体选项一起使用。
 
 仅适用于以H.264格式编码的视频。不接受值。
 
@@ -134,7 +134,7 @@ $ mkvmerge -o test.mkv --timecodes 0:timestamps.txt test.h264
 
 ==== `frames` 
 
-准确记录指定的帧数。任何非零值都会覆盖 xref:camera_software.adoc#timeout[`timeout`]。接受非零整数。
+准确记录指定的帧数。任何非零值都会覆盖 [`timeout`](http://raspberry.dns8844.cn/documentation/computers/camera_software.html#timeout)。接受非零整数。
 
 [[framerate]]
 ==== `framerate` 

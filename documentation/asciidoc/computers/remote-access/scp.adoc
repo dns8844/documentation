@@ -3,18 +3,18 @@
 
 安全复制协议 ( `scp` ) 通过 SSH 发送文件。您可以使用 `scp` 在 Raspberry Pi 和另一台计算机之间复制文件。
 
-要使用 `scp` ，请查找 Raspberry Pi 的 IP 地址。
+要使用 `scp` ，需要先 Raspberry Pi 的 IP 地址。
 
-=== 将文件复制到您的 Raspberry Pi
+=== 将文件复制到 Raspberry Pi
 
-要将名为 `myfile.txt` 的文件从您的个人计算机复制到 Raspberry Pi 上的用户主文件夹，请从包含 `myfile.txt` 的目录中运行以下命令，将 `<username>` 占位符替换为您用于登录 Raspberry Pi 的用户名，将 `<pi_ip_address>` 占位符替换为您 Raspberry Pi 的 IP 地址：
+要将名为 `myfile.txt` 的文件从个人计算机复制到 Raspberry Pi 上的用户主文件夹，请从包含 `myfile.txt` 的目录中运行以下命令，将 `<username>` 占位符替换为您用于登录 Raspberry Pi 的用户名，将 `<pi_ip_address>` 占位符替换为您 Raspberry Pi 的 IP 地址：
 
 [source,console]
 ----
 $ scp myfile.txt <username>@<pi_ip_address>:
 ----
 
-要将文件复制到特定目录，请在 `scp` 命令中的 `:` 后附加目录路径。在运行 `scp` 之前创建文件夹，因为 `scp` 不会自动创建文件夹。例如，以下命令将名为 `myfile.txt` 的文件复制到用户主文件夹中的 `project/` 目录中：
+要将文件复制到特定目录，请在 `scp` 命令中的 `:` 后跟随目录路径。在运行 `scp` 之前创建文件夹，因为 `scp` 不会自动创建文件夹。例如，以下命令将名为 `myfile.txt` 的文件复制到用户主文件夹中的 `project/` 目录中：
 
 [source,console]
 ----

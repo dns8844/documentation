@@ -67,7 +67,7 @@ xref:pico-series.adoc#pico-2-technical-specification[Raspberry Pi Pico 2] 由Ras
 
 本设计按“原样”提供，作者不承担与本设计有关的所有保证，包括对适销性和适用性的所有暗示保证。在任何情况下，作者均不对因使用、数据或利润损失而导致的任何特殊、直接、间接或后果性损害或任何损害负责，无论是由于合同、疏忽或其他侵权行为，还是与使用或执行本设计有关。
 
-==== 其他板卡
+=== 其他板卡
 
 您可以在 https://forums.raspberrypi.com/viewforum.php?f=147[Raspberry Pi forums] 上找到关于基于第三方RP2350的板的讨论。
 

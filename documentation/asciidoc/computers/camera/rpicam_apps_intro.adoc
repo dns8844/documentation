@@ -15,20 +15,20 @@ Raspberry Pi提供了一组示例 `rpicam-apps` 。这些CLI应用程序建立�
 * `rpicam-raw` ：直接从传感器捕获原始（未处理的Bayer）帧。
 * `rpicam-detect` ：默认情况下未构建，但如果用户在其Raspberry Pi上安装了TensorFlow Lite，则可以构建它。检测到特定物体时捕获 JPEG 图像。
 
-最新版本的Raspberry Pi OS包括五个基本的 `rpicam-apps` ，因此即使在全新的Raspberry Pi OS安装上，您也可以使用相机录制图像和视频。
+最新版本的Raspberry Pi OS包括五个基本的 `rpicam-apps`，因此即使在全新的Raspberry Pi OS安装上，您也可以使用相机录制图像和视频。
 
-用户可以根据自己的要求创建具有自定义功能的基于 `rpicam` 的应用程序。 https://github.com/raspberrypi/rpicam-apps[ `rpicam-apps` 源代码] 在BSD-2-Clause许可下免费提供。
+用户可以根据自己的要求创建具有自定义功能的基于 `rpicam` 的应用程序。 https://github.com/raspberrypi/rpicam-apps[`rpicam-apps` 源代码] 在BSD-2-Clause许可下免费提供。
 
 [[libcamera]]
 === `libcamera` 
 
-`libcamera` 是一个开源软件库，旨在直接支持Arm处理器上Linux操作系统的相机系统。在 Broadcom GPU 上运行的专有代码被减至最少。有关 `libcamera` 的更多信息，请参阅 https://libcamera.org[ `libcamera` 网站]。
+`libcamera` 是一个开源软件库，旨在直接支持Arm处理器上Linux操作系统的相机系统。在 Broadcom GPU 上运行的专有代码被减至最少。有关 `libcamera` 的更多信息，请参阅 https://libcamera.org[`libcamera` 网站]。
 
-`libcamera` 提供了一个{cpp}API来配置相机，然后允许应用程序请求图像帧。这些图像缓冲区驻留在系统内存中，可以直接传递给静止图像编码器（如JPEG）或视频编码器（如h.264）。 `libcamera` 本身不编码或显示图像：该功能使用 `rpicam-apps` 。
+`libcamera` 提供了一个{cpp}API来配置相机，然后允许应用程序请求图像帧。这些图像缓冲区驻留在系统内存中，可以直接传递给静止图像编码器（如JPEG）或视频编码器（如h.264）。`libcamera` 本身不编码或显示图像：该功能使用 `rpicam-apps`。
 
-您可以在 https://git.linuxtv.org/libcamera.git/[官方libcam存储库]中找到源代码。Raspberry Pi OS发行版使用 https://github.com/raspberrypi/libcamera.git[fork] 来控制更新。
+您可以在 https://git.linuxtv.org/libcamera.git/[官方libcam存储库] 中找到源代码。Raspberry Pi OS发行版使用 https://github.com/raspberrypi/libcamera.git[fork] 来控制更新。
 
-在 `libcamera` 内核之下，我们提供了一个自定义流水线处理程序。libcamera "使用该层驱动 Raspberry Pi 上的传感器和图像信号处理器（ISP）。libcamera "包含一系列图像处理算法（IPA），包括自动曝光/增益控制（AEC/AGC）、自动白平衡（AWB）和自动镜头阴影校正（ALSC）。
+在 `libcamera` 内核之下，我们提供了一个自定义流水线处理程序。libcamera 使用该层驱动 Raspberry Pi 上的传感器和图像信号处理器（ISP）。libcamera包含一系列图像处理算法（IPA），包括自动曝光/增益控制（AEC/AGC）、自动白平衡（AWB）和自动镜头阴影校正（ALSC）。
 
 Raspberry Pi的 `libcamera` 实现支持以下相机：
 
@@ -47,4 +47,4 @@ Raspberry Pi的 `libcamera` 实现支持以下相机：
 ** IMX519
 ** OV9281
 
-扩展对新传感器的支持，https://git.linuxtv.org/libcamera.git/[贡献给 `libcamera` ]。
+扩展对新传感器的支持，https://git.linuxtv.org/libcamera.git/[贡献给 `libcamera`]。

@@ -23,7 +23,7 @@ NOTE: 本节仅适用于 Raspberry Pi 3 Model B，因为 Raspberry Pi 3 Model B+
 $ echo program_usb_boot_mode=1 | sudo tee -a /boot/firmware/config.txt
 ----
 
-这会将 `program_usb_boot_mode=1` 添加到 xref:config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 的末尾。使用 `sudo reboot` 重新启动 Raspberry Pi。客户端 Raspberry Pi 重新启动后，使用以下命令检查 OTP 是否已编程：
+这会将 `program_usb_boot_mode=1` 添加到 xref:config_txt.adoc#what-is-config-txt[/boot/firmware/config.txt] 的末尾。使用 `sudo reboot` 重新启动 Raspberry Pi。客户端 Raspberry Pi 重新启动后，使用以下命令检查 OTP 是否已编程：
 
 [source,console]
 ----
