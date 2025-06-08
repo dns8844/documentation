@@ -13,9 +13,9 @@ $ rpicam-still --output test.jpg
 
 ==== 编码器
 
-`rpicam-still` 可以以多种格式保存图像，包括 `png`、 `bmp` 以及RGB和YUV二进制像素转储。要读取这些二进制转储，任何读取文件的应用程序都必须了解像素排列。
+`rpicam-still` 可以以多种格式保存图像，包括 `png`、`bmp` 以及RGB和YUV二进制像素转储。要读取这些二进制转储，任何读取文件的应用程序都必须了解像素排列。
 
-使用 xref:camera_software.adoc#encoding[`encoding` ] 选项指定输出格式。传递给 xref:camera_software.adoc#output[ `output`] 的文件名对输出文件类型没有影响。
+使用 xref:camera_software.adoc#encoding[`encoding`] 选项指定输出格式。传递给 xref:camera_software.adoc#output[`output`] 的文件名对输出文件类型没有影响。
 
 要捕获全分辨率PNG图像并将其保存到名为 `test.png` 的文件中，请运行以下命令：
 
@@ -24,7 +24,7 @@ $ rpicam-still --output test.jpg
 $ rpicam-still --encoding png --output test.png
 ----
 
-有关指定图像格式的更多信息，请参阅 xref:camera_software.adoc#encoding[ `encoding` 选项参考]。
+有关指定图像格式的更多信息，请参阅 xref:camera_software.adoc#encoding[`encoding` 选项参考]。
 
 ==== 捕获原始图像
 
@@ -37,7 +37,7 @@ $ rpicam-still --encoding png --output test.png
 $ rpicam-still --raw --output test.jpg
 ----
 
-`rpicam-still` 以DNG（Adobe Digital Negative）格式保存原始图像。要确定原始图像的文件名， `rpicam-still` 使用与输出文件相同的名称，扩展名更改为 `.dng` 。要处理DNG图像，请使用 https://en.wikipedia.org/wiki/Dcraw[Dcraw]或 https://en.wikipedia.org/wiki/RawTherapee[RawTherapee] 等应用程序。
+`rpicam-still` 以DNG（Adobe Digital Negative）格式保存原始图像。要确定原始图像的文件名，`rpicam-still` 使用与输出文件相同的名称，扩展名更改为 `.dng` 。要处理DNG图像，请使用 https://en.wikipedia.org/wiki/Dcraw[Dcraw] 或 https://en.wikipedia.org/wiki/RawTherapee[RawTherapee] 等应用程序。
 
 DNG元数据包括电平、白平衡信息以及ISP用于生成JPEG的色彩矩阵。使用 https://exiftool.org/[ExifTool] 查看 DNG 元数据。以下输出显示了存储在 Raspberry Pi 使用 HQ 摄像机拍摄的原始图像中的典型元数据：
 ----
@@ -92,7 +92,7 @@ Shutter Speed                   : 1/20
 
 要拍摄长时间曝光的图像，请禁用自动曝光/增益控制 (AEC/AGC) 和自动白平衡 (AWB)。否则，这些算法将迫使用户在收敛时等待若干帧。
 
-要禁用这些算法，请为增益和 AWB 提供明确的值。由于长时间曝光已经耗费了大量时间，使用 xref:camera_software.adoc#immediate[`immediate`] 选项完全跳过预览阶段通常是合理的。
+要禁用这些算法，请为增益和 AWB 提供明确的值。由于长时间曝光已经耗费了大量时间，可以使用 xref:camera_software.adoc#immediate[`immediate`] 选项完全跳过预览阶段。
 
 要执行100秒曝光捕获，请运行以下命令：
 

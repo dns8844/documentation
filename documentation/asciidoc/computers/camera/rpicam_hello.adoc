@@ -1,14 +1,14 @@
 
 === `rpicam-hello` 
 
-`rpicam-hello` 简要显示包含来自连接相机的视频馈送的预览窗口。要使用 `rpicam-hello` 显示预览窗口五秒钟，请在终端中运行以下命令：
+`rpicam-hello` 会显示一个来自相机的视频的预览窗口。要使用 `rpicam-hello` 显示预览窗口五秒钟，请在终端中运行以下命令：
 
 [source,console]
 ----
 $ rpicam-hello
 ----
 
-您可以使用 xref:camera_software.adoc#timeout[`timeout`] 选项传递可选的持续时间（以毫秒为单位）。值 `0` 无限期运行预览：
+您可以使用 xref:camera_software.adoc#timeout[`timeout`] 选项设置预览时间（以毫秒为单位）。值 `0` 无限期运行预览：
 
 [source,console]
 ----
@@ -19,13 +19,13 @@ $ rpicam-hello --timeout 0
 
 ==== 显示图像预览
 
-大多数 `rpicam-apps` 会在窗口中显示预览图像。如果没有活动的桌面环境，则使用Linux直接渲染管理器（DRM）将预览直接绘制到显示器上。否则， `rpicam-apps` 会尝试使用桌面环境。两条路径都使用零拷贝GPU缓冲区共享：因此，_不_支持X转发。
+大多数 `rpicam-apps` 会在窗口中显示预览图像。如果没有活动的桌面环境，则使用Linux直接渲染管理器（DRM）将预览直接绘制到显示器上。否则， `rpicam-apps` 会尝试使用桌面环境。两条路径都使用零拷贝GPU缓冲区共享：因此，_不_ 支持X转发。
 
-如果您运行X窗口服务器并希望使用X转发，请添加 xref:camera_software.adoc#qt-preview[`qt-preview`]标志以在 https://en.wikipedia.org/wiki/Qt_(software)[Qt] 窗口中呈现预览窗口。Qt预览窗口比替代窗口使用更多资源。
+如果您运行X窗口服务器并希望使用X转发，请添加 xref:camera_software.adoc#qt-preview[`qt-preview`] 标志以在 https://en.wikipedia.org/wiki/Qt_(software)[Qt] 窗口中呈现预览窗口。Qt预览窗口将会比替代窗口使用更多资源。
 
-NOTE: 使用Gtk2的旧系统在与OpenCV链接时可能会产生 `Glib-GObject` 错误并且无法显示Qt预览窗口。在这种情况下，以root身份编辑文件 `/etc/xdg/qt5ct/qt5ct.conf` 并将包含 `style=gtk2` 的行替换为 `style=gtk3` 。
+NOTE: 使用Gtk2的旧系统在与OpenCV链接时可能会产生 `Glib-GObject` 错误并且无法显示Qt预览窗口。在这种情况下，以root身份编辑文件 `/etc/xdg/qt5ct/qt5ct.conf` 并将 `style=gtk2` 替换为 `style=gtk3` 。
 
-要完全禁止预览窗口，请传递 xref:camera_software.adoc#nopreview[`nopreview`] 标志：
+要完全禁止预览窗口，请使用 xref:camera_software.adoc#nopreview[`nopreview`] 选项：
 
 [source,console]
 ----
@@ -39,4 +39,4 @@ xref:camera_software.adoc#info-text[`info-text`] 选项使用 `%` 指令在窗�
 $ rpicam-hello --info-text "red gain %rg, blue gain %bg"
 ----
 
-有关指令的完整列表，请参阅 xref:camera_software.adoc#info-text[ `info-text` 参考]。
+有关指令的完整列表，请参阅 xref:camera_software.adoc#info-text[info-text信息]。

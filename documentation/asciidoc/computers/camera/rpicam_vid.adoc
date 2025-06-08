@@ -28,7 +28,7 @@ $ rpicam-vid -t 10s -o test.mp4
 
 ==== 编码器
 
-'rpicam-vid' 支持运动 JPEG 以及未压缩和未格式化的 YUV420：
+`rpicam-vid` 支持运动 JPEG 以及未压缩和未格式化的 YUV420：
 
 [source,console]
 ----
@@ -56,7 +56,7 @@ $ rpicam-vid -t 10000 --codec mjpeg --segment 1 -o test%05d.jpeg
 * 使用 `--level 4.2` 将 https://en.wikipedia.org/wiki/Advanced_Video_Coding#Levels[H.264 目标级别] 设置为 4.2。
 * 通过将 xref:camera_software.adoc#denoise[`denoise`] 选项设置为 `cdn_off` 来禁用软件色彩降噪处理。
 * 使用 xref:camera_software.adoc#nopreview[`nopreview`] 禁用显示窗口以释放一些额外的 CPU 周期。
-* 在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中设置 `force_turbo=1` 以确保在视频捕获期间 CPU 时钟不会节流。有关更多信息，请参阅 xref:config_txt.adoc#force_turbo[ `force_turbo` 文档]。
+* 在 xref:../computers/config_txt.adoc#what-is-config-txt[`/boot/firmware/config.txt`] 中设置 `force_turbo=1` 以确保在视频捕获期间 CPU 时钟不会节流。有关更多信息，请参阅 xref:config_txt.adoc#force_turbo[`force_turbo` 文档]。
 * 使用 `--width 1280 --height 720` 或更低的值调整 ISP 输出分辨率以实现您的帧速率目标。
 * 在 Raspberry Pi 4 上，您可以通过在 `/boot/firmware/config.txt` 中添加 `gpu_freq=550` 或更高来超频 GPU 以提高性能。有关更多详细信息，请参阅 xref:config_txt.adoc#overclocking[超频文档]。
 

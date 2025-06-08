@@ -1,7 +1,7 @@
 
 === `rpicam-raw` 
 
-`rpicam-raw` 直接从传感器将视频记录为原始Bayer帧。它不显示预览窗口。要将两秒钟的原始剪辑录制到名为 `test.raw` 的文件中，请运行以下命令：
+`rpicam-raw` 直接从传感器将视频记录为原始Bayer帧。它不显示预览窗口。要将两秒钟的原始视频录制到名为 `test.raw` 的文件中，请运行以下命令：
 
 [source,console]
 ----
@@ -17,11 +17,11 @@ $ rpicam-raw -t 2000 -o test.raw
 $ rpicam-raw -t 2000 --segment 1 -o test%05d.raw
 ----
 
-如果使用快速存储设备， `rpicam-raw` 能以 10fps 的速度将 18MB 的 1200 万像素 HQ 相机帧写入磁盘。rpicam-raw "无法将输出帧格式化为 DNG 文件；如需该功能，请使用 xref:camera_software.adoc#rpicam-still[`rpicam-still` ]。使用 xref:camera_software.adoc#framerate[ `framerate`] 选项时，速度应低于 10，以避免丢帧：
+如果使用快速存储设备，`rpicam-raw` 能以 10fps 的速度将 18MB 的 1200 万像素 HQ 相机帧写入磁盘。rpicam-raw 无法将输出帧格式化为 DNG 文件；如需该功能，请使用 xref:camera_software.adoc#rpicam-still[`rpicam-still`]。使用 xref:camera_software.adoc#framerate[`framerate`] 选项时，速度应低于 10，以避免丢帧：
 
 [source,console]
 ----
 $ rpicam-raw -t 5000 --width 4056 --height 3040 -o test.raw --framerate 8
 ----
 
-有关原始格式的更多信息，请参阅 xref:camera_software.adoc#mode[ `mode` 文档]。
+有关原始格式的更多信息，请参阅 xref:camera_software.adoc#mode[`mode` 文档]。

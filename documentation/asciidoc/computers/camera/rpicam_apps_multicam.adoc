@@ -6,6 +6,6 @@
 * 对于Raspberry Pi 5，您可以使用双MIPI连接器将两个摄像头直接连接到电路板。
 * 对于其他带有摄像头端口的树莓派设备，您可以将两个或多个摄像头与视频多路复用板连接，例如 https://www.arducam.com/product/multi-camera-v2-1-adapter-raspberry-pi/[此第三方产品]。由于两个摄像头都连接到单个Unicam端口，_同时只能有一个摄像头在_使用。
 
-要列出平台上所有可用的相机，请使用 xref:camera_software.adoc#list-cameras[`list-cameras` ] 选项。要选择要使用的相机，请将相机索引传递给 xref:camera_software.adoc#camera[ `相机`] 选项。
+要列出平台上所有可用的相机，请使用 xref:camera_software.adoc#list-cameras[`list-cameras`] 选项。要选择要使用的相机，请将相机索引传递给 xref:camera_software.adoc#camera[`相机`] 选项。
 
-NOTE:  `libcamera` 尚不提供立体相机支持。当同时运行两个相机时，它们必须在不同的进程中运行。这意味着它们之间无法同步传感器取景或3A操作。作为一种解决方法，您可以通过HQ（IMX477）相机的外部同步信号同步相机，并在必要时将3A切换到手动模式。
+NOTE: `libcamera` 尚不提供立体相机支持。当同时运行两个相机时，它们必须在不同的进程中运行。这意味着它们之间无法同步传感器取景或3A操作。作为一种解决方法，您可以通过HQ（IMX477）相机的外部同步信号同步相机，并在必要时将3A切换到手动模式。
